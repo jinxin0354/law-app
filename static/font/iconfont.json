@@ -1,0 +1,37 @@
+{
+  "id": "2796419",
+  "name": "法力",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13053965",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "782377",
+      "name": "客服",
+      "font_class": "kefu",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "201575",
+      "name": "3.1-疑问",
+      "font_class": "31yiwen",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "14386270",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e673",
+      "unicode_decimal": 58995
+    }
+  ]
+}

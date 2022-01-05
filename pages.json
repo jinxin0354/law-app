@@ -1,0 +1,1187 @@
+//tips: 新建页面,新建路由,需要重新编译,否则跳转报错
+{
+	"easycom": { //easycom,按需自动注册组件。原则上可以把所有页面引入组件方法删掉，会自动引入。
+		"autoscan": true,
+		"custom": {
+			"law-(.*)": "@/components/law-$1/law-$1.vue",
+			"order-(.*)": "@/components/order-$1/order-$1.vue",
+			"service-(.*)": "@/components/service-$1/service-$1.vue",
+			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		}
+	},
+	"pages": [
+		// 委托人
+		{
+			"path": "pages/client/index/index",
+			"aliasPath": "/",
+			"style": {
+				"navigationBarTitleText": "法力",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/index/list",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/index/notice",
+			"style": {
+				"navigationBarTitleText": "服务通知",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 问一下
+		{
+			"path": "pages/client/order/order-ask",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 代写文书
+		{
+			"path": "pages/client/order/order-write",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 陪聊
+		{
+			"path": "pages/client/order/order-chat",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 管家
+		{
+			"path": "pages/client/order/order-butler",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 判案
+		{
+			"path": "pages/client/order/order-decide",
+			"style": {
+				"navigationBarTitleText": "判案"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 打官司
+		{
+			"path": "pages/client/order/order-court-own",
+			
+			"style": {
+				"navigationBarTitleText": "提交订单"
+				// "app-plus": {
+				// 	"titleNView": {
+				// 		"type": "transparent"
+				// 	}
+				// }
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 刑事会见
+		{
+			"path": "pages/client/order/order-criminal",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/service",
+			"style": {
+				"navigationBarTitleText": "服务领域"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/write-type",
+			"style": {
+				"navigationBarTitleText": "文书类型"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/user",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#E02E24",
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/match",
+			"style": {
+				"navigationBarTitleText": "匹配律师中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		//邀请好友
+		{
+			"path": "pages/client/user/invite",
+			"style": {
+				"navigationBarTitleText": "邀请好友",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		//我的优惠券
+		{
+			"path": "pages/client/user/my_coupon",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/my_invite",
+			"style": {
+				"navigationBarTitleText": "邀请好友",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/invite-vx",
+			"style": {
+				"navigationBarTitleText": "保存二维码",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/accept-invite",
+			"style": {
+				"navigationBarTitleText": "领券",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/accept-share-coupon",
+			"style": {
+				"navigationBarTitleText": "领券",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/withdraw",
+			"style": {
+				"navigationBarTitleText": "提现",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/match-specialist",
+			"style": {
+				"navigationBarTitleText": "匹配法务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/item-detail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/to-cancel",
+			"style": {
+				"navigationBarTitleText": "取消订单",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/order-cancel",
+			"style": {
+				"navigationBarTitleText": "订单取消",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/auto-cancel",
+			"style": {
+				"navigationBarTitleText": "订单取消",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-minute",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-month",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-year",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-face",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-ok",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/lawyer-detail",
+			"style": {
+				"navigationBarTitleText": "律师详情",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent"
+					}
+				}
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/ask",
+			"style": {
+				"navigationBarTitleText": "问大家",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue65a",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "28px"
+						}, {
+							"text": "\ue618",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "28px"
+						}]
+					}
+				}
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/more_ask",
+			"style": {
+				"navigationBarTitleText": "问大家",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/invoice",
+			"style": {
+				"navigationBarTitleText": "开发票",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/invoice-add",
+			"style": {
+				"navigationBarTitleText": "添加新抬头",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/order",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/wallet",
+			"style": {
+				"navigationBarTitleText": "钱包",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#E02E24",
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/upload",
+			"style": {
+				"navigationBarTitleText": "项目资料",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/upload2",
+			"style": {
+				"navigationBarTitleText": "项目资料",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/map",
+			"style": {
+				"navigationBarTitleText": "预约地点",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/forward-time",
+			"style": {
+				"navigationBarTitleText": "预约时间",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/cang",
+			"style": {
+				"navigationBarTitleText": "藏经阁",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/cang-upload",
+			"style": {
+				"navigationBarTitleText": "上传模板",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/order/datum",
+			"style": {
+				"navigationBarTitleText": "藏经阁",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue65a",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "28px"
+						}, {
+							"text": "\ue618",
+							"fontSrc": "/static/font/iconfont.ttf",
+							"fontSize": "28px"
+						}]
+					}
+				}
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/datum-preview",
+			"style": {
+				"navigationBarTitleText": "预览效果",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/service-remove",
+			"style": {
+				"navigationBarTitleText": "服务解除",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-specialist",
+			"style": {
+				"navigationBarTitleText": "法务服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-investor",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/to-friend",
+			"style": {
+				"navigationBarTitleText": "发送给朋友",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/friend-pay",
+			"style": {
+				"navigationBarTitleText": "朋友代付",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/weixin-map",
+			"style": {
+				"navigationBarTitleText": "微信内置导航",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/order/web-view",
+			"style": {
+				"navigationBarTitleText": "被执行人信息查询",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/evaluate",
+			"style": {
+				"navigationBarTitleText": "评价有礼",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/evaluate-list",
+			"style": {
+				"navigationBarTitleText": "评价有礼",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		// 律师端
+		{
+			"path": "pages/lawyer/user/receive-order",
+			"style": {
+				"navigationBarTitleText": "我的接单",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-minute",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-month",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-year",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-face",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-ok",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/order-cancel",
+			"style": {
+				"navigationBarTitleText": "订单取消",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-remove",
+			"style": {
+				"navigationBarTitleText": "服务解除",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/dead-date",
+			"style": {
+				"navigationBarTitleText": "请选择缴纳截止日",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/apply-invest-award",
+			"style": {
+				"navigationBarTitleText": "结算投资人奖励",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		// 投资人支付(不用还)
+		{
+			"path": "pages/lawyer/user/service-investor",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/apply-service-ok",
+			"style": {
+				"navigationBarTitleText": "申请服务完成",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/apply-invest-cost",
+			"style": {
+				"navigationBarTitleText": " 申请投资费用（可多选）",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/return-invest-cost",
+			"style": {
+				"navigationBarTitleText": "退回投资费用（可多选）",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		// 法务
+		{
+			"path": "pages/specialist/user/service-specialist",
+			"style": {
+				"navigationBarTitleText": "法务服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/specialist/user/order-cancel",
+			"style": {
+				"navigationBarTitleText": "订单取消",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/specialist/user/to-cancel",
+			"style": {
+				"navigationBarTitleText": "取消订单",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/specialist/user/service-ok",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/specialist/user/receive-order",
+			"style": {
+				"navigationBarTitleText": "我的接单",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/service-investor",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/sure-service-ok",
+			"style": {
+				"navigationBarTitleText": "审批服务完成",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/service-ok",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/inboxMessages",
+			"style": {
+				"navigationBarTitleText": "投资人收件信息",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"color": "#ffffff",
+							"fontSize": "28rpx",
+							"text": "添加新收件信息"
+						}]
+					}
+				}
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/inboxMessages-add",
+			"style": {
+				"navigationBarTitleText": "添加新收件信息",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/webView",
+			"style": {
+				"navigationBarTitleText": "aa",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": false
+			}
+		},
+		{
+			"path": "pages/client/user/waitWithdraw",
+			"style": {
+				"navigationBarTitleText": "待结算收益",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		}, {
+			"path": "pages/service/service",
+			"style": {
+				"navigationBarTitleText": "服务认证",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/service/lawyerAuth/lawyerAuth",
+			"style": {
+				"navigationBarTitleText": "认证律师",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/lawyerAuth",
+			"style": {
+				"navigationBarTitleText": "认证律师",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/upload-certificate",
+			"style": {
+				"navigationBarTitleText": "上传律师证书",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/upload-certificate",
+			"style": {
+				"navigationBarTitleText": "上传律师证书",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/upload-idcard",
+			"style": {
+				"navigationBarTitleText": "上传身份证件",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/upload-idcard",
+			"style": {
+				"navigationBarTitleText": "上传身份证件",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			},
+			"meta": {
+				"auth": true
+			}
+
+		}, {
+			"path": "pages/service/legalAffairs/legalAffairs",
+			"style": {
+				"navigationBarTitleText": "认证法务专员",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/legalAffairs/upload-legalAffairs",
+			"style": {
+				"navigationBarTitleText": "上传资格证书",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/investors/investors",
+			"style": {
+				"navigationBarTitleText": "认证投资人",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+
+			}
+
+		}, {
+			"path": "pages/service/investors/upload-business",
+			"style": {
+				"navigationBarTitleText": "上传营业执照",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/suit/suit",
+			"style": {
+				"navigationBarTitleText": "诉讼案例文件",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/suit/upload-case/upload-case",
+			"style": {
+				"navigationBarTitleText": "上传案例",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/suit/zhian",
+			"style": {
+				"navigationBarTitleText": "治安刑事",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/investors/upload-idcard",
+			"style": {
+				"navigationBarTitleText": "上传身份证",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}
+
+		, {
+			"path": "pages/service/suit/zhianxingshi",
+			"style": {
+				"navigationBarTitleText": "治安刑事",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/service/suit/zhianDetail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
+			"path": "pages/service/legalAffairs/upload-idcard",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}
+
+		, {
+			"path": "pages/service/xieyi/xieyi",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/service/uploadCard/uploadCard",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/service/lawyerAuth/lawyerNew",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
+			"path": "pages/service/investors/inveNew",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		},
+		{
+			"path": "pages/service/legalAffairs/legalNew",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
+		}
+
+		, {
+			"path": "pages/moreMoney/moreMoney",
+			"style": {
+				"navigationBarTitleText": "余额",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/moreMoney/DeatilMoney",
+			"style": {
+				"navigationBarTitleText": "余额明细",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {}
+				}
+
+			}
+		},
+		{
+			"path": "pages/moreMoney/drawDetail",
+			"style": {
+				"navigationBarTitleText": "可提现明细",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {}
+				}
+		
+			}
+		},
+		{
+			"path": "pages/moreMoney/addMoney",
+			"style": {
+				"navigationBarTitleText": "充值",
+				"enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"app-plus": {
+					"titleNView": {}
+				}
+		
+			}
+		}
+	    ,{
+            "path" : "components/order-service/order-service",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "components/order-pop-common/order-pop-common",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "components/order-items-service/order-items-service",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "法力",
+		"navigationBarBackgroundColor": "#FFC801",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"titleNView": {
+				"buttons": [{
+					"text": "\ue65a",
+					"fontSrc": "/static/font/iconfont.ttf",
+					"fontSize": "28px"
+				}]
+			}
+		}
+
+
+
+	}
+}
