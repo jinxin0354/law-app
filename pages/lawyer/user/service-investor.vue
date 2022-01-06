@@ -98,8 +98,12 @@
 				</button>
 				<button class="service-item active" @click="jump('/pages/lawyer/user/return-invest-cost', { order_id: order_id })">退回投资费用</button>
 				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
-				<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button>
-				<button class="service-item active" style="width: 100%; margin-right: 0;" @click="jump('/pages/lawyer/user/apply-invest-award', { order_id: order_id })">
+				<!-- <button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
+				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
+				<!-- <button class="service-item active" style="width: 100%; margin-right: 0;" @click="jump('/pages/lawyer/user/apply-invest-award', { order_id: order_id })" >
+					结算投资人奖励
+				</button> -->
+				<button class="service-item active" style="width: 100%; margin-right: 0;" @click="$refs.returnCost.$refs.returnCost.open()">
 					结算投资人奖励
 				</button>
 				<button
@@ -257,8 +261,8 @@
 		<uni-popup ref="popupApplyServiceRemove" type="center">
 			<order-popup-common title="申请解除委托" @closePop="closePop('popupApplyServiceRemove')">
 				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
-					<view class="ck-box">
-						<checkbox-group>
+					<view class="ck-box" style="padding: 24px 33px;">
+						<!-- <checkbox-group>
 							<label class="ck-item">
 								<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
 								我已与委托人、投资人确认解除委托。
@@ -267,16 +271,34 @@
 								<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
 								我已将全部投资费用原路退回给投资人
 							</label>
-						</checkbox-group>
+						</checkbox-group> -->
 						<view class="dialog-tip">解除原因</view>
 						<textarea placeholder="请输入" :focus="true" placeholder-class="placeholder" class="dialog-textarea" v-model="reason" style="width: calc(100% - 40rpx);" />
+						<checkbox-group  @change="resultChange" style="margin-top: 10px;">
+							<label class="ck-item">
+								<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+								<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" :checked="true" :disabled="true" />
+								我已与委托人、投资人确认解除委托。
+							</label>
+							<label class="ck-item">
+								<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+								<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue2" :checked="true" :disabled="true" />
+								我已将全部投资费用原路退回给投资人
+							</label>
+						</checkbox-group>
 					</view>
 				</scroll-view>
-				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn"><button class="service-item active flex1" @click="confirmEntrustOk">我要申请</button></view>
+				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn">
+					<button class="service-item active button " @click="confirmEntrustOk">我要申请</button>
+					</view>
 			</order-popup-common>
 		</uni-popup>
 		<!-- 债券投资合同组件-->
 		<order-invest-contact ref="investContact"></order-invest-contact>
+		<order-return-cost ref="returnCost" :orderId="order_id"></order-return-cost>
+		
 		<!-- 打电话组件 -->
 		<order-telephone name="委托人" :phoneNumber="info.order.user_mobile" ref="telephoneClient" v-if="info.order.user_mobile"></order-telephone>
 		<order-telephone name="律师" :phoneNumber="info.order.lawyer_mobile" ref="telephoneLawyer" v-if="info.order.lawyer_mobile"></order-telephone>
@@ -298,6 +320,10 @@ export default {
 			info: {
 				order: {}
 			},
+			result: [
+				'checkValue1',
+				'checkValue2'
+						],
 			order_id: '',
 			reason: '',
 			isLinkInvestor: false, //是否联系投资人
@@ -313,6 +339,18 @@ export default {
 		}
 	},
 	methods: {
+		async jumpToWeb() {
+			let url = this.info.order.zhaiquan_hetong
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				phone.loadOffice(url);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('loadOffice', url, data => {});
+			}
+		},
+		resultChange(e) {
+			this.result = e.detail.value;
+		},
 		async init() {
 			let formData = {
 				id: this.order_id,
@@ -400,7 +438,20 @@ export default {
 </script>
 
 <style lang="scss">
+	.button {
+		width: 180px ;
+		height: 38px;
+		margin: auto ;
+		margin-bottom: 10px;
+	}
 .content {
 	padding-bottom: 30rpx;
 }
+.check-img {
+		width: 15px;
+		height: 15px;
+		// margin-left: 7.5px;
+		margin-top:4px;
+		margin-right: 5px;
+	}
 </style>

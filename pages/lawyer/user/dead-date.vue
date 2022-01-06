@@ -35,6 +35,8 @@ export default {
 			let res = this.date;
 			let pages = getCurrentPages();
 			let prePage = pages[pages.length - 2];
+			// console.log(res);
+			// console.log(prePage.$vm);
 			prePage.$vm.onDatetimeChange(res);
 			uni.navigateBack({
 				delta: 1

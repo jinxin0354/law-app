@@ -17,6 +17,7 @@ export default {
 @import 'uview-ui/index.scss';
 @import '@/common/style/common.scss';
 @import '@/static/font/iconfont.css';
+@import '@/common/style/layout.css';
 
 // 设置scroolview滚动条
 ::-webkit-scrollbar {

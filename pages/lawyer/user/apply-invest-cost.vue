@@ -2,119 +2,146 @@
 	<view class="content">
 		<view class="od-box paddingbottom0">
 			<view class="od-item">
-				<view class="item-tip">付款人</view>
-				<view class="item-right"><view class="item-txt">投资人</view></view>
+				<view class="item-tip font-15" style="line-height: 30px;">付款人</view>
+				<view class="item-right">
+					<view class="item-txt font-15" style="margin-left: 32px;">投资人</view>
+				</view>
 			</view>
-			<view class="od-item">
-				<view class="item-tip require">申请事项</view>
+			<view class="od-item" style="margin-top: 19px;">
+				<view class="item-tip require font-15">申请事项</view>
 				<view class="item-right">
 					<view class="why-box">
 						<checkbox-group @change="resultChange">
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue1" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												案件受理费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" /></view>
+							<view class="flex flex-horizontal">
+								<label>
+									<view class="why-checkbox">
+										<view class="checkbox-left  ">
+											<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" checked="" />
 										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">缴纳截止日</view>
-											<view class="arrow-right">
-												<input class="why-ipt flex1" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
+									</view>
+								</label>
+								<view class="checkbox-right">
+									<view class="flex flex-vertical">
+										<view class="flex flex-horizontal flex-center-v">
+											<text class="font-15">案件受理费</text>
+											<text style="margin-left: 10px;">￥</text>
+											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
+												<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
 											</view>
 										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">案件受理费通知书</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" placeholder-class="placeholder" disabled="" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
-											</view>
+										<view class="flex flex-horizontal flex-center-v" style="margin-top: 7.5px;">
+											<text>缴纳截止日</text>
+											<image src="@/static/img/icon/calendar.png" mode="aspectFit" style="width: 15px;height: 15px;margin-left: 10px;"></image>
+											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
+										</view>
+										<text  style="margin-top: 7.5px;">案件受理费通知书 <text style="color: red;">*</text></text>
+										<image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+									</view>
+								</view>
+							</view>
+							
+							<view class="flex flex-horizontal" style="margin-top: 10px;">
+								<label>
+									<view class="why-checkbox">
+										<view class="checkbox-left">
+											<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue2" checked="" />
+										</view>
+									
+									</view>
+								</label>
+								<view class="flex flex-vertical">
+									<view class="flex flex-horizontal flex-center-v">
+										<text class="font-15">公告费</text>
+										<text style="margin-left: 10px;">￥</text>
+										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
+											<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" />
+										</view>
+									</view>
+									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
+									<image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+								</view>
+							</view>
+							<view class="flex flex-horizontal" style="margin-top: 10px;">
+								<label>
+									<view class="why-checkbox">
+										<view class="checkbox-left">
+											<image v-if="result.indexOf('checkValue3') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue3" checked="" />
+										</view>
+									</view>
+								</label>
+								<view class="flex flex-vertical">
+									<view class="flex flex-horizontal flex-center-v">
+										<text class="font-15">异地被告身份查询费</text>
+										<text style="margin-left: 10px;">￥</text>
+										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
+											<input class="why-ipt" type="number" v-model="case_money" placeholder="限额600元" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
-							</label>
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue2" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												公告费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" /></view>
+							</view>
+							<view class="flex flex-horizontal" style="margin-top: 10px;" v-if="apply_lawyer == 0">
+								<label >
+									<view class="why-checkbox">
+										<view class="checkbox-left">
+											<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue4"  checked="" />
 										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">公告费缴费通知书</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
+										
+									</view>
+								</label>
+								<view class="checkbox-right">
+									<view class="flex flex-vertical">
+										<view class="flex flex-horizontal flex-center-v">
+											<text class="font-15">律师费用</text>
+											<text style="margin-left: 10px;">￥</text>
+											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
+												<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" />
 											</view>
 										</view>
 									</view>
-								</view>
-							</label>
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue3" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												异地被告身份查询费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" /></view>
+									<view class="checkbox-item">
+										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
+										<view class="arrow-right" @click="jump('/pages/client/order/upload')">
+											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
+											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
+											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
+										</view>
+									</view>
+									<view class="checkbox-item">
+										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
+										<view class="arrow-right" @click="jump('/pages/client/order/upload')">
+											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
+											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
+											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
+										</view>
+									</view>
+									<view class="checkbox-item">
+										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
+										<view class="arrow-right" @click="jump('/pages/client/order/upload')">
+											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
+											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
+											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
+										</view>
+									</view>
+									<view class="checkbox-item">
+										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
+										<view class="arrow-right" @click="jump('/pages/client/order/upload')">
+											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
+											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
+											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
 										</view>
 									</view>
 								</view>
-							</label>
-							<label v-if="apply_lawyer == 0">
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue4" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												律师费用
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" placeholder-class="placeholder" /></view>
-										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">委托代理合同</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
-											</view>
-										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">委托人主体资料</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
-											</view>
-										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">起诉状（委托人已签章）</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
-											</view>
-										</view>
-										<view class="checkbox-item">
-											<view class="why-txt">立案受理通知书</view>
-											<view class="arrow-right" @click="jump('/pages/client/order/upload')">
-												<input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" />
-												<image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image>
-											</view>
-										</view>
-									</view>
-								</view>
-							</label>
+							</view>
+							
+							
 						</checkbox-group>
 					</view>
 				</view>
@@ -166,7 +193,11 @@ export default {
 			main: [],
 			indictment: [],
 			note: [],
-			result: [],
+			result: ['checkValue1',
+			'checkValue2',
+			'checkValue3',
+			'checkValue4'
+			],
 			investor_mobile: '',
 			apply_lawyer: 0 //是否申请投资费用1申请  0未申请过律师费
 		};
@@ -183,8 +214,13 @@ export default {
 		}
 	},
 	methods: {
+		onDatetimeChange(e){
+			this.case_time = e
+		},
 		resultChange(e) {
 			this.result = e.detail.value;
+			console.log(this.result)
+			console.log(this.result.indexOf('checkValue2'))
 		},
 		async confirm() {
 			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
@@ -232,7 +268,17 @@ export default {
 };
 </script>
 
+
 <style lang="scss">
+	.check-img {
+		width: 15px;
+		height: 15px;
+		margin-left: 7.5px;
+		margin-top:4px;
+	}
+	.why-txt {
+		margin-top: 7.5px;
+	}
 .content {
 	padding-bottom: 150rpx;
 }

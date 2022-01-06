@@ -1,0 +1,202 @@
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+/*弹性布局*/
+.flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/*垂直*/
+.flex-vertical {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+/*水平*/
+.flex-horizontal {
+  -webkit-box-orient: horizontal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -moz-box-orient: horizontal;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.flex-2 {
+  -webkit-box-flex: 3;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+  -webkit-flex-shrink: 0;
+}
+
+/*居中*/
+.flex-center {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+/*垂直居中||水平居中*/
+.flex-center-v {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-self-end {
+  align-self: flex-end;
+  -webkit-align-self: flex-end;
+
+}
+
+.flex-self-start {
+  align-self: flex-start;
+  -webkit-align-self: flex-start;
+}
+
+.flex-self-center {
+  align-self: center;
+  -webkit-align-self: center;
+
+}
+
+.flex-pack-center {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.flex-pack-justify {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.flex-start {
+  align-items: flex-start;
+  -webkit-align-items: flex-start;
+  align-content: flex-start;
+  justify-content:flex-start;
+  -webkit-justify-content: flex-start;
+}
+
+.flex-end {
+  align-items: flex-end;
+  -webkit-align-items: flex-end;
+  align-content: flex-end;
+  justify-content:flex-end;
+  -webkit-justify-content: flex-end;
+}
+
+/*固定*/
+.fixed {
+  position: fixed;
+  z-index: 99999;
+}
+
+/*固定大小*/
+.border-box {
+  -moz-box-sizing: border-box; /*Firefox3.5+*/
+  -webkit-box-sizing: border-box; /*Safari3.2+*/
+  -o-box-sizing: border-box; /*Opera9.6*/
+  -ms-box-sizing: border-box; /*IE8*/
+  box-sizing: border-box; /*W3C标准(IE9+，Safari5.1+,Chrome10.0+,Opera10.6+都符合box-sizing的w3c标准语法)*/
+}
+
+/*
+* ==================================
+* COMMON LAYOUT FOR ALL WEB END
+* ==================================
+*/
+
+/*
+* ==================================
+* COMMON SIZE FOR ALL WEB START
+* ==================================
+*/
+.match-parent-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.one-third-width {
+  width: 33.3%;
+}
+
+.one-fourth-width {
+  width: 25%;
+}
+
+.one-tenth-width {
+  width: 10%;
+}
+
+.match-parent-height {
+  height: 100%;
+}
+
+.half-height {
+  height: 50%;
+}
+
+.one-third-height {
+  height: 33.3%;
+}
+
+.one-fourth-height {
+  height: 25%;
+}
+
+.one-tenth-height {
+  height: 10%;
+}
+
+.font-15 {
+	font-size: 15px;
+}
+
+.font-14 {
+	font-size: 14px;
+}
+
+.font-13 {
+	font-size: 13px;
+}
