@@ -36,9 +36,9 @@
 											<image src="@/static/img/icon/calendar.png" mode="aspectFit" style="width: 15px;height: 15px;margin-left: 10px;"></image>
 											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
 										</view>
-										<text  style="margin-top: 7.5px;">案件受理费通知书 <text style="color: red;">*</text></text>
-										<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
-										<image @click="$refs.uploadAdd.$refs.popupAdd.open()" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
+										<image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+										<!-- <image @click="$refs.uploadAdd.$refs.popupAdd.open()" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 									</view>
 								</view>
 							</view>
@@ -59,7 +59,7 @@
 										<text class="font-15">公告费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" />
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
@@ -82,7 +82,7 @@
 										<text class="font-15">异地被告身份查询费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" v-model="case_money" placeholder="限额600元" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -100,10 +100,10 @@
 								<view class="checkbox-right">
 									<view class="flex flex-vertical">
 										<view class="flex flex-horizontal flex-center-v">
-											<text class="font-15">律师费用</text>
+											<text class="font-15">律师费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" />
+												<input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 											</view>
 										</view>
 									</view>
@@ -191,7 +191,7 @@ export default {
 			announce_money: '',
 			announce: [],
 			enquire: '',
-			lawyer: '',
+			lawyer: '1500',
 			contract: [],
 			main: [],
 			indictment: [],

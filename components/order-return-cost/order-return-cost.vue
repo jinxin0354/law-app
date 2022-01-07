@@ -1,6 +1,6 @@
 <template>
 	<uni-popup ref="returnCost" type="center">
-		<order-popup-common title="投资人收件信息" @closePop="closePop('returnCost')">
+		<order-popup-common title="结算投资人奖励" @closePop="closePop('returnCost')">
 			<view slot="popup-con" >
 				<view class="flex flex-vertical" style="padding: 0 16px;">
 					<view class="flex flex-horizontal flex-center-v">
@@ -11,7 +11,7 @@
 						<text class="font-15">投资人收益金额<text style="color: red;">*</text></text>
 						<text style="margin-left: 10px;">¥</text>
 						<view class="input-b">
-							<input class="why-ipt" type="number" v-model="money" placeholder="请输入" placeholder-class="placeholder" />
+							<input class="why-ipt" type="number" v-model="money" placeholder="投资人此次收到多少钱" placeholder-class="placeholder" />
 						</view>
 					</view>
 					<text class="font-15" style="margin-top: 30px;">委托人回款的银行流水<text style="color: red;">*</text></text>
@@ -26,11 +26,11 @@
 						<text class="font-15">您的奖励金额<text style="color: red;">*</text></text>
 						<text style="margin-left: 10px;">¥</text>
 						<view  class="input-b">
-							<input class="why-ipt font-13" type="number" v-model="price" placeholder="投资人收益金额x10%" placeholder-class="placeholder" />
+							<input class="why-ipt font-13" type="number" v-model="price" disabled="" placeholder="投资人收益金额x10%" placeholder-class="placeholder" />
 						</view>
 					</view>
 					<text class="flex flex-self-center" style="margin-top: 30px;">我已与投资人核对了奖励金额</text>
-					<button class="ok-btn button"  @click="confirm">
+					<button class="ok-btn button flex flex-center"  @click="confirm">
 						我要结算
 					</button>
 				</view>
@@ -60,6 +60,8 @@ export default {
 		money(){
 			if(this.money){
 				this.price = this.money * 0.1
+			} else {
+				this.price = ""
 			}
 		}
 	},
@@ -104,7 +106,7 @@ export default {
 	}
 	.input-b{
 		border-bottom: 1px solid #000000;
-		width: 140px;
+		width: 160px;
 	}
 </style>
 

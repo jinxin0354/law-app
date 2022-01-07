@@ -70,8 +70,9 @@
 							<view class="item-right">
 								<order-right-textarea v-model="requirement" ref="myrequire"
 									placeholderTxt="请填写委托人要律师帮Ta实现什么结果" :requirement="requirement"
-									:key="new Date().getTime()"></order-right-textarea>
+									></order-right-textarea>
 							</view>
+							<!-- :key="new Date().getTime()" -->
 						</view>
 						<view class="case-title">委托人</view>
 						<view class="od-item">
@@ -204,8 +205,8 @@
 			}
 		},
 		onShow() {
+			console.log('show');
 			this.init();
-
 		},
 		methods: {
 			async init() {

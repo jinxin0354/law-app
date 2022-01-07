@@ -1,71 +1,89 @@
 <template>
 	<view class="content">
 		<view class="od-box paddingbottom0">
-			<view class="od-item">
+			<view class="od-item flex flex-horizontal flex-center-v">
 				<view class="item-tip">收款人</view>
 				<view class="item-right"><view class="item-txt">投资人</view></view>
 			</view>
 			<view class="od-item">
-				<view class="item-tip require">申请事项</view>
+				<view class="item-tip" style="margin-top: 5px;">退回事项<text style="color: red;">*</text></view>
 				<view class="item-right">
 					<view class="why-box">
 						<checkbox-group @change="resultChange">
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue1" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												案件受理费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="case_money" placeholder="请输入" placeholder-class="placeholder" /></view>
+							<view class="flex flex-horizontal flex-center-v">
+								<label>
+									<view class="flex flex-horizontal flex-center-v" >
+										<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" checked="" />
+									</view>
+								</label>
+								<view class="flex flex-horizontal flex-center-v" style="margin-left: 15px;">
+									<view class="flex flex-horizontal flex-center-v flex-1" style="white-space:nowrap;" >
+										案件受理费
+										<text>￥</text>
+									</view>
+									<view class="input-border">
+										<input class="why-ipt" type="number" v-model="case_money" :disabled="result.indexOf('checkValue1') != -1" placeholder="请输入" placeholder-class="placeholder" />
+									</view>
+								</view>
+							</view>
+							<view class="flex flex-horizontal flex-center-v item">
+								<label>
+									<view class="flex flex-horizontal flex-center-v">
+										<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue2" checked="false" />
+									</view>
+								</label>
+								<view class="flex flex-horizontal flex-center-v" style="margin-left: 15px;">
+									<view class="why-txt">
+										公告费
+										<text>￥</text>
+									</view>
+									<view class="input-border"><input class="why-ipt" type="number" v-model="announce_money" :disabled="result.indexOf('checkValue2') != -1" placeholder="请输入" placeholder-class="placeholder" /></view>
+								</view>
+							</view>
+							<view class="flex flex-horizontal flex-center-v item">
+								<label>
+									<view class="flex flex-horizontal flex-center-v">
+										<image v-if="result.indexOf('checkValue3') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue3"  checked="false" />
+									</view>
+								</label>
+								<view class="checkbox-right flex flex-horizontal">
+									<view class=" flex flex-horizontal flex-center-v flex-1"  style="margin-left: 15px;">
+										<view class="why-txt" style="white-space:nowrap;">
+											异地被告身份查询费
+											<text>￥</text>
+										</view>
+										<view class="input-border">
+											<input class="why-ipt" type="number" v-model="enquire" placeholder="请输入" :disabled="result.indexOf('checkValue3') != -1" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
-							</label>
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue2" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												公告费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" /></view>
+							</view>
+							<view class="flex flex-horizontal flex-center-v item">
+								<label>
+									<view class="flex flex-horizontal flex-center-v">
+									<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
+										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" disabled=""  value="checkValue4"  checked="ture" />
+									</view>
+								</label>
+								<view class="checkbox-right flex flex-horizontal">
+									<view class=" flex flex-horizontal flex-center-v flex-1"  style="margin-left: 15px;">
+										<view class="why-txt" style="white-space:nowrap;">
+											律师费用
+											<text>￥</text>
+										</view>
+										<view class="input-border">
+											<input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
-							</label>
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue3" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												异地被告身份查询费
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="enquire" placeholder="请输入" placeholder-class="placeholder" /></view>
-										</view>
-									</view>
-								</view>
-							</label>
-							<label>
-								<view class="why-checkbox">
-									<view class="checkbox-left"><checkbox color="#FFC801" style="transform: scale(0.7);" value="checkValue4" disabled="" checked="" /></view>
-									<view class="checkbox-right">
-										<view class="checkbox-item">
-											<view class="why-txt">
-												律师费用
-												<text>￥</text>
-											</view>
-											<view class="why-ipt-box"><input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" placeholder-class="placeholder" /></view>
-										</view>
-									</view>
-								</view>
-							</label>
+							</view>
 						</checkbox-group>
 					</view>
 				</view>
@@ -98,8 +116,13 @@ export default {
 			case_money: '',
 			announce_money: '',
 			enquire: '',
-			lawyer: '',
-			result: []
+			lawyer: '1500',
+			result: [
+				'checkValue1',
+				'checkValue2',
+				'checkValue3',
+				'checkValue4'
+			]
 		};
 	},
 	created() {
@@ -175,6 +198,22 @@ export default {
 </script>
 
 <style lang="scss">
+	.item {
+		height: 30px;
+	}
+	.input-border {
+		border-bottom: 1rpx solid #eee;
+		vertical-align: bottom;
+		margin-left: 20rpx;
+		padding-bottom: 4rpx;
+	}
+	
+	.check-img {
+		width: 15px;
+		height: 15px;
+		margin-left: 7.5px;
+		margin-top:4px;
+	}
 .content {
 	padding-bottom: 150rpx;
 }

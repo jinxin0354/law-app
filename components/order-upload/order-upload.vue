@@ -30,6 +30,12 @@ export default {
 			isShowUpFile: true ,//IOS 不能上传文件，不显示此按钮
 		};
 	},
+	onLoad() {
+		const nav = navigator.userAgent;
+		if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+			this.isShowUpFile = false;
+		}
+	},
 	created() {
 		const nav = navigator.userAgent;
 		if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
@@ -39,6 +45,7 @@ export default {
 	methods: {
 		// 打开摄像头
 		camera() {
+			const nav = navigator.userAgent;
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.camera();
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {

@@ -273,19 +273,19 @@
 							</label>
 						</checkbox-group> -->
 						<view class="dialog-tip">解除原因</view>
-						<textarea placeholder="请输入" :focus="true" placeholder-class="placeholder" class="dialog-textarea" v-model="reason" style="width: calc(100% - 40rpx);" />
+						<textarea placeholder="请输入解除事由" :focus="true" placeholder-class="placeholder" class="dialog-textarea" v-model="reason" style="width: calc(100% - 40rpx);" />
 						<checkbox-group  @change="resultChange" style="margin-top: 10px;">
-							<label class="ck-item">
+							<label class="ck-item flex-center-v">
 								<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 								<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" :checked="true" :disabled="true" />
+								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" :checked="false" :disabled="false" />
 								我已与委托人、投资人确认解除委托。
 							</label>
-							<label class="ck-item">
+							<label class="ck-item flex-center-v">
 								<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 								<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue2" :checked="true" :disabled="true" />
-								我已将全部投资费用原路退回给投资人
+								<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue2" :checked="false" :disabled="false" />
+								我已将全部投资费用原路退回给投资人。
 							</label>
 						</checkbox-group>
 					</view>
@@ -320,10 +320,7 @@ export default {
 			info: {
 				order: {}
 			},
-			result: [
-				'checkValue1',
-				'checkValue2'
-						],
+			result: [],
 			order_id: '',
 			reason: '',
 			isLinkInvestor: false, //是否联系投资人
@@ -451,7 +448,7 @@ export default {
 		width: 15px;
 		height: 15px;
 		// margin-left: 7.5px;
-		margin-top:4px;
+		// margin-top:4px;
 		margin-right: 5px;
 	}
 </style>
