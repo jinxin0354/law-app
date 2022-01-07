@@ -121,7 +121,11 @@
 
 	.od-box .od-item .item-tip {
 		font-size: 26rpx;
-		width: 180rpx;
+		width: 200rpx;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 20rpx;
 	}
 
 	.service-list {
