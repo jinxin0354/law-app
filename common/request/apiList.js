@@ -786,6 +786,12 @@ export default {
 			auth: false,
 			method: 'POST',
 			//点赞转发收藏
+		},
+		lawyerLang: {
+			url: '/api/lawyer/lang',
+			auth: false,
+			method: 'POST',
+            // 律师语言列表
 		}
 	}
 };
