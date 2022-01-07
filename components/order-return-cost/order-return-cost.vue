@@ -15,11 +15,11 @@
 						</view>
 					</view>
 					<text class="font-15" style="margin-top: 30px;">委托人回款的银行流水<text style="color: red;">*</text></text>
-					<view class="arrow-right" style="margin-top: 10px;" @click="jump('/pages/client/order/upload')">
+					<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
 						<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
 					</view>
 					<text class="font-15" style="margin-top: 30px;">委托人向投资人支付投资收益的付款记录<text style="color: red;">*</text></text>
-					<view class="arrow-right" style="margin-top: 10px;" @click="jump('/pages/client/order/upload')">
+					<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
 						<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
 					</view>
 					<view class="flex flex-horizontal flex-center-v" style="margin-top: 24px;">
@@ -36,6 +36,9 @@
 				</view>
 			</view>
 		</order-popup-common>
+		
+		<order-upload ref="uploadAdd" @fileResult="fileResult"></order-upload>
+		
 	</uni-popup>
 </template>
 
@@ -61,6 +64,9 @@ export default {
 		}
 	},
 	methods: {
+		fileResult(e) {
+			console.log('result',e);
+		},
 		async confirm(){
 			// TODO银行流水和付款记录
 			let formData = {
