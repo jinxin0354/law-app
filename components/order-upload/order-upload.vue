@@ -28,6 +28,8 @@ export default {
 		return {
 			source:[],
 			isShowUpFile: true ,//IOS 不能上传文件，不显示此按钮
+			sourceFile: [],
+			
 		};
 	},
 	onLoad() {
@@ -37,12 +39,32 @@ export default {
 		}
 	},
 	created() {
+		window.fileOk = this.fileOk;
+		window.photoOk = this.photoOk;
+		window.sourceOk = this.sourceOk;
 		const nav = navigator.userAgent;
 		if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 			this.isShowUpFile = false;
 		}
 	},
 	methods: {
+		//接收文件
+		fileOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			this.sourceFile = this.sourceFile.concat(tempList);
+		},
+		//接收图片
+		photoOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+		
+			this.source = this.source.concat(tempList);
+		},
 		// 打开摄像头
 		camera() {
 			const nav = navigator.userAgent;

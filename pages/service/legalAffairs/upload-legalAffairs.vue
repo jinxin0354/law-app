@@ -210,10 +210,12 @@
 				}
 			},
 			getDis() {
+				return
 				let params = {
 					token: uni.getStorageSync('token')
 				};
 				this.$api('index.fawudetail', params).then(res => {
+					
 					if (res.data.is_six == 2) {
 						this.isDis = true;
 					}

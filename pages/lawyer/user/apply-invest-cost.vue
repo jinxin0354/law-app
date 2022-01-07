@@ -28,7 +28,7 @@
 											<text class="font-15">案件受理费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" type="number" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
+												<input class="why-ipt" type="number" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
 											</view>
 										</view>
 										<view class="flex flex-horizontal flex-center-v" style="margin-top: 7.5px;">
@@ -37,12 +37,11 @@
 											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
 										</view>
 										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
-										<image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
-										<!-- <image @click="$refs.uploadAdd.$refs.popupAdd.open()" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
+										<!-- <image @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
+										<image @click="addPhoto(1)" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
 									</view>
 								</view>
 							</view>
-							
 							<view class="flex flex-horizontal" style="margin-top: 10px;">
 								<label>
 									<view class="why-checkbox">
@@ -59,11 +58,11 @@
 										<text class="font-15">公告费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" :disabled="result.indexOf('checkValue2') == -1" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" />
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
-									<image @click="$refs.uploadAdd.$refs.popupAdd.open()" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+									<image @click="addPhoto(2)" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
 									<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 								</view>
 							</view>
@@ -82,7 +81,7 @@
 										<text class="font-15">异地被告身份查询费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" :disabled="result.indexOf('checkValue3') == -1" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -103,13 +102,13 @@
 											<text class="font-15">律师费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
+												<input class="why-ipt" type="number"  v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 											</view>
 										</view>
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="$refs.uploadAdd.$refs.popupAdd.open()">
+										<view class="arrow-right"   @click="addPhoto(3)">
 											
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
@@ -118,7 +117,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="$refs.uploadAdd.$refs.popupAdd.open()">
+										<view class="arrow-right"   @click="addPhoto(4)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
@@ -126,7 +125,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="$refs.uploadAdd.$refs.popupAdd.open()">
+										<view class="arrow-right"   @click="addPhoto(5)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
@@ -134,7 +133,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="$refs.uploadAdd.$refs.popupAdd.open()">
+										<view class="arrow-right"   @click="addPhoto(6)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
@@ -190,12 +189,14 @@ export default {
 			case: [],
 			announce_money: '',
 			announce: [],
+			source:[],
 			enquire: '',
 			lawyer: '1500',
 			contract: [],
 			main: [],
 			indictment: [],
 			note: [],
+			addType: 1,
 			result: ['checkValue1',
 			'checkValue2',
 			'checkValue3',
@@ -217,6 +218,10 @@ export default {
 		}
 	},
 	methods: {
+		addPhoto(e) {
+			this.addType = e
+			this.$refs.uploadAdd.$refs.popupAdd.open()
+		},
 		onDatetimeChange(e){
 			this.case_time = e
 		},
