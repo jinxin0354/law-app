@@ -501,13 +501,26 @@
                     </view>
                 </view>
                 <view class="od-item marginbottom20">
+                    <view class="item-tip">
+                            排除律师
+                    </view>
+                    <view class="item-right" @click="lawyerSelectClick()">
+                    	<view class="service-list inline-list">
+                    		<view class="service-item active">{{ remove_userids.length }}个</view>
+                    	</view>
+                    	<view class="item-nav" @click="$refs.popupServiceStage.open()">
+                    		<image src="@/static/img/right.png" mode="aspectFit"></image>
+                    	</view>
+                    </view>
+                </view>
+                <view class="od-item marginbottom20">
                 	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.stagePopup.open()">服务阶段<image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.popupServiceStage.open()">
                 		<view class="service-list inline-list">
                 			<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
                 		</view>
-                		<view class="item-nav" @click="$refs.popupServiceStage.open()">
+                		<view class="item-nav">
                 			<image src="@/static/img/right.png" mode="aspectFit"></image>
                 		</view>
                 	</view>
@@ -541,6 +554,9 @@
                     <view class="service-list inline-list">
                     	<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{offer}}</view>
                     </view>
+                    <view class="item-nav">
+                    	<image src="@/static/img/right.png" mode="aspectFit"></image>
+                    </view>
                 	</view>
                 </view>
                 <!-- <view class="od-item marginbottom20">
@@ -555,7 +571,7 @@
                 		<view class="item-nav"></view>
                 	</view>
                 </view> -->
-                <view class="od-item">
+                <!-- <view class="od-item">
                 	<view class="item-tip">律师费用</view>
                 	<view class="item-right">
                 		<view class="fee-item flex">
@@ -583,10 +599,46 @@
                 		</view>
                 		<view class="fee-item flex">
                 			<view class="fee-tip">后期费用：</view>
-                			<!-- 千里马，无后期费用。活马和还魂马有后期费用 -->
                 			<view class="fee-right" v-if="offer == '千里马'">无</view>
                 			<view class="fee-right" v-else>{{ moneyList.length > 0 ? moneyList[0].later_money : '' }}</view>
                 		</view>
+                	</view>
+                </view> -->
+                <view class="od-item marginbottom20">
+                	<view class="item-tip">
+                        <view class="center-box">
+                            付款时间
+                            <view class="required-box" v-if="offer == '千里马'">
+                                *   
+                            </view>
+                        </view>
+                    </view>
+                	<view class="item-right" @click="offer == '千里马' ? $refs.priceTypePopup.open() : ''">
+                    <view class="service-list inline-list">
+                    	<view class="service-item active" style="width: 60%">{{price_type_text}}</view>
+                    </view>
+                    <view class="item-nav" v-if="offer == '千里马'">
+                    	<image src="@/static/img/right.png" mode="aspectFit"></image>
+                    </view>
+                	</view>
+                </view>
+                <view class="od-item marginbottom20">
+                	<view class="item-tip">
+                        <view class="center-box">
+                            付款金额
+                        </view>
+                    </view>
+                	<view class="item-right" style="height:60rpx">
+                        <view class="service-list inline-list" v-if="offer == '千里马'" style="color:red;font-weight: 700;">
+                            ￥{{ money }}
+                        </view>
+                        <view class="service-list inline-list" v-if="offer == '活马'" style="color:red;font-weight: 700;">
+                            前期费用：{{money}}(下单时付)</br>
+                            后期费用：按律师帮您回收款物金额的{{ later_money }}计算
+                        </view>
+                        <view class="service-list inline-list" v-if="offer == '还魂马'" style="color:red;font-weight: 700;">
+                            按律师帮您回收款物金额的{{ later_money }}计算
+                        </view>
                 	</view>
                 </view>
                 <view class="od-item marginbottom20" v-if="bearFees == '投资人支付(不用还)'">
@@ -603,10 +655,32 @@
                 <order-user-coupon :info="info" v-if="Object.keys(info.product).length > 0" @getCoupon="getCoupon"></order-user-coupon>
                 <!-- 付款方式组件 -->
                 <!-- 选千里马-先用后付或还魂马时，付费方式字段隐藏 -->
-                <template v-if="price_type_text != '先用后付 无忧付' && offer != '还魂马'">
+                <!-- <template v-if="price_type_text != '先用后付 无忧付' && offer != '还魂马'">
                 	<order-item-pay-method ref="orderItemPayMethod" :info="info" v-if="Object.keys(info.product).length > 0"></order-item-pay-method>
+                </template> -->
+                <template v-if="price_type_text != '先用后付 无忧付' && offer != '还魂马'">
+                    <view class="od-item marginbottom20">
+                    	<view class="item-tip"><view class="center-box">
+                                付款方式
+                                <view class="required-box">
+                                    *   
+                                </view></view>
+                            </view>
+                    	<view class="item-right" @click="$refs.playTypePopop.open()">
+                        <view class="service-list inline-list">
+                            <view v-if="pay_type == '微信'" class="service-item active" style="width: calc((100% - 50rpx) / 2)"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon1.png" mode="aspectFit"></image>{{pay_type}}</view>
+                            <view v-if="pay_type == '支付宝'" class="service-item active" style="width: calc((100% - 50rpx) / 2)"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon2.png" mode="aspectFit"></image>{{pay_type}}</view>
+                            <view v-if="pay_type == '余额'" class="service-item active" style="width: calc((100% - 50rpx) / 2)"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon3.png" mode="aspectFit"></image>{{pay_type}}
+                            </view>
+                            <view v-if="pay_type == '朋友代付'" class="service-item active" style="width: calc((100% - 50rpx) / 2)"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon4.png" mode="aspectFit"></image>{{pay_type}}</view>
+                        </view>
+                        <view class="item-nav">
+                        	<image src="@/static/img/right.png" mode="aspectFit"></image>
+                        </view>
+                    	</view>
+                    </view>
                 </template>
-                <view class="od-item">
+                <view class="od-item marginbottom20">
                 	<view class="item-tip">项目资料</view>
                 	<view class="item-right" @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })">
                 		<view class="item-txt gray">您手上有的资料，都可上传</view>
@@ -614,7 +688,7 @@
                 		<view class="item-nav"><image src="@/static/img/right.png" mode="aspectFit"></image></view>
                 	</view>
                 </view>
-                <view class="od-item">
+                <view class="od-item marginbottom20">
                 	<view class="item-tip">我的要求</view>
                 	<view class="item-right">
                 		<order-right-textarea ref="myrequire"></order-right-textarea>
@@ -1396,6 +1470,117 @@
             </view>
             </view>
         </uni-popup>
+        <uni-popup ref="removeUseridsSelectpopup" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">选择排除律师</view>
+            		<view class="title-close" @click="closePop('removeUseridsSelectpopup')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+                <view class="remark-box">
+                    您不想让哪些律师/哪个律所看到您的订单
+                </view>
+                <view class="select-box">
+                       <input class="input-box" placeholder-class="input-placeholder-box" v-model="keyword" confirm-type='search' @confirm='keywordConfirm' type="text" placeholder="请输入律师或律所名称" />
+                       <view class="select-all-box" @click="selectAll">
+                           全选
+                       </view>
+                </view>
+                <view class="bot-con">
+                    <view class="lawyer-con" v-for="(item,index) in removeUserData" :key='index' @click="lawyerItemClick(item)">
+                        <view class="lawyer-left">
+                            <view class="image-wrapper"><image :src="item.lawyer_avatar" mode="widthFix"></image></view>
+                        </view>
+                        <view class="lawyer-right">
+                            <view class="lawyer-name">
+                                <view class="name-left">{{ item.realname}}</view>
+                                <view class="title-year">
+                                    <view class="year-img"><image src="@/static/img/lawyer-list-icon5.png" mode="aspectFit"></image></view>
+                                    <view class="year-num">执业{{ item.years }}年</view>
+                                </view>
+                                <view class="name-right">
+                                    <view class="image-wrapper" v-if="userSelectData.includes(item.id)"><image src="@/static/img/pitch-on-icon.png" mode="aspectFit"></image></view>
+                                    <view class="image-wrapper" v-else><image src="@/static/img/un-pitch-on-icon.png" mode="aspectFit"></image></view>
+                                </view>
+                            </view>
+                            <view class="lawyer-item">
+                                <view class="item-left">
+                                    <view class="image-wrapper"><image src="@/static/img/person.png" mode="aspectFit"></image></view>
+                                </view>
+                                <view class="item-txt">
+                                    <text class="item-txt">{{ item.area_text }}</text>
+                                </view>
+                            </view>
+                            <view class="lawyer-item">
+                                <view class="item-left">
+                                    <view class="image-wrapper"><image src="@/static/img/locat.png" mode="aspectFit"></image></view>
+                                </view>
+                                <view class="item-txt">{{ item.address_text }}</view>
+                            </view>
+                            <view class="lawyer-item">
+                                <view class="item-left">
+                                    <view class="image-wrapper"><image src="@/static/img/address.png" mode="aspectFit"></image></view>
+                                </view>
+                                <view class="item-txt">{{ item.lawyer }}</view>
+                            </view>
+                            <view class="lawyer-item">
+                                <view class="item-left">
+                                    <view class="image-wrapper"><image src="@/static/img/code.png" mode="aspectFit"></image></view>
+                                </view>
+                                <view class="item-txt">执业证号:{{ item.code }}</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="bot-save">
+                    <view class="save-box" @click="lawyerSaveClick">确定</view>
+                </view>
+            </view>
+        </uni-popup>
+        <uni-popup ref="priceTypePopup" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">选择付款时间</view>
+            		<view class="title-close" @click="closePop('priceTypePopup')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+            <view class="bot-select-con">
+                <view v-for="(item,index) in moneyList" :key='index' :class="price_type_text == item.price_type_text ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="priceSelectClick(item)" style="position: relative;">{{item.price_type_text }}
+                    <image v-if="item.price_type_text == '先用后付 无忧付'" class="noback" src="@/static/img/order-noback2.png" mode="aspectFit"></image>
+                    <image v-if="item.price_type_text == '边用边付 轻松付'" class="noback" src="@/static/img/order-noback3.png" mode="aspectFit"></image>
+                </view>
+            </view>
+            </view>
+        </uni-popup>
+        <uni-popup ref="playTypePopop" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">选择付款方式</view>
+            		<view class="title-close" @click="closePop('playTypePopop')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+            <view class="bot-select-con">
+                <view :class="pay_type == '微信' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('微信')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon1.png" mode="aspectFit"></image>微信</view>
+                <view :class="pay_type == '支付宝' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('支付宝')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon2.png" mode="aspectFit"></image>支付宝</view>
+                <view :class="pay_type == '余额' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('余额')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon3.png" mode="aspectFit"></image>余额
+                    <view style="font-size: 20rpx;color:#C0C0C0">
+                        {{ info.money }}
+                    </view>
+                </view>
+                <view :class="pay_type == '朋友代付' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('朋友代付')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon4.png" mode="aspectFit"></image>朋友代付</view>
+            </view>
+            </view>
+        </uni-popup>
+        
         <!-- 选择地区组件 -->
         <u-picker mode="region" v-model="showArea" :params="params" :default-region="defaultRegion"
         	confirm-color="#FFC801" @confirm="regionConfirm"></u-picker>
@@ -1552,6 +1737,16 @@
                 offerData:[],//报价方式数据
                 priceTypeData:[],//费用承担
                 money_type:'',
+                removeUserData:[],//排除律师数据
+                remove_userids:[],//排除律师
+                userSelectData:[],//选中的律师
+                keyword:'',
+                later_money:'',
+                pay_type:'微信',
+                playTypeList:[{name:'微信',img:'@/static/img/pay-icon1.png'},
+                {name:'支付宝',img:'@/static/img/pay-icon2.png'},
+                {name:'余额',img:'@/static/img/pay-icon3.png'},
+                {name:'朋友代付',img:'@/static/img/pay-icon4.png'}]
             };
 		},
 		created() {
@@ -1726,6 +1921,7 @@
 				};
 				let res = await this.$api('index.product_price_name', formData);
 				this.moneyList = res.data;
+                this.later_money = res.data.length > 0 ? res.data[0].later_money : '';
 				this.money = res.data.length > 0 ? res.data[0].price : '';
 				this.price_type_text = res.data.length > 0 ? res.data[0].price_type_text : '';
 				this.sell = res.data.length > 0 ? res.data[0].sell : '';
@@ -1767,7 +1963,7 @@
 					offer_type: this.offer_type,
 					money_type: money_type ? money_type : '',
 					money: this.money,
-					pay_type: this.$refs.orderItemPayMethod ? this.$refs.orderItemPayMethod.payMethod : '', //无
+					pay_type: this.pay_type, //无
 					source: this.source,
 					requirement: this.$refs.myrequire.requirement_copy,
 					price_type: this.bearFees, // 费用承担
@@ -1805,8 +2001,7 @@
 						} else {
 							let formDataPay = {
 								order_id: this.order_id,
-								payMethod: this.$refs.orderItemPayMethod ? this.$refs.orderItemPayMethod
-									.payMethod : '',
+								payMethod: this.pay_type,
 								fen: '',
 								pay_type: 1
 							};
@@ -1831,8 +2026,7 @@
 						} else {
 							let formDataPay = {
 								order_id: this.order_id,
-								payMethod: this.$refs.orderItemPayMethod ? this.$refs.orderItemPayMethod
-									.payMethod : '',
+								payMethod: pay_type,
 								fen: '',
 								pay_type: 1
 							};
@@ -2016,6 +2210,63 @@
             offerSelectClick(item){
                 this.offer = item
                 this.closePop('offerSelectPopop')
+            },
+            // 点击选择排除律师按钮
+            lawyerSelectClick(){
+                this.$refs.removeUseridsSelectpopup.open()
+                this.userSelectData = this.remove_userids.concat()
+                this.getlawyerPage()
+            },
+            // 获取排除律师数组
+            async getlawyerPage(keyword) {
+            	let formData = {
+            		page: 1,
+            		limit: 9999,
+                    keyword:keyword,
+            		token: uni.getStorageSync('token')
+            	};
+            	let res = await this.$api('index.lawyerPage', formData);
+            	if (res.code == 1) {
+            		this.removeUserData = res.data.data || []
+            	}else{
+                    this.removeUserData = []
+                }
+            },
+            // 选择排除律师
+            lawyerItemClick(info){
+                if(this.userSelectData.includes(info.id)){
+                    console.log('取消选择')
+                     this.userSelectData.splice(this.userSelectData.findIndex(item => item === info.id), 1)
+                }else{
+                    console.log('选择')
+                    this.userSelectData.push(info.id)   
+                }
+            },
+            // 排除律师选中按钮
+            lawyerSaveClick(){
+                this.remove_userids = this.userSelectData || []
+                this.closePop('removeUseridsSelectpopup')
+            },
+            keywordConfirm(val){
+                this.getlawyerPage(val.detail.value || '')
+            },
+            // 全选
+            selectAll(){
+                this.userSelectData = this.removeUserData.map((item,index)=>{
+                    return item.id
+                })
+            },
+            // 付款时间点击选项
+            priceSelectClick(info){
+                this.product_price_id = info.id;
+                this.price_type_text = info.price_type_text;
+                this.money = info.price;//前期费用
+                this.later_money = info.later_money || ''//后期费用
+                this.closePop('priceTypePopup')
+            },
+            playTypeSelectClick(info){
+                this.pay_type = info
+                this.closePop('playTypePopop')
             }
 		}
 	};
@@ -2412,6 +2663,43 @@
     			}
     		}
     	}
+        .remark-box{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60rpx;
+            color: #777777;
+            font-size: 24rpx;
+        }
+        .select-box{
+            padding: 0rpx 40rpx;
+            height: 100rpx;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .input-box{
+                width: 500rpx;
+                height: 60rpx;
+                border: 1rpx solid #DCDCDC;
+                border-radius: 6rpx;
+                background: rgba(245, 245, 245, 0.59);
+            }
+            .input-placeholder-box{
+                margin-left: 20rpx;
+            }
+            .select-all-box{
+                width: 120rpx;
+                height: 50rpx;
+                border: 1rpx solid #F9B804;
+                color: #F9B804;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+            }
+        }
     .assistant-title-box{
         margin-left: 120rpx;
         height: 60rpx;
@@ -2565,6 +2853,82 @@
                     line-height: 80rpx;
                     border-bottom: 2rpx solid rgba(136,136,136,0.6);
                 }
+            }
+            .lawyer-con {
+                margin-bottom: 20rpx;
+            	display: flex;
+                border-radius: 30rpx;
+                border: 1rpx solid #DCDCDC;
+                padding: 10rpx 20rpx;
+                box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+            }
+            .lawyer-left {
+            	font-weight: bold;
+            	width: 100rpx;
+            	margin-right: 30rpx;
+            	.image-wrapper {
+            		width: 100rpx;
+            		height: 100rpx;
+            		border-radius: 20rpx;
+            		overflow: hidden;
+            		image {
+            			width: 100%;
+            			height: 100%;
+            		}
+            	}
+            }
+            .lawyer-right {
+            	flex: 1;
+            	.lawyer-name {
+            		display: flex;
+            		margin-bottom: 20rpx;
+            		justify-content: space-between;
+            		.name-left {
+            			font-size: 16px;
+            			font-weight: bold;
+            			margin-right: 10px;
+            		}
+            		.name-right {
+            			padding-left: 10rpx;
+            			.image-wrapper {
+            				width: 30rpx;
+            				height: 30rpx;
+            				image {
+            					vertical-align: middle;
+            					width: 100%;
+            					height: 100%;
+            				}
+            			}
+            		}
+            		.name-center {
+            			flex: 1;
+            		}
+            	}
+            	.lawyer-tip {
+            		margin-bottom: 20rpx;
+            		color: #666666;
+            		font-size: 26rpx;
+            	}
+            	.lawyer-item {
+            		margin-bottom: 10rpx;
+            		display: flex;
+            		.item-left {
+            			margin-right: 10rpx;
+            			.image-wrapper {
+            				width: 30rpx;
+            				height: 30rpx;
+            				image {
+            					width: 100%;
+            					height: 100%;
+            				}
+            			}
+            		}
+            		.item-txt {
+            			color: #aaa;
+            			font-size: 26rpx;
+            			flex: 1;
+            		}
+            	}
             }
     	}
         .bot-save{

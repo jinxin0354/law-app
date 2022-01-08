@@ -17,9 +17,9 @@
 				@click="seHeight = true"
 				:class="seHeight == true ? 'myHeight' : ''"
 			/>
-			<view class="word-num" v-if="seHeight == true">{{ txtVal }}/30</view>
+			<!-- <view class="word-num" v-if="seHeight == true">{{ txtVal }}/30</view> -->
 		</view>
-		<!-- <view class="textarea-tip">
+		 <view class="textarea-tip">
 			<view class="image-wrapper" @click="change"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
 			<view class="tip-demo" v-if="isFocus">
 				<view style="font-weight: bold; font-size: 28rpx; ">范例</view>
@@ -29,7 +29,7 @@
 				<view>我要与林志玲离婚，要抚养权，分财产</view>
 				<view>柳岩告我，要我赔偿精神损失费，没有道理，要求打赢</view>
 			</view>
-		</view> -->
+		</view> 
 	</view>
 </template>
 
