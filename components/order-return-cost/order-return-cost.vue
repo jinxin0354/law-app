@@ -16,13 +16,13 @@
 							</view>
 						</view>
 						<text class="font-15" style="margin-top: 30px;">委托人回款的银行流水<text style="color: red;">*</text></text>
-						<upload-add-list :list="lawyer_list" @change="listChange($event,'lawyer_list')"></upload-add-list>
+						<upload-add-list :list="proof" @change="listChange($event,'proof')"></upload-add-list>
 						<!-- 
 						<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
 							<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
 						</view> -->
 						<text class="font-15" style="margin-top: 30px;">委托人向投资人支付投资收益的付款记录<text style="color: red;">*</text></text>
-						<upload-add-list :list="lawyer_list" @change="listChange($event,'lawyer_list')"></upload-add-list>
+						<upload-add-list :list="image" @change="listChange($event,'image')"></upload-add-list>
 						<!-- 
 						<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
 							<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
@@ -51,10 +51,9 @@ export default {
 	data() {
 		return {
 			money: '',//收益金额
-			proof: '',//银行流水
-			image: '',//付款记录
+			proof: [],//银行流水
+			image: [],//付款记录
 			price: '',//奖励金额
-			lawyer_list: []
 		};
 	},
 	created() {
@@ -73,14 +72,21 @@ export default {
 		listChange(e,type) {
 			this[type] = e
 		},
+		getUrlParams(list) {
+			let newArr = []
+			list.filter(e=>{
+				newArr.push(e.url)
+			})
+			return newArr.join(',')
+		},
 		async confirm(){
 			// TODO银行流水和付款记录
 			let formData = {
 				id: this.orderId,
 				token: uni.getStorageSync('token'),
 				money: this.money,
-				proof:this.proof,
-				image:this.image,
+				proof: this.getUrlParams(this.proof) ,
+				image: this.getUrlParams(this.image),
 				price: this.price,
 				type:3
 			};
