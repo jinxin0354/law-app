@@ -37,8 +37,8 @@
 											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
 										</view>
 										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
+										<upload-add-list :list="case_list" @change="listChange($event,'case_list')"></upload-add-list>
 										<!-- <image @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
-										<image @click="addPhoto(1)" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
 									</view>
 								</view>
 							</view>
@@ -62,7 +62,7 @@
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
-									<image @click="addPhoto(2)" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image>
+									<upload-add-list :list="announce_list" @change="listChange($event,'announce_list')"></upload-add-list>
 									<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 								</view>
 							</view>
@@ -101,43 +101,49 @@
 										<view class="flex flex-horizontal flex-center-v">
 											<text class="font-15">律师费</text>
 											<text style="margin-left: 10px;">￥</text>
-											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
+											<view class="" style="width: 70px;">
 												<input class="why-ipt" type="number"  v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 											</view>
 										</view>
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="addPhoto(3)">
-											
+										<upload-add-list :list="contract_list" @change="listChange($event,'contract_list')"></upload-add-list>
+										<!-- <view class="arrow-right"   @click="addPhoto(3)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
-										</view>
+										<!-- </view> -->
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="addPhoto(4)">
+										<upload-add-list :list="main_list" @change="listChange($event,'main_list')"></upload-add-list>
+										
+										<!-- <view class="arrow-right"   @click="addPhoto(4)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
-										</view>
+										<!-- </view> -->
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="addPhoto(5)">
+										<upload-add-list :list="indictment_list" @change="listChange($event,'indictment_list')"></upload-add-list>
+										
+										<!-- <view class="arrow-right"   @click="addPhoto(5)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
-										</view>
+										<!-- </view> -->
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
-										<view class="arrow-right"   @click="addPhoto(6)">
+										<upload-add-list :list="note_list" @change="listChange($event,'note_list')"></upload-add-list>
+										
+										<!-- <view class="arrow-right"   @click="addPhoto(6)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
 											<!-- <image class="arrow-img" src="@/static/img/right.png" mode="aspectFit"></image> -->
-										</view>
+										<!-- </view> --> 
 									</view>
 								</view>
 							</view>
@@ -147,7 +153,6 @@
 			</view>
 		</view>
 		<view class="ok-box fixed"><button type="default" class="ok-btn" @click="confirm">我要申请</button></view>
-		<order-upload ref="uploadAdd" @fileResult="fileResult"></order-upload>
 		<!-- 超出5000弹出层 -->
 		<uni-popup ref="popupOver5000" type="dialog">
 			<uni-popup-dialog
@@ -193,6 +198,12 @@ export default {
 			enquire: '',
 			lawyer: '1500',
 			contract: [],
+			case_list:[],
+			announce_list: [],
+			contract_list: [],
+			main_list: [],
+			indictment_list: [],
+			note_list: [],
 			main: [],
 			indictment: [],
 			note: [],
@@ -218,15 +229,11 @@ export default {
 		}
 	},
 	methods: {
-		addPhoto(e) {
-			this.addType = e
-			this.$refs.uploadAdd.$refs.popupAdd.open()
+		listChange(e,type) {
+			this[type] = e
 		},
 		onDatetimeChange(e){
 			this.case_time = e
-		},
-		fileResult(e) {
-			console.log('result',e)
 		},
 		resultChange(e) {
 			this.result = e.detail.value;

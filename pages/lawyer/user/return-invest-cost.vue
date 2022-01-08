@@ -3,7 +3,7 @@
 		<view class="od-box paddingbottom0">
 			<view class="od-item flex flex-horizontal flex-center-v">
 				<view class="item-tip">收款人</view>
-				<view class="item-right"><view class="item-txt">投资人</view></view>
+				<view class="item-right"><view class="item-txt" style="margin-left: 38px;">投资人</view></view>
 			</view>
 			<view class="od-item">
 				<view class="item-tip" style="margin-top: 5px;">退回事项<text style="color: red;">*</text></view>
@@ -24,7 +24,7 @@
 										<text>￥</text>
 									</view>
 									<view class="input-border">
-										<input class="why-ipt" type="number" v-model="case_money" :disabled="result.indexOf('checkValue1') != -1" placeholder="请输入" placeholder-class="placeholder" />
+										<input class="why-ipt" type="number" v-model="case_money" :disabled="result.indexOf('checkValue1') == -1" placeholder="请输入" placeholder-class="placeholder" />
 									</view>
 								</view>
 							</view>
@@ -41,7 +41,7 @@
 										公告费
 										<text>￥</text>
 									</view>
-									<view class="input-border"><input class="why-ipt" type="number" v-model="announce_money" :disabled="result.indexOf('checkValue2') != -1" placeholder="请输入" placeholder-class="placeholder" /></view>
+									<view class="input-border"><input class="why-ipt" type="number" v-model="announce_money" :disabled="result.indexOf('checkValue2') == -1" placeholder="请输入" placeholder-class="placeholder" /></view>
 								</view>
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
@@ -59,7 +59,7 @@
 											<text>￥</text>
 										</view>
 										<view class="input-border">
-											<input class="why-ipt" type="number" v-model="enquire" placeholder="请输入" :disabled="result.indexOf('checkValue3') != -1" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" v-model="enquire" placeholder="请输入" :disabled="result.indexOf('checkValue3') == -1" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -69,16 +69,16 @@
 									<view class="flex flex-horizontal flex-center-v">
 									<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" disabled=""  value="checkValue4"  checked="ture" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"  checked="ture" />
 									</view>
 								</label>
 								<view class="checkbox-right flex flex-horizontal">
 									<view class=" flex flex-horizontal flex-center-v flex-1"  style="margin-left: 15px;">
 										<view class="why-txt" style="white-space:nowrap;">
-											律师费用
+											律师费
 											<text>￥</text>
 										</view>
-										<view class="input-border">
+										<view class="">
 											<input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 										</view>
 									</view>

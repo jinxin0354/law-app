@@ -54,7 +54,9 @@ export default {
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
-			this.sourceFile = this.sourceFile.concat(tempList);
+			// this.sourceFile = this.sourceFile.concat(tempList);
+			this.$emit('fileResult',tempList)
+			this.closePop('popupAdd')
 		},
 		//接收图片
 		photoOk(res) {
@@ -63,7 +65,9 @@ export default {
 				tempList.push(JSON.parse(item));
 			});
 		
-			this.source = this.source.concat(tempList);
+			// this.source = this.source.concat(tempList);
+			this.$emit('fileResult',tempList)
+			this.closePop('popupAdd')
 		},
 		// 打开摄像头
 		camera() {
