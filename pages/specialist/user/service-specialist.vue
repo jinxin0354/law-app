@@ -110,7 +110,7 @@
 						</view>
 						<template v-for="(item, index) in otherInfoLIst">
 							<view class="case-title">
-								对方当事人{{ index + 1 }}
+								对方当事人<!-- {{ index + 1 }} -->
 								<view class="title-del" @click="deleteOtherInfo(index)">
 									<view class="image-wrapper">
 										<image src="@/static/img/delete.png" mode="aspectFit"></image>

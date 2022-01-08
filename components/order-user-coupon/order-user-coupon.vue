@@ -1,6 +1,6 @@
 <template>
-	<view class="od-item">
-		<view class="item-tip">优惠券</view>
+	<view class="od-item marginbottom20">
+		<view class="item-tip" style="width: 200rpx;">优惠券</view>
 		<view class="item-right" @click="openCoupons()">
 			<view class="item-txt gray" v-if="info.coupon && info.coupon.coupon && info.coupon.coupon.length == 0">暂无可用优惠券</view>
 			<template v-else>

@@ -792,6 +792,12 @@ export default {
 			auth: false,
 			method: 'POST',
             // 律师语言列表
+		},
+		lawyerPage: {
+			url: '/api/lawyer/lawyerPage',
+			auth: false,
+			method: 'POST',
+            // 律师语言列表
 		}
 	}
 };
