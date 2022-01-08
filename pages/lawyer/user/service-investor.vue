@@ -273,7 +273,10 @@
 							</label>
 						</checkbox-group> -->
 						<view class="dialog-tip">解除原因</view>
-						<textarea placeholder="请输入解除事由" :focus="true" placeholder-class="placeholder" class="dialog-textarea" v-model="reason" style="width: calc(100% - 40rpx);" />
+						<view class="dialog-textarea border-box" style="height: 80px;">
+							<!-- style="width: calc(100% - 40rpx);" -->
+							<textarea class="border-box" placeholder="请输入解除事由" style="height: 100rpx;width: calc(100%);height: calc(100%);" :focus="true" placeholder-class="placeholder" v-model="reason" />
+						</view>
 						<checkbox-group  @change="resultChange" style="margin-top: 10px;">
 							<label class="ck-item flex-center-v">
 								<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
