@@ -238,7 +238,16 @@ export default {
 		resultChange(e) {
 			this.result = e.detail.value;
 		},
+		getUrlParams(list) {
+			let newArr = []
+			list.filter(e=>{
+				newArr.push(e.url)
+			})
+			return newArr.join(',')
+		},
 		async confirm() {
+			
+			
 			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
 			if (sum > 5000) {
 				this.$refs.popupOver5000.open();
@@ -251,6 +260,55 @@ export default {
 				})
 				return;
 			}
+			
+			if (this.case_list.length <= 0) {
+				uni.showToast({
+					title: '案件受理费缴纳通知书为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			if (this.announce_list.length <= 0) {
+				uni.showToast({
+					title: '公告费缴费通知书为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			if (this.contract_list.length <= 0) {
+				uni.showToast({
+					title: '委托代理合同为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			if (this.main_list.length <= 0) {
+				uni.showToast({
+					title: '委托人主体资料为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			if (this.indictment_list.length <= 0) {
+				uni.showToast({
+					title: '起诉状（委托人已签章）为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			if (this.note_list.length <= 0) {
+				uni.showToast({
+					title: '立案受理通知书为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			
 			this.addInfo();
 		},
 		async addInfo() {
@@ -259,15 +317,15 @@ export default {
 				token: uni.getStorageSync('token'),
 				case_money:Number(this.case_money),
 				case_time: this.case_time,
-				case: this.case,
 				announce_money: Number(this.announce_money),
-				announce: this.announce,
+				announce: this.getUrlParams(this.announce_list),
 				enquire: Number(this.enquire),	
 				lawyer: Number(this.lawyer),
-				contract: this.contract,
-				main: this.main,
-				indictment: this.indictment,
-				note: this.note
+				case: this.getUrlParams(this.case_list),
+				contract: this.getUrlParams(this.contract_list),
+				main: this.getUrlParams(this.main_list),
+				indictment: this.getUrlParams(this.indictment_list),
+				note: this.getUrlParams(this.note_list),
 			};
 
 			let res = await this.$api('index.lawyer_apply', formData);

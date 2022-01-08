@@ -69,7 +69,7 @@
 									<view class="flex flex-horizontal flex-center-v">
 									<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"  checked="ture" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"  checked="false" />
 									</view>
 								</label>
 								<view class="checkbox-right flex flex-horizontal">
@@ -97,7 +97,7 @@
 					<view class="od-item marginbottom10">
 						<view class="item-tip require">付款金额</view>
 						<view class="item-right">
-							<view class="item-txt red">￥{{ Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer) }}</view>
+							<view class="item-txt red">￥{{ Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + (result.indexOf('checkValue4') == -1 ? 0 : Number(this.lawyer))}}</view>
 						</view>
 					</view>
 				</template>
@@ -120,8 +120,7 @@ export default {
 			result: [
 				'checkValue1',
 				'checkValue2',
-				'checkValue3',
-				'checkValue4'
+				'checkValue3'
 			]
 		};
 	},
@@ -139,7 +138,7 @@ export default {
 			this.result = e.detail.value;
 		},
 		async confirm() {
-			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
+			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) +  (this.result.indexOf('checkValue4') == -1 ? 0 : Number(this.lawyer));
 			if (sum < 0.01) {
 				uni.showToast({
 					title: '退回投资费用需大于0',
@@ -157,7 +156,7 @@ export default {
 				case_money: Number(this.case_money),
 				announce_money: Number(this.announce_money),
 				enquire: Number(this.enquire),
-				lawyer: Number(this.lawyer)
+				lawyer:(this.result.indexOf('checkValue4') == -1 ? 0 : Number(this.lawyer))
 			};
 
 			let res = await this.$api('index.lawyer_back', formData);

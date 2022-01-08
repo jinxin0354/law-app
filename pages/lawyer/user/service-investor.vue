@@ -261,7 +261,7 @@
 		<uni-popup ref="popupApplyServiceRemove" type="center">
 			<order-popup-common title="申请解除委托" @closePop="closePop('popupApplyServiceRemove')">
 				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
-					<view class="ck-box" style="padding: 24px 33px;">
+					<view class="ck-box" >
 						<!-- <checkbox-group>
 							<label class="ck-item">
 								<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
