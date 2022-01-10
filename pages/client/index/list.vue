@@ -229,7 +229,8 @@ export default {
 			let params = {
 				product_id: item.product_price_id,
 				product_name: item.product_name,
-				area_id: item.id
+				area_id: item.id,
+				product_image:item.product_image
 			};
 
 			if (item.product_name == '问一下') {

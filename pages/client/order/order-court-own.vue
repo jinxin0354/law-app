@@ -1,8 +1,13 @@
 <template>
 	<view class="content">
-		<view class="item-top" :style="{ 'background-image': 'url(' + topImg + ')' }">
-			<view class="item-admin">
-				用户133****2345下单了这个产品 3分钟前
+		<view class="item-top" :style="{ 'background-image': 'url(' + product_image + ')' }">
+			<view class="item-admin" v-if="buyTipData.length > 0" style="width:600rpx">
+				<!-- 用户133****2345下单了这个产品 3分钟前 -->
+				<swiper class="swiper" :autoplay="true" :interval="3000" :vertical='true' style="width:600rpx;height:60rpx">
+				                        <swiper-item v-for="(item,index) in buyTipData" :key='index'>
+				                            <view>{{item}}</view>
+				                        </swiper-item>
+				                    </swiper>
 			</view>
 			<!-- <view class="item-img">
 				<view class="item-left">
@@ -18,25 +23,26 @@
 		<view class="item-main">
 			<view class="main-top">
 				<view class="top-left">
-					<text style="font-size: 26rpx;">￥</text>399
+					<text style="font-size: 26rpx;">￥</text>{{price}}
 				</view>
 				<view class="top-right">
-					已售30
+					已售{{sale}}
 				</view>
 			</view>
 			<view class="item-title">
-				债权债务代理起诉方(套餐)一审+二审+执行
+				{{productTitleName}}
 			</view>
 			<view class="item-way">
-				<text class="item-txt">分期付</text>
-				<text class="item-txt">为你分忧</text>
-				<text class="item-txt">效益归你</text>
+				<text class="item-txt" v-for="(item,index) in labelData">{{item}}</text>
 			</view>
 			<view class="item-bottom" @click="$refs.orderService.$refs.popupEnsure.open()">
+                <view class="bottom-info">
+                    
 				<image class="bottom-sure" src="@/static/img/order-sure.png" mode=""></image>
 				<text class="bottom-left">服务保障 </text>
 				<text class="bottom-order"></text>
-				<text class="bottom-txt">免费取消订单·隐私保护·保险保障·无理...</text>
+				<text class="bottom-txt">{{tags.join(',')}}</text>
+                </view>
 				<image class="bottom-img" src="@/static/img/right.png" mode="aspectFit"></image>
 			</view>
 
@@ -67,7 +73,9 @@
                 </view>
                 <view class="item-right" @click="$refs.priceTypeSelectPopop.open()">
                 	<view class="service-list inline-list">
-                		<view class="service-item active" style="width: 60%; margin-right: 0;">{{bearFees}}</view>
+                		<view class="service-item active" style="position: relative;">{{bearFees}}
+										<image v-if="bearFees == '投资人支付'" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
+										</view>
                 	</view>
                     <view class="item-nav">
                     	<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -77,9 +85,13 @@
 			<view class="od-item marginbottom20">
 				<view class="item-tip">涉案金额</view>
                 <view class="item-right">
-                	<view class="service-list inline-list">
-                		<view class="service-item active" style="width: 100%; margin-right: 0;">{{ qiankuan }}</view>
-                	</view>
+                	<!-- <view class="service-list inline-list"> -->
+                        <!-- style="width: 100%; margin-right: 0;" -->
+                		<!-- <view class="service-item active" >{{ qiankuan }}</view>
+                	</view> -->
+                    <view class="service-list inline-list">
+                    	<view class="service-item active" :style="bearFees == '自费' ? 'width:calc((100% - 36px) / 3);' : 'width: 100%; margin-right: 0;'">{{qiankuan}}</view>
+                    </view>
                 </view>
 			</view>
 			<template v-if="bearFees == '自费'">
@@ -95,7 +107,7 @@
 					</view>
 				</view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip">我的角色</view>
+					<view class="item-tip">您的角色</view>
 					<view class="item-right" @click="$refs.selfIdentPopop.open()">
 						<view class="service-list inline-list">
 							<view class="service-item active">{{ self_ident }}</view>
@@ -219,7 +231,7 @@
 				<view class="od-item marginbottom20">
 				    <view class="item-tip">
 				        <view class="center-box">
-				            律师执业语言
+				            律师服务语言
 				            <view class="required-box">
 				                *   
 				            </view>
@@ -317,7 +329,7 @@
 					<view class="item-tip">项目资料</view>
 					<view class="item-right"
 						@click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })">
-						<view class="item-txt gray">您手上有的资料，都可上传</view>
+						<view class="item-txt gray">您手上有的资料都可上传</view>
 						<view class="item-file" v-if="source && source.length > 0">
 							<image src="@/static/img/order-file.png"></image>
 						</view>
@@ -335,7 +347,12 @@
 					</view>
 				</view> -->
                 <view class="od-item marginbottom20">
-                	<view class="item-tip">案件进度</view>
+                	<view class="item-tip">
+                    <view class="center-box">
+                        案件进度<view class="required-box">
+                        *
+                        </view>
+                    </view></view>
                 	<view class="item-right" @click="$refs.jinduPopop.open()">
                 		<view class="service-list inline-list">
                 			<view class="service-item active">{{ jindu }}</view>
@@ -346,7 +363,12 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip">我的角色</view>
+                	<view class="item-tip">
+                    <view class="center-box">
+                        您的角色<view class="required-box">
+                        *
+                        </view>
+                    </view></view>
                 	<view class="item-right" @click="$refs.selfIdentPopop.open()">
                 		<view class="service-list inline-list">
                 			<view class="service-item active">{{ self_ident }}</view>
@@ -357,7 +379,13 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.identPopop.open()">对方类型<image  src="@/static/img/order-ques.png" mode=""
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.identPopop.open()">
+                    <view class="center-box">
+                        对方类型<view class="required-box">
+                        *
+                        </view>
+                    </view>
+                    <image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.duiIdentPopop.open()">
                 		<view class="service-list inline-list">
@@ -369,7 +397,12 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="jump('/pages/client/order/web-view', { url: 'http://zxgk.court.gov.cn/shixin/' })">对方失信<image  src="@/static/img/order-ques.png" mode=""
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="jump('/pages/client/order/web-view', { url: 'http://zxgk.court.gov.cn/shixin/' })">
+                    <view class="center-box">
+                        对方失信<view class="required-box">
+                        *
+                        </view>
+                    </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.believePopop.open()">
                 		<view class="service-list inline-list">
@@ -381,7 +414,12 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="jump('/pages/client/order/web-view', { url: 'http://zxgk.court.gov.cn/zhixing/' })">对方正在被</br>法院执行中<image  src="@/static/img/order-ques.png" mode=""
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="jump('/pages/client/order/web-view', { url: 'http://zxgk.court.gov.cn/zhixing/' })">
+                    <view class="center-box">
+                        对方正在</br>被法院执</br>行中<view class="required-box">
+                        *
+                        </view>
+                    </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.isZhiXingPopop.open()">
                 		<view class="service-list inline-list">
@@ -393,11 +431,29 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.organizationPopop.open()">审理机构<image  src="@/static/img/order-ques.png" mode=""
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.organizationPopop.open()">
+                    <view class="center-box">
+                        审理机构<view class="required-box">
+                        *
+                        </view>
+                    </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.organizationSelectPopop.open()">
                 		<view class="service-list inline-list">
                 			<view class="service-item active">{{ organization }}</view>
+                		</view>
+                		<view class="item-nav">
+                			<image src="@/static/img/right.png" mode="aspectFit"></image>
+                		</view>
+                	</view>
+                </view>
+                <view class="od-item marginbottom20">
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.stagePopup.open()">服务阶段<image  src="@/static/img/order-ques.png" mode=""
+                style="width: 30rpx;height: 30rpx"></image></view>
+                	<view class="item-right" @click="$refs.popupServiceStage.open()">
+                        <view class="item-txt gray" v-if="!stage">您想让律师帮您代理哪几个办案阶段</view>
+                		<view class="service-list inline-list">
+                			<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
                 		</view>
                 		<view class="item-nav">
                 			<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -472,7 +528,7 @@
                         </view>
                     </view>
                     <view class="item-right" @click="practiceAreaClick">
-                    	<view class="item-txt gray" v-if="!practiceArea">请选择审理地点的律师,效率高,成本低</view>
+                    	<view class="item-txt gray" v-if="!practiceArea">请选择审理地点的律师，效率高，成本低</view>
                     	<view class="service-list inline-list" v-else>
                     		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea }}</view>
                     	</view>
@@ -484,7 +540,7 @@
                 <view class="od-item marginbottom20">
                     <view class="item-tip">
                         <view class="center-box">
-                            律师执业语言
+                            律师服务语言
                             <view class="required-box">
                                 *   
                             </view>
@@ -492,9 +548,14 @@
                     </view>
                     <view class="item-right" @click="langClick">
                     	<view class="item-txt gray" v-if="lang_ids.length == 0">您希望律师用什么语言与您交流</view>
-                    	<view class="service-list inline-list" v-else>
+                    	<view class="service-list inline-list" v-else-if="lang_ids.length > 0 && lang_ids.length < 3 ">
                     		<view class="service-item active" v-for="(item,index) in lang_ids" :key='index' style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,item)}}</view>
                     	</view>
+                        <view class="service-list inline-list" v-else>
+                        	<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[0])}}</view>
+                        	<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[1])}}</view>
+                            ...
+                        </view>
                     	<view class="item-nav">
                     		<image src="@/static/img/right.png" mode="aspectFit"></image>
                     	</view>
@@ -505,7 +566,8 @@
                             排除律师
                     </view>
                     <view class="item-right" @click="lawyerSelectClick()">
-                    	<view class="service-list inline-list">
+                    	<view class="item-txt gray" v-if="remove_userids.length == 0">您不想让哪些律师/哪个律所看到您的订单</view>
+                    	<view class="service-list inline-list" v-else>
                     		<view class="service-item active">{{ remove_userids.length }}个</view>
                     	</view>
                     	<view class="item-nav" @click="$refs.popupServiceStage.open()">
@@ -513,18 +575,7 @@
                     	</view>
                     </view>
                 </view>
-                <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.stagePopup.open()">服务阶段<image  src="@/static/img/order-ques.png" mode=""
-                style="width: 30rpx;height: 30rpx"></image></view>
-                	<view class="item-right" @click="$refs.popupServiceStage.open()">
-                		<view class="service-list inline-list">
-                			<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
-                		</view>
-                		<view class="item-nav">
-                			<image src="@/static/img/right.png" mode="aspectFit"></image>
-                		</view>
-                	</view>
-                </view>
+                
                 
                 <view class="od-item marginbottom20">
                 	<view class="item-tip">
@@ -615,7 +666,11 @@
                     </view>
                 	<view class="item-right" @click="offer == '千里马' ? $refs.priceTypePopup.open() : ''">
                     <view class="service-list inline-list">
-                    	<view class="service-item active" style="width: 60%">{{price_type_text}}</view>
+                    	<view class="service-item active" style="width: 60%;position: relative;">{{price_type_text}}
+                        <image v-if="price_type_text == '先付后用 任性付'" class="noback" src="@/static/img/order-noback4.png" mode="aspectFit"></image>
+                        <image v-if="price_type_text == '先用后付 无忧付'" class="noback" src="@/static/img/order-noback2.png" mode="aspectFit"></image>
+                        <image v-if="price_type_text == '边用边付 轻松付'" class="noback" src="@/static/img/order-noback3.png" mode="aspectFit"></image>
+                        </view>
                     </view>
                     <view class="item-nav" v-if="offer == '千里马'">
                     	<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -628,20 +683,30 @@
                             付款金额
                         </view>
                     </view>
-                	<view class="item-right" style="height:60rpx">
+                	<view class="item-right" style="min-height:60rpx;padding-right: 20rpx;">
                         <view class="service-list inline-list" v-if="offer == '千里马'" style="color:red;font-weight: 700;">
-                            ￥{{ money }}
+                            ￥{{ total }}
                         </view>
                         <view class="service-list inline-list" v-if="offer == '活马'" style="color:red;font-weight: 700;">
-                            前期费用：{{money}}(下单时付)</br>
-                            后期费用：按律师帮您回收款物金额的{{ later_money }}计算
+                            前期费用：{{total}}(下单时付)
+                            <view v-if="self_ident == '起诉方'">
+                                后期费用：按律师帮您回收款物金额的{{ later_money }}计算
+                            </view>
+                            <view v-else>
+                                后期费用：按律师帮您减少支出金额的{{ later_money }}计算
+                            </view>
                         </view>
                         <view class="service-list inline-list" v-if="offer == '还魂马'" style="color:red;font-weight: 700;">
-                            按律师帮您回收款物金额的{{ later_money }}计算
+                            <view v-if="self_ident == '起诉方'">
+                                按律师帮您回收款物金额的{{ later_money }}计算
+                            </view>
+                            <view v-else>
+                                按律师帮您减少支出金额的{{ later_money }}计算
+                            </view>
                         </view>
                 	</view>
                 </view>
-                <view class="od-item marginbottom20" v-if="bearFees == '投资人支付(不用还)'">
+                <view class="od-item marginbottom20" v-if="bearFees == '投资人支付'">
                 	<view class="item-tip">投资人收益</view>
                 	<view class="item-right">
                 		<view class="item-txt">
@@ -682,9 +747,9 @@
                 </template>
                 <view class="od-item marginbottom20">
                 	<view class="item-tip">项目资料</view>
-                	<view class="item-right" @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })">
-                		<view class="item-txt gray">您手上有的资料，都可上传</view>
-                		<view class="item-file" v-if="source && source.length > 0"><image src="@/static/img/order-file.png"></image></view>
+                	<view class="item-right" @click="jump('/pages/client/order/project-data', { card_images: card_images,liaotian_images:liaotian_images,jietiao_images: jietiao_images,cuishou_images:cuishou_images,other_images:other_images,type:2 })">
+                		<view class="item-txt gray">您手上有的资料都可上传</view>
+                		<view class="item-file" v-if="card_images!='' || liaotian_images!='' || jietiao_images!='' || cuishou_images!='' || other_images!=''"><image src="@/static/img/order-file.png"></image></view>
                 		<view class="item-nav"><image src="@/static/img/right.png" mode="aspectFit"></image></view>
                 	</view>
                 </view>
@@ -730,7 +795,7 @@
 					</view>
 				</view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip">我的角色</view>
+					<view class="item-tip">您的角色</view>
 					<view class="item-right">
 						<view class="service-list inline-list">
 							<view class="service-item active">{{ self_ident }}</view>
@@ -801,12 +866,7 @@
                 </view>
                 <view class="od-item marginbottom20">
                 	<view class="item-tip">
-                        <view class="center-box">
                             律师执业年限
-                            <view class="required-box">
-                            *
-                            </view>
-                        </view>
                 	</view>
                     <view class="item-right">
                     	<view class="service-list inline-list">
@@ -816,16 +876,10 @@
                 </view>
                 <view class="od-item marginbottom20">
                     <view class="item-tip">
-                        <view class="center-box">
                             律师执业区域
-                            <view class="required-box">
-                                *   
-                            </view>
-                        </view>
                     </view>
                     <view class="item-right">
-                    	<view class="item-txt gray" v-if="!practiceArea">请选择审理地点的律师,效率高,成本低</view>
-                    	<view class="service-list inline-list" v-else>
+                    	<view class="service-list inline-list">
                     		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea }}</view>
                     	</view>
                     </view>
@@ -833,7 +887,7 @@
                 <view class="od-item marginbottom20">
                     <view class="item-tip">
                         <view class="center-box">
-                            律师执业语言
+                            律师服务语言
                             <view class="required-box">
                                 *   
                             </view>
@@ -841,8 +895,13 @@
                     </view>
                     <view class="item-right" @click="langClick">
                     	<view class="item-txt gray" v-if="lang_ids.length == 0">您希望律师用什么语言与您交流</view>
-                    	<view class="service-list inline-list" v-else>
+                    	<view class="service-list inline-list" v-else-if="lang_ids.length > 0 && lang_ids.length < 3 ">
                     		<view class="service-item active" v-for="(item,index) in lang_ids" :key='index' style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,item)}}</view>
+                    	</view>
+                    	<view class="service-list inline-list" v-else>
+                    		<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[0])}}</view>
+                    		<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[1])}}</view>
+                    	    ...
                     	</view>
                     	<view class="item-nav">
                     		<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -875,12 +934,12 @@
                 	</view>
                 </view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip">投资人承担<image src="@/static/img/order-ques.png" mode=""
+					<view class="item-tip" @click="download(doc_touziren)">投资人承担<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
-						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;color:red;padding: 6rpx;">律师费+立案受理费+公告费+异地被告身份查询费</view>
-						<view class="whyIcon" @click="downloadFile(info.product.doc[2].url)">
-							<image src="@/static/img/why.png" mode="aspectFit"></image>
+						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;color:red;padding: 6rpx 10rpx;margin-right: 6rpx;">律师费+立案受理费+公告费+异地被告身份查询费</view>
+						<view class="whyIcon" style="align-items:center" @click="downloadFile(info.product.doc[2].url)">
+							<image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
 						</view>
 					</view>
 				</view>
@@ -888,8 +947,8 @@
 					<view class="item-tip" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
-						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx;">
-							<text class="red">您回收款物后5日内，按回收款物金额的30％支付投资收益给投资人，不回款不用付。</text>
+						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx 10rpx;">
+							<text class="red">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。</text>
 						</view>
                         <view class="whyIcon">
                         	<image ></image>
@@ -899,9 +958,9 @@
 				<view class="od-item marginbottom20">
 					<view class="item-tip">项目资料</view>
 					<view class="item-right"
-						@click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })">
-						<view class="item-txt gray">您手上有的资料，都可上传</view>
-						<view class="item-file" v-if="source && source.length > 0">
+						@click="jump('/pages/client/order/project-data', { card_images: card_images,liaotian_images: liaotian_images,jietiao_images: jietiao_images,cuishou_images: cuishou_images,other_images: other_images,huan_images:huan_images,type:1 })">
+						<view class="item-txt gray">您手上有的资料都可上传</view>
+						<view class="item-file" v-if="card_images!='' || liaotian_images!='' || jietiao_images!='' || cuishou_images!='' || other_images!='' || huan_images!=''">
 							<image src="@/static/img/order-file.png"></image>
 						</view>
 						<view class="item-nav">
@@ -947,6 +1006,7 @@
 			<!-- 服务范围组件 -->
 			<!-- <order-item-service-desc :info="info" v-if="Object.keys(info.product).length > 0"></order-item-service-desc> -->
 		</view>
+		<order-feiyong-info v-if="bearFees == '自费'" :docZifei='doc_zifei'></order-feiyong-info>
 		<!-- 服务内容组件 -->
 		<order-unfold title="服务内容">
 			<view slot="unfold-con">
@@ -969,24 +1029,35 @@
 				</view>
 			</view>
 		</view>
-		<view class="go-box">
-			<view class="go-left">
-				<view class="left-prize" v-if="bearFees == '投资人支付(不用还)'">
-					<text style="font-size: 34rpx;">￥投资人支付</text>
-					(不用还)
-				</view>
-				<template v-else>
-					<view class="left-prize">
-						￥{{ money }}
-						<text class="coupon-prize" v-if="sell">已优惠￥{{ sell }}</text>
+		<view class="save-box-two">
+			<checkbox-group @change="checkChange" v-if="bearFees == '投资人支付'">
+				<label class="chekc-group-box" >
+					<checkbox style="transform:scale(0.8);" color="#FFC801" value="1" />
+					我已阅读
+					<view class="check-info" @click="download(hetong_doc)">
+						《债券投资合同》
+					</view>,并同意按上述条款履行
+				</label>
+			</checkbox-group>
+			<view class="save-go-box">
+				<view class="go-left">
+					<view class="left-prize" v-if="bearFees == '投资人支付'">
+						<text style="font-size: 34rpx;">￥0元下单</text>
 					</view>
-					<view class="left-tip">{{ price_type_text }}</view>
-				</template>
+					<template v-else>
+						<view class="left-prize" style="font-weight: 600;">
+							￥{{ money }}
+							<text class="coupon-prize" v-if="sell && offer!='还魂马'" style="text-decoration:line-through;color:#aaaaaa">￥{{ sell }}</text>
+						</view>
+						<view class="left-tip">{{ price_type_text }}</view>
+					</template>
+				</view>
+				<view class="go-right" v-if="!edit_order_id"><button type="default" class="go-btn"
+						@click="confirm">一键无忧下单</button></view>
+				<view class="go-right" v-else><button type="default" class="go-btn" @click="addOrder">我要下单</button></view>
 			</view>
-			<view class="go-right" v-if="!edit_order_id"><button type="default" class="go-btn"
-					@click="confirm">一键无忧下单</button></view>
-			<view class="go-right" v-else><button type="default" class="go-btn" @click="addOrder">我要下单</button></view>
 		</view>
+		
 
 		<!-- 服务人员弹出层 -->
 		<uni-popup ref="popupService" type="bottom">
@@ -1048,22 +1119,20 @@
 			</order-popup-common>
 		</uni-popup>
 		<!-- 服务阶段弹出层 -->
-		<uni-popup ref="popupServiceStage">
-			<order-popup-common title="服务阶段" @closePop="closePop('popupServiceStage')">
-				<scroll-view class="popup-con" slot="popup-con" scroll-y="true">
-					<view class="take-box">
-						<view class="take-title"><text class="gray require relative">您想让律师帮您代理哪几个办案阶段</text></view>
-						<view class="service-list">
-							<view class="service-item" style="width: 100%;" :class="{ active: stage == item }"
-								v-for="(item, index) in stage_list" @click="stage = item">{{ item }}</view>
-						</view>
-					</view>
-				</scroll-view>
-				<view class="ok-box" slot="popup-btn"
-					style="margin-top: -50rpx; position: absolute; bottom: 0; width: 100%; border-radius: 46rpx;">
-					<button type="default" class="ok-btn" @click="closePop('popupServiceStage')">确定</button>
-				</view>
-			</order-popup-common>
+		<uni-popup ref="popupServiceStage" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">选择服务阶段</view>
+            		<view class="title-close" @click="closePop('popupServiceStage')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+                <scroll-view scroll-y="true" class="stage-scroll-box">
+                    <view v-for="(item,index) in stage_list" :key='index' :class="stage == item ? 'select-item-box pitch-on': 'select-item-box un-pitch'"  @click="stageSelectClick(item)">{{ item }}</view>
+                </scroll-view>
+            </view>
 		</uni-popup>
         <uni-popup ref="identPopop" type="bottom">
             <view class="popup-bottom-box">
@@ -1075,7 +1144,7 @@
             			</view>
             		</view>
             	</view>
-                <view class="bot-con">
+                <scroll-view scroll-y="true" class="bot-con"> 
                     <view class="bot-title-box">
                         <view class="icon-box"></view>
                         <view class="title-text-box">快速指引</view>
@@ -1114,7 +1183,7 @@
                     <view class="bot-content-img-box">
                         <image src="@/static/img/ident-popup9.jpg"></image>
                     </view>
-                </view>
+                </scroll-view>
                 <view class="bot-save">
                     <view class="save-box" @click="closePop('identPopop')">朕知道了</view>
                 </view>
@@ -1130,7 +1199,7 @@
             			</view>
             		</view>
             	</view>
-                <view class="bot-con">
+                <scroll-view scroll-y="true" class="bot-con">
                     <view class="bot-title-two-box">
                         <view class="icon-box"></view>
                         <view class="bot-content-box">您和对方没有书面文件约定由哪个机构审理的，</br>选<span>人民法院</span>。
@@ -1157,7 +1226,7 @@
                         <view style="margin-left:29rpx" class="bot-content-box">·因本协议引起的或与本协议有关的任何争议，由双方友好协商解决，协商不成的，双方均同意提交广州仲裁委员会仲裁，并同意按照该会届时有效的仲裁规则仲裁。仲裁裁决是终局的，对各方均有约束力
                         </view>
                     </view>
-                </view>
+                </scroll-view>
                 <view class="bot-save">
                     <view class="save-box" @click="closePop('organizationPopop')">朕知道了</view>
                 </view>
@@ -1181,7 +1250,7 @@
         <uni-popup ref="selfIdentPopop" type="bottom">
             <view class="popup-bottom-box">
             	<view class="bot-title">
-            		<view class="title-txt">选择我的身份</view>
+            		<view class="title-txt">选择您的角色</view>
             		<view class="title-close" @click="closePop('selfIdentPopop')">
             			<view class="image-wrapper">
             				<image src="@/static/img/close.png" mode="aspectFit"></image>
@@ -1211,7 +1280,7 @@
         <uni-popup ref="believePopop" type="bottom">
             <view class="popup-bottom-box">
             	<view class="bot-title">
-            		<view class="title-txt">选择对方是否失信</view>
+            		<view class="title-txt">选择对方失信</view>
             		<view class="title-close" @click="closePop('believePopop')">
             			<view class="image-wrapper">
             				<image src="@/static/img/close.png" mode="aspectFit"></image>
@@ -1226,7 +1295,7 @@
         <uni-popup ref="isZhiXingPopop" type="bottom">
             <view class="popup-bottom-box">
             	<view class="bot-title">
-            		<view class="title-txt">对方是否正在被法院执行</view>
+            		<view class="title-txt">选择对方正在被法院执行中</view>
             		<view class="title-close" @click="closePop('isZhiXingPopop')">
             			<view class="image-wrapper">
             				<image src="@/static/img/close.png" mode="aspectFit"></image>
@@ -1264,7 +1333,7 @@
             			</view>
             		</view>
             	</view>
-                <view class="bot-con" style="height:500rpx">
+                <scroll-view scroll-y="true" class="bot-con" style="height:500rpx">
                     <view class="stage-item-box" v-for="(item,index) in stageSelectData" :key='index' @click="stageItemClick(item)">
                         <view class="left-box">
                             <view class="icon-box"></view>
@@ -1276,7 +1345,7 @@
                             <image src="@/static/img/right.png" mode="aspectFit"></image>
                         </view>
                     </view>
-                </view>
+                </scroll-view>
                 <view class="bot-save">
                     <view class="save-box" @click="closePop('stagePopup')">朕知道了</view>
                 </view>
@@ -1285,7 +1354,7 @@
         <uni-popup ref="productNameSelectPopop" type="bottom">
             <view class="popup-bottom-box">
             	<view class="bot-title">
-            		<view class="title-txt">选择执业年限</view>
+            		<view class="title-txt">选择律师执业年限</view>
             		<view class="title-close" @click="closePop('productNameSelectPopop')">
             			<view class="image-wrapper">
             				<image src="@/static/img/close.png" mode="aspectFit"></image>
@@ -1308,7 +1377,7 @@
             		</view>
             	</view>
                 <view class="assistant-title-box">您希望律师用什么语言与您交流？</view>
-            <view class="bot-con" style="padding: 0rpx;">
+            <scroll-view scroll-y="true" class="bot-con" style="padding: 0rpx;">
                 <view class="lang-item-box" v-for="(item,index) in langIdData" :key='index' @click="langSelectClick(item)">
                     <view class="icon-box" v-if="popupSelectList.includes(item.id)">
                         <image src="@/static/img/pitch-on-icon.png" mode="aspectFit"></image>
@@ -1318,7 +1387,7 @@
                     </view>
                     <view class="content-box">{{ item.recname }}</view>
                 </view>
-            </view>
+            </scroll-view>
             <view class="bot-save">
                 <view class="save-box" @click="langSaveClick">确定</view>
             </view>
@@ -1335,7 +1404,10 @@
             		</view>
             	</view>
             <view class="bot-select-con">
-                <view v-for="(item,index) in moneyTypeData" :key='index' :class="bearFees == item.value_name ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="priceTypeSelectClick(item.value_name )">{{item.value_name }}</view>
+                <view v-for="(item,index) in moneyTypeData" :key='index' :class="bearFees == item.new_value_name ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="priceTypeSelectClick(item.new_value_name )" style="position: relative;">{{item.new_value_name }}
+								<image v-if="item.new_value_name == '投资人支付'" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
+								</view>
+								
             </view>
             </view>
         </uni-popup>
@@ -1349,7 +1421,7 @@
             			</view>
             		</view>
             	</view>
-            <view class="bot-con" style="height:300rpx">
+            <scroll-view scroll-y="true" class="bot-con" style="height:300rpx">
                 <view class="bot-title-box">
                     <view class="icon-box"></view>
                     <view class="title-text-box">范例</view>
@@ -1361,7 +1433,7 @@
                     我要与林志玲离婚，要抚养权，分财产</br>
                     柳岩告我，要我赔偿精神损失费，没有道理，要求打赢</br>
                 </view>
-            </view>
+            </scroll-view>
             <view class="bot-save">
                 <view class="save-box" @click="closePop('myrequirePopup')">朕知道了</view>
             </view>
@@ -1377,7 +1449,7 @@
             			</view>
             		</view>
             	</view>
-            <view class="bot-con" style="height: 500rpx;">
+            <scroll-view scroll-y="true" class="bot-con" style="height: 500rpx;">
                 <view class="bot-title-box">
                     <view class="icon-box"></view>
                     <view class="title-text-box">债权总额</view>
@@ -1395,7 +1467,7 @@
                 <view class="bot-content-box">
                     ·与欠款方和解/调解时，您给欠款方减免了部分欠款本金或没有减免欠款本金，计算公式为：您与欠款方的和解/调解金额×30%。 
                 </view>
-            </view>
+            </scroll-view>
             <view class="bot-save">
                 <view class="save-box" @click="closePop('earningsPopup')">朕知道了</view>
             </view>
@@ -1426,7 +1498,7 @@
             			</view>
             		</view>
             	</view>
-            <view class="bot-con">
+            <scroll-view scroll-y="true" class="bot-con" v-if="self_ident == '起诉方'">
                 <view class="bot-title-box">
                     <view class="icon-box"></view>
                     <view class="title-text-box">千里马</view>
@@ -1449,7 +1521,31 @@
                     您认为不抱希望的烂债，反正搏一把</br>·先用后付 大力出奇迹</br>·风险律师担 不回款不收钱</br>·重赏之下 必有勇士
                 </view>
                 
-            </view>
+            </scroll-view>
+            <scroll-view scroll-y="true" class="bot-con" v-else>
+                <view class="bot-title-box">
+                    <view class="icon-box"></view>
+                    <view class="title-text-box">千里马</view>
+                </view>
+                <view class="bot-content-box">
+                    您认为要偿还的债，请律师走个程序，争取还款计划和时间</br>·先付费 后办事</br>·花小钱 办大事</br>·少烦恼，不慌乱
+                </view>
+                <view class="bot-title-box">
+                    <view class="icon-box"></view>
+                    <view class="title-text-box">活马</view>
+                </view>
+                <view class="bot-content-box">
+                    您认为账不对，要花点心思理清</br>·前期跑腿费+见面部分提成</br>·风险共担 长效激励</br>·利益均衡 效益可期
+                </view>
+                <view class="bot-title-box">
+                    <view class="icon-box"></view>
+                    <view class="title-text-box">还魂马</view>
+                </view>
+                <view class="bot-content-box">
+                    您认为不抱希望了，全力争取减免，少亏就是赚</br>·先用后付 不减免不收费</br>·风险律师担 大力出奇迹</br>·重赏之下 必有勇士
+                </view>
+                
+            </scroll-view>
             <view class="bot-save">
                 <view class="save-box" @click="closePop('offerPopop')">朕知道了</view>
             </view>
@@ -1489,7 +1585,7 @@
                            全选
                        </view>
                 </view>
-                <view class="bot-con">
+                <scroll-view scroll-y="true" class="bot-con">
                     <view class="lawyer-con" v-for="(item,index) in removeUserData" :key='index' @click="lawyerItemClick(item)">
                         <view class="lawyer-left">
                             <view class="image-wrapper"><image :src="item.lawyer_avatar" mode="widthFix"></image></view>
@@ -1534,7 +1630,7 @@
                             </view>
                         </view>
                     </view>
-                </view>
+                </scroll-view>
                 <view class="bot-save">
                     <view class="save-box" @click="lawyerSaveClick">确定</view>
                 </view>
@@ -1552,6 +1648,7 @@
             	</view>
             <view class="bot-select-con">
                 <view v-for="(item,index) in moneyList" :key='index' :class="price_type_text == item.price_type_text ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="priceSelectClick(item)" style="position: relative;">{{item.price_type_text }}
+                    <image v-if="item.price_type_text == '先付后用 任性付'" class="noback" src="@/static/img/order-noback4.png" mode="aspectFit"></image>
                     <image v-if="item.price_type_text == '先用后付 无忧付'" class="noback" src="@/static/img/order-noback2.png" mode="aspectFit"></image>
                     <image v-if="item.price_type_text == '边用边付 轻松付'" class="noback" src="@/static/img/order-noback3.png" mode="aspectFit"></image>
                 </view>
@@ -1569,21 +1666,23 @@
             		</view>
             	</view>
             <view class="bot-select-con">
-                <view :class="pay_type == '微信' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('微信')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon1.png" mode="aspectFit"></image>微信</view>
-                <view :class="pay_type == '支付宝' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('支付宝')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon2.png" mode="aspectFit"></image>支付宝</view>
-                <view :class="pay_type == '余额' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('余额')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon3.png" mode="aspectFit"></image>余额
+                <view :class="pay_type == '微信' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('微信')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon1.png" mode="aspectFit"></image>微信</view>
+                <view :class="pay_type == '支付宝' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('支付宝')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon2.png" mode="aspectFit"></image>支付宝</view>
+                <view :class="pay_type == '余额' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('余额')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon3.png" mode="aspectFit"></image>余额
                     <view style="font-size: 20rpx;color:#C0C0C0">
                         {{ info.money }}
                     </view>
                 </view>
-                <view :class="pay_type == '朋友代付' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="playTypeSelectClick('朋友代付')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon4.png" mode="aspectFit"></image>朋友代付</view>
+                <view :class="pay_type == '朋友代付' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('朋友代付')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon4.png" mode="aspectFit"></image>朋友代付</view>
             </view>
             </view>
         </uni-popup>
         
         <!-- 选择地区组件 -->
+        
         <u-picker mode="region" v-model="showArea" :params="params" :default-region="defaultRegion"
-        	confirm-color="#FFC801" @confirm="regionConfirm"></u-picker>
+        	confirm-color="#FFC801" @confirm="regionConfirm" title='选择律师执业区域'>
+            </u-picker>
 		<!-- 其他费用或有温馨提示 -->
 		<order-common-tip ref="orderCommonTipMaybe">
 			<view class="warm-tip-box" style="padding: 0 30rpx;">
@@ -1677,18 +1776,17 @@
 				},
 				serviceType: '', //服务方式
 				practiceChoose: '智能匹配', //挑选方式
-				practiceYear: '全部', //执业年限
+				practiceYear: '', //执业年限
 				practiceArea: '全国', //执业区域
 				product_id: '', //七个产品id
 				product_name: '', //七个产品名称
 				area_id: '', //服务领域id
 				requirement: '', //我的要求
-				tags: '', //服务保障
+				tags: [], //服务保障
 				serve_content: '', //服务内容
 				desc_content: '', //产品说明
 				money: '', //律师费
 				moneyList: [], //律师费列表
-				source: [], //项目资料
 				price_type_text: '', //律师费 付款方式
 				agree: '', //同意
 				bearFees: '', //费用承担
@@ -1743,10 +1841,22 @@
                 keyword:'',
                 later_money:'',
                 pay_type:'微信',
-                playTypeList:[{name:'微信',img:'@/static/img/pay-icon1.png'},
-                {name:'支付宝',img:'@/static/img/pay-icon2.png'},
-                {name:'余额',img:'@/static/img/pay-icon3.png'},
-                {name:'朋友代付',img:'@/static/img/pay-icon4.png'}]
+								product_image:'',
+								buyTipData:'',
+								hetong_doc:'',
+								doc_touziren:'',
+								doc_zifei:'',
+								card_images:'',//欠款方身份证正反面/姓名 身份证号
+								liaotian_images:'',//确认欠款金额的聊天截图内容
+								jietiao_images:'',//借条/欠条/还款承诺书/对账单等文书
+								cuishou_images:'',//催收的聊天内容(微信/支付宝/录音/录像)
+								huan_images:'',//还款记录(包括每次还款金额和还款时间) 
+								other_images:'',//您认为有用的其他有用材料
+								price:'0',//价格
+								sale:'0',//销量
+								labelData:[],
+								productTitleName:'',
+                                total:0
             };
 		},
 		created() {
@@ -1764,6 +1874,7 @@
 				this.product_id = params.product_id;
 				this.area_id = params.area_id;
 				this.product_name = params.product_name;
+				this.product_image = params.product_image;
 				this.init();
 			}
 		},
@@ -1776,7 +1887,7 @@
 			},
 			//切换费用承担
 			bearFees(val, oldVal) {
-				if (this.bearFees == '投资人支付(不用还)') {
+				if (this.bearFees == '投资人支付') {
 					this.jindu = '待起诉';
 					this.self_ident = '起诉方';
 					this.dui_ident = '个人/个体户';
@@ -1785,15 +1896,16 @@
 					this.hear_basis = '合同约定的管辖地点';
 					this.hear_addr = '广东广州';
 					this.qiankuan = '本金1万元以上—5万元以下(含)(人民币)';
-					this.money = '投资人支付(不用还)';
+					this.money = '投资人支付';
                     this.is_believe = 1;
                     this.is_fayuan_zhixing = 1
-                    this.practiceYear = '全部'
+                    this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
                     this.serve_offer = '投资人确定'
 				} else if (this.bearFees == '自费') {
 					this.qiankuan = '都可以';
                     this.serve_offer = '平台统一价'
+                    this.practiceYear = this.productNameData[0].value_name
 					if (oldVal) {
 						this.getMoney();
 					}
@@ -1814,7 +1926,7 @@
 					this.getMoney();
 				}
 			},
-			// 我的角色
+			// 您的角色
 			self_ident(val, oldVal) {
 				this.getStage();
 				this.getTip();
@@ -1876,7 +1988,6 @@
 				this.money = res.data.product.price;
 				this.serviceType = res.data.product.product_type;
 				this.practiceChoose = res.data.product.choose;
-				this.practiceYear = res.data.product.product_name;
 				// this.practiceArea = res.data.product.profession_name;
                 this.practiceArea = '广东省,深圳市'
                 this.defaultRegion = ['广东省', '深圳市']
@@ -1893,7 +2004,6 @@
 				this.hear_basis = res.data.list.hear_basis[0];
 				this.hear_addr = res.data.list.hear_addr[0];
 				this.requirement = res.data.product.requirement || '';
-				this.source = res.data.product.source || [];
 				this.offer = res.data.product.offer;
 				this.offerList = res.data.list.offer;
 				this.moneyList = res.data.list.price_type;
@@ -1905,8 +2015,24 @@
                 this.stageSelectData[3].image = res.data.product.doc_jieduan5
                 this.hearAddrUrl = res.data.product.doc_shenli
                 this.productNameData = res.data.list.product_name
+                this.practiceYear = this.productNameData[0].value_name
                 this.moneyTypeData = res.data.list.money_type || []
                 this.offerData = res.data.list.offer || []
+								this.buyTipData = res.data.buy_tips || []
+								this.hetong_doc = res.data.product.hetong_doc
+								this.doc_touziren = res.data.product.doc_touziren
+								this.doc_zifei = res.data.product.doc_zifei
+								this.card_images = res.data.product.card_images || ''//欠款方身份证正反面/姓名 身份证号
+								this.liaotian_images = res.data.product.liaotian_images || ''//确认欠款金额的聊天截图内容
+								this.jietiao_images = res.data.product.jietiao_images || ''//借条/欠条/还款承诺书/对账单等文书
+								this.cuishou_images = res.data.product.cuishou_images || ''//催收的聊天内容(微信/支付宝/录音/录像)
+								this.huan_images = res.data.product.huan_images || ''//还款记录(包括每次还款金额和还款时间) 
+								this.other_images = res.data.product.other_images || ''//您认为有用的其他有用材料
+								this.price = res.data.product.price || '0' //价格
+								this.sale = res.data.product.sale || '0' //销量
+								this.labelData = res.data.product.label
+								this.productTitleName = res.data.product.product_name
+								this.tags = res.data.product.tags || []
 			},
 			async getMoney() {
 				let formData = {
@@ -1915,7 +2041,7 @@
 					product_id: this.product_name,
 					product_name_id: this.practiceYear,
 					coupon_id: this.current_coupon ? this.current_coupon.id : '',
-					self_ident: this.self_ident, //我的角色
+					self_ident: this.self_ident, //您的角色
 					stage: this.stage, //服务阶段
 					offer: this.offer //服务报价
 				};
@@ -1925,6 +2051,7 @@
 				this.money = res.data.length > 0 ? res.data[0].price : '';
 				this.price_type_text = res.data.length > 0 ? res.data[0].price_type_text : '';
 				this.sell = res.data.length > 0 ? res.data[0].sell : '';
+                this.total = res.data.length > 0 ? res.data[0].total : 0;
 			},
 			// 优惠券
 			getCoupon(current_coupon) {
@@ -1947,8 +2074,16 @@
 				}
 			},
 			confirm() {
-				if (this.bearFees == '投资人支付(不用还)') {
-					this.$refs.investContact.$refs.popupBond.open();
+				if (this.bearFees == '投资人支付') {
+					// this.$refs.investContact.$refs.popupBond.open();
+					if (this.agree == '1') {
+						this.addOrder(this.price_type_text);
+					} else {
+						uni.showToast({
+							title: '请勾选我已阅读并同意按上述条款履行',
+							icon: 'none'
+						});
+					}
 				} else {
 					this.addOrder(this.price_type_text);
 				}
@@ -1964,7 +2099,6 @@
 					money_type: money_type ? money_type : '',
 					money: this.money,
 					pay_type: this.pay_type, //无
-					source: this.source,
 					requirement: this.$refs.myrequire.requirement_copy,
 					price_type: this.bearFees, // 费用承担
 					price_detail: '', //费用明细
@@ -1980,7 +2114,13 @@
 					server_address: this.hear_basis + this.hear_addr, //审理地点,
 					product_price_id: this.product_price_id,
 					fali_source: this.fali_source,
-                    lang_ids:this.lang_ids
+          lang_ids:this.lang_ids,
+					card_images : this.card_images,//欠款方身份证正反面/姓名 身份证号
+					liaotian_images : this.liaotian_images,//确认欠款金额的聊天截图内容
+					jietiao_images : this.jietiao_images,//借条/欠条/还款承诺书/对账单等文书
+					cuishou_images : this.cuishou_images,//催收的聊天内容(微信/支付宝/录音/录像)
+					huan_images : this.huan_images,//还款记录(包括每次还款金额和还款时间) 
+					other_images : this.other_images,//您认为有用的其他有用材料
 				};
 
 				if (this.edit_order_id) {
@@ -2019,14 +2159,14 @@
 					// 新下单
 					else {
 						this.order_id = res.data.order_id;
-						if (money_type == '先用后付 无忧付' || this.bearFees == '投资人支付(不用还)' || this.offer == '还魂马') {
+						if (money_type == '先用后付 无忧付' || this.bearFees == '投资人支付' || this.offer == '还魂马') {
 							this.replace('/pages/client/user/match-specialist', {
 								order_id: this.order_id
 							});
 						} else {
 							let formDataPay = {
 								order_id: this.order_id,
-								payMethod: pay_type,
+								payMethod: this.pay_type,
 								fen: '',
 								pay_type: 1
 							};
@@ -2252,9 +2392,13 @@
             },
             // 全选
             selectAll(){
-                this.userSelectData = this.removeUserData.map((item,index)=>{
-                    return item.id
-                })
+                if(this.userSelectData.length == this.removeUserData){
+                    this.userSelectData = []
+                }else{
+                    this.userSelectData = this.removeUserData.map((item,index)=>{
+                        return item.id
+                    })                    
+                }
             },
             // 付款时间点击选项
             priceSelectClick(info){
@@ -2262,12 +2406,21 @@
                 this.price_type_text = info.price_type_text;
                 this.money = info.price;//前期费用
                 this.later_money = info.later_money || ''//后期费用
+                this.total = info.total || 0//后期费用
                 this.closePop('priceTypePopup')
             },
             playTypeSelectClick(info){
                 this.pay_type = info
                 this.closePop('playTypePopop')
-            }
+            },
+						// 查看债券投资合同
+						checkHeTong(){
+							
+						},
+                        stageSelectClick(item){
+                            this.stage = item
+                this.closePop('popupServiceStage')
+                        }
 		}
 	};
 </script>
@@ -2372,40 +2525,46 @@
 			height: 66rpx;
 			line-height: 66rpx;
 			display: flex;
+            justify-content: space-between;
 			margin-top: 16rpx;
 			align-items: center;
-			justify-content: center;
+			padding: 0rpx 20rpx;
 			border-radius: 10rpx;
-
-			.bottom-sure {
-				width: 50rpx;
-				height: 50rpx;
-			}
-
-			.bottom-left {
-				font-size: 28rpx;
-				font-weight: bold;
-				color: #0DAB37;
-			}
-
-			.bottom-order {
-				width: 2rpx;
-				height: 30rpx;
-				margin: 0 10rpx;
-				background-color: #D2D2D2;
-			}
-
-			.bottom-txt {
-				font-size: 24rpx;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
+            .bottom-info{
+                display: flex;
+                height: 100%;
+                align-items: center;
+                .bottom-sure {
+                	width: 30rpx;
+                	height: 30rpx;
+                }
+                
+                .bottom-left {
+                	font-size: 28rpx;
+                	font-weight: bold;
+                	margin-left: 10rpx;
+                	color: #0DAB37;
+                }
+                
+                .bottom-order {
+                	width: 2rpx;
+                	height: 30rpx;
+                	margin: 0 10rpx;
+                	background-color: #D2D2D2;
+                }
+                
+                .bottom-txt {
+                	font-size: 24rpx;
+                	overflow: hidden;
+                	text-overflow: ellipsis;
+                	white-space: nowrap;
+                }
+            }
+			
 
 			.bottom-img {
 				width: 14rpx;
 				height: 24rpx;
-				margin-left: 24rpx;
 			}
 		}
 	}
@@ -2701,7 +2860,7 @@
             }
         }
     .assistant-title-box{
-        margin-left: 120rpx;
+        margin-left: 160rpx;
         height: 60rpx;
         color: #777777;
         font-size: 24rpx;
@@ -2709,7 +2868,8 @@
     	.bot-con {
     		padding: 0 30rpx;
             height: 800rpx;
-            overflow-y: scroll;
+            // overflow-y: scroll;
+            width: calc(100% - 60rpx);
     		.service-list {
     			margin-bottom: 20rpx;
     		}
@@ -2979,5 +3139,84 @@
                color: #222222;
             }
         }
+        .stage-scroll-box{
+            max-height: 600rpx;
+            padding-left: 25%;
+            margin: 20rpx 0rpx;
+            .select-item-box{
+                width: 50%;
+                height: 60rpx;
+                margin: 10rpx 0rpx;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            // 选中
+            .pitch-on{
+               border:1px solid #F9B804;
+               color: #F9B804;
+            }
+            // 未选中
+            .un-pitch{
+               border:1px solid #DDDDDD;
+               color: #222222;
+            }
+        }
     }
+		.save-box-two{
+			background-color: #ffffff;
+			padding: 20rpx 30rpx;
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			box-sizing: border-box;
+			border-top: 1rpx solid #f6f6f6;
+			z-index: 10;
+			.chekc-group-box{
+				display: flex;
+				height: 60rpx;
+				align-items: center;
+				.check-info{
+					color: #06b4fd;
+				}
+			}
+			
+			.save-go-box {
+				display: flex;
+	justify-content: space-between;
+				width: 100%;
+				z-index: 10;
+			
+				.go-left {
+					display: flex;
+					align-items: center;
+					color: #f00;
+					flex-wrap: wrap;
+					.left-prize {
+						width: 100%;
+					}
+					.left-tip {
+						font-size: 24rpx;
+						color: #aaaaaa;
+					}
+				}
+			
+				.go-right {
+					.go-btn {
+						width: 300rpx;
+						background-color: $uni-color-primary;
+						border-radius: 20rpx;
+						color: #ffffff;
+						font-size: 36rpx;
+						height: 80rpx;
+						line-height: 80rpx;
+						box-sizing: border-box;
+			
+						&::after {
+							border: none;
+						}
+					}
+				}
+			}
+		}
 </style>

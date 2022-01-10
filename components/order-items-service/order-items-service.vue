@@ -1,6 +1,6 @@
 <template>
 	<view class="od-item marginbottom20">
-		<view class="item-tip">服务领域<image @click="openPopup" src="@/static/img/order-ques.png" mode=""
+		<view class="item-tip" @click="openPopup">服务领域<image  src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx"></image>
 		</view>
 		<view class="item-right" @click="openServiceArea()">
@@ -27,7 +27,7 @@
                 			</view>
                 		</view>
                 	</view>
-                    <view class="bot-con">
+                    <scroll-view scroll-y="true" class="bot-con">
                         <view class="bot-title-box">
                             <view class="icon-box"></view>
                             <view class="title-text-box">快速指引</view>
@@ -69,7 +69,7 @@
                         <view class="bot-content-box">
                             包括打假纠纷，商标/专利/著作权纠纷，网站侵权纠纷,商标申请、续期、变更、转让等，专利认定、申请、许可使用等，著作权保护、转让、许可等，知识产权管理制度，商业秘密保护，知识产权归属、行政决定/处罚等。
                         </view>
-                        </view>
+                        </scroll-view>
                         <view class="bot-save">
                             <view class="save-box" @click="close">朕知道了</view>
                         </view>
@@ -183,7 +183,8 @@
     	.bot-con {
     		padding: 0 30rpx;
             height: 800rpx;
-            overflow-y: scroll;
+            width: calc(100% - 60rpx);
+            // overflow-y: scroll;
     		.service-list {
     			margin-bottom: 20rpx;
     		}

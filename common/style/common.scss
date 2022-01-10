@@ -177,6 +177,7 @@ uni-button[disabled][type='default'] {
 				flex: 1;
 				line-height: 60rpx;
 				display: flex;
+                margin-left: 10rpx;
 				.ipt {
 					margin-top: 10rpx;
 					flex: 1;
@@ -198,6 +199,7 @@ uni-button[disabled][type='default'] {
 			.right-textarea {
 				width: 100%;
 				display: flex;
+                margin-left: 10rpx;
 				.textarea-left {
 					flex: 1;
 					position: relative;
