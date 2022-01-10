@@ -9,7 +9,7 @@
 		<view class="bot-con">
 			<view class="od-box">
 				<slot name="payOption"></slot>
-				<view class="od-item">
+				<!-- <view class="od-item">
 					<view class="item-tip require">付款方式</view>
 					<view class="item-right">
 						<view class="pay-list" style="width: 100%; display: flex; flex-wrap: wrap;">
@@ -31,11 +31,24 @@
 							</view>
 						</view>
 					</view>
-				</view>
+				</view> -->
 				<slot name="payOption2"></slot>
+				
+				
 			</view>
 		</view>
-		<view class="ok-box"><button type="default" class="ok-btn" @click="confirmPay" style="margin: -30rpx 100rpx 0;">{{btnText}}</button></view>
+		<!-- style="margin: -30rpx 100rpx 0;" 原button样式 -->
+		<!-- <view class="flex-item-i">
+				<label class="radio">
+				<radio value="" color="#ffca00" /><text>我已与委托人确认付款金额</text>
+				</label>
+			</view> -->	
+		<view class="ok-box">
+			<text class="amount">合计
+			<text class=" red"> ¥ 9999.00</text>
+			</text>
+			<button type="default" class="ok-btn" @click="confirmPay">{{btnText}}</button>
+			</view>
 	</view>
 </template>
 
@@ -78,7 +91,8 @@ export default {
 	}
 }
 .popup-bottom-box {
-	background-color: #ffffff;
+	background-color: #F5f5f5;
+	height: 1080rpx;
 	overflow: auto;
 	border-radius: 26rpx;
 	.bot-title {
@@ -120,6 +134,8 @@ export default {
 		}
 		.od-box {
 			padding: 0;
+			// height: 800rpx;
+			background: #f5f5f5;
 		}
 	}
 }
@@ -160,4 +176,16 @@ export default {
 		}
 	}
 }
+.ok-box{
+	background: #f5f5f5;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+.amount{
+	font-size: 32rpx;
+.red{
+	color:#f00;
+}
+}}
+
 </style>
