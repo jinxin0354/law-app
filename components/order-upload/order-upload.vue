@@ -21,6 +21,7 @@
 	</uni-popup>
 </template>
 
+
 <script>
 export default {
 	props: [],
@@ -48,6 +49,9 @@ export default {
 		}
 	},
 	methods: {
+		sourceOk(res) {
+			this.fali_source = res;
+		},
 		//接收文件
 		fileOk(res) {
 			let tempList = [];
@@ -91,6 +95,10 @@ export default {
 		},
 		//选择照片
 		pickPhoto() {
+			// this.$emit('fileResult',[''])
+			// uni.hideLoading()
+			// this.closePop('popupAdd')
+			// return
 			const nav = navigator.userAgent;
 			uni.showLoading({
 				title: '上传中'

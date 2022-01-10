@@ -15,7 +15,7 @@
 							<view class="flex flex-horizontal">
 								<label>
 									<view class="why-checkbox">
-										<view class="checkbox-left  ">
+										<view class="checkbox-left">
 											<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" checked="" />
@@ -50,7 +50,6 @@
 											<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 											<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue2" checked="" />
 										</view>
-									
 									</view>
 								</label>
 								<view class="flex flex-vertical flex-1">
@@ -247,6 +246,13 @@ export default {
 		},
 		async confirm() {
 			
+			if (this.result.length == 0) {
+				uni.showToast({
+					title: '请选择申请事项',
+					icon: 'none'
+				})
+				return;
+			}
 			
 			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
 			if (sum > 5000) {
@@ -280,40 +286,42 @@ export default {
 				}
 			}
 			
-			
-			if (this.result.indexOf('checkValue4') != -1) {
-				if (this.contract_list.length <= 0) {
-					uni.showToast({
-						title: '委托代理合同为必填项',
-						icon: 'none'
-					})
-					return;
-				}
-				
-				if (this.main_list.length <= 0) {
-					uni.showToast({
-						title: '委托人主体资料为必填项',
-						icon: 'none'
-					})
-					return;
-				}
-				
-				if (this.indictment_list.length <= 0) {
-					uni.showToast({
-						title: '起诉状（委托人已签章）为必填项',
-						icon: 'none'
-					})
-					return;
-				}
-				
-				if (this.note_list.length <= 0) {
-					uni.showToast({
-						title: '立案受理通知书为必填项',
-						icon: 'none'
-					})
-					return;
+			if (this.apply_lawyer == 0) {
+				if (this.result.indexOf('checkValue4') != -1) {
+					if (this.contract_list.length <= 0) {
+						uni.showToast({
+							title: '委托代理合同为必填项',
+							icon: 'none'
+						})
+						return;
+					}
+					
+					if (this.main_list.length <= 0) {
+						uni.showToast({
+							title: '委托人主体资料为必填项',
+							icon: 'none'
+						})
+						return;
+					}
+					
+					if (this.indictment_list.length <= 0) {
+						uni.showToast({
+							title: '起诉状（委托人已签章）为必填项',
+							icon: 'none'
+						})
+						return;
+					}
+					
+					if (this.note_list.length <= 0) {
+						uni.showToast({
+							title: '立案受理通知书为必填项',
+							icon: 'none'
+						})
+						return;
+					}
 				}
 			}
+			
 			
 			
 			
