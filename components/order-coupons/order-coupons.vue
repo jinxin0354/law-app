@@ -31,7 +31,7 @@ export default {
 	props: ['couponsInfo', 'current_coupon'],
 	data() {
 		return {
-			active: -1
+			active: 0
 		};
 	},
 	created() {},

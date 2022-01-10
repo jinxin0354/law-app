@@ -35,6 +35,9 @@ export default {
 		};
 	},
 	created() {},
+    mounted(){
+        this.current_coupon = this.info.coupon.coupon[0] || ''
+    },
 	methods: {
 		openCoupons() {
 			if (this.info.coupon && this.info.coupon.coupon.length > 0) {

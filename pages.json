@@ -1165,6 +1165,17 @@
             }
             
         }
+        ,{
+            "path" : "pages/client/order/project-data",
+            "style": {
+            	"navigationBarTitleText": "项目资料",
+            	"enablePullDownRefresh": false
+            },
+            "meta": {
+            	"auth": true
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

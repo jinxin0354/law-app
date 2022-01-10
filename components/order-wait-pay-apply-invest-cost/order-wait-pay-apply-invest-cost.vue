@@ -73,8 +73,8 @@ export default {
 				pay_type = 2;
 				order_id = this.current_item.id;
 			} else {
-				pay_type = 1;
-				order_id = this.info.order.id;
+				pay_type = 4;
+				order_id = this.current_item.id;
 			}
 			let formDataPay = {
 				order_id: order_id,
