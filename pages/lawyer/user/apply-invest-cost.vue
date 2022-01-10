@@ -53,7 +53,7 @@
 									
 									</view>
 								</label>
-								<view class="flex flex-vertical">
+								<view class="flex flex-vertical flex-1">
 									<view class="flex flex-horizontal flex-center-v">
 										<text class="font-15">公告费</text>
 										<text style="margin-left: 10px;">￥</text>
@@ -62,7 +62,7 @@
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
-									<upload-add-list :list="announce_list" @change="listChange($event,'announce_list')"></upload-add-list>
+									<upload-add-list key="announce_list" :list="announce_list" @change="listChange($event,'announce_list')"></upload-add-list>
 									<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 								</view>
 							</view>
@@ -76,7 +76,7 @@
 										</view>
 									</view>
 								</label>
-								<view class="flex flex-vertical">
+								<view class="flex flex-vertical flex-1">
 									<view class="flex flex-horizontal flex-center-v">
 										<text class="font-15">异地被告身份查询费</text>
 										<text style="margin-left: 10px;">￥</text>
@@ -96,7 +96,7 @@
 										</view>
 									</view>
 								</label>
-								<view class="checkbox-right">
+								<view class="checkbox-right flex-1">
 									<view class="flex flex-vertical">
 										<view class="flex flex-horizontal flex-center-v">
 											<text class="font-15">律师费</text>
@@ -108,7 +108,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
-										<upload-add-list :list="contract_list" @change="listChange($event,'contract_list')"></upload-add-list>
+										<upload-add-list key="contract_list" :list="contract_list" @change="listChange($event,'contract_list')"></upload-add-list>
 										<!-- <view class="arrow-right"   @click="addPhoto(3)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
@@ -117,7 +117,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
-										<upload-add-list :list="main_list" @change="listChange($event,'main_list')"></upload-add-list>
+										<upload-add-list key="main_list" :list="main_list" @change="listChange($event,'main_list')"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(4)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -127,7 +127,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
-										<upload-add-list :list="indictment_list" @change="listChange($event,'indictment_list')"></upload-add-list>
+										<upload-add-list key="indictment_list" :list="indictment_list" @change="listChange($event,'indictment_list')"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(5)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -137,7 +137,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
-										<upload-add-list :list="note_list" @change="listChange($event,'note_list')"></upload-add-list>
+										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(6)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -260,53 +260,62 @@ export default {
 				})
 				return;
 			}
-			
-			if (this.case_list.length <= 0) {
-				uni.showToast({
-					title: '案件受理费缴纳通知书为必填项',
-					icon: 'none'
-				})
-				return;
-			}
-			if (this.announce_list.length <= 0) {
-				uni.showToast({
-					title: '公告费缴费通知书为必填项',
-					icon: 'none'
-				})
-				return;
+			if (this.result.indexOf('checkValue1') != -1) {
+				if (this.case_list.length <= 0) {
+					uni.showToast({
+						title: '案件受理费缴纳通知书为必填项',
+						icon: 'none'
+					})
+					return;
+				}
 			}
 			
-			if (this.contract_list.length <= 0) {
-				uni.showToast({
-					title: '委托代理合同为必填项',
-					icon: 'none'
-				})
-				return;
+			if (this.result.indexOf('checkValue2') != -1) {
+				if (this.announce_list.length <= 0) {
+					uni.showToast({
+						title: '公告费缴费通知书为必填项',
+						icon: 'none'
+					})
+					return;
+				}
 			}
 			
-			if (this.main_list.length <= 0) {
-				uni.showToast({
-					title: '委托人主体资料为必填项',
-					icon: 'none'
-				})
-				return;
+			
+			if (this.result.indexOf('checkValue4') != -1) {
+				if (this.contract_list.length <= 0) {
+					uni.showToast({
+						title: '委托代理合同为必填项',
+						icon: 'none'
+					})
+					return;
+				}
+				
+				if (this.main_list.length <= 0) {
+					uni.showToast({
+						title: '委托人主体资料为必填项',
+						icon: 'none'
+					})
+					return;
+				}
+				
+				if (this.indictment_list.length <= 0) {
+					uni.showToast({
+						title: '起诉状（委托人已签章）为必填项',
+						icon: 'none'
+					})
+					return;
+				}
+				
+				if (this.note_list.length <= 0) {
+					uni.showToast({
+						title: '立案受理通知书为必填项',
+						icon: 'none'
+					})
+					return;
+				}
 			}
 			
-			if (this.indictment_list.length <= 0) {
-				uni.showToast({
-					title: '起诉状（委托人已签章）为必填项',
-					icon: 'none'
-				})
-				return;
-			}
 			
-			if (this.note_list.length <= 0) {
-				uni.showToast({
-					title: '立案受理通知书为必填项',
-					icon: 'none'
-				})
-				return;
-			}
 			
 			
 			this.addInfo();
@@ -320,13 +329,16 @@ export default {
 				announce_money: Number(this.announce_money),
 				announce: this.getUrlParams(this.announce_list),
 				enquire: Number(this.enquire),	
-				lawyer: Number(this.lawyer),
 				case: this.getUrlParams(this.case_list),
 				contract: this.getUrlParams(this.contract_list),
 				main: this.getUrlParams(this.main_list),
 				indictment: this.getUrlParams(this.indictment_list),
 				note: this.getUrlParams(this.note_list),
 			};
+			
+			if (this.apply_lawyer == 0) {
+				formData.lawyer =  Number(this.lawyer)
+			}
 
 			let res = await this.$api('index.lawyer_apply', formData);
 			if (res.code == 1) {

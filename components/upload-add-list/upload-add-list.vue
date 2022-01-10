@@ -3,7 +3,7 @@
 		<view class="upload-item" v-for="(item, index) in list" :key="index" @click="previewImage(item)">
 			<!-- 显示图片 -->
 			<view class="item-img" v-if="getFileType(item.name) == 'image'">
-				<view class="image-wrapper"><image :src="item.url" mode="aspectFit"></image></view>
+				<view class="image-wrapper"><image :src="item.url" mode="aspectFill"></image></view>
 			</view>
 			<!-- 显示其他 -->
 			<template v-else>
@@ -156,7 +156,8 @@
 <style lang="scss">
 .upload-box {
 	.upload-item {
-		height: 200rpx;
+		height: 66px;
+		// height: calc((100% - 40rpx) / 3);
 		box-sizing: border-box;
 		background-color: #ffffff;
 		border-radius: 20rpx;

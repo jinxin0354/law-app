@@ -20,8 +20,8 @@
 			<!-- <view class="word-num" v-if="seHeight == true">{{ txtVal }}/30</view> -->
 		</view>
 		 <view class="textarea-tip">
-			<view class="image-wrapper" @click="change"><image src="@/static/img/edit-icon.png" mode="aspectFit"></image></view>
-			<view class="tip-demo" v-if="isFocus">
+			<view class="image-wrapper" @click="change"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
+			<view class="tip-demo" style="z-index: 9999;" v-if="isFocus">
 				<view style="font-weight: bold; font-size: 28rpx; ">范例</view>
 				<view>我要陈冠希还我借款200元</view>
 				<view>我要彭于晏赔偿我人身损害费300元</view>

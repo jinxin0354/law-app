@@ -62,7 +62,7 @@
 		<!-- 编辑案件主体弹窗 -->
 		<uni-popup ref="popupCase" type="center">
 			<order-popup-common title="案件主体信息" @closePop="closePop('popupCase')">
-				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
+				<view class="popup-con" scroll-y="true" slot="popup-con" style="overflow: visible;">
 					<view class="od-box" style="padding-top: 0;">
 						<view class="od-title"><text class="gray">(先联系委托人，确认信息后，再填写)</text></view>
 						<view class="case-title">委托人诉求{{requirement}}</view>
@@ -144,7 +144,7 @@
 								增加对方当事人</view>
 						</view>
 					</view>
-				</scroll-view>
+				</view>
 				<view class="ok-box" slot="popup-btn"><button type="default" class="ok-btn"
 						@click="confirmSave">确定</button></view>
 			</order-popup-common>
@@ -397,6 +397,9 @@
 </script>
 
 <style lang="scss">
+	.uni-scroll-view {
+		overflow: visible !important;
+	}
 	.content {
 		padding-bottom: 30rpx;
 	}
