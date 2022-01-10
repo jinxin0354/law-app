@@ -32,7 +32,7 @@ export default {
 	width: 660rpx;
 	box-sizing: border-box;
 	background-color: #ffffff;
-	overflow: auto;
+	// overflow: auto;
 	border-radius: 26rpx;
 	.popup-title {
 		display: flex;
