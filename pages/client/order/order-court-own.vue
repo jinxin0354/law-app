@@ -667,6 +667,7 @@
                 	<view class="item-right" @click="offer == '千里马' ? $refs.priceTypePopup.open() : ''">
                     <view class="service-list inline-list">
                     	<view class="service-item active" style="width: 60%;position: relative;">{{price_type_text}}
+                        <image v-if="price_type_text == '先付后用 任性付'" class="noback" src="@/static/img/order-noback4.png" mode="aspectFit"></image>
                         <image v-if="price_type_text == '先用后付 无忧付'" class="noback" src="@/static/img/order-noback2.png" mode="aspectFit"></image>
                         <image v-if="price_type_text == '边用边付 轻松付'" class="noback" src="@/static/img/order-noback3.png" mode="aspectFit"></image>
                         </view>
@@ -1647,6 +1648,7 @@
             	</view>
             <view class="bot-select-con">
                 <view v-for="(item,index) in moneyList" :key='index' :class="price_type_text == item.price_type_text ? 'select-item-box pitch-on': 'select-item-box un-pitch'" @click="priceSelectClick(item)" style="position: relative;">{{item.price_type_text }}
+                    <image v-if="item.price_type_text == '先付后用 任性付'" class="noback" src="@/static/img/order-noback4.png" mode="aspectFit"></image>
                     <image v-if="item.price_type_text == '先用后付 无忧付'" class="noback" src="@/static/img/order-noback2.png" mode="aspectFit"></image>
                     <image v-if="item.price_type_text == '边用边付 轻松付'" class="noback" src="@/static/img/order-noback3.png" mode="aspectFit"></image>
                 </view>
