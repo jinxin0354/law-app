@@ -261,7 +261,7 @@
 		<uni-popup ref="popupApplyServiceRemove" type="center">
 			<order-popup-common title="申请解除委托" @closePop="closePop('popupApplyServiceRemove')">
 				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
-					<view class="ck-box" >
+					<view class="ck-box" style="padding: 15px 24px;">
 						<!-- <checkbox-group>
 							<label class="ck-item">
 								<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
@@ -273,7 +273,7 @@
 							</label>
 						</checkbox-group> -->
 						<view class="dialog-tip">解除原因</view>
-						<view class="dialog-textarea border-box" style="height: 80px;">
+						<view class="dialog-textarea border-box" style="height: 80px;border: 1px solid #eee;border-radius: 10px;padding: 15px;">
 							<!-- style="width: calc(100% - 40rpx);" -->
 							<textarea class="border-box" placeholder="请输入解除事由" style="height: 100rpx;width: calc(100%);height: calc(100%);" :focus="true" placeholder-class="placeholder" v-model="reason" />
 						</view>

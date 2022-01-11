@@ -307,7 +307,7 @@
 					<view class="item-tip">投资人承担</view>
 					<view class="item-right"  @click="downloadFile(info.product.doc[2].url)">
 						<view class="item-txt">律师费+立案受理费+公告费+异地被告身份查询费</view>
-						<view class="whyIcon"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
+						<view class="whyIcon"><image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image></view>
 					</view>
 				</view>
 				<view class="od-item">

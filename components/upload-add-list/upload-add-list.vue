@@ -1,9 +1,10 @@
 <template>
-	<view class="flex flex-horizontal flex-wrap upload-box">
+	<view class="flex flex-horizontal flex-wrap upload-box" style="margin-top: 10px;">
 		<view class="upload-item" v-for="(item, index) in list" :key="index" @click="previewImage(item)">
 			<!-- 显示图片 -->
-			<view class="item-img" v-if="getFileType(item.name) == 'image'">
-				<view class="image-wrapper"><image :src="item.url" mode="aspectFit"></image></view>
+			<!-- getFileType(item.name) == 'image' -->
+			<view class="item-img" v-if="true">
+				<view class="image-wrapper"><image :src="item.url" mode="aspectFill"></image></view>
 			</view>
 			<!-- 显示其他 -->
 			<template v-else>
@@ -22,7 +23,9 @@
 				<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
 			</view>
 		</view>
-		<image @click="addPhoto" src="@/static/img/icon/icon_upload.png" mode="aspectFit" class="image"></image>
+		<view class="upload-item">
+			<image @click="addPhoto" src="@/static/img/icon/icon_upload.png" mode="aspectFit" class="item-img"></image>
+		</view>
 		<order-upload ref="uploadAdd" @fileResult="fileResult"></order-upload>
 	</view>
 </template>
@@ -146,17 +149,12 @@
 	}
 </script>
 
-<style>
-	.image {
-		width: 60px;
-		height: 60px;
-		margin-top: 10px;
-	}
-</style>
+
 <style lang="scss">
 .upload-box {
 	.upload-item {
-		height: 200rpx;
+		height: 66px;
+		// height: calc((100% - 40rpx) / 3);
 		box-sizing: border-box;
 		background-color: #ffffff;
 		border-radius: 20rpx;

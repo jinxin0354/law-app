@@ -15,7 +15,7 @@
 									<view class="flex flex-horizontal flex-center-v" >
 										<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1" checked="" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1"  />
 									</view>
 								</label>
 								<view class="flex flex-horizontal flex-center-v" style="margin-left: 15px;">
@@ -24,7 +24,7 @@
 										<text>￥</text>
 									</view>
 									<view class="input-border">
-										<input class="why-ipt" type="number" v-model="case_money" :disabled="result.indexOf('checkValue1') == -1" placeholder="请输入" placeholder-class="placeholder" />
+										<input class="why-ipt" type="number" pattern="[0-9]*" v-model="case_money" :disabled="result.indexOf('checkValue1') == -1" placeholder="请输入" placeholder-class="placeholder" />
 									</view>
 								</view>
 							</view>
@@ -33,7 +33,7 @@
 									<view class="flex flex-horizontal flex-center-v">
 										<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue2" checked="false" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue2" />
 									</view>
 								</label>
 								<view class="flex flex-horizontal flex-center-v" style="margin-left: 15px;">
@@ -41,7 +41,7 @@
 										公告费
 										<text>￥</text>
 									</view>
-									<view class="input-border"><input class="why-ipt" type="number" v-model="announce_money" :disabled="result.indexOf('checkValue2') == -1" placeholder="请输入" placeholder-class="placeholder" /></view>
+									<view class="input-border"><input class="why-ipt" pattern="[0-9]*" type="number" v-model="announce_money" :disabled="result.indexOf('checkValue2') == -1" placeholder="请输入" placeholder-class="placeholder" /></view>
 								</view>
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
@@ -49,7 +49,7 @@
 									<view class="flex flex-horizontal flex-center-v">
 										<image v-if="result.indexOf('checkValue3') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue3"  checked="false" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue3"   />
 									</view>
 								</label>
 								<view class="checkbox-right flex flex-horizontal">
@@ -59,7 +59,7 @@
 											<text>￥</text>
 										</view>
 										<view class="input-border">
-											<input class="why-ipt" type="number" v-model="enquire" placeholder="请输入" :disabled="result.indexOf('checkValue3') == -1" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" pattern="[0-9]*" v-model="enquire" placeholder="请输入" :disabled="result.indexOf('checkValue3') == -1" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -69,7 +69,7 @@
 									<view class="flex flex-horizontal flex-center-v">
 									<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
-										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"  checked="false" />
+										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"   />
 									</view>
 								</label>
 								<view class="checkbox-right flex flex-horizontal">
@@ -79,7 +79,7 @@
 											<text>￥</text>
 										</view>
 										<view class="">
-											<input class="why-ipt" type="number" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
+											<input class="why-ipt" type="number" pattern="[0-9]*" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -118,9 +118,6 @@ export default {
 			enquire: '',
 			lawyer: '1500',
 			result: [
-				'checkValue1',
-				'checkValue2',
-				'checkValue3'
 			]
 		};
 	},

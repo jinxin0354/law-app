@@ -20,16 +20,29 @@
 			<!-- <view class="word-num" v-if="seHeight == true">{{ txtVal }}/30</view> -->
 		</view>
 		 <view class="textarea-tip">
-			<view class="image-wrapper" @click="change"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
-			<view class="tip-demo" v-if="isFocus">
+			<view class="image-wrapper" @click="$refs.popupTip.open()"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
+			<uni-popup ref="popupTip" type="center">
+				<order-popup-common title="范例" @closePop="closePop('popupTip')">
+					<view class="flex flex-vertical" style="padding: 15px;" slot="popup-con">
+						<view>我要陈冠希还我借款200元</view>
+						<view>我要彭于晏赔偿我人身损害费300元</view>
+						<view>我要阿里巴巴给我货款30万元</view>
+						<view>我要与林志玲离婚，要抚养权，分财产</view>
+						<view>柳岩告我，要我赔偿精神损失费，没有道理，要求打赢</view>
+					</view>
+				</order-popup-common>
+			</uni-popup>
+		
+			<!-- <view class="tip-demo" style="z-index: 9999;" v-if="isFocus">
 				<view style="font-weight: bold; font-size: 28rpx; ">范例</view>
 				<view>我要陈冠希还我借款200元</view>
 				<view>我要彭于晏赔偿我人身损害费300元</view>
 				<view>我要阿里巴巴给我货款30万元</view>
 				<view>我要与林志玲离婚，要抚养权，分财产</view>
 				<view>柳岩告我，要我赔偿精神损失费，没有道理，要求打赢</view>
-			</view>
+			</view> -->
 		</view> 
+	
 	</view>
 </template>
 
