@@ -239,7 +239,7 @@ export default {
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
-			this[this.photoType].concat(tempList)
+			this[this.photoType] = this[this.photoType].concat(tempList)
 			uni.hideLoading()
 		},
 		//接收图片
@@ -249,7 +249,7 @@ export default {
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
-			this[this.photoType].concat(tempList)
+			this[this.photoType] = this[this.photoType].concat(tempList)
 			uni.hideLoading()
 		},
 		caseList(e) {

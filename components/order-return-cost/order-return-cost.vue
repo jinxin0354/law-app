@@ -5,7 +5,7 @@
 				<scroll-view scroll-y="" style="max-height: 570px;">
 					<view class="flex flex-vertical" style="padding: 0 16px;">
 						<view class="flex flex-horizontal flex-center-v">
-							<text class="font-15">付款人</text>
+							<text class="font-15" @click="add">付款人</text>
 							<text class="font-15" style="margin-left: 75px;">投资人</text>
 						</view>
 						<view class="flex flex-horizontal flex-center-v" style="margin-top: 20px;">
@@ -72,6 +72,21 @@ export default {
 		}
 	},
 	methods: {
+		add(){
+			let res = ["{}"]
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			console.log('tempList',tempList);
+			if (this.type == 1) {
+				this.proof = this.proof.concat(tempList) 
+			} else {
+				this.image = this.image.concat(tempList)
+			}
+			console.log('proof',this.proof);
+			console.log('image',this.image);
+		},
 		//接收文件
 		fileOk(res) {
 			console.log('fileOk',res);
@@ -82,9 +97,9 @@ export default {
 			});
 			
 			if (this.type == 1) {
-				this.proof.concat(tempList) 
+				this.proof = this.proof.concat(tempList) 
 			} else {
-				this.image.concat(tempList)
+				this.image = this.image.concat(tempList)
 			}
 			uni.hideLoading()
 		},
@@ -96,11 +111,15 @@ export default {
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
+			console.log('tempList',tempList);
 			if (this.type == 1) {
-				this.proof.concat(tempList) 
+				this.proof = this.proof.concat(tempList) 
 			} else {
-				this.image.concat(tempList)
+				this.image = this.image.concat(tempList)
 			}
+			console.log('proof',this.proof);
+			console.log('image',this.image);
+			
 			uni.hideLoading()
 		},
 		listChange(e,type) {
