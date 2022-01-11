@@ -74,8 +74,10 @@ export default {
 	methods: {
 		//接收文件
 		fileOk(res) {
-			if (res == 'nothing') {
-				uni.hideLoading()
+			
+			uni.hideLoading()
+			if (res == "nothing") {
+				return
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
@@ -87,12 +89,12 @@ export default {
 			} else {
 				this.image = this.image.concat(tempList)
 			}
-			uni.hideLoading()
 		},
 		//接收图片
 		photoOk(res) {
-			if (res == 'nothing') {
-				uni.hideLoading()
+			uni.hideLoading()
+			if (res == "nothing") {
+				return
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
@@ -103,8 +105,6 @@ export default {
 			} else {
 				this.image = this.image.concat(tempList)
 			}
-			
-			uni.hideLoading()
 		},
 		listChange(e,type) {
 			this[type] = e

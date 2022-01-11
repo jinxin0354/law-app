@@ -28,7 +28,7 @@
 											<text class="font-15">案件受理费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" pattern="[0-9]*" type="number" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
+												<input class="why-ipt" pattern="[0-9]*" type="text" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
 											</view>
 										</view>
 										<view class="flex flex-horizontal flex-center-v" style="margin-top: 7.5px;">
@@ -234,27 +234,27 @@ export default {
 	},
 	methods: {
 		fileOk(res) {
-			if (res == 'nothing') {
-				uni.hideLoading()
+			uni.hideLoading()
+			if (res == "nothing") {
+				return
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
 			this[this.photoType] = this[this.photoType].concat(tempList)
-			uni.hideLoading()
 		},
 		//接收图片
 		photoOk(res) {
-			if (res == 'nothing') {
-				uni.hideLoading()
+			uni.hideLoading()
+			if (res == "nothing") {
+				return
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
 			});
 			this[this.photoType] = this[this.photoType].concat(tempList)
-			uni.hideLoading()
 		},
 		caseList(e) {
 			this.case_list = e
