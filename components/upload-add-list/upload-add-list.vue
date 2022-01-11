@@ -39,10 +39,10 @@
 		props: ["list",'readOnly'],
 		methods: {
 			addPhoto() {
-				let list = this.list.concat({name:"word"})
-				this.$emit('change',list)
+				// let list = this.list.concat({name:"word"})
+				// this.$emit('change',list)
 				this.$emit('click')
-				// this.$refs.uploadAdd.$refs.popupAdd.open()
+				this.$refs.uploadAdd.$refs.popupAdd.open()
 			},
 			fileResult(e) {
 				console.log('fileResult',e);
@@ -168,7 +168,7 @@
 		.item-icon {
 			height: 89rpx;
 			// padding-top: 50rpx;
-			// padding-top: 20rpx;
+			padding-top: 10rpx;
 			.image-wrapper {
 				width: 67rpx;
 				height: 89rpx;
@@ -181,7 +181,7 @@
 		}
 		.item-name {
 			// padding: 80rpx 20rpx 0;
-			// padding: 20rpx 20rpx 0;
+			padding: 10rpx 20rpx 0;
 			text-align: center;
 			font-size: 28rpx;
 		}
