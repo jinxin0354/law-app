@@ -300,7 +300,7 @@
 		</uni-popup>
 		<!-- 债券投资合同组件-->
 		<order-invest-contact ref="investContact"></order-invest-contact>
-		<order-return-cost ref="returnCost" :orderId="order_id"></order-return-cost>
+		<order-return-cost ref="returnCost" @init="init()" :orderId="order_id"></order-return-cost>
 		
 		<!-- 打电话组件 -->
 		<order-telephone name="委托人" :phoneNumber="info.order.user_mobile" ref="telephoneClient" v-if="info.order.user_mobile"></order-telephone>

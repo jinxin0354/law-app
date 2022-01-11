@@ -135,6 +135,7 @@ export default {
 			
 			let res = await this.$api('index.money', formData);
 			if (res.code == 1) {
+				this.$emit('init')
 				this.closePop('returnCost')
 				// let pages = getCurrentPages();
 				// let prevPage = pages[pages.length - 2];
