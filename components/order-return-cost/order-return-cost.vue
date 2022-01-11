@@ -80,9 +80,9 @@ export default {
 			});
 			
 			if (this.type == 1) {
-				this.proof = tempList
+				this.proof.concat(tempList) 
 			} else {
-				this.image = tempList
+				this.image.concat(tempList)
 			}
 			uni.hideLoading()
 		},
@@ -93,9 +93,9 @@ export default {
 				tempList.push(JSON.parse(item));
 			});
 			if (this.type == 1) {
-				this.proof = tempList
+				this.proof.concat(tempList) 
 			} else {
-				this.image = tempList
+				this.image.concat(tempList)
 			}
 			uni.hideLoading()
 		},
