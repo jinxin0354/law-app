@@ -41,6 +41,7 @@
 			addPhoto() {
 				// let list = this.list.concat({name:"word"})
 				// this.$emit('change',list)
+				
 				this.$emit('click')
 				this.$refs.uploadAdd.$refs.popupAdd.open()
 			},
