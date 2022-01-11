@@ -1,7 +1,7 @@
 <template>
 	<view class="detail-item">
 		<view class="item-title">
-			<view style="display: flex;align-items: center;" @click="download(docZifei)">
+			<view style="display: flex;align-items: center;" @click="download({image:docZifei})">
 				打官司费用
 				<image  src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;margin-left: 10rpx;"></image>
@@ -69,6 +69,7 @@ export default {
 			this.isCollect = !this.isCollect;
 		},
 		async download(item) {
+            console.log(item.image)
 			const nav = navigator.userAgent;
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.loadOffice(item.image);

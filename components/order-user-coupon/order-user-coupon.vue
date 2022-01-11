@@ -1,10 +1,13 @@
 <template>
 	<view class="od-item marginbottom20">
-		<view class="item-tip" style="width: 200rpx;">优惠券</view>
+		<view class="item-tip title-box" style="width: 200rpx;">优惠券</view>
 		<view class="item-right" @click="openCoupons()">
 			<view class="item-txt gray" v-if="info.coupon && info.coupon.coupon && info.coupon.coupon.length == 0">暂无可用优惠券</view>
 			<template v-else>
-				<view class="item-txt red" v-if="current_coupon">-{{ current_coupon.money }}</view>
+				<view class="item-txt red" v-if="current_coupon">
+                    <view class="coupon-box">
+                        -{{ current_coupon.money }}
+                    </view></view>
 				<view class="item-txt gray" v-else>选择优惠券</view>
 				<view class="item-coupon" v-if="info.coupon && info.coupon.coupon && !current_coupon">
 					<text>{{ info.coupon.coupon.length }}张可用</text>
@@ -65,5 +68,14 @@ export default {
 		padding: 0 6rpx;
 		font-size: 24rpx;
 	}
+}
+.title-box{
+    display: flex;
+    align-items: center;
+}
+.coupon-box{
+    width:calc((100% - 44rpx) / 2);
+    border: 1rpx solid red;
+    text-align: center;
 }
 </style>
