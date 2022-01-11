@@ -51,6 +51,9 @@ export default {
 	methods: {
 		sourceOk(res) {
 			this.fali_source = res;
+			this.$emit('fileResult',tempList)
+			uni.hideLoading()
+			this.closePop('popupAdd')
 		},
 		//接收文件
 		fileOk(res) {

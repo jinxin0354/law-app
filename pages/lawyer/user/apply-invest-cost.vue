@@ -38,6 +38,8 @@
 										</view>
 										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
 										<upload-add-list :list="case_list" @change="listChange($event,'case_list')"></upload-add-list>
+										<upload-add-list :list="case_list" @change="caseList"></upload-add-list>
+										
 										<!-- <image @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 									</view>
 								</view>
@@ -228,6 +230,9 @@ export default {
 		}
 	},
 	methods: {
+		caseList(e) {
+			this.case_list = e
+		},
 		listChange(e,type) {
 			this[type] = e
 		},
@@ -322,10 +327,6 @@ export default {
 				}
 			}
 			
-			
-			
-			
-			
 			this.addInfo();
 		},
 		async addInfo() {
@@ -344,7 +345,7 @@ export default {
 				note: this.getUrlParams(this.note_list),
 			};
 			
-			if (this.apply_lawyer == 0) {
+			if (this.apply_lawyer == 0 && this.result.indexOf('checkValue4') != -1) {
 				formData.lawyer =  Number(this.lawyer)
 			}
 
