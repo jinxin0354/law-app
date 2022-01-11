@@ -17,14 +17,14 @@
 						</view>
 						<text class="font-15" style="margin-top: 30px;">委托人回款的银行流水<text style="color: red;">*</text></text>
 						<!-- <upload-add-list :list="proof" @change="listChange($event,'proof')"></upload-add-list> -->
-						<upload-add-list :list="proof" @change="listChangeProof"></upload-add-list>
+						<upload-add-list :list="proof" @change="listChangeProof" @click="type = 1"></upload-add-list>
 						<!-- 
 						<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
 							<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
 						</view> -->
 						<text class="font-15" style="margin-top: 30px;">委托人向投资人支付投资收益的付款记录<text style="color: red;">*</text></text>
 						<!-- <upload-add-list :list="image" @change="listChangeImage($event,'image')"></upload-add-list> -->
-						<upload-add-list :list="image" @change="listChangeImage"></upload-add-list>
+						<upload-add-list :list="image" @change="listChangeImage" @click="type = 2"></upload-add-list>
 						
 						<!-- 
 						<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
@@ -57,9 +57,14 @@ export default {
 			proof: [],//银行流水
 			image: [],//付款记录
 			price: '',//奖励金额
+			clickType: 1
 		};
 	},
 	created() {
+		window.fileOk = this.fileOk;
+		window.photoOk = this.photoOk;
+	},
+	mounted() {
 		
 	},
 	watch:{
@@ -72,6 +77,33 @@ export default {
 		}
 	},
 	methods: {
+		//接收文件
+		fileOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			
+			if (this.type == 1) {
+				this.proof = tempList
+			} else {
+				this.image = tempList
+			}
+			uni.hideLoading()
+		},
+		//接收图片
+		photoOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			if (this.type == 1) {
+				this.proof = tempList
+			} else {
+				this.image = tempList
+			}
+			uni.hideLoading()
+		},
 		listChange(e,type) {
 			this[type] = e
 		},

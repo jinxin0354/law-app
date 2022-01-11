@@ -40,21 +40,14 @@ export default {
 		}
 	},
 	created() {
-		window.fileOk = this.fileOk;
-		window.photoOk = this.photoOk;
-		window.sourceOk = this.sourceOk;
+		// window.fileOk = this.fileOk;
+		// window.photoOk = this.photoOk;
 		const nav = navigator.userAgent;
 		if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 			this.isShowUpFile = false;
 		}
 	},
 	methods: {
-		sourceOk(res) {
-			this.fali_source = res;
-			this.$emit('fileResult',tempList)
-			uni.hideLoading()
-			this.closePop('popupAdd')
-		},
 		//接收文件
 		fileOk(res) {
 			let tempList = [];
@@ -86,6 +79,7 @@ export default {
 			})
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.camera();
+				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('camera', {}, data => {
 					let tempList = this.trimSpace(data);
@@ -108,6 +102,7 @@ export default {
 			})
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.pickPhoto();
+				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('pickPhoto', {}, data => {
 					let tempList = this.trimSpace(data);
@@ -126,6 +121,7 @@ export default {
 			})
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.pickFile();
+				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('pickFile', {}, data => {
 					let tempList = this.trimSpace(data);
