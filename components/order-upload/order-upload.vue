@@ -74,15 +74,17 @@ export default {
 		// 打开摄像头
 		camera() {
 			const nav = navigator.userAgent;
-			uni.showLoading({
-				title: '上传中'
-			})
+			
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.camera();
+				uni.showLoading({
+					title: '上传中'
+				})
 				this.closePop('popupAdd')
+				
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('camera', {}, data => {
-					uni.hideLoading()
+					// uni.hideLoading()
 					let tempList = this.trimSpace(data);
 					// this.source = this.source.concat(tempList);
 					this.$emit('fileResult',tempList)
@@ -97,15 +99,17 @@ export default {
 			// this.closePop('popupAdd')
 			// return
 			const nav = navigator.userAgent;
-			uni.showLoading({
-				title: '上传中'
-			})
+		
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.pickPhoto();
+				uni.showLoading({
+					title: '上传中'
+				})
 				this.closePop('popupAdd')
+				
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('pickPhoto', {}, data => {
-					uni.hideLoading()
+					// uni.hideLoading()
 					let tempList = this.trimSpace(data);
 					// this.source = this.source.concat(tempList);
 					this.$emit('fileResult',tempList)
@@ -116,16 +120,16 @@ export default {
 		// 选择文件
 		pickFile() {
 			const nav = navigator.userAgent;
-			uni.showLoading({
-				title: '上传中'
-			})
+			
 			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 				phone.pickFile();
+				uni.showLoading({
+					title: '上传中'
+				})
 				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('pickFile', {}, data => {
 					let tempList = this.trimSpace(data);
-					
 					// this.source = this.source.concat(tempList);
 					this.$emit('fileResult',tempList)
 					uni.hideLoading()

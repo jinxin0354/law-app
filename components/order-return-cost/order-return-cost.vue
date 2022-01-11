@@ -74,10 +74,8 @@ export default {
 	methods: {
 		//接收文件
 		fileOk(res) {
-			
-			uni.hideLoading()
 			if (res == "nothing") {
-				return
+				uni.hideLoading()
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
@@ -92,9 +90,9 @@ export default {
 		},
 		//接收图片
 		photoOk(res) {
-			uni.hideLoading()
+			
 			if (res == "nothing") {
-				return
+				uni.hideLoading()
 			}
 			let tempList = [];
 			res.forEach((item, index) => {

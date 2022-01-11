@@ -28,7 +28,7 @@
 											<text class="font-15">案件受理费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" pattern="[0-9]*" type="text" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
+												<input class="why-ipt" pattern="[0-9]*" @input="inputChange($event,'case_money')" type="text" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
 											</view>
 										</view>
 										<view class="flex flex-horizontal flex-center-v" style="margin-top: 7.5px;">
@@ -233,10 +233,15 @@ export default {
 		window.photoOk = this.photoOk;
 	},
 	methods: {
+		inputChange(e,type){
+			this.$nextTick(() => {
+				this[type] = e.detail.value.replace(/\D/g,'')
+			})
+		},
 		fileOk(res) {
-			uni.hideLoading()
+			
 			if (res == "nothing") {
-				return
+				uni.hideLoading()
 			}
 			let tempList = [];
 			res.forEach((item, index) => {
@@ -246,9 +251,8 @@ export default {
 		},
 		//接收图片
 		photoOk(res) {
-			uni.hideLoading()
 			if (res == "nothing") {
-				return
+				uni.hideLoading()
 			}
 			let tempList = [];
 			res.forEach((item, index) => {

@@ -2,8 +2,7 @@
 	<view class="flex flex-horizontal flex-wrap upload-box" style="margin-top: 10px;">
 		<view class="upload-item" v-for="(item, index) in list" :key="index" @click="previewImage(item)">
 			<!-- 显示图片 -->
-			<!-- getFileType(item.name) == 'image' -->
-			<view class="item-img" v-if="true">
+			<view class="item-img" v-if="getFileType(item.name) == 'image'">
 				<view class="image-wrapper"><image :src="item.url" mode="aspectFill"></image></view>
 			</view>
 			<!-- 显示其他 -->
