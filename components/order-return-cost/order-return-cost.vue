@@ -12,7 +12,7 @@
 							<text class="font-15">投资人收益金额<text style="color: red;">*</text></text>
 							<text style="margin-left: 10px;">¥</text>
 							<view class="input-b">
-								<input class="why-ipt" type="number" pattern="[0-9]*" v-model="money" placeholder="投资人此次收到多少钱" placeholder-class="placeholder" />
+								<input class="why-ipt" type="number" pattern="[0-9]*" @input="inputChange($event,'money')" v-model="money" placeholder="投资人此次收到多少钱" placeholder-class="placeholder" />
 							</view>
 						</view>
 						<text class="font-15" style="margin-top: 30px;">委托人回款的银行流水<text style="color: red;">*</text></text>
@@ -31,8 +31,8 @@
 						<view class="flex flex-horizontal flex-center-v" style="margin-top: 24px;">
 							<text class="font-15">您的奖励金额<text style="color: red;">*</text></text>
 							<text style="margin-left: 10px;">¥</text>
-							<view  class="">
-								<input class="why-ipt font-13" pattern="[0-9]*" type="number" v-model="price" disabled="" placeholder="投资人收益金额x10%" placeholder-class="placeholder" />
+							<view  class="flex flex-1">
+								<input class="why-ipt font-13" pattern="[0-9]*" type="number" v-model="price" @input="inputChange($event,'price')" disabled="" placeholder="投资人收益金额x10%" placeholder-class="placeholder" />
 							</view>
 						</view>
 						<text class="flex flex-self-center" style="margin-top: 30px;">我已与投资人核对了奖励金额</text>
@@ -72,6 +72,11 @@ export default {
 		}
 	},
 	methods: {
+		inputChange(e,type){
+			this.$nextTick(() => {
+				this[type] = e.detail.value.replace(/\D/g,'')
+			})
+		},
 		//接收文件
 		fileOk(res) {
 			if (res == "nothing") {
@@ -87,6 +92,7 @@ export default {
 			} else {
 				this.image = this.image.concat(tempList)
 			}
+			uni.hideLoading()
 		},
 		//接收图片
 		photoOk(res) {
@@ -103,6 +109,7 @@ export default {
 			} else {
 				this.image = this.image.concat(tempList)
 			}
+			uni.hideLoading()
 		},
 		listChange(e,type) {
 			this[type] = e
