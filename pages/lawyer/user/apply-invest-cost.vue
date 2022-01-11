@@ -234,6 +234,7 @@ export default {
 	},
 	methods: {
 		fileOk(res) {
+			console.log('fileOk',res);
 			let tempList = [];
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
@@ -243,6 +244,7 @@ export default {
 		},
 		//接收图片
 		photoOk(res) {
+			console.log('photoOk',res);
 			let tempList = [];
 			res.forEach((item, index) => {
 				tempList.push(JSON.parse(item));
