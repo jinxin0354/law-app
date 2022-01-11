@@ -74,8 +74,8 @@
                 <view class="item-right" @click="$refs.priceTypeSelectPopop.open()">
                 	<view class="service-list inline-list">
                 		<view class="service-item active" style="position: relative;">{{bearFees}}
-										<image v-if="bearFees == '投资人支付'" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
-										</view>
+                            <image v-if="bearFees == '投资人支付'" style="right:-68rpx;top:-20rpx" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
+                        </view>
                 	</view>
                     <view class="item-nav">
                     	<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -452,7 +452,7 @@
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="$refs.popupServiceStage.open()">
                         <view class="item-txt gray" v-if="!stage">您想让律师帮您代理哪几个办案阶段</view>
-                		<view class="service-list inline-list">
+                		<view class="service-list inline-list" v-else>
                 			<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
                 		</view>
                 		<view class="item-nav">
@@ -461,7 +461,7 @@
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
-                	<view class="item-tip" style="padding-right: 20rpx;" @click="download(hearAddrUrl)"><view class="center-box">
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="download({image:hearAddrUrl})"><view class="center-box">
                         审理地点<view class="required-box">
                         *
                         </view>
@@ -590,6 +590,10 @@
                     <view class="service-list inline-list">
                     	<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{serve_offer}}</view>
                     </view>
+                    
+                    <view class="whyIcon" style="align-items:center" @click="downloadFile(info.product.doc[2].url)">
+                    	<image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
+                    </view>
                 	</view>
                 </view>
                 <view class="od-item marginbottom20">
@@ -684,10 +688,10 @@
                         </view>
                     </view>
                 	<view class="item-right" style="min-height:60rpx;padding-right: 20rpx;">
-                        <view class="service-list inline-list" v-if="offer == '千里马'" style="color:red;font-weight: 700;">
+                        <view class="service-list inline-list" v-if="offer == '千里马'" style="color:red;font-weight: 700;margin-left: 10rpx;">
                             ￥{{ total }}
                         </view>
-                        <view class="service-list inline-list" v-if="offer == '活马'" style="color:red;font-weight: 700;">
+                        <view class="service-list inline-list" v-if="offer == '活马'" style="color:red;font-weight: 700;;margin-left: 10rpx;">
                             前期费用：{{total}}(下单时付)
                             <view v-if="self_ident == '起诉方'">
                                 后期费用：按律师帮您回收款物金额的{{ later_money }}计算
@@ -696,7 +700,7 @@
                                 后期费用：按律师帮您减少支出金额的{{ later_money }}计算
                             </view>
                         </view>
-                        <view class="service-list inline-list" v-if="offer == '还魂马'" style="color:red;font-weight: 700;">
+                        <view class="service-list inline-list" v-if="offer == '还魂马'" style="color:red;font-weight: 700;;margin-left: 10rpx;">
                             <view v-if="self_ident == '起诉方'">
                                 按律师帮您回收款物金额的{{ later_money }}计算
                             </view>
@@ -839,7 +843,7 @@
 					</view>
 				</view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip" style="padding-right: 20rpx;" @click="download(hearAddrUrl)"><view class="center-box">
+					<view class="item-tip" style="padding-right: 20rpx;" @click="download({image:hearAddrUrl})"><view class="center-box">
                         审理地点<view class="required-box">
                         *
                         </view>
@@ -934,7 +938,7 @@
                 	</view>
                 </view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip" @click="download(doc_touziren)">投资人承担<image src="@/static/img/order-ques.png" mode=""
+					<view class="item-tip" style="align-items: flex-start;margin-top: 10rpx;" @click="download({image:doc_touziren})">投资人承担<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
 						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;color:red;padding: 6rpx 10rpx;margin-right: 6rpx;">律师费+立案受理费+公告费+异地被告身份查询费</view>
@@ -944,7 +948,7 @@
 					</view>
 				</view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
+					<view class="item-tip" style="align-items: flex-start;margin-top: 10rpx;" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
 						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx 10rpx;">
@@ -1034,7 +1038,7 @@
 				<label class="chekc-group-box" >
 					<checkbox style="transform:scale(0.8);" color="#FFC801" value="1" />
 					我已阅读
-					<view class="check-info" @click="download(hetong_doc)">
+					<view class="check-info" @click="download({image:hetong_doc})">
 						《债券投资合同》
 					</view>,并同意按上述条款履行
 				</label>
@@ -1669,7 +1673,7 @@
                 <view :class="pay_type == '微信' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('微信')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon1.png" mode="aspectFit"></image>微信</view>
                 <view :class="pay_type == '支付宝' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('支付宝')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon2.png" mode="aspectFit"></image>支付宝</view>
                 <view :class="pay_type == '余额' ? 'select-item-box pitch-on': 'select-item-box un-pitch'" style="justify-content:flex-start;padding-left:110rpx" @click="playTypeSelectClick('余额')"><image style="width: 40rpx;height: 40rpx;margin-right: 10rpx;" src="@/static/img/pay-icon3.png" mode="aspectFit"></image>余额
-                    <view style="font-size: 20rpx;color:#C0C0C0">
+                    <view style="font-size: 20rpx;color:#C0C0C0;margin-left: 10rpx;">
                         {{ info.money }}
                     </view>
                 </view>
@@ -1888,7 +1892,7 @@
 			//切换费用承担
 			bearFees(val, oldVal) {
 				if (this.bearFees == '投资人支付') {
-					this.jindu = '待起诉';
+					this.jindu = '未起诉';
 					this.self_ident = '起诉方';
 					this.dui_ident = '个人/个体户';
 					this.organization = '人民法院';
@@ -2861,7 +2865,7 @@
         }
     .assistant-title-box{
         margin-left: 160rpx;
-        height: 60rpx;
+        height: 30rpx;
         color: #777777;
         font-size: 24rpx;
     }
@@ -3008,7 +3012,7 @@
                     }
                 }
                 .content-box{
-                    width: calc(100% - 120rpx);
+                    width: calc(100% - 100rpx);
                     height: 80rpx;
                     line-height: 80rpx;
                     border-bottom: 2rpx solid rgba(136,136,136,0.6);
@@ -3176,10 +3180,14 @@
 				display: flex;
 				height: 60rpx;
 				align-items: center;
+                color: #AAAAAA;
 				.check-info{
-					color: #06b4fd;
+					color: rgba(6,180,253,0.6);
 				}
 			}
+            .chekc-group-box /deep/ .uni-checkbox-input{
+                border-radius: 22rpx;
+            }
 			
 			.save-go-box {
 				display: flex;
@@ -3219,4 +3227,5 @@
 				}
 			}
 		}
+        
 </style>
