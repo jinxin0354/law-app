@@ -37,8 +37,8 @@
 											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
 										</view>
 										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
-										<upload-add-list :list="case_list" @change="listChange($event,'case_list')"></upload-add-list>
-										<upload-add-list :list="case_list" @change="caseList"></upload-add-list>
+										<upload-add-list :list="case_list" @change="listChange($event,'case_list')" @click="photoType = 'case_list'"></upload-add-list>
+										<!-- <upload-add-list :list="case_list" @change="caseList"></upload-add-list> -->
 										
 										<!-- <image @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 									</view>
@@ -63,7 +63,7 @@
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
-									<upload-add-list key="announce_list" :list="announce_list" @change="listChange($event,'announce_list')"></upload-add-list>
+									<upload-add-list key="announce_list" :list="announce_list" @change="listChange($event,'announce_list')" @click="photoType = 'announce_list'"></upload-add-list>
 									<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 								</view>
 							</view>
@@ -109,7 +109,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
-										<upload-add-list key="contract_list" :list="contract_list" @change="listChange($event,'contract_list')"></upload-add-list>
+										<upload-add-list key="contract_list" :list="contract_list" @change="listChange($event,'contract_list')" @click="photoType = 'contract_list'"></upload-add-list>
 										<!-- <view class="arrow-right"   @click="addPhoto(3)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
@@ -118,7 +118,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
-										<upload-add-list key="main_list" :list="main_list" @change="listChange($event,'main_list')"></upload-add-list>
+										<upload-add-list key="main_list" :list="main_list" @change="listChange($event,'main_list')"  @click="photoType = 'main_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(4)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -128,7 +128,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
-										<upload-add-list key="indictment_list" :list="indictment_list" @change="listChange($event,'indictment_list')"></upload-add-list>
+										<upload-add-list key="indictment_list" :list="indictment_list" @change="listChange($event,'indictment_list')" @click="photoType = 'indictment_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(5)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -138,7 +138,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
-										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')"></upload-add-list>
+										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')" @click="photoType = 'note_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(6)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -214,6 +214,7 @@ export default {
 			'checkValue3',
 			'checkValue4'
 			],
+			photoType: 'case_list',
 			investor_mobile: '',
 			apply_lawyer: 0 //是否申请投资费用1申请  0未申请过律师费
 		};
@@ -228,8 +229,27 @@ export default {
 		if (params.apply_lawyer) {
 			this.apply_lawyer = Number(params.apply_lawyer);
 		}
+		window.fileOk = this.fileOk;
+		window.photoOk = this.photoOk;
 	},
 	methods: {
+		fileOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			this[this.photoType].concat(tempList)
+			uni.hideLoading()
+		},
+		//接收图片
+		photoOk(res) {
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			this[this.photoType].concat(tempList)
+			uni.hideLoading()
+		},
 		caseList(e) {
 			this.case_list = e
 		},

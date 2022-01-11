@@ -124,6 +124,7 @@ export default {
 	created() {
 		// 安卓
 		window.payOk = this.payOk;
+		
 	},
 	onLoad(params) {
 		if (params.order_id) {
@@ -131,6 +132,7 @@ export default {
 		}
 	},
 	methods: {
+		
 		resultChange(e) {
 			this.result = e.detail.value;
 		},
