@@ -82,10 +82,10 @@ export default {
 				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('camera', {}, data => {
+					uni.hideLoading()
 					let tempList = this.trimSpace(data);
 					// this.source = this.source.concat(tempList);
 					this.$emit('fileResult',tempList)
-					uni.hideLoading()
 					this.closePop('popupAdd')
 				});
 			}
@@ -105,10 +105,10 @@ export default {
 				this.closePop('popupAdd')
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('pickPhoto', {}, data => {
+					uni.hideLoading()
 					let tempList = this.trimSpace(data);
 					// this.source = this.source.concat(tempList);
 					this.$emit('fileResult',tempList)
-					uni.hideLoading()
 					this.closePop('popupAdd')
 				});
 			}
