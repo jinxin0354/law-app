@@ -339,6 +339,12 @@ export default {
 		}
 	},
 	methods: {
+		async showTip() {
+			uni.showToast({
+				title: "已发送给投资人，请联系投资人确认",
+				icon: 'none'
+			})
+		},
 		async jumpToWeb() {
 			let url = this.info.order.zhaiquan_hetong
 			const nav = navigator.userAgent;

@@ -386,15 +386,13 @@ export default {
 
 			let res = await this.$api('index.lawyer_apply', formData);
 			if (res.code == 1) {
-				if (type == 1) {
-					uni.showToast({
-						title: "已发送给投资人，请联系投资人确认",
-						icon: 'none'
-					})
-				}
+				
 				let pages = getCurrentPages();
 				let prevPage = pages[pages.length - 2];
 				prevPage.$vm.init();
+				if (type == 1) {
+					prevPage.$vm.showTip()
+				}
 				uni.navigateBack({
 					delta: 1
 				});
