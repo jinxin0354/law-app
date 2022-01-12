@@ -154,6 +154,8 @@
 			</view>
 		</view>
 		<view class="ok-box fixed"><button type="default" class="ok-btn" @click="confirm">我要申请</button></view>
+		<order-telephone name="投资人" :phoneNumber="investor_mobile" ref="telephoneInvestor" v-if="investor_mobile"></order-telephone>
+		
 		<!-- 超出5000弹出层 -->
 		<uni-popup ref="popupOver5000" type="dialog">
 			<uni-popup-dialog
@@ -164,16 +166,16 @@
 				:before-close="true"
 				@confirm="
 					closePop('popupOver5000');
-					$refs.popupTel.open();
+					$refs.telephoneInvestor.$refs.popupTel.open();
 				"
 				@close="
 					closePop('popupOver5000');
-					addInfo();
+					addInfo(1);
 				"
 			>
 				<view class="">
 					本案累计申请金额已超过
-					<text class="red">5000</text>
+					<text class="red">3400</text>
 					元， 需要投资人审批，请先与投资人协 商一致。
 				</view>
 			</uni-popup-dialog>
@@ -293,7 +295,7 @@ export default {
 			}
 			
 			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
-			if (sum > 5000) {
+			if (sum > 3400) {
 				this.$refs.popupOver5000.open();
 				return;
 			}
@@ -362,7 +364,7 @@ export default {
 			
 			this.addInfo();
 		},
-		async addInfo() {
+		async addInfo(type = 0) {
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
@@ -384,6 +386,12 @@ export default {
 
 			let res = await this.$api('index.lawyer_apply', formData);
 			if (res.code == 1) {
+				if (type == 1) {
+					uni.showToast({
+						title: "已发送给投资人，请联系投资人确认",
+						icon: 'none'
+					})
+				}
 				let pages = getCurrentPages();
 				let prevPage = pages[pages.length - 2];
 				prevPage.$vm.init();
