@@ -20,7 +20,7 @@
 			<!-- <view class="word-num" v-if="seHeight == true">{{ txtVal }}/30</view> -->
 		</view>
 		 <view class="textarea-tip">
-			<view class="image-wrapper" @click="$refs.popupTip.open()"><image src="@/static/img/why.png" mode="aspectFit"></image></view>
+			<view class="image-wrapper" @click="$refs.popupTip.open()"><image src="@/static/img/edit-icon.png" mode="aspectFit"></image></view>
 			<uni-popup ref="popupTip" type="center">
 				<order-popup-common title="范例" @closePop="closePop('popupTip')">
 					<view class="flex flex-vertical" style="padding: 15px;" slot="popup-con">

@@ -107,7 +107,7 @@
 		</view>
 		<view class="module-box">
 			<view class="module-title-box">
-				 催收的聊天内容(微信/支付宝/录音/录像)
+				 催收的聊天内容(微信/支付宝/录音/录像/短信)
 			</view>
 			<view class="upload-box">
 				<view class="upload-item" v-for="(item, index) in cuishou_images" :key="index" @click="previewImage(item)">
@@ -302,8 +302,8 @@
 			}
 		},
 	created() {
+		window.fileOk = this.fileOk;
 		window.photoOk = this.photoOk;
-		window.sourceOk = this.sourceOk;
 	},
 		methods: {
 			//接收文件
@@ -454,6 +454,9 @@
 			// 打开摄像头
 			camera() {
 				const nav = navigator.userAgent;
+                uni.showLoading({
+                	title: '上传中'
+                })
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.camera();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
@@ -484,6 +487,9 @@
 			//选择照片
 			pickPhoto() {
 				const nav = navigator.userAgent;
+                uni.showLoading({
+                	title: '上传中'
+                })
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.pickPhoto();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
@@ -514,6 +520,9 @@
 			// 选择文件
 			pickFile() {
 				const nav = navigator.userAgent;
+                uni.showLoading({
+                	title: '上传中'
+                })
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.pickFile();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
@@ -541,6 +550,16 @@
 					});
 				}
 			},
+            // 去掉数组中的空值
+            trimSpace(array) {
+            	for (var i = 0; i < array.length; i++) {
+            		if (array[i] == '' || array[i] == null || typeof array[i] == 'undefined') {
+            			array.splice(i, 1);
+            			i = i - 1;
+            		}
+            	}
+            	return array;
+            },
 			confirmUpload(isSave) {
 				this.$refs.popupUpload.close();
 				let pages = getCurrentPages();

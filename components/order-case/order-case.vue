@@ -42,7 +42,7 @@
 				</view>
 			</view>
 			<template v-for="(item, index) in otherInfoLIst">
-				<view class="case-title">对方当事人{{ index + 1 }}</view>
+				<view class="case-title">对方当事人</view>
 				<view class="od-item marginbottom10">
 					<view class="item-tip require">姓名</view>
 					<view class="item-right">

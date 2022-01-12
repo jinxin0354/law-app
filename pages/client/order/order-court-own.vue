@@ -1,5 +1,15 @@
 <template>
 	<view class="content">
+        <law-order-nav style="z-index: 999;" :productTitleName='productTitleName'></law-order-nav>
+        <view class="tabs-box" :style="'top:'+windowTop+'px'" v-if="showTab">
+            <view class="tab-item-box" v-for="(item,index) in tabList" :key='index'>
+                <view :class="item.id == tabItemValue ? 'name-box-one' : 'name-box-two'">
+                    {{item.name}}
+                </view>
+                <view :class="item.id == tabItemValue ? 'icon-box-one' : 'icon-box-two'">
+                </view>
+            </view>
+        </view>
 		<view class="item-top" :style="{ 'background-image': 'url(' + product_image + ')' }">
 			<view class="item-admin" v-if="buyTipData.length > 0" style="width:600rpx">
 				<!-- 用户133****2345下单了这个产品 3分钟前 -->
@@ -467,12 +477,12 @@
                         </view>
                     </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
-                	<view class="item-right" @click="$refs.popupTake.open()">
+                	<view class="item-right" @click="popupTakeTwoClick">
                 		<view class="item-txt gray" v-if="!hear_addr">您的案件在哪里审理？</view>
                 		<view class="service-list inline-list" v-else>
-                			<view class="service-item active">{{ hear_addr }}</view>
+                			<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ hear_addr }}</view>
                 		</view>
-                		<view class="item-nav" @click="$refs.popupTake.open()">
+                		<view class="item-nav">
                 			<image src="@/static/img/right.png" mode="aspectFit"></image>
                 		</view>
                 	</view>
@@ -591,7 +601,7 @@
                     	<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{serve_offer}}</view>
                     </view>
                     
-                    <view class="whyIcon" style="align-items:center" @click="downloadFile(info.product.doc[2].url)">
+                    <view class="whyIcon" @click="gotoJiSuanQi(info.product.product_id)">
                     	<image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
                     </view>
                 	</view>
@@ -854,7 +864,7 @@
 						<view class="service-list inline-list" v-else>
 							<view class="service-item active">{{ hear_addr }}</view>
 						</view>
-						<view class="item-nav" @click="$refs.popupTake.open()">
+						<view class="item-nav">
 							<image src="@/static/img/right.png" mode="aspectFit"></image>
 						</view>
 					</view>
@@ -942,7 +952,7 @@
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
 						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;color:red;padding: 6rpx 10rpx;margin-right: 6rpx;">律师费+立案受理费+公告费+异地被告身份查询费</view>
-						<view class="whyIcon" style="align-items:center" @click="downloadFile(info.product.doc[2].url)">
+						<view class="whyIcon" style="align-items:center" @click="gotoJiSuanQi(info.product.product_id)">
 							<image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
 						</view>
 					</view>
@@ -1010,15 +1020,15 @@
 			<!-- 服务范围组件 -->
 			<!-- <order-item-service-desc :info="info" v-if="Object.keys(info.product).length > 0"></order-item-service-desc> -->
 		</view>
-		<order-feiyong-info v-if="bearFees == '自费'" :docZifei='doc_zifei'></order-feiyong-info>
+		<order-feiyong-info v-if="bearFees == '自费'" :id='info.product.product_id' :docZifei='doc_zifei'></order-feiyong-info>
 		<!-- 服务内容组件 -->
-		<order-unfold title="服务内容">
+		<order-unfold-new title="服务内容">
 			<view slot="unfold-con">
 				<view class="" v-html="info.product.serve_content"></view>
 			</view>
-		</order-unfold>
+		</order-unfold-new>
 		<!-- 产品说明组件 -->
-		<order-unfold-product title="产品说明" :img_src="info.product.desc_content"></order-unfold-product>
+		<order-unfold-product-new title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
 
 		<view class="od-box">
 			<view class="od-item"
@@ -1056,8 +1066,10 @@
 						<view class="left-tip">{{ price_type_text }}</view>
 					</template>
 				</view>
-				<view class="go-right" v-if="!edit_order_id"><button type="default" class="go-btn"
-						@click="confirm">一键无忧下单</button></view>
+				<view class="go-right" v-if="!edit_order_id">
+                    <button v-if="isShare" type="default" class="go-btn" @click="confirm">一键无忧下单</button>
+                    <button v-else type="default" class="go-btn" @click="downloadApp">一键无忧下单</button>
+                    </view>
 				<view class="go-right" v-else><button type="default" class="go-btn" @click="addOrder">我要下单</button></view>
 			</view>
 		</view>
@@ -1088,7 +1100,7 @@
 					@click="bondConfirm">确定并继续下单</button></view>
 		</order-invest-contact>
 		<!-- 审理地点弹出层 -->
-		<uni-popup ref="popupTake">
+		<!-- <uni-popup ref="popupTake">
 			<order-popup-common title="审理地点" @closePop="closePop('popupTake')">
 				<scroll-view class="popup-con" slot="popup-con" scroll-y="true">
 					<view class="take-box">
@@ -1121,7 +1133,41 @@
 					<button type="default" class="ok-btn" @click="closePop('popupTake')">确定</button>
 				</view>
 			</order-popup-common>
-		</uni-popup>
+		</uni-popup> -->
+        <uni-popup ref="popupTake" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">审理地点</view>
+            		<view class="title-close" @click="closePop('popupTake')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+                <scroll-view scroll-y="true" class="stage-scroll-box">
+                    <view v-for="(item,index) in info.list.hear_addr" :key='index' :class="hear_addr == item ? 'select-item-box pitch-on': 'select-item-box un-pitch'"  @click="hearAddrSelectClick(item)">{{ item }}</view>
+                </scroll-view>
+            </view>
+        </uni-popup>
+        <uni-popup ref="popupTakeTwo" type="bottom">
+            <view class="popup-bottom-box">
+            	<view class="bot-title">
+            		<view class="title-txt">审理地点(自费)</view>
+            		<view class="title-close" @click="closePop('popupTakeTwo')">
+            			<view class="image-wrapper">
+            				<image src="@/static/img/close.png" mode="aspectFit"></image>
+            			</view>
+            		</view>
+            	</view>
+                <!-- <scroll-view scroll-y="true" class="stage-scroll-box">
+                    <view v-for="(item,index) in info.list.hear_addr" :key='index' :class="hear_addr == item ? 'select-item-box pitch-on': 'select-item-box un-pitch'"  @click="hearAddrSelectClick(item)">{{ item }}</view>
+                </scroll-view> -->
+            </view>
+        </uni-popup>
+        <u-picker mode="region" v-model="popupTakeTwo" :params="params" :default-region="defaultTake"
+        	confirm-color="#FFC801" @confirm="TakeConfirm" title='审理地点'>
+            </u-picker>
+        
 		<!-- 服务阶段弹出层 -->
 		<uni-popup ref="popupServiceStage" type="bottom">
             <view class="popup-bottom-box">
@@ -1860,12 +1906,24 @@
 								sale:'0',//销量
 								labelData:[],
 								productTitleName:'',
-                                total:0
+                                total:0,
+                                popupTakeTwo:false,
+                                defaultTake:[],
+                                windowTop:44,
+                                tabList:[{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
+                                tabItemValue:1,
+                                showTab:false,
+                                isShare:this.$route.query.type ? false : true//是否是分享页面
             };
 		},
 		created() {
 			// 安卓
 			window.payOk = this.payOk;
+            uni.getSystemInfo({
+                success: function (res) {
+                    this.windowTop = res.windowTop || 44
+                }
+            });
 		},
 		onLoad(params) {
 			// 编辑
@@ -1906,14 +1964,19 @@
                     this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
                     this.serve_offer = '投资人确定'
+                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
 				} else if (this.bearFees == '自费') {
-					this.qiankuan = '都可以';
+					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
+                    this.defaultTake = ['广东省','广州市']
+					this.hear_addr = '广东省,广州市';
+                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}]
 					if (oldVal) {
 						this.getMoney();
 					}
 				}
+                this.tabItemValue = 1
 			},
 			// 服务阶段
 			stage(val, oldVal) {
@@ -1941,9 +2004,36 @@
 			}
 		},
 		onPageScroll() {
-			// console.log("onpage")
-			// var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-			// console.log(scrollTop)
+			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            if(scrollTop < 460){
+                this.showTab = false
+            }else{
+                this.showTab = true
+                if (this.bearFees == '投资人支付'){
+                   if(scrollTop > 460 && scrollTop < 750){
+                       this.tabItemValue = 1
+                   } else if(scrollTop >= 750 && scrollTop < 1600){
+                       this.tabItemValue = 2
+                   } else if(scrollTop >= 1600 && scrollTop < 3350){
+                       this.tabItemValue = 3
+                   }else{
+                       this.tabItemValue = 4
+                   }
+                }else{
+                    if(scrollTop > 460 && scrollTop < 840){
+                        this.tabItemValue = 1
+                    }else if(scrollTop >= 840 && scrollTop < 1400){
+                        this.tabItemValue = 2
+                    }else if(scrollTop >= 1400 && scrollTop < 2200){
+                        this.tabItemValue = 3
+                    }else if(scrollTop >= 2200 && scrollTop < 4020){
+                        this.tabItemValue = 4
+                    }else{
+                        this.tabItemValue = 5
+                    }
+                }
+                
+            }
 			// if(scrollTop>500){
 			// 	console.log("大于500")
 			// 	uni.pageScrollTo({
@@ -2282,7 +2372,14 @@
             imageClick(item){
                 let previewImages = [];
                 previewImages.push(item.image);
-                this.previewImages(previewImages);
+                // this.previewImages(previewImages);
+                // 预览图片
+                const nav = navigator.userAgent;
+                if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+                	phone.previewPicture(JSON.stringify(previewImages));
+                } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+                	this.$bridge.callhandler('previewPicture', previewImages, data => {});
+                }
             },
             // 执业年限选择
             productNameSelectClick(item){
@@ -2294,11 +2391,13 @@
                 this.showArea = true
             },
             regionConfirm(res){
-                if (res.city.label == '市辖区') {
-                	this.practiceArea = res.province.label;
-                } else {
-                	this.practiceArea = res.province.label + ',' + res.city.label;
-                } 
+                console.log(res,'-----------')
+                // if (res.city.label == '市辖区') {
+                // 	this.practiceArea = res.province.label;
+                // } else {
+                // 	this.practiceArea = res.province.label + ',' + res.city.label || '';
+                // } 
+                this.practiceArea = res.province.label + ',' + res.city.label;
                 this.showArea = false
             },
             // 律师语言选择
@@ -2417,14 +2516,44 @@
                 this.pay_type = info
                 this.closePop('playTypePopop')
             },
-						// 查看债券投资合同
-						checkHeTong(){
-							
-						},
-                        stageSelectClick(item){
-                            this.stage = item
+            stageSelectClick(item){
+                this.stage = item
                 this.closePop('popupServiceStage')
-                        }
+            },
+            hearAddrSelectClick(item){
+                this.hear_addr = item
+                this.closePop('popupTake')
+            },
+            gotoJiSuanQi(id){
+                const nav = navigator.userAgent;
+                if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+                	let res = phone.openProject(id);
+                } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+                	this.$bridge.callhandler('gotoJiSuanQi', id, res => {});
+                }
+            },
+            popupTakeTwoClick(){
+                this.defaultTak = this.hear_addr.split(',')
+                this.popupTakeTwo = true
+            },
+            TakeConfirm(res){
+                // if (res.city.label == '市辖区') {
+                // 	this.hear_addr = res.province.label;
+                // } else {
+                // 	this.hear_addr = res.province.label + ',' + res.city.label;
+                // }
+                this.hear_addr = res.province.label + ',' + res.city.label;
+                this.popupTakeTwo = false
+            },
+            downloadApp(){
+                let ua = window.navigator.userAgent.toLowerCase()
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                    alert('请点击右上角按钮在其他浏览器打开')
+                }else{
+                    window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.lifakeji.lark.business.law'
+                }
+            }
+            
 		}
 	};
 </script>
@@ -2864,7 +2993,7 @@
             }
         }
     .assistant-title-box{
-        margin-left: 160rpx;
+        margin-left: 140rpx;
         height: 30rpx;
         color: #777777;
         font-size: 24rpx;
@@ -3227,5 +3356,51 @@
 				}
 			}
 		}
+        .tabs-box{
+            position: fixed;
+            left: 0px;
+            width: 100%;
+            height: 60rpx;
+            background-color: rgba(255,255,255,1);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10;
+            .tab-item-box{
+                width: 20%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .name-box-one{
+                    // 选中
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    color: #000;
+                    font-size: 28rpx;
+                }
+                .name-box-two{
+                    // 选中
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    color: #aaa;
+                    font-size: 28rpx;
+                }
+                .icon-box-one{
+                    margin-top: 2rpx;
+                    width: 50rpx;
+                    height: 8rpx;
+                    border-radius: 8rpx;
+                    background-color: rgb(253,200,6);
+                }
+                .icon-box-two{
+                    margin-top: 2rpx;
+                    width: 50px;
+                    height: 8rpx;
+                    border-radius: 8rpx;
+                    background-color: rgb(255,255,255);
+                }
+            }
+        }
         
 </style>
