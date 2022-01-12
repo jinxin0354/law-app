@@ -131,6 +131,8 @@ export default {
 				(item.product == '打官司' && item.status == 16) ||
 				(item.product == '打官司' && item.status == 17)
 			) {
+				console.log(item.price_type);
+					console.log('XX');
 				if (item.serve_time == '15分钟') {
 					this.jump('/pages/lawyer/user/service-minute', { order_id: item.id });
 				} else if (item.serve_time == '连续包月') {
@@ -138,7 +140,7 @@ export default {
 				} else if (item.serve_time == '包年') {
 					this.jump('/pages/lawyer/user/service-year', { order_id: item.id });
 				} else if (item.price_type == '投资人支付(不用还)') {
-					console.log(this.userInfo.is_touziren);
+					
 					// 切换到律师接单选项
 					if(this.current == 2){
 						this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
@@ -159,7 +161,12 @@ export default {
 						this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
 					}
 				} else {
-					this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+					if(item.product == '打官司'){
+						this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+					} else {
+						this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+					}
+					
 				}
 			} else if (item.product != '打官司' && item.status == 16) {
 				this.jump('/pages/lawyer/user/service-ok', { order_id: item.id });

@@ -138,7 +138,13 @@ export default {
 				} else if (item.price_type == '投资人支付(不用还)') {
 					this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
 				} else {
-					this.jump('/pages/client/user/service-face', { order_id: item.id, status: item.status });
+					console.log('XX');
+					if(item.product == '打官司'){
+						this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
+					} else {
+						this.jump('/pages/client/user/service-face', { order_id: item.id, status: item.status });
+					}
+					
 				}
 			} else if ((item.product != '打官司' && item.status == 16) || item.status == 6) {
 				this.jump('/pages/client/user/service-ok', { order_id: item.id });

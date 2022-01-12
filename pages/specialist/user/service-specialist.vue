@@ -26,14 +26,14 @@
 		<!-- 案件主体信息 -->
 		<order-case :info="info" :key="new Date().getTime() + 'case'">
 			<template slot="case-edit">
-				<view class="gray">(先联系委托人，确认信息后，再填写)</view>
+				<view class="gray red" style="font-size: 26rpx;">(跟委托人确定后再改)</view>
 				<button type="default" class="ok-btn" @click="$refs.popupCase.open()">编辑</button>
 			</template>
 		</order-case>
 		<!-- 订单详情  -->
 		<order-detail ref="orderAllDetail" :info="info.order" :key="new Date().getTime()">
 			<template slot="detail-edit">
-				<view class="gray" style="width: 200rpx;">（如需更改订单，请先联系委托人再更改）</view>
+				<view class="gray red" style="width: 200rpx;font-size: 26rpx;">（跟委托人确定后再改）</view>
 				<button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()"
 					v-if="!isEdit">更改订单</button>
 				<button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()" v-else>催促委托人确认并付款</button>
@@ -41,7 +41,7 @@
 		</order-detail>
 		<!-- 服务完成弹出层 -->
 		<uni-popup ref="popupServiceOk" type="dialog">
-			<uni-popup-dialog type="info" okTxt="是" cancleTxt="否" content="我已与委托人确认服务完成,以便帮我尽快匹配律师" :before-close="true"
+			<uni-popup-dialog type="info" okTxt="是" cancleTxt="否" content="我已与委托人确认法务服务完成,以便帮我尽快匹配律师" :before-close="true"
 				@confirm="confirmServiceOk" @close="closePop('popupServiceOk')"></uni-popup-dialog>
 		</uni-popup>
 		<!-- 确认服务完成弹出层 -->
@@ -64,7 +64,7 @@
 			<order-popup-common title="案件主体信息" @closePop="closePop('popupCase')">
 				<view class="popup-con" scroll-y="true" slot="popup-con" style="overflow: visible;">
 					<view class="od-box" style="padding-top: 0;">
-						<view class="od-title"><text class="gray">(先联系委托人，确认信息后，再填写)</text></view>
+						<view class="od-title"><text class="gray red" style="font-size: 26rpx;">(请先联系委托人确定后再改)</text></view>
 						<view class="case-title">委托人诉求{{requirement}}</view>
 						<view class="od-item marginbottom10">
 							<view class="item-right">
@@ -443,5 +443,9 @@
 	.gray {
 		width: 400rpx !important;
 		margin-left: 10rpx;
+	}
+	.red{
+		color: #f20000;
+		
 	}
 </style>

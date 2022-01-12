@@ -6,7 +6,7 @@
 				<image  src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;margin-left: 10rpx;"></image>
 			</view>
-			<image style="width: 30rpx;height: 30rpx;" src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
+			<image @click="gotoJiSuanQi(id)" style="width: 30rpx;height: 30rpx;" src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
 		</view>
 		<view class="item-intro intro_txt" :class="isDown ? 'heightMy' : ''">
 			<view class="dian-box">
@@ -42,10 +42,6 @@
 				如产生上述费用，由您按照相关发票支付给相关部门。
 			</view>
     </view>
-		<view class="item-down" @click="down">
-			<text class="down-txt" v-if="isDown">展开</text>
-			<text class="down-txt" v-if="!isDown">收起</text>
-		</view>
 		<!-- </template> -->
 	</view>
 </template>
@@ -54,10 +50,11 @@
 export default {
 	props: {
 		docZifei: '',
+        id:''
 	},
 	data() {
 		return {
-			isDown: true,
+			isDown: false,
 			isCollect: false
 		};
 	},
@@ -77,6 +74,14 @@ export default {
 				this.$bridge.callhandler('loadOffice', item.image, data => {});
 			}
 		},
+        gotoJiSuanQi(id){
+            const nav = navigator.userAgent;
+            if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+            	let res = phone.gotoJiSuanQi(id);
+            } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+            	this.$bridge.callhandler('gotoJiSuanQi', id, res => {});
+            }
+        },
 	}
 };
 </script>

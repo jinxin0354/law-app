@@ -76,6 +76,9 @@
 				</view>
 				<view class="match-image-txt" v-if="info.order.pro_name == '打官司'">
 					<view class="txt-left">
+						<view class="image-wrapper">
+							<image src="@/static/img/warning.png" mode="aspectFit"></image>
+						</view>
 					</view>
 					<view class="txt-right green">如有疑问，请联系您的律师帮您处理。</view>
 				</view>
@@ -965,12 +968,5 @@
 			}
 		}
 
-	}
-
-	
-
-	//下半部分圆角矩形
-	.service-item {
-		border-radius: 50rpx;
 	}
 </style>

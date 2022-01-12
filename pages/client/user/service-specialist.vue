@@ -37,13 +37,13 @@
 		<!-- 案件主体信息 -->
 		<order-case :info="info" :key="new Date().getTime() + 'case'">
 			<template slot="case-edit">
-				<text class="gray">(请叫一下法务专员为您填写)</text>
+				<text class="gray" style="color: #f20000;">(请叫一下法务专员为您填写)</text>
 			</template>
 		</order-case>
 		<!-- 订单详情  -->
 		<order-detail ref="orderAllDetail" :info="info.order">
 			<template slot="detail-edit">
-				<text class="gray">（如需更改，请叫一下法务专员帮您修改）</text>
+				<text class="gray" style="color: #f20000;">（如需更改，请叫一下法务专员帮您修改）</text>
 			</template>
 		</order-detail>
 		<!-- 服务完成弹出层 -->
@@ -156,8 +156,9 @@ export default {
 			let res = await this.$api('index.u_call_legal', formData);
 			if (res.code == 1) {
 				uni.showToast({
-					title: '法力平台已催促服务法务，请稍等片刻',
-					icon: 'none'
+					title: '法力平台已催促法务专员，请稍等片刻。',
+					icon: 'none',
+					duration:3000,
 				});
 			}
 		},
