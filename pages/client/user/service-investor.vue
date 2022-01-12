@@ -351,12 +351,31 @@
 							<view v-for="(item,index) in swit_flg1(moneyparams.chuli_type)" class="od-item flex-item-i">
 								<view class="flex-item-lable">
 									<view class="ico"></view>
-									<view class="require">{{item}}</view>
+									<view v-if="index<2" class="require">{{item}}</view>
+									<view v-else-if="index==2" >{{item}}</view>
+									<view v-else-if="index==3" class="adi-symbol">
+										<view class="adi">{{item}}</view>
+										<view @click="$refs.direc.open('center')" class="symbol"></view>
+									</view>
+									
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
+									<view class="item-right" v-if="index>=2">
+										<view  class="computer-text">
+											<text class="text-icon">¥</text>
+											<view class="text-cont" v-if="index==2">
+												<text  v-if="!moneyparams.price" style="color: #000000;" >999</text>
+												<text v-else class=""> {{}}</text>
+											</view>
+											<view class="text-cont" v-if="index==3">
+												<text  v-if="!moneyparams.price" > 待计算</text>
+												<text v-else class=""> {{moneyparams.price*0.3}}</text>
+											</view>
+										</view>
+									</view>
+									<view v-else class="item-txt">
 										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
+										<input  type="number" class="ipt-border" placeholder="输入金额"
 											placeholder-class="placeholder" v-model="moneyparams.money" />
 									</view>
 								</view>
@@ -573,7 +592,7 @@
 				return obj[n2]
 			},
 			swit_flg1(n) {
-				let str = ''
+				let str = '您与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
 				switch (n) {
 					case '法院判决':
 						str = '法院判决支持的欠款本金金额是多少'
