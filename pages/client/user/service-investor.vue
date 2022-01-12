@@ -969,11 +969,4 @@
 		}
 
 	}
-
-	
-
-	//下半部分圆角矩形
-	.service-item {
-		border-radius: 50rpx;
-	}
 </style>
