@@ -3,21 +3,25 @@
         <law-order-nav style="z-index: 999;" :productTitleName='productTitleName'></law-order-nav>
         <view class="tabs-box" :style="'top:'+windowTop+'px'" v-if="showTab">
             <view class="tab-item-box" v-for="(item,index) in tabList" :key='index'>
-                <view :class="item.id == tabItemValue ? 'name-box-one' : 'name-box-two'">
+                <view v-if="bearFees != '自费'" :class="item.id == tabItemValue ? 'name-box-one' : 'name-box-two'" @click="scrollToOne(item.id)">
                     {{item.name}}
                 </view>
-                <view :class="item.id == tabItemValue ? 'icon-box-one' : 'icon-box-two'">
+                <view v-else :class="item.id == tabItemValue ? 'name-box-one' : 'name-box-two'" @click="scrollToTwo(item.id)">
+                    {{item.name}}
+                </view>
+                <view :class="item.id == tabItemValue ? 'icon-box-one' : 'icon-box-two'" >
                 </view>
             </view>
         </view>
-		<view class="item-top" :style="{ 'background-image': 'url(' + product_image + ')' }">
-			<view class="item-admin" v-if="buyTipData.length > 0" style="width:600rpx">
+		<view class="item-top" id='itemTop' :style="{ 'background-image': 'url(' + product_image + ')' }">
+			<view class="item-admin" v-if="buyTipData.length > 0">
 				<!-- 用户133****2345下单了这个产品 3分钟前 -->
-				<swiper class="swiper" :autoplay="true" :interval="3000" :vertical='true' style="width:600rpx;height:60rpx">
-				                        <swiper-item v-for="(item,index) in buyTipData" :key='index'>
-				                            <view>{{item}}</view>
-				                        </swiper-item>
-				                    </swiper>
+				<swiper class="swiper" :autoplay="true" :interval="3000" :vertical='true' style="height:60rpx;width: 750rpx;">
+                    <swiper-item v-for="(item,index) in buyTipData" :key='index' style="display: flex;
+            justify-content: center;">
+                        {{item}}
+                    </swiper-item>
+                </swiper>
 			</view>
 			<!-- <view class="item-img">
 				<view class="item-left">
@@ -30,7 +34,7 @@
 				</view> 
 			</view> -->
 		</view>
-		<view class="item-main">
+		<view class="item-main" id='itemMain'>
 			<view class="main-top">
 				<view class="top-left">
 					<text style="font-size: 26rpx;">￥</text>{{price}}
@@ -66,7 +70,7 @@
 			</u-sticky>
 		</view> -->
 
-		<view class="od-box  od-boxs">
+		<view class="od-box  od-boxs" ref='selectListRef' id='odBoxId'>
 			<!-- 服务领域新组件 -->
 			<order-items-service ref="orderItem" :info="info" v-if="Object.keys(info.product).length > 0">
 			</order-items-service>
@@ -84,7 +88,7 @@
                 <view class="item-right" @click="$refs.priceTypeSelectPopop.open()">
                 	<view class="service-list inline-list">
                 		<view class="service-item active" style="position: relative;">{{bearFees}}
-                            <image v-if="bearFees == '投资人支付'" style="right:-68rpx;top:-20rpx" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
+                            <image v-if="bearFees == '投资人支付'" style="right:-52rpx;top:-16rpx" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
                         </view>
                 	</view>
                     <view class="item-nav">
@@ -1020,15 +1024,15 @@
 			<!-- 服务范围组件 -->
 			<!-- <order-item-service-desc :info="info" v-if="Object.keys(info.product).length > 0"></order-item-service-desc> -->
 		</view>
-		<order-feiyong-info v-if="bearFees == '自费'" :id='info.product.product_id' :docZifei='doc_zifei'></order-feiyong-info>
+		<order-feiyong-info id='feiYong' v-show="bearFees == '自费'" :id='info.product.product_id' :docZifei='doc_zifei'></order-feiyong-info>
 		<!-- 服务内容组件 -->
-		<order-unfold-new title="服务内容">
+		<order-unfold-new title="服务内容" id='fuWu'>
 			<view slot="unfold-con">
 				<view class="" v-html="info.product.serve_content"></view>
 			</view>
 		</order-unfold-new>
 		<!-- 产品说明组件 -->
-		<order-unfold-product-new title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
+		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
 
 		<view class="od-box">
 			<view class="od-item"
@@ -1891,29 +1895,35 @@
                 keyword:'',
                 later_money:'',
                 pay_type:'微信',
-								product_image:'',
-								buyTipData:'',
-								hetong_doc:'',
-								doc_touziren:'',
-								doc_zifei:'',
-								card_images:'',//欠款方身份证正反面/姓名 身份证号
-								liaotian_images:'',//确认欠款金额的聊天截图内容
-								jietiao_images:'',//借条/欠条/还款承诺书/对账单等文书
-								cuishou_images:'',//催收的聊天内容(微信/支付宝/录音/录像)
-								huan_images:'',//还款记录(包括每次还款金额和还款时间) 
-								other_images:'',//您认为有用的其他有用材料
-								price:'0',//价格
-								sale:'0',//销量
-								labelData:[],
-								productTitleName:'',
-                                total:0,
-                                popupTakeTwo:false,
-                                defaultTake:[],
-                                windowTop:44,
-                                tabList:[{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
-                                tabItemValue:1,
-                                showTab:false,
-                                isShare:this.$route.query.type ? false : true//是否是分享页面
+                product_image:'',
+                buyTipData:'',
+                hetong_doc:'',
+                doc_touziren:'',
+                doc_zifei:'',
+                card_images:'',//欠款方身份证正反面/姓名 身份证号
+                liaotian_images:'',//确认欠款金额的聊天截图内容
+                jietiao_images:'',//借条/欠条/还款承诺书/对账单等文书
+                cuishou_images:'',//催收的聊天内容(微信/支付宝/录音/录像)
+                huan_images:'',//还款记录(包括每次还款金额和还款时间) 
+                other_images:'',//您认为有用的其他有用材料
+                price:'0',//价格
+                sale:'0',//销量
+                labelData:[],
+                productTitleName:'',
+                total:0,
+                popupTakeTwo:false,
+                defaultTake:[],
+                windowTop:44,
+                tabList:[{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
+                tabItemValue:1,
+                showTab:false,
+                isShare:this.$route.query.type ? false : true,//是否是分享页面
+                itemTopHeight:0,//上方图片高度
+                itemMainHeight:0,//基本信息模块高度
+                odBoxHeight:0,//服务选项模块高度
+                feiYongHeight:576,//律师费用模块高度
+                fuWuHeight:792,//服务内容模块高度
+                chanPinHeight:1983,//产品说明模块高度
             };
 		},
 		created() {
@@ -1924,6 +1934,7 @@
                     this.windowTop = res.windowTop || 44
                 }
             });
+            
 		},
 		onLoad(params) {
 			// 编辑
@@ -1939,7 +1950,21 @@
 				this.product_image = params.product_image;
 				this.init();
 			}
+            
 		},
+        onReady(){
+            let self = this
+            uni.createSelectorQuery().select("#itemTop").boundingClientRect(function(data) { //data - 各种参数
+            console.log(data)
+    　　　  　self.itemTopHeight = data.height
+    　　    }).exec()
+            uni.createSelectorQuery().select("#itemMain").boundingClientRect(function(data) { //data - 各种参数
+    　　　  　self.itemMainHeight = data.height
+    　　    }).exec()
+            uni.createSelectorQuery().select("#odBoxId").boundingClientRect(function(data) { //data - 各种参数
+    　　　  　self.odBoxHeight = data.height
+    　　    }).exec()
+        },
 		watch: {
 			// 切换审理机构获取服务阶段
 			organization(val, oldVal) {
@@ -1964,19 +1989,20 @@
                     this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
                     this.serve_offer = '投资人确定'
-                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
+                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3}]
 				} else if (this.bearFees == '自费') {
 					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
                     this.defaultTake = ['广东省','广州市']
 					this.hear_addr = '广东省,广州市';
-                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}]
-					if (oldVal) {
+                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4}]
+                    if (oldVal) {
 						this.getMoney();
 					}
 				}
                 this.tabItemValue = 1
+                
 			},
 			// 服务阶段
 			stage(val, oldVal) {
@@ -2005,53 +2031,84 @@
 		},
 		onPageScroll() {
 			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            if(scrollTop < 460){
+                    let height = this.itemTopHeight + this.itemMainHeight - 44
+            if(scrollTop < height){
                 this.showTab = false
             }else{
                 this.showTab = true
                 if (this.bearFees == '投资人支付'){
-                   if(scrollTop > 460 && scrollTop < 750){
+                    let height1 = this.itemTopHeight + this.itemMainHeight - 44
+                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
+                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
+                   if(scrollTop >= height1 && scrollTop < height2){
                        this.tabItemValue = 1
-                   } else if(scrollTop >= 750 && scrollTop < 1600){
+                   } else if(scrollTop >= height2 && scrollTop < height3){
                        this.tabItemValue = 2
-                   } else if(scrollTop >= 1600 && scrollTop < 3350){
+                   } else{
                        this.tabItemValue = 3
-                   }else{
-                       this.tabItemValue = 4
                    }
                 }else{
-                    if(scrollTop > 460 && scrollTop < 840){
+                    let height1 = this.itemTopHeight + this.itemMainHeight - 44
+                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
+                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
+                    if(scrollTop >= height1 && scrollTop < height2){
                         this.tabItemValue = 1
-                    }else if(scrollTop >= 840 && scrollTop < 1400){
+                    }else if(scrollTop >= height2 && scrollTop < height3){
                         this.tabItemValue = 2
-                    }else if(scrollTop >= 1400 && scrollTop < 2200){
+                    }else if(scrollTop >= height3 && scrollTop < height4){
                         this.tabItemValue = 3
-                    }else if(scrollTop >= 2200 && scrollTop < 4020){
+                    }else {
                         this.tabItemValue = 4
-                    }else{
-                        this.tabItemValue = 5
                     }
                 }
-                
             }
-			// if(scrollTop>500){
-			// 	console.log("大于500")
-			// 	uni.pageScrollTo({
-			// 		scrollTop: 0,
-			// 		duration: 300,
-			// 		success:()=> {
-			// 			console.log("成功")
-			// 		},
-			// 		fail: () => {
-			// 			console.log("失败")
-			// 		}
-			// 	});
-			// }
 		},
 		methods: {
-			text() {
-
-			},
+            scrollToOne(id){　　  　
+                    let height1 = this.itemTopHeight + this.itemMainHeight - 44
+                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
+                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
+                this.tabItemValue = id
+                if(id == 1){
+                    uni.pageScrollTo({
+                        scrollTop: height1
+                    })
+                }else if(id == 2){
+                    uni.pageScrollTo({
+                        scrollTop: height2
+                    })
+                }else{
+                    uni.pageScrollTo({
+                        scrollTop: height3
+                    })
+                }
+            },
+            scrollToTwo(id){
+                console.log(this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 530,'')
+                    let height1 = this.itemTopHeight + this.itemMainHeight - 44
+                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
+                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
+                this.tabItemValue = id
+                if(id == 1){
+                    uni.pageScrollTo({
+                        scrollTop: height1
+                    })
+                }else if(id == 2){
+                    uni.pageScrollTo({
+                        scrollTop: height2
+                    })
+                }else if(id == 3){
+                    uni.pageScrollTo({
+                        scrollTop: height3
+                    })
+                }else{
+                    uni.pageScrollTo({
+                        scrollTop: height4
+                    })
+                }
+            },
 			async init() {
 				let formData;
 				// 编辑
@@ -2370,16 +2427,28 @@
                 }
             },
             imageClick(item){
-                let previewImages = [];
-                previewImages.push(item.image);
-                // this.previewImages(previewImages);
-                // 预览图片
-                const nav = navigator.userAgent;
-                if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                	phone.previewPicture(JSON.stringify(previewImages));
-                } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-                	this.$bridge.callhandler('previewPicture', previewImages, data => {});
-                }
+                // let previewImages = [];
+                // previewImages.push(item.image);
+                // // this.previewImages(previewImages);
+                // // 预览图片
+                // const nav = navigator.userAgent;
+                // if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+                // 	phone.previewPicture(JSON.stringify(previewImages));
+                // } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+                // 	this.$bridge.callhandler('previewPicture', previewImages, data => {});
+                // }
+                 uni.previewImage({
+                    urls: item.image,
+                    longPressActions: {
+                        itemList: ['发送给朋友', '保存图片', '收藏'],
+                        success: function(data) {
+                            console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+                        },
+                        fail: function(err) {
+                            console.log(err.errMsg);
+                        }
+                    }
+                });
             },
             // 执业年限选择
             productNameSelectClick(item){
@@ -2495,7 +2564,7 @@
             },
             // 全选
             selectAll(){
-                if(this.userSelectData.length == this.removeUserData){
+                if(this.userSelectData.length == this.removeUserData.length){
                     this.userSelectData = []
                 }else{
                     this.userSelectData = this.removeUserData.map((item,index)=>{
@@ -2572,8 +2641,8 @@
 		.item-admin {
 			position: absolute;
 			height: 20rpx;
-			top: 136rpx;
-			left: 10rpx;
+			top: 0;
+			left: 0rpx;
 			height: 60rpx;
 			color: #FFFFFF;
 			line-height: 60rpx;
@@ -2581,7 +2650,8 @@
 			font-size: 22rpx;
 			font-weight: bold;
 			border-radius: 10rpx;
-			background-color: rgba(0, 0, 0, 0.66);
+			background-color: rgba(0, 0, 0, 0.3);
+            
 		}
 
 		.item-img {
@@ -2972,14 +3042,14 @@
             justify-content: space-between;
             align-items: center;
             .input-box{
-                width: 500rpx;
+                width: 530rpx;
                 height: 60rpx;
                 border: 1rpx solid #DCDCDC;
                 border-radius: 6rpx;
                 background: rgba(245, 245, 245, 0.59);
             }
             .input-placeholder-box{
-                margin-left: 20rpx;
+                margin-left: 40rpx;
             }
             .select-all-box{
                 width: 120rpx;
@@ -3360,12 +3430,13 @@
             position: fixed;
             left: 0px;
             width: 100%;
-            height: 60rpx;
+            height: 80rpx;
             background-color: rgba(255,255,255,1);
             display: flex;
             justify-content: space-around;
             align-items: center;
             z-index: 10;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
             .tab-item-box{
                 width: 20%;
                 height: 100%;
@@ -3374,27 +3445,33 @@
                 align-items: center;
                 .name-box-one{
                     // 选中
-                    height: 50rpx;
-                    line-height: 50rpx;
-                    color: #000;
-                    font-size: 28rpx;
+                    margin-top: 16rpx;
+                    height: 44rpx;
+                    line-height: 44rpx;
+                    color: #222222;
+                    font-size: 30rpx;
+                    font-family: PingFang SC;
+                    font-weight: bold;
                 }
                 .name-box-two{
                     // 选中
-                    height: 50rpx;
-                    line-height: 50rpx;
+                    margin-top: 16rpx;
+                    height: 44rpx;
+                    line-height: 44rpx;
                     color: #aaa;
-                    font-size: 28rpx;
+                    font-size: 30rpx;
+                    font-family: PingFang SC;
+                    font-weight: bold;
                 }
                 .icon-box-one{
-                    margin-top: 2rpx;
+                    margin-top: 6rpx;
                     width: 50rpx;
                     height: 8rpx;
                     border-radius: 8rpx;
                     background-color: rgb(253,200,6);
                 }
                 .icon-box-two{
-                    margin-top: 2rpx;
+                    margin-top: 6rpx;
                     width: 50px;
                     height: 8rpx;
                     border-radius: 8rpx;

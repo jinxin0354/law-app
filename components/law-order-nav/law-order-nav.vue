@@ -1,7 +1,7 @@
 <template>
 	<view class="fixedTop">
 		<view class="top-nav-box">
-            <view class="back-icon-box" v-if="isShare">
+            <view class="back-icon-box" v-if="isShare" @click="backClick">
                 <image class="back-icon" src="@/static/img/back-icon.png" mode="aspectFit"></image>
             </view>
             <view class="back-icon-box" v-else>
@@ -48,6 +48,11 @@ export default {
         			console.log(data, '我走了这里');
         		});
         	}
+        },
+        backClick(){
+            uni.navigateBack({
+                delta: 2
+            });
         }
 	}
 };

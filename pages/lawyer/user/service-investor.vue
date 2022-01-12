@@ -137,7 +137,7 @@
 			</template>
 			<template v-if="isClientServiceOk && !isLawyerServiceOk">
 				<view class="service-list">
-					<button class="service-item active flex1" @click="$refs.popupSureServiceOk.open()">确认服务完成</button>
+					<button class="service-item active flex1" @click="jump('/pages/lawyer/user/apply-service-oks', { order_id: order_id })">确认服务完成</button>
 					<button class="service-item active flex1" style="margin-right: 0;" @click="$refs.popupNoSureServiceOk.open()">不确认服务完成</button>
 				</view>
 			</template>

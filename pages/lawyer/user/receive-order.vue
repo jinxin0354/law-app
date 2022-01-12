@@ -131,8 +131,6 @@ export default {
 				(item.product == '打官司' && item.status == 16) ||
 				(item.product == '打官司' && item.status == 17)
 			) {
-				console.log(item.price_type);
-					console.log('XX');
 				if (item.serve_time == '15分钟') {
 					this.jump('/pages/lawyer/user/service-minute', { order_id: item.id });
 				} else if (item.serve_time == '连续包月') {
@@ -162,7 +160,18 @@ export default {
 					}
 				} else {
 					if(item.product == '打官司'){
-						this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+						console.log('XXXXXX');
+						console.log(this.userInfo.is_touziren);
+						if (this.userInfo.is_lawyer == '1') {
+							this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+						} else if (this.userInfo.is_touziren == '1') {
+							console.log('x2');
+							this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
+						}else if(this.userInfo.is_fawu == '1'){
+							this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
+						} else{
+							this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+						}
 					} else {
 						this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
 					}
