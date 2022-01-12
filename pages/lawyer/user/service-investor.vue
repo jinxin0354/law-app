@@ -294,7 +294,7 @@
 					</view>
 				</scroll-view>
 				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn">
-					<button class="service-item active button " @click="confirmEntrustOk">我要申请</button>
+					<button class="service-item active button " :style="result.length == 2 && reason.length > 0 ? '' : 'background-color:#F2F2F2;color:#999;border-color:#f2f2f2;'" @click="confirmEntrustOk">我要申请</button>
 					</view>
 			</order-popup-common>
 		</uni-popup>
@@ -378,6 +378,10 @@ export default {
 			}
 		},
 		async confirmEntrustOk() {
+			if (this.reason.length == 0 || this.result.length < 2) {
+				return
+			}
+			
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
