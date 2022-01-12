@@ -24,7 +24,7 @@
 										<text>￥</text>
 									</view>
 									<view class="input-border">
-										<input class="why-ipt" type="number" @input="inputChange($event,'case_money')" pattern="[0-9]*" v-model="case_money" :disabled="result.indexOf('checkValue1') == -1" placeholder="请输入" placeholder-class="placeholder" />
+										<input class="why-ipt" type="text" @input="inputChange($event,'case_money')" pattern="[0-9]*" v-model="case_money" :disabled="result.indexOf('checkValue1') == -1" placeholder="请输入" placeholder-class="placeholder" />
 									</view>
 								</view>
 							</view>
@@ -41,7 +41,7 @@
 										公告费
 										<text>￥</text>
 									</view>
-									<view class="input-border"><input class="why-ipt" pattern="[0-9]*" type="number" v-model="announce_money" @input="inputChange($event,'announce_money')" :disabled="result.indexOf('checkValue2') == -1" placeholder="请输入" placeholder-class="placeholder" /></view>
+									<view class="input-border"><input class="why-ipt" pattern="[0-9]*" type="text" v-model="announce_money" @input="inputChange($event,'announce_money')" :disabled="result.indexOf('checkValue2') == -1" placeholder="请输入" placeholder-class="placeholder" /></view>
 								</view>
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
@@ -59,7 +59,7 @@
 											<text>￥</text>
 										</view>
 										<view class="input-border">
-											<input class="why-ipt" type="number" pattern="[0-9]*" v-model="enquire" @input="inputChange($event,'enquire')" placeholder="请输入" :disabled="result.indexOf('checkValue3') == -1" placeholder-class="placeholder" />
+											<input class="why-ipt" type="text" pattern="[0-9]*" v-model="enquire" @input="inputChange($event,'enquire')" placeholder="请输入" :disabled="result.indexOf('checkValue3') == -1" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
