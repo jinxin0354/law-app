@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="time-top">
-			<view class="top-title require">选择日期</view>
+			<view class="top-title flex flex-horizontal flex-center-v">选择日期 <text style="color: #f00;">*</text></view>
 			<!-- 插入模式 -->
 			<uni-calendar class="uni-calendar--hook" :date="date" :start-date="startDate" :showMonth="false" @change="change" />
 		</view>
