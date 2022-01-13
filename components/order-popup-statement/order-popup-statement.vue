@@ -1,5 +1,5 @@
 <template>
-	<!-- 结算收益组件   -->
+	<!-- 结算收益组件 -->
 	<view class="popup-common-box">
 		<view class="popup-title">
 			<view class="title-txt">{{title}}</view>
