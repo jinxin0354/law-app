@@ -16,7 +16,7 @@
 		<view class="item-top" id='itemTop' :style="{ 'background-image': 'url(' + product_image + ')' }">
 			<view class="item-admin" v-if="buyTipData.length > 0">
 				<!-- 用户133****2345下单了这个产品 3分钟前 -->
-				<swiper class="swiper" :autoplay="true" :interval="3000" :vertical='true' style="height:60rpx;width: 750rpx;">
+				<swiper class="swiper" :autoplay="true" :interval="3000" circular :vertical='true' style="height:60rpx;width: 750rpx;">
                     <swiper-item v-for="(item,index) in buyTipData" :key='index' style="display: flex;
             justify-content: center;">
                         {{item}}
@@ -484,7 +484,7 @@
                 	<view class="item-right" @click="popupTakeTwoClick">
                 		<view class="item-txt gray" v-if="!hear_addr">您的案件在哪里审理？</view>
                 		<view class="service-list inline-list" v-else>
-                			<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ hear_addr }}</view>
+                			<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ hear_addr.replace(/,/g, "") }}</view>
                 		</view>
                 		<view class="item-nav">
                 			<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -544,7 +544,7 @@
                     <view class="item-right" @click="practiceAreaClick">
                     	<view class="item-txt gray" v-if="!practiceArea">请选择审理地点的律师，效率高，成本低</view>
                     	<view class="service-list inline-list" v-else>
-                    		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea }}</view>
+                    		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea.replace(/,/g, "") }}</view>
                     	</view>
                     	<view class="item-nav">
                     		<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -898,7 +898,7 @@
                     </view>
                     <view class="item-right">
                     	<view class="service-list inline-list">
-                    		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea }}</view>
+                    		<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ practiceArea.replace(/,/g, "") }}</view>
                     	</view>
                     </view>
                 </view>
@@ -1034,7 +1034,7 @@
 		<!-- 产品说明组件 -->
 		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
 
-		<view class="od-box">
+		<view class="od-box" id='wendajia'>
 			<view class="od-item"
 				@click="jump('/pages/client/order/ask', { id: info.product.id, product_name: info.product.product })">
 				<view class="item-tip">问大家</view>
@@ -1924,6 +1924,8 @@
                 feiYongHeight:576,//律师费用模块高度
                 fuWuHeight:792,//服务内容模块高度
                 chanPinHeight:1983,//产品说明模块高度
+                wendajiaHeight:0,//问大家模块高度
+                windowHeight:0
             };
 		},
 		created() {
@@ -1964,6 +1966,14 @@
             uni.createSelectorQuery().select("#odBoxId").boundingClientRect(function(data) { //data - 各种参数
     　　　  　self.odBoxHeight = data.height
     　　    }).exec()
+            uni.createSelectorQuery().select("#wendajia").boundingClientRect(function(data) { //data - 各种参数
+    　　　  　self.wendajiaHeight = data.height
+    　　    }).exec()
+    uni.getSystemInfo({
+        success: function (res) {
+            self.windowHeight = res.windowHeight
+        }
+    });
         },
 		watch: {
 			// 切换审理机构获取服务阶段
@@ -1989,14 +1999,14 @@
                     this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
                     this.serve_offer = '投资人确定'
-                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3}]
+                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
 				} else if (this.bearFees == '自费') {
 					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
                     this.defaultTake = ['广东省','广州市']
 					this.hear_addr = '广东省,广州市';
-                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4}]
+                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}]
                     if (oldVal) {
 						this.getMoney();
 					}
@@ -2031,35 +2041,42 @@
 		},
 		onPageScroll() {
 			var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-                    let height = this.itemTopHeight + this.itemMainHeight - 44
+            let height = this.itemTopHeight + this.itemMainHeight - 44
             if(scrollTop < height){
                 this.showTab = false
             }else{
+                // chanPinHeight  wendajiaHeight
                 this.showTab = true
                 if (this.bearFees == '投资人支付'){
                     let height1 = this.itemTopHeight + this.itemMainHeight - 44
                     let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
                     let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 300
                    if(scrollTop >= height1 && scrollTop < height2){
                        this.tabItemValue = 1
                    } else if(scrollTop >= height2 && scrollTop < height3){
                        this.tabItemValue = 2
-                   } else{
+                   } else if(scrollTop >= height3 && scrollTop < height4){
                        this.tabItemValue = 3
+                   } else{
+                       this.tabItemValue = 4
                    }
                 }else{
                     let height1 = this.itemTopHeight + this.itemMainHeight - 44
                     let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
                     let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
                     let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
+                    let height5 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 250
                     if(scrollTop >= height1 && scrollTop < height2){
                         this.tabItemValue = 1
                     }else if(scrollTop >= height2 && scrollTop < height3){
                         this.tabItemValue = 2
                     }else if(scrollTop >= height3 && scrollTop < height4){
                         this.tabItemValue = 3
-                    }else {
+                    }else if(scrollTop >= height4 && scrollTop < height5){
                         this.tabItemValue = 4
+                    }else {
+                        this.tabItemValue = 5
                     }
                 }
             }
@@ -2069,27 +2086,7 @@
                     let height1 = this.itemTopHeight + this.itemMainHeight - 44
                     let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
                     let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
-                this.tabItemValue = id
-                if(id == 1){
-                    uni.pageScrollTo({
-                        scrollTop: height1
-                    })
-                }else if(id == 2){
-                    uni.pageScrollTo({
-                        scrollTop: height2
-                    })
-                }else{
-                    uni.pageScrollTo({
-                        scrollTop: height3
-                    })
-                }
-            },
-            scrollToTwo(id){
-                console.log(this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 530,'')
-                    let height1 = this.itemTopHeight + this.itemMainHeight - 44
-                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
-                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
-                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 300
                 this.tabItemValue = id
                 if(id == 1){
                     uni.pageScrollTo({
@@ -2106,6 +2103,36 @@
                 }else{
                     uni.pageScrollTo({
                         scrollTop: height4
+                    })
+                }
+            },
+            scrollToTwo(id){
+                console.log(this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 530,'')
+                let height1 = this.itemTopHeight + this.itemMainHeight - 44
+                let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
+                let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
+                let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
+                let height5 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + this.chanPinHeight + this.wendajiaHeight + this.wendajiaHeight - this.windowHeight + 300
+                this.tabItemValue = id
+                if(id == 1){
+                    uni.pageScrollTo({
+                        scrollTop: height1
+                    })
+                }else if(id == 2){
+                    uni.pageScrollTo({
+                        scrollTop: height2
+                    })
+                }else if(id == 3){
+                    uni.pageScrollTo({
+                        scrollTop: height3
+                    })
+                }else if(id == 4){
+                    uni.pageScrollTo({
+                        scrollTop: height4
+                    })
+                }else{
+                    uni.pageScrollTo({
+                        scrollTop: height5
                     })
                 }
             },
@@ -2596,9 +2623,9 @@
             gotoJiSuanQi(id){
                 const nav = navigator.userAgent;
                 if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                	let res = phone.openProject(id);
+                	let res = phone.gotoJiSuanQi(0);
                 } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-                	this.$bridge.callhandler('gotoJiSuanQi', id, res => {});
+                	this.$bridge.callhandler('gotoJiSuanQi', 0, res => {});
                 }
             },
             popupTakeTwoClick(){
