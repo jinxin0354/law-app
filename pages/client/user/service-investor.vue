@@ -346,7 +346,7 @@
 						</view> -->
 
 						</view>
-						<!-- 第三部分部分支持  -->
+						<!-- 第三部分部分支持-->
 						<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" style="margin-top: 15rpx;">
 							<view v-for="(item,index) in swit_flg1(moneyparams.chuli_type)" class="od-item flex-item-i">
 								<view class="flex-item-lable">
