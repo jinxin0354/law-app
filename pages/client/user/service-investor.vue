@@ -258,14 +258,14 @@
 		<!-- 付款给投资人弹出层 -->
 		<uni-popup ref="payToInvestor" type="center">
 			<scroll-view scroll-top="0" scroll-y="true">
-			<service-popup-pay title="结算收益" btnText="我要结算" @closePop="closePop('payToInvestor')"
+			<service-popup-pays title="付款给投资人" btnText="我要支付" @closePop="closePop('payToInvestor')"
 				@confirmPay="confirmPayToInvestor">
 				<template slot="payOption">
 					<view class="flex-item">
 						<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="require text">委托人的案子以什么方式处理的</view>
+							<view class="text">委托人的案子以什么方式处理的<span style="color: #FF0000;">*</span></view>
 						</view>
 						<view class="item-right">
 							<view class="service-list">
@@ -469,7 +469,7 @@
 						</view>	
 				</template>
 
-			</service-popup-pay>
+			</service-popup-pays>
 			</scroll-view>
 			<uni-popup ref="direc" type="center">
 				<view class="popup-direc-box">

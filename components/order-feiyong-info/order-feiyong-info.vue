@@ -77,9 +77,9 @@ export default {
         gotoJiSuanQi(id){
             const nav = navigator.userAgent;
             if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-            	let res = phone.gotoJiSuanQi(id);
+            	let res = phone.gotoJiSuanQi(0);
             } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-            	this.$bridge.callhandler('gotoJiSuanQi', id, res => {});
+            	this.$bridge.callhandler('gotoJiSuanQi', 0, res => {});
             }
         },
 	}

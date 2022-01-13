@@ -7,6 +7,7 @@
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
+        "kernel" : { "ios" : "WKWebview" },
         "usingComponents" : true,
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
@@ -48,6 +49,7 @@
                         "urlidentifier": "baidu.com", //  一般为域名倒写，例如 baidu.com
                         "urlschemes": ["your_url_schemes"]
                                 }]
+                                
             },
             /* SDK配置 */
             "sdkConfigs" : {}

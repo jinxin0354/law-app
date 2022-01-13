@@ -17,12 +17,12 @@
 			<view class="service-title require">执业年限</view>
 			<view class="service-list">
 				<view class="service-item" :class="year == '全部' ? 'active' : ''" @click="year = '全部'">全部</view>
-				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业3年以上' ? 'active' : ''"
-					@click="year = '执业3年以上'">执业3年起</view>
-				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业5年以上' ? 'active' : ''"
-					@click="year = '执业5年以上'">执业5年起</view>
-				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业10年以上' ? 'active' : ''"
-					@click="year = '执业10年以上'">执业10年起</view>
+				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业3年起' ? 'active' : ''"
+					@click="year = '执业3年起'">执业3年起</view>
+				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业5年起' ? 'active' : ''"
+					@click="year = '执业5年起'">执业5年起</view>
+				<view class="service-item" v-if="serviceDuration != '15分钟'" :class="year == '执业10年起' ? 'active' : ''"
+					@click="year = '执业10年起'">执业10年起</view>
 			</view>
 			<view class="service-title require">执业区域</view>
 			<view class="od-box">
