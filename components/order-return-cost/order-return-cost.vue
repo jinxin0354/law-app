@@ -22,7 +22,7 @@
 							<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 100px;height: 100px;"></image>
 						</view> -->
 						<text class="font-15" style="margin-top: 30px;">委托人向投资人支付投资收益的付款记录<text style="color: red;">*</text></text>
-						<upload-add-list :list="image" @change="listChangeImage($event,'image')" @click="type = 2"></upload-add-list>
+						<upload-add-list :list="image" @change="listChange($event,'image')" @click="type = 2"></upload-add-list>
 						
 						<!-- 
 						<view class="arrow-right" style="margin-top: 10px;"  @click="$refs.uploadAdd.$refs.popupAdd.open()">
@@ -122,6 +122,22 @@ export default {
 			return newArr.join(',')
 		},
 		async confirm(){
+			
+			if (this.proof.length <= 0) {
+				uni.showToast({
+					title: '委托人回款的银行流水为必填项',
+					icon: 'none'
+				})
+				return;
+			}
+			
+			if (this.image.length <= 0) {
+				uni.showToast({
+					title: '委托人向投资人支付投资收益的付款记录',
+					icon: 'none'
+				})
+				return;
+			}
 			// TODO银行流水和付款记录
 			let formData = {
 				id: this.orderId,
