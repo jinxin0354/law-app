@@ -223,7 +223,7 @@
 				@confirm="sureRemoveEntrust(2, 'popupNoSureRemoveEntrust')" @close="closePop('popupContract')">
 			</uni-popup-dialog>
 		</uni-popup>
-		<!-- 结算投资人收益弹出层  -->
+		<!-- 结算投资人收益弹出层   -->
 		<uni-popup ref="popupSettleAccounts" type="center">
 
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">

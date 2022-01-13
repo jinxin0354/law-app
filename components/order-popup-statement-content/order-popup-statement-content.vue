@@ -4,7 +4,7 @@
 			<view class="od-box">
 		<scroll-view scroll-top="0" scroll-y="true">
 			<view class="flex-item">
-				<!-- 委托人案子以什么方式处理得 -->
+				<!-- 委托人案子以什么方式处理得  -->
 				<view class="od-item flex-item-i">
 					<view class="flex-item-lable">
 						<view class="ico"></view>
