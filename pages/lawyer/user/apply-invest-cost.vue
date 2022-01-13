@@ -28,7 +28,7 @@
 											<text class="font-15">案件受理费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-												<input class="why-ipt" pattern="[0-9]*" type="number" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
+												<input class="why-ipt" pattern="[0-9]*" @input="inputChange($event,'case_money')" type="text" :disabled="result.indexOf('checkValue1') == -1" v-model="case_money" placeholder="请输入"  placeholder-class="placeholder" />
 											</view>
 										</view>
 										<view class="flex flex-horizontal flex-center-v" style="margin-top: 7.5px;">
@@ -37,7 +37,9 @@
 											<input class="why-ipt" style="margin-left: 5px;width: 120px;" type="text" v-model="case_time" placeholder="请选择" disabled="" @click="jump('/pages/lawyer/user/dead-date')" />
 										</view>
 										<text  style="margin-top: 7.5px;">案件受理费缴纳通知书 <text style="color: red;">*</text></text>
-										<upload-add-list :list="case_list" @change="listChange($event,'case_list')"></upload-add-list>
+										<upload-add-list :list="case_list" @change="listChange($event,'case_list')" @click="photoType = 'case_list'"></upload-add-list>
+										<!-- <upload-add-list :list="case_list" @change="caseList"></upload-add-list> -->
+										
 										<!-- <image @click="jump('/pages/client/order/upload', { source: JSON.stringify(source) })" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 									</view>
 								</view>
@@ -57,11 +59,11 @@
 										<text class="font-15">公告费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" pattern="[0-9]*" :disabled="result.indexOf('checkValue2') == -1" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" />
+											<input class="why-ipt" type="text" pattern="[0-9]*" :disabled="result.indexOf('checkValue2') == -1" @input="inputChange($event,'announce_money')" v-model="announce_money" placeholder="请输入" placeholder-class="placeholder" />
 										</view>
 									</view>
 									<text style="margin-top: 7.5px;">公告费缴费通知书 <text style="color: red;">*</text></text>
-									<upload-add-list key="announce_list" :list="announce_list" @change="listChange($event,'announce_list')"></upload-add-list>
+									<upload-add-list key="announce_list" :list="announce_list" @change="listChange($event,'announce_list')" @click="photoType = 'announce_list'"></upload-add-list>
 									<!-- <image @click="jump('/pages/client/order/upload')" src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;margin-top: 10px;"></image> -->
 								</view>
 							</view>
@@ -80,7 +82,7 @@
 										<text class="font-15">异地被告身份查询费</text>
 										<text style="margin-left: 10px;">￥</text>
 										<view class="" style="border-bottom: 1px solid #000000;width: 70px;">
-											<input class="why-ipt" type="number" pattern="[0-9]*" :disabled="result.indexOf('checkValue3') == -1" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" />
+											<input class="why-ipt" type="text" pattern="[0-9]*" :disabled="result.indexOf('checkValue3') == -1" @input="inputChange($event,'enquire')" v-model="enquire" placeholder="限额600元" placeholder-class="placeholder" />
 										</view>
 									</view>
 								</view>
@@ -101,13 +103,13 @@
 											<text class="font-15">律师费</text>
 											<text style="margin-left: 10px;">￥</text>
 											<view class="" style="width: 70px;">
-												<input class="why-ipt" type="number" pattern="[0-9]*" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
+												<input class="why-ipt" type="text" pattern="[0-9]*" v-model="lawyer" placeholder="请输入" disabled="" placeholder-class="placeholder" />
 											</view>
 										</view>
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托代理合同 <text style="color: red;">*</text></view>
-										<upload-add-list key="contract_list" :list="contract_list" @change="listChange($event,'contract_list')"></upload-add-list>
+										<upload-add-list key="contract_list" :list="contract_list" @change="listChange($event,'contract_list')" @click="photoType = 'contract_list'"></upload-add-list>
 										<!-- <view class="arrow-right"   @click="addPhoto(3)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
 											<!-- <input class="why-ipt flex1" type="text" placeholder="请上传资料" disabled="" placeholder-class="placeholder" /> -->
@@ -116,7 +118,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">委托人主体资料 <text style="color: red;">*</text></view>
-										<upload-add-list key="main_list" :list="main_list" @change="listChange($event,'main_list')"></upload-add-list>
+										<upload-add-list key="main_list" :list="main_list" @change="listChange($event,'main_list')"  @click="photoType = 'main_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(4)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -126,7 +128,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">起诉状（委托人已签章） <text style="color: red;">*</text></view>
-										<upload-add-list key="indictment_list" :list="indictment_list" @change="listChange($event,'indictment_list')"></upload-add-list>
+										<upload-add-list key="indictment_list" :list="indictment_list" @change="listChange($event,'indictment_list')" @click="photoType = 'indictment_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(5)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -136,7 +138,7 @@
 									</view>
 									<view class="checkbox-item">
 										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
-										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')"></upload-add-list>
+										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')" @click="photoType = 'note_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(6)">
 											<image  src="@/static/img/icon/icon_upload.png" mode="aspectFit" style="width: 80px;height: 80px;"></image>
@@ -152,6 +154,8 @@
 			</view>
 		</view>
 		<view class="ok-box fixed"><button type="default" class="ok-btn" @click="confirm">我要申请</button></view>
+		<order-telephone name="投资人" :phoneNumber="investor_mobile" ref="telephoneInvestor" v-if="investor_mobile"></order-telephone>
+		
 		<!-- 超出5000弹出层 -->
 		<uni-popup ref="popupOver5000" type="dialog">
 			<uni-popup-dialog
@@ -162,16 +166,16 @@
 				:before-close="true"
 				@confirm="
 					closePop('popupOver5000');
-					$refs.popupTel.open();
+					$refs.telephoneInvestor.$refs.popupTel.open();
 				"
 				@close="
 					closePop('popupOver5000');
-					addInfo();
+					addInfo(1);
 				"
 			>
 				<view class="">
 					本案累计申请金额已超过
-					<text class="red">5000</text>
+					<text class="red">3400</text>
 					元， 需要投资人审批，请先与投资人协 商一致。
 				</view>
 			</uni-popup-dialog>
@@ -212,6 +216,7 @@ export default {
 			'checkValue3',
 			'checkValue4'
 			],
+			photoType: 'case_list',
 			investor_mobile: '',
 			apply_lawyer: 0 //是否申请投资费用1申请  0未申请过律师费
 		};
@@ -226,8 +231,43 @@ export default {
 		if (params.apply_lawyer) {
 			this.apply_lawyer = Number(params.apply_lawyer);
 		}
+		window.fileOk = this.fileOk;
+		window.photoOk = this.photoOk;
 	},
 	methods: {
+		inputChange(e,type){
+			console.log(e);
+			this.$nextTick(() => {
+				this[type] = e.detail.value.replace(/\D/g,'')
+			})
+		},
+		fileOk(res) {
+			
+			if (res == "nothing") {
+				uni.hideLoading()
+			}
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			this[this.photoType] = this[this.photoType].concat(tempList)
+			uni.hideLoading()
+		},
+		//接收图片
+		photoOk(res) {
+			if (res == "nothing") {
+				uni.hideLoading()
+			}
+			let tempList = [];
+			res.forEach((item, index) => {
+				tempList.push(JSON.parse(item));
+			});
+			this[this.photoType] = this[this.photoType].concat(tempList)
+			uni.hideLoading()
+		},
+		caseList(e) {
+			this.case_list = e
+		},
 		listChange(e,type) {
 			this[type] = e
 		},
@@ -255,7 +295,7 @@ export default {
 			}
 			
 			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
-			if (sum > 5000) {
+			if (sum > 3400) {
 				this.$refs.popupOver5000.open();
 				return;
 			}
@@ -322,13 +362,9 @@ export default {
 				}
 			}
 			
-			
-			
-			
-			
 			this.addInfo();
 		},
-		async addInfo() {
+		async addInfo(type = 0) {
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
@@ -344,15 +380,19 @@ export default {
 				note: this.getUrlParams(this.note_list),
 			};
 			
-			if (this.apply_lawyer == 0) {
+			if (this.apply_lawyer == 0 && this.result.indexOf('checkValue4') != -1) {
 				formData.lawyer =  Number(this.lawyer)
 			}
 
 			let res = await this.$api('index.lawyer_apply', formData);
 			if (res.code == 1) {
+				
 				let pages = getCurrentPages();
 				let prevPage = pages[pages.length - 2];
 				prevPage.$vm.init();
+				if (type == 1) {
+					prevPage.$vm.showTip()
+				}
 				uni.navigateBack({
 					delta: 1
 				});

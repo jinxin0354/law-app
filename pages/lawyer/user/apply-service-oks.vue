@@ -49,6 +49,11 @@
 					<view>原件一份</view>
 					<text style="line-height: 55rpx;">
 					【追欠款的生效裁判文书/和解协议】
+					【民事裁定书（追加投资人为申请执行人）】
+					【民事裁定书（终结本次执行）】
+					复印件各一份
+					【执行申请书】
+					【执行立案通知书】
 					</text>
 				</view>
 			</view>
@@ -71,7 +76,7 @@
 				<view style="margin-left: 10rpx;font-weight: 300;">我已与投资人结算完投资人奖励。</view>
 			</view>
 		</view>
-		<view class="fixed sumit" @click="confirmServiceOk">我要申请</view>
+		<view class="fixed sumit" :class="finish" @click="confirmServiceOk">我要确认</view>
 	<!-- 全局通用组件 -->
 	<law-common ref="lawCommon"></law-common>
 	</view>
@@ -85,15 +90,30 @@ export default {
 			return_money: '', //回款总金额
 			against_ben: '', //冲销本金
 			against_else: '', // 冲销其他款项
-			//新修改 start
 			tabIndex:'',
 			tabIndexs:'',
 			is_kuaidi:false,
 			is_jiangli:false,
 			is_service:false,
 			is_shouyi:false
-			//新修改 end
 		};
+	},
+	computed:{
+		finish(){
+			if(this.is_kuaidi==false||this.is_jiangli==false||
+			this.is_service==false|| this.is_shouyi==false){
+				return 'sumits';
+			}
+			if(this.tabIndex!='全部不支持'){
+				if(this.tabIndexs=='全额回款'&& this.return_money==''){
+					return 'sumits';
+				}
+				if(this.tabIndexs=='部分回款' && (this.return_money==''||this.against_ben==''
+				||this.against_else=='')){
+					return 'sumits';
+				}
+			}
+		}
 	},
 	onLoad(params) {
 		if (params.order_id) {
@@ -254,5 +274,10 @@ export default {
 	border-radius: 40rpx;
 	background-color: #FFC900;
 	font-size: 32rpx;
+}
+.sumits{
+	color: #000000;
+	background-color: #F5F5F5;
+	border: 1rpx solid #999999;
 }
 </style>

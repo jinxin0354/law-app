@@ -1176,6 +1176,18 @@
             }
             
         }
+        ,{
+            "path" : "pages/lawyer/user/apply-service-oks",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "确认服务完成",
+                "enablePullDownRefresh": false
+            },
+			"meta": {
+				"auth": true
+			}
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

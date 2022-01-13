@@ -107,7 +107,7 @@
 		</view>
 		<view class="module-box">
 			<view class="module-title-box">
-				 催收的聊天内容(微信/支付宝/录音/录像)
+				 催收的聊天内容(微信/支付宝/录音/录像/短信)
 			</view>
 			<view class="upload-box">
 				<view class="upload-item" v-for="(item, index) in cuishou_images" :key="index" @click="previewImage(item)">
@@ -302,8 +302,8 @@
 			}
 		},
 	created() {
+		window.fileOk = this.fileOk;
 		window.photoOk = this.photoOk;
-		window.sourceOk = this.sourceOk;
 	},
 		methods: {
 			//接收文件
@@ -456,6 +456,10 @@
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.camera();
+                    uni.showLoading({
+                	title: '上传中'
+                })
+                    this.closePop('popupAdd')
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('camera', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -486,6 +490,10 @@
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.pickPhoto();
+                    uni.showLoading({
+                    	title: '上传中'
+                    })
+                    this.closePop('popupAdd')
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('pickPhoto', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -516,6 +524,10 @@
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
 					phone.pickFile();
+                    uni.showLoading({
+                    	title: '上传中'
+                    })
+                    this.closePop('popupAdd')
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('pickFile', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -541,6 +553,16 @@
 					});
 				}
 			},
+            // 去掉数组中的空值
+            trimSpace(array) {
+            	for (var i = 0; i < array.length; i++) {
+            		if (array[i] == '' || array[i] == null || typeof array[i] == 'undefined') {
+            			array.splice(i, 1);
+            			i = i - 1;
+            		}
+            	}
+            	return array;
+            },
 			confirmUpload(isSave) {
 				this.$refs.popupUpload.close();
 				let pages = getCurrentPages();

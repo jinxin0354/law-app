@@ -137,7 +137,7 @@
 			</template>
 			<template v-if="isClientServiceOk && !isLawyerServiceOk">
 				<view class="service-list">
-					<button class="service-item active flex1" @click="$refs.popupSureServiceOk.open()">确认服务完成</button>
+					<button class="service-item active flex1" @click="jump('/pages/lawyer/user/apply-service-oks', { order_id: order_id })">确认服务完成</button>
 					<button class="service-item active flex1" style="margin-right: 0;" @click="$refs.popupNoSureServiceOk.open()">不确认服务完成</button>
 				</view>
 			</template>
@@ -294,13 +294,13 @@
 					</view>
 				</scroll-view>
 				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn">
-					<button class="service-item active button " @click="confirmEntrustOk">我要申请</button>
+					<button class="service-item active button " :style="result.length == 2 && reason.length > 0 ? '' : 'background-color:#F2F2F2;color:#999;border-color:#f2f2f2;'" @click="confirmEntrustOk">我要申请</button>
 					</view>
 			</order-popup-common>
 		</uni-popup>
 		<!-- 债券投资合同组件-->
 		<order-invest-contact ref="investContact"></order-invest-contact>
-		<order-return-cost ref="returnCost" :orderId="order_id"></order-return-cost>
+		<order-return-cost ref="returnCost" @init="init()" :orderId="order_id"></order-return-cost>
 		
 		<!-- 打电话组件 -->
 		<order-telephone name="委托人" :phoneNumber="info.order.user_mobile" ref="telephoneClient" v-if="info.order.user_mobile"></order-telephone>
@@ -339,6 +339,12 @@ export default {
 		}
 	},
 	methods: {
+		async showTip() {
+			uni.showToast({
+				title: "已发送给投资人，请联系投资人确认",
+				icon: 'none'
+			})
+		},
 		async jumpToWeb() {
 			let url = this.info.order.zhaiquan_hetong
 			const nav = navigator.userAgent;
@@ -372,6 +378,10 @@ export default {
 			}
 		},
 		async confirmEntrustOk() {
+			if (this.reason.length == 0 || this.result.length < 2) {
+				return
+			}
+			
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
