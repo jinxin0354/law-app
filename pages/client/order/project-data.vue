@@ -455,11 +455,12 @@
 			camera() {
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-					phone.camera();
                     uni.showLoading({
                 	title: '上传中'
                 })
+					phone.camera();
                     this.closePop('popupAdd')
+                    uni.hideLoading();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('camera', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -483,17 +484,19 @@
 							this.other_images = this.other_images.concat(tempList);
 						}
 					});
+                    this.closePop('popupAdd')
 				}
 			},
 			//选择照片
 			pickPhoto() {
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-					phone.pickPhoto();
                     uni.showLoading({
                     	title: '上传中'
                     })
+					phone.pickPhoto();
                     this.closePop('popupAdd')
+                    uni.hideLoading();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('pickPhoto', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -517,17 +520,19 @@
 							this.other_images = this.other_images.concat(tempList);
 						}
 					});
+                    this.closePop('popupAdd')
 				}
 			},
 			// 选择文件
 			pickFile() {
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-					phone.pickFile();
                     uni.showLoading({
                     	title: '上传中'
                     })
+					phone.pickFile();
                     this.closePop('popupAdd')
+                    uni.hideLoading();
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('pickFile', {}, data => {
 						let tempList = this.trimSpace(data);
@@ -551,6 +556,7 @@
 							this.other_images = this.other_images.concat(tempList);
 						}
 					});
+                    this.closePop('popupAdd')
 				}
 			},
             // 去掉数组中的空值

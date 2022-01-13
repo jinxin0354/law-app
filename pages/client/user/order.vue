@@ -139,7 +139,7 @@ export default {
 					this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
 				} else {
 					console.log('XX');
-					if(item.product == '打官司'){
+					if(item.price_type == '投资人支付(不用还)'){
 						this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
 					} else {
 						this.jump('/pages/client/user/service-face', { order_id: item.id, status: item.status });

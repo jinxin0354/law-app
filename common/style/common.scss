@@ -519,11 +519,13 @@ uni-button[disabled][type='default'] {
 		padding: 1rpx 10rpx;
 		border: 1rpx #3abbff solid;
 		font-size: 24rpx;
-		text-align: center;
 		color: #3abbff;
 		margin-left: -20rpx;
-		padding-left: 20rpx;
+		padding-left: 28rpx;
 		border-radius: 10rpx;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 	}
 	.year-img {
 		width: 40rpx;

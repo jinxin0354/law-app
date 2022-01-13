@@ -158,35 +158,57 @@
 		</uni-popup>
 		<!-- 审批服务完成弹出层 -->
 		<uni-popup ref="popupApproveServiceOk" type="center">
-			<order-popup-common title="审批服务完成" @closePop="closePop('popupApproveServiceOk')">
+			<order-popup-common title="审批服务完成" style="background-color: #F5F5F5;" @closePop="closePop('popupApproveServiceOk')">
 				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
 					<view class="why-box">
-						<view class="why-title">诉讼结果</view>
-						<view class="why-txt">{{ approveInfo.result }}</view>
+						<view class="why-title">委托人主张的欠款本金</view>
+						<view class="why-txts">{{ approveInfo.result }}</view>
 					</view>
 					<view class="why-box">
 						<view class="why-title">回款结果</view>
-						<view class="why-txt">{{ approveInfo.sure }}</view>
+						<view class="why-txts" style="margin-bottom: 30rpx;">{{ approveInfo.return_type }}</view>
+						<view class="why-title">回款总金额：<span style="font-weight: 300;">￥{{approveInfo.return_money}}</span></view>
+						<view class="why-title">冲销本金：<span style="font-weight: 300;">￥{{approveInfo.against_ben}}</span></view>
+						<view class="why-title">冲销其他款项：<span style="font-weight: 300;">￥{{approveInfo.against_else}}</span></view>
 					</view>
 					<view class="why-box">
 						<view class="why-title">律师已快递如下文件给我</view>
-						<view class="why-txt">{{ approveInfo.is_send }}</view>
+						<view class="xieyi" @click="is_kuaidi=!is_kuaidi">
+							<image src="../../../static/img/icon/radio.png" v-if="is_kuaidi==false" style="width: 34rpx;height: 34rpx;"></image>
+							<image src="../../../static/img/icon/radioed.png" v-if="is_kuaidi==true" style="width: 34rpx;height: 34rpx;"></image>
+							<view class="" style="margin-left: 5rpx;font-weight: 400;">
+								<view>原件一份</view>
+								<text style="line-height: 55rpx;">
+									<view v-for="i in approveInfo.is_send">{{i}}</view>
+								</text>
+								
+							</view>
+						</view>
+						<!-- <view class="why-txt">{{ approveInfo.is_send }}</view> -->
 					</view>
 					<view class="why-box">
 						<view class="why-title">我确认如下事项</view>
-						<checkbox-group @change="resultChange4">
-							<label class="" v-for="(item, index) in resultLIst4" :key="item.value">
-								<view class="why-radio">
-									<checkbox :value="item.name" style="transform: scale(0.7);" color="#FFC801" />
-									<view class="why-txt">{{ item.name }}</view>
-								</view>
-							</label>
-						</checkbox-group>
+						<view class="xieyi" style="height: 80rpx;" @click="is_service=!is_service">
+							<image src="../../../static/img/icon/radio.png" v-if="is_service==false" style="width: 34rpx;height: 34rpx;"></image>
+							<image src="../../../static/img/icon/radioed.png" v-if="is_service==true" style="width: 34rpx;height: 34rpx;"></image>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已与委托人、投资人确认服务完成。</view>
+						</view>
+						<view class="xieyi" style="height: 80rpx;" @click="is_shouyi=!is_shouyi">
+							<image src="../../../static/img/icon/radio.png" v-if="is_shouyi==false" style="width: 34rpx;height: 34rpx;"></image>
+							<image src="../../../static/img/icon/radioed.png" v-if="is_shouyi==true" style="width: 34rpx;height: 34rpx;"></image>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已让委托人向投资人支付完投资收益。</view>
+						</view>
+						<view class="xieyi" @click="is_jiangli=!is_jiangli">
+							<image src="../../../static/img/icon/radio.png" v-if="is_jiangli==false" style="width: 34rpx;height: 34rpx;"></image>
+							<image src="../../../static/img/icon/radioed.png" v-if="is_jiangli==true" style="width: 34rpx;height: 34rpx;"></image>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已与投资人结算完投资人奖励。</view>
+						</view>
 					</view>
 				</scroll-view>
-				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn">
-					<button class="service-item active flex1" @click="$refs.popupSureServiceOk.open()">确认服务完成</button>
-					<button class="service-item active flex1"
+				<view class="service-list" style="padding-left: 20rpx;margin-top: 40rpx; " slot="popup-btn">
+					<button class="service-item flex1 submit" v-if="finish!='active'">确认服务完成</button>
+					<button class="service-item flex1 submit active" v-else  @click="$refs.popupSureServiceOk.open()">确认服务完成</button>
+					<button class="service-item active flex1 submit"
 						@click="$refs.popupNoSureServiceOk.open()">不确认服务完成</button>
 				</view>
 			</order-popup-common>
@@ -288,8 +310,21 @@
 				],
 				result4: [],
 				approveInfo: {}, //审批信息
-				settleAccountsInfo: {} //结算投资人收益
+				settleAccountsInfo: {} ,//结算投资人收益
+				is_kuaidi:false,
+				is_jiangli:false,
+				is_service:false,
+				is_shouyi:false,
 			};
+		},
+		computed:{
+			finish(){
+				if(this.is_kuaidi==true&&this.is_jiangli==true&&
+				this.is_service==true&& this.is_shouyi==true){
+					return 'active';
+				}
+				
+			}
 		},
 		onLoad(params) {
 			if (params.order_id) {
@@ -341,13 +376,16 @@
 				}
 			},
 			async sureServiceOk(status, pop) {
-				if (this.result4.length < 3) {
-					uni.showToast({
-						title: '我确认如下事项,需全选',
-						icon: 'none'
-					});
-					return;
+				if(status==1){
+					if(this.is_service==false || this.is_jiangli==false||this.is_shouyi==false){
+						uni.showToast({
+							title:'我确认如下事项,需全选',
+							icon:'none'
+						})
+						return
+					}
 				}
+				
 				this.closePop('popupApproveServiceOk');
 				let formData = {
 					id: this.order_id,
@@ -378,7 +416,13 @@
 				};
 				let res = await this.$api('index.t_sure_h5', formData);
 				if (res.code == 1) {
-					this.approveInfo = res.data;
+					var info=res.data;
+					if(res.data.is_send!='') {
+						let kuai=res.data.is_send.split(' ')
+						kuai.shift()
+						info.is_send=kuai;
+					}
+					this.approveInfo = info;
 				}
 			},
 			async confirmSettleAccounts() {
@@ -425,29 +469,34 @@
 	.why-box {
 		background-color: #ffffff;
 		border-radius: 26rpx;
-		padding: 0 30rpx 0;
+		padding: 30rpx;
 		margin-bottom: 20rpx;
-
+		margin-left: 20rpx;
+		margin-right: 20rpx;
 		.why-title {
 			font-weight: bold;
 			margin-bottom: 20rpx;
 		}
-
-		.why-radio {
-			padding-bottom: 20rpx;
-			display: flex;
-			flex-wrap: wrap;
-
-			.why-txt {}
-
-			.why-ipt-box {
-				flex: 1;
-				border-bottom: 1rpx solid #eee;
-				vertical-align: bottom;
-				margin-left: 20rpx;
-				padding-bottom: 4rpx;
-			}
+		.why-txts {
+			width: 180rpx;
+			height: 60rpx;
+			background-color: #FFC900;
+			color: white;
+			line-height: 60rpx;
+			text-align: center;
+			border-radius: 38rpx;
+			font-size: 28rpx;
 		}
+		.xieyi{
+			display: flex;
+			align-items: flex-start;
+		}
+		
 	}
-	
+	.submit{
+		background-color: #F5F5F5;
+		border: 1rpx solid #999999;
+		border-radius: 38rpx;
+		color: #000000;
+	}
 </style>

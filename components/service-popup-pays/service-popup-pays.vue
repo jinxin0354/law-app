@@ -78,7 +78,7 @@ export default {
 	}
 }
 .popup-bottom-box {
-	background-color: #ffffff;
+	background-color: #F5F5F5;
 	overflow: auto;
 	border-radius: 26rpx;
 	.bot-title {
@@ -120,6 +120,7 @@ export default {
 		}
 		.od-box {
 			padding: 0;
+			background: none;
 		}
 	}
 }

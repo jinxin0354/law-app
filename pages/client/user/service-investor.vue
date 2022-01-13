@@ -281,11 +281,11 @@
 							</view>
 						</view>
 					</view>
-
+					
 					<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="require ">委托人主张的欠款本金有多少获得支持</view>
+							<view class="">委托人主张的欠款本金有多少获得支持<span style="color: #FF0000;">*</span></view>
 						</view>
 						<view class="item-right">
 							<view class="service-list">
@@ -304,14 +304,14 @@
 					<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="require">{{swit_flg(moneyparams.chuli_money)[0]}}</view>
+							<view>{{swit_flg(moneyparams.chuli_money)[0]}}<span style="color: #FF0000;">*</span></view>
 							<!-- <view class="require">委托人这次收回了多少钱</view> -->
 						</view>
 						<view class="item-right">
-							<view class="item-txt">
-								<text class="input_icon">¥</text>
-								<input type="number" class="ipt-border" placeholder="输入金额"
-									placeholder-class="placeholder" v-model="moneyparams.money" />
+							<view class="input">
+								<view>￥</view>
+								<input type="number" placeholder="输入金额" v-model="moneyparams.money" />
+								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
 					</view>
@@ -337,71 +337,69 @@
 							</view>
 						</view>
 						<view class="item-right">
-							<view class="item-txt computer_input">
-								<text class="input_icon">¥</text>
-								<!--moneyparams.money*0.3-->
-								<!--  -->
-								<input type="number" class="ipt-border" disabled="disabled" placeholder="待计算"
-									placeholder-class="placeholder" v-model="moneyparams.price" />
+							<view class="input">
+								<view>￥</view>
+								<input type="number" placeholder="输入金额" :disabled="true" v-model="getMoney" />
+								<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 							</view>
 						</view>
 					</view>
 					</view>
 					<!-- 和解/调解  -->
-					<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" >
+					<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" style="margin-top: 15rpx;">
 						<view class="od-item flex-item-i">
 							<view class="flex-new-item">
 								<view class="ico"></view>
-								<view class="require">{{swit_flg1(moneyparams.chuli_type)[0]}}</view>
+								<view>{{swit_flg1(moneyparams.chuli_type)[0]}}<span style="color: #FF0000;">*</span></view>
 								<!-- <view class="require">委托人这次收回了多少钱</view> -->
 							</view>
 							<view class="item-right">
-								<view class="item-txt">
-									<text class="input_icon">¥</text>
-									<input type="number" class="ipt-border" placeholder="输入金额"
-										placeholder-class="placeholder" v-model="moneyparams.money" />
+								<view class="input">
+									<view>￥</view>
+									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" />
+									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
 						</view>
 						<view class="od-item flex-item-i">
-								<view class="flex-new-item">
+								<view class="flex-new-item" style="height: 60rpx;">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[1]}}</view>
+									<view>{{swit_flg1(moneyparams.chuli_type)[1]}}<span style="color: #FF0000;">*</span></view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view>￥</view>
+										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" />
+										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
 							</view>
 						<view class="od-item flex-item-i">
 								<view class="flex-new-item">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[2]}}</view>
+									<view>{{swit_flg1(moneyparams.chuli_type)[2]}}<span style="color: #FF0000;">*</span></view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view>￥</view>
+										<input type="number" placeholder="输入金额" v-model="moneyparams.touzi_money" />
+										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
 							</view>
 						<view class="od-item flex-item-i">
 								<view class="flex-new-item">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[3]}}</view>
+									<view style="height: 66rpx;">{{swit_flg1(moneyparams.chuli_type)[3]}}<span style="color: #FF0000;">*</span></view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view>￥</view>
+										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.sunshi_money" />
+										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
 							</view>
@@ -419,10 +417,10 @@
 							</view>
 						</view>
 						<view class="item-right">
-							<view class="item-txt">
-								<text class="input_icon">¥</text>
-								<input type="number" class="ipt-border" placeholder="输入金额"
-									placeholder-class="placeholder" v-model="moneyparams.weiyue_money" />
+							<view class="input">
+								<view>￥</view>
+								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" />
+								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
 						</view>
@@ -575,11 +573,26 @@
 				moneyparams: {
 					chuli_type: "法院判决",
 					chuli_money: "全部支持",
-					money: "",
-					price: "",
-					weiyue_money: ""
+					money: "",//委托人这次收回了多少钱
+					price: "",//委托人这次应付收益
+					weiyue_money: "",//委托人逾期付款的违约金
+					yuan_money:'',//委托人原来主张的欠款本金金额是多少
+					hejie_money:'',//委托人与欠款方和解时，欠款方同意偿还的欠款本金金额是多少  
+					touzi_money:'',//投资人已经支付的投资费用
+					sunshi_money:'',//委托人应付的投资费用损失
+					total_money:''//合计付款金额
 				}
 			};
+		},
+		computed:{
+			getMoney(){
+				if(this.moneyparams.money!=''){
+					let money=this.moneyparams.money*0.3
+					this.moneyparams.price=money.toFixed(2)
+					return money.toFixed(2)
+				}
+				 
+			}
 		},
 		onLoad(params) {
 			if (params.order_id) {
@@ -878,8 +891,9 @@
 				margin-left: 7rpx;
 			}
 			.text_icon{
-						margin-left: 10rpx;
-					}
+				margin-left: 10rpx;
+			}
+			
 		}	
 		
 			
@@ -890,6 +904,7 @@
 		// padding: 30rpx;
 		width: 100%;
 		background: #FFFFFF;
+		padding-bottom: 30rpx;
 		border-radius: 24rpx;
 		//每一项内容
 		.flex-item-i{
@@ -897,6 +912,32 @@
 			// margin-top: 30rpx;
 			// margin-bottom: 30rpx;
 			padding: 30rpx 30rpx 0 30rpx;
+			.item-right{
+				display: flex;
+				align-items: center;
+				//新改
+				.input{
+					margin-top: 20rpx;
+					font-size: 26rpx;
+					display: flex;
+					align-items: center;
+					width: 585rpx;
+					height: 60rpx;
+					border-radius: 12rpx;
+					border: 1rpx solid #E0E0E0;
+					padding-left: 17rpx;
+					padding-right: 17rpx;
+					input{
+						width: 430rpx;
+						height: 60rpx;
+						font-size: 26rpx;
+						margin-left: 10rpx;
+						margin-right: 10rpx;
+						letter-spacing: 1rpx;
+						
+					}
+				}
+			}
 		}
 		.service-list{
 			margin-top: 24rpx;

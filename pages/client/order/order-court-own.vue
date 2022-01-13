@@ -3250,7 +3250,7 @@
                 border-radius: 30rpx;
                 border: 1rpx solid #DCDCDC;
                 padding: 10rpx 20rpx;
-                box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.16);
+                box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.16);
             }
             .lawyer-left {
             	font-weight: bold;

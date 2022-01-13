@@ -19,7 +19,7 @@
 				<view class="why-title" style="margin-top: 30rpx;">回款总金额<span style="color: #FF0000;">*</span></view>
 				<view class="input">
 					<view class="">￥</view>
-					<input type="number" placeholder="输入金额" v-model="return_money" />
+					<input type="text" @input="inputChange($event,'return_money')" pattern="[0-9]*"  placeholder="输入金额" v-model="return_money" />
 					<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 				</view>
 			</block>
@@ -27,7 +27,7 @@
 				<view class="why-title" style="margin-top: 30rpx;">冲销本金<span style="color: #FF0000;">*</span></view>
 				<view class="input">
 					<view class="">￥</view>
-					<input type="number" placeholder="输入金额" v-model="against_ben" />
+					<input type="text" @input="inputChange($event,'against_ben')" pattern="[0-9]*"  placeholder="输入金额" v-model="against_ben" />
 					<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 				</view>
 			</block>
@@ -35,7 +35,7 @@
 				<view class="why-title" style="margin-top: 30rpx;">冲销其他款项<span style="color: #FF0000;">*</span></view>
 				<view class="input">
 					<view class="">￥</view>
-					<input type="number" placeholder="输入金额" v-model="against_else" />
+					<input type="text" @input="inputChange($event,'against_else')" pattern="[0-9]*"  placeholder="输入金额" v-model="against_else" />
 					<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 				</view>
 			</block>
@@ -48,7 +48,7 @@
 				<view class="" style="margin-left: 5rpx;font-weight: 400;">
 					<view>原件一份</view>
 					<text style="line-height: 55rpx;">
-					【追欠款的生效裁判文书/和解协议】
+					{{kuaidi[0]}}
 					</text>
 				</view>
 			</view>
@@ -91,7 +91,10 @@ export default {
 			is_kuaidi:false,
 			is_jiangli:false,
 			is_service:false,
-			is_shouyi:false
+			is_shouyi:false,
+			kuaidi:[
+				'【追欠款的生效裁判文书/和解协议】'
+			]
 			//新修改 end
 		};
 	},
@@ -123,7 +126,7 @@ export default {
 				})
 				return
 			}
-			if(this.tabIndexs==''){
+			if(this.tabIndexs==''&&this.tabIndex!='全部不支持'){
 				uni.showToast({
 					title:'回款结果,需选中',
 					icon:'none'
@@ -151,8 +154,11 @@ export default {
 				result:this.tabIndex,
 				return_money:this.return_money,
 				against_ben:this.against_ben,
-				against_else:this.against_else
+				against_else:this.against_else,
+				is_send:'原件一份'+''+this.kuaidi.join(''),
+				return_type:this.tabIndexs
 			};
+			
 			
 			let res = await this.$api('index.lawyer_sure', formData);
 			if (res.code == 1) {
@@ -173,7 +179,12 @@ export default {
 		//回款结果选项切换
 		checktabs(e){
 			this.tabIndexs=e
-		}
+		},
+		inputChange(e,type){
+			this.$nextTick(() => {
+				this[type] = e.detail.value.replace(/\D/g,'')
+			})
+		},
 		
 	}
 };

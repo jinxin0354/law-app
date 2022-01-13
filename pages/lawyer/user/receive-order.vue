@@ -163,7 +163,11 @@ export default {
 						console.log('XXXXXX');
 						console.log(this.userInfo.is_touziren);
 						if (this.userInfo.is_lawyer == '1') {
-							this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+							if(item.price_type == '投资人支付(不用还)'){
+								this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+							} else {
+								this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+							}
 						} else if (this.userInfo.is_touziren == '1') {
 							console.log('x2');
 							this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
