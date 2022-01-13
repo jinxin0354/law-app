@@ -263,7 +263,7 @@
 							<view class="od-item flex-item-i">
 								<view class="flex-item-lable">
 									<view class="ico"></view>
-									<view class="require text">委托人的案子以什么方式处理的</view>
+									<view class="require text">您的案子以什么方式处理的</view>
 								</view>
 								<view class="item-right">
 									<view class="service-list">
@@ -283,7 +283,7 @@
 							<view class="od-item flex-item-i">
 								<view class="flex-item-lable">
 									<view class="ico"></view>
-									<view class="require ">委托人主张的欠款本金有多少获得支持</view>
+									<view class="require ">您主张的欠款本金有多少获得支持</view>
 								</view>
 								<view class="item-right">
 									<view class="service-list">
@@ -351,7 +351,9 @@
 							<view v-for="(item,index) in swit_flg1(moneyparams.chuli_type)" class="od-item flex-item-i">
 								<view class="flex-item-lable">
 									<view class="ico"></view>
-									<view v-if="index<2" class="require">{{item}}</view>
+									<view v-if="index<1" class="require">{{item}}</view>
+									<view v-if="index==1" ><text>{{item}}</text>
+									<text class="red">*</text></view>
 									<view v-else-if="index==2" >{{item}}</view>
 									<view v-else-if="index==3" class="adi-symbol">
 										<view class="adi">{{item}}</view>
@@ -388,7 +390,7 @@
 								<view class="flex-item-lable">
 									<view class="ico"></view>
 									<view class="adi-symbol">
-										<view class="adi">委托人逾期付款的违约金*(如无,请填写0)</view>
+										<view class="adi">您逾期付款的违约金*(如无,请填写0)</view>
 										<view @click="$refs.direc.open('center')" class="symbol">
 										</view>
 									</view>
@@ -457,9 +459,12 @@
 			</scroll-view>
 			<uni-popup ref="direc" type="center">
 				<view class="popup-direc-box">
+					
 					<view class="bot-title">
 						<view class="title-txt">计算方式说明</view>
+						
 						<view class="title-close" @click="close">
+							
 							<view class="image-wrapper">
 								<image src="@/static/img/close.png" mode="aspectFit"></image>
 							</view>
@@ -468,33 +473,33 @@
 					<view class="od-item flex-item-i">
 						<view class="flex-item-lable">
 							<view class="ico"></view>
-							<view class="blod">委托人这次应付投资收益</view>
+							<view class="blod">您这次应付投资收益</view>
 						</view>
 						<view class="item-right">
 							<view class="item-txt">
 								<text class="input_icon">¥</text>
-								<text class="text_icon">委托人起诉的全部金额x30%</text>
+								<text class="text_icon">您这次收回的钱x30%</text>
 							</view>
 						</view>
 					</view>
 					<view class="od-item flex-item-i">
 						<view class="flex-item-lable">
 							<view class="ico"></view>
-							<view class="blod">委托人应付的投资费用损失为</view>
+							<view class="blod">您应付的投资费用损失为</view>
 						</view>
 						<view class="item-right">
 							<view class="item-txt">
 								<view class="bt1">法院判决时适用</view>
 								<view class="dl1">
 									<text class="input_icon">¥</text>
-									<view class="text_icon">(委托人原来主张的欠款本金-法院判决支持的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+									<view class="text_icon">(您原来主张的欠款本金-法院判决支持的欠款本金)÷您原来主张的欠款本金×投资人已支付的投资费用</view>
 								</view>
 							</view>
 							<view class="item-txt">
 								<view class="bt1">和解/调解时适用</view>
 								<view class="dl1">
 									<text class="input_icon">¥</text>
-									<view>(委托人原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+									<view class="text_icon">(您原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷您原来主张的欠款本金×投资人已支付的投资费用</view>
 								</view>
 							</view>
 						</view>
@@ -502,12 +507,12 @@
 					<view class="od-item flex-item-i">
 						<view class="flex-item-lable">
 							<view class="ico"></view>
-							<view class="">委托人预期付款的违约金</view>
+							<view class="">您逾期付款的违约金</view>
 						</view>
 						<view class="item-right">
 							<view class="item-txt">
 								<text class="input_icon">¥</text>
-								<text>委托人未付款金额×万分之六×逾期天数</text>
+								<text class="text_icon">您未付款金额×万分之六×逾期天数</text>
 							</view>
 						</view>
 					</view>
@@ -586,13 +591,14 @@
 				n2 = n2 != '全部不支持' ? '1' : '0'
 
 				let obj = {
-					'0': ['委托人起诉金额总和是多少', '委托人应付的投资收益损失为'],
-					'1': ['委托人这次收回了多少钱', '委托人这次应付投资收益']
+					'0': ['您起诉金额总和是多少', '您应付的投资收益损失为'],
+					'1': ['您这次收回了多少钱', '您这次应付投资收益']
 				}
 				return obj[n2]
 			},
 			swit_flg1(n) {
-				let str = '您与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
+				console.log(n);
+				let str ='您与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
 				switch (n) {
 					case '法院判决':
 						str = '法院判决支持的欠款本金金额是多少'
@@ -608,9 +614,11 @@
 						console.log(4);
 						break;
 				}
-				let arr = ['您原来主张的欠款本金金额是多少',
+				let arr = [
+					'您原来主张的欠款本金金额是多少',
 					str,
-					'投资人已支付的费用', '您应付的投资费用损失为'
+					'投资人已支付的费用',
+					 '您应付的投资费用损失为'
 				]
 				return arr
 			},
@@ -849,14 +857,14 @@
 				//带付款图标的input空间
 				.item-txt {
 					position: relative;
-					
+					// margin-left: 19rpx;
 					// align-content: center;
 					//付款文字样式
 					.input_icon {
 						position: absolute;
 						font-size: 18rpx;
-						top: 12rpx;
-						left: 10rpx;
+						top: 8rpx;
+						left: 19rpx;
 						z-index: 8;
 					}
 					.ipt-border {
@@ -864,7 +872,7 @@
 						margin-top: 10rpx;
 						// border: none;
 						height: 25rpx;
-						text-indent: 24rpx;
+						text-indent: 30rpx;
 						color: #d4d4d4;
 					}
 				}
@@ -879,8 +887,8 @@
 						color: #f00;
 						position: absolute;
 						font-size: 18rpx;
-						top: 16rpx;
-						left: 10rpx;
+						top: 12rpx;
+						left: 19rpx;
 						margin-right: 7rpx;
 						z-index: 8;
 					}

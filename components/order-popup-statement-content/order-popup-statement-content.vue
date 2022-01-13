@@ -86,6 +86,7 @@
 					<view class="flex-item-lable">
 						<view class="ico"></view>
 						<view v-if="index<1" class="require">{{item}}</view>
+						<view v-if="index==1"><text>{{item}}</text><text class="red">*</text></view>
 						<view v-else-if="index==2">{{item}}</view>
 						<view v-else-if="index==3" class="adi-symbol">
 							<view class="adi">{{item}}</view>
