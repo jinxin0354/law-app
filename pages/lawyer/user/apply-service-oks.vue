@@ -47,7 +47,10 @@
 				<image src="../../../static/img/icon/radioed.png" v-if="is_kuaidi==true" style="width: 34rpx;height: 34rpx;"></image>
 				<view class="" style="margin-left: 5rpx;font-weight: 400;">
 					<view>原件一份</view>
-					<text style="line-height: 55rpx;">
+					<text style="line-height: 55rpx;"  v-if="(tabIndex=='全部支持'&& tabIndexs=='全额回款')|| tabIndex=='全部不支持'">
+						【追欠款的生效裁判文书/和解协议】
+					</text>
+					<text style="line-height: 55rpx;" v-else>
 					【追欠款的生效裁判文书/和解协议】
 					【民事裁定书（追加投资人为申请执行人）】
 					【民事裁定书（终结本次执行）】

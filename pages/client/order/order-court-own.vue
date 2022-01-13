@@ -2051,7 +2051,7 @@
                     let height1 = this.itemTopHeight + this.itemMainHeight - 44
                     let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
                     let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
-                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 300
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 260
                    if(scrollTop >= height1 && scrollTop < height2){
                        this.tabItemValue = 1
                    } else if(scrollTop >= height2 && scrollTop < height3){
@@ -2454,28 +2454,28 @@
                 }
             },
             imageClick(item){
-                // let previewImages = [];
-                // previewImages.push(item.image);
-                // // this.previewImages(previewImages);
-                // // 预览图片
-                // const nav = navigator.userAgent;
-                // if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                // 	phone.previewPicture(JSON.stringify(previewImages));
-                // } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-                // 	this.$bridge.callhandler('previewPicture', previewImages, data => {});
-                // }
-                 uni.previewImage({
-                    urls: item.image,
-                    longPressActions: {
-                        itemList: ['发送给朋友', '保存图片', '收藏'],
-                        success: function(data) {
-                            console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
-                        },
-                        fail: function(err) {
-                            console.log(err.errMsg);
-                        }
-                    }
-                });
+                let previewImages = [];
+                previewImages.push(item.image);
+                // this.previewImages(previewImages);
+                // 预览图片
+                const nav = navigator.userAgent;
+                if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+                	phone.previewPicture(JSON.stringify(previewImages));
+                } else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+                	this.$bridge.callhandler('previewPicture', previewImages, data => {});
+                }
+                //  uni.previewImage({
+                //     urls: item.image,
+                //     longPressActions: {
+                //         itemList: ['发送给朋友', '保存图片', '收藏'],
+                //         success: function(data) {
+                //             console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+                //         },
+                //         fail: function(err) {
+                //             console.log(err.errMsg);
+                //         }
+                //     }
+                // });
             },
             // 执业年限选择
             productNameSelectClick(item){
@@ -2673,7 +2673,7 @@
 			height: 60rpx;
 			color: #FFFFFF;
 			line-height: 60rpx;
-			padding: 0 10rpx;
+			// padding: 0 10rpx;
 			font-size: 22rpx;
 			font-weight: bold;
 			border-radius: 10rpx;
