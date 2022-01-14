@@ -336,6 +336,16 @@
 			}
 		},
 		{
+			"path": "pages/client/user/service-zifei",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
 			"path": "pages/client/user/service-ok",
 			"style": {
 				"navigationBarTitleText": "服务完成",
@@ -664,6 +674,16 @@
 		},
 		{
 			"path": "pages/lawyer/user/service-face",
+			"style": {
+				"navigationBarTitleText": "律师服务中",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-zifei",
 			"style": {
 				"navigationBarTitleText": "律师服务中",
 				"enablePullDownRefresh": true
