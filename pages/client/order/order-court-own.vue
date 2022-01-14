@@ -562,14 +562,13 @@
                     </view>
                     <view class="item-right" @click="langClick">
                     	<view class="item-txt gray" v-if="lang_ids.length == 0">您希望律师用什么语言与您交流</view>
-                    	<view class="service-list inline-list" v-else-if="lang_ids.length > 0 && lang_ids.length < 3 ">
-                    		<view class="service-item active" v-for="(item,index) in lang_ids" :key='index' style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,item)}}</view>
+                    	<view class="service-list inline-list" v-else>
+                    		<view class="service-item active"  :style="lang_ids.length == 1 ? 'width: calc((100% - 50rpx) / 2);margin-top: 10rpx' : 'width: 100%;margin-top: 10rpx'">{{langStr}}</view>
                     	</view>
-                        <view class="service-list inline-list" v-else>
-                        	<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[0])}}</view>
-                        	<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[1])}}</view>
-                            ...
-                        </view>
+                        <!-- <view class="service-list inline-list" v-else>
+                        	<view class="service-item active" style="width: calc((100% - 50rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[0])}}</view>
+                        	<view class="service-item active" style="width: calc((100% - 50rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[1])}}</view>
+                        </view> -->
                     	<view class="item-nav">
                     		<image src="@/static/img/right.png" mode="aspectFit"></image>
                     	</view>
@@ -856,6 +855,15 @@
 						</view>
 					</view>
 				</view>
+                <view class="od-item marginbottom20">
+                	<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.stagePopup.open()">服务阶段<image  src="@/static/img/order-ques.png" mode=""
+                style="width: 30rpx;height: 30rpx"></image></view>
+                	<view class="item-right">
+                		<view class="service-list inline-list">
+                			<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
+                		</view>
+                	</view>
+                </view>
 				<view class="od-item marginbottom20">
 					<view class="item-tip" style="padding-right: 20rpx;" @click="download({image:hearAddrUrl})"><view class="center-box">
                         审理地点<view class="required-box">
@@ -866,20 +874,20 @@
 					<view class="item-right" @click="$refs.popupTake.open()">
 						<view class="item-txt gray" v-if="!hear_addr">您的案件在哪里审理？</view>
 						<view class="service-list inline-list" v-else>
-							<view class="service-item active">{{ hear_addr }}</view>
+							<view class="service-item active" style="width: calc((100% - 20rpx) / 2);">{{ hear_addr }}</view>
 						</view>
 						<view class="item-nav">
 							<image src="@/static/img/right.png" mode="aspectFit"></image>
 						</view>
 					</view>
 				</view>
+                
                 <view class="od-item marginbottom20">
                 	<view class="item-tip">律师挑选方式</view>
                     <view class="item-right">
                     	<view class="service-list inline-list">
                     		<view class="service-item active">智能匹配</view>
                     	</view>
-                    	<view class="item-nav"></view>
                     </view>
                 </view>
                 <view class="od-item marginbottom20">
@@ -888,7 +896,7 @@
                 	</view>
                     <view class="item-right">
                     	<view class="service-list inline-list">
-                    		<view class="service-item active" style="width: calc((100% - 50rpx) / 2);">{{ practiceYear }}</view>
+                    		<view class="service-item active">{{ practiceYear }}</view>
                     	</view>
                     </view>
                 </view>
@@ -913,28 +921,20 @@
                     </view>
                     <view class="item-right" @click="langClick">
                     	<view class="item-txt gray" v-if="lang_ids.length == 0">您希望律师用什么语言与您交流</view>
-                    	<view class="service-list inline-list" v-else-if="lang_ids.length > 0 && lang_ids.length < 3 ">
-                    		<view class="service-item active" v-for="(item,index) in lang_ids" :key='index' style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,item)}}</view>
-                    	</view>
                     	<view class="service-list inline-list" v-else>
-                    		<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[0])}}</view>
-                    		<view class="service-item active" style="width: calc((100% - 100rpx) / 2);margin-top: 10rpx;margin-right: 20rpx;">{{getDataName(langIdData,lang_ids[1])}}</view>
-                    	    ...
+                    		<view class="service-item active"  :style="lang_ids.length == 1 ? 'width: calc((100% - 50rpx) / 2);margin-top: 10rpx' : 'width: 100%;margin-top: 10rpx'">{{langStr}}</view>
                     	</view>
+                    	<!-- <view class="service-list inline-list" v-else>
+                    		<view class="service-item active" style="width: calc((100% - 20rpx) / 2);margin:10rpx 10rpx 0rpx 10rpx">{{getDataName(langIdData,lang_ids[0])}}</view>
+                    		<view class="service-item active" style="width: calc((100% - 20rpx) / 2);margin:10rpx 0rpx 0rpx 0rpx">{{getDataName(langIdData,lang_ids[1])}}</view>
+                    	    ...
+                    	</view> -->
                     	<view class="item-nav">
                     		<image src="@/static/img/right.png" mode="aspectFit"></image>
                     	</view>
                     </view>
                 </view>
-				<view class="od-item marginbottom20">
-					<view class="item-tip" style="padding-right: 20rpx;" @click="$refs.stagePopup.open()">服务阶段<image  src="@/static/img/order-ques.png" mode=""
-				style="width: 30rpx;height: 30rpx"></image></view>
-					<view class="item-right">
-						<view class="service-list inline-list">
-							<view class="service-item active" style="width: 100%; margin-right: 0;">{{ stage }}</view>
-						</view>
-					</view>
-				</view>
+				
 				<view class="od-item marginbottom20">
 					<view class="item-tip">服务报价</view>
 					<view class="item-right">
@@ -962,10 +962,10 @@
 					</view>
 				</view>
 				<view class="od-item marginbottom20">
-					<view class="item-tip" style="align-items: flex-start;margin-top: 10rpx;" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
+					<view class="item-tip" style="align-items: flex-start" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
-						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx 10rpx;">
+						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx 10rpx;flex:1">
 							<text class="red">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。</text>
 						</view>
                         <view class="whyIcon">
@@ -1034,7 +1034,7 @@
 		<!-- 产品说明组件 -->
 		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
 
-		<view class="od-box" id='wendajia'>
+		<view class="od-box" :style="bearFees == '自费' ? 'margin-bottom:22rpx' : 'margin-bottom:88rpx'" id='wendajia'>
 			<view class="od-item"
 				@click="jump('/pages/client/order/ask', { id: info.product.id, product_name: info.product.product })">
 				<view class="item-tip">问大家</view>
@@ -1664,19 +1664,19 @@
                                     <text class="item-txt">{{ item.area_text }}</text>
                                 </view>
                             </view>
-                            <view class="lawyer-item">
+                            <view class="lawyer-item" style="align-items: center;">
                                 <view class="item-left">
                                     <view class="image-wrapper"><image src="@/static/img/locat.png" mode="aspectFit"></image></view>
                                 </view>
                                 <view class="item-txt">{{ item.address_text }}</view>
                             </view>
-                            <view class="lawyer-item">
+                            <view class="lawyer-item" style="align-items: center;">
                                 <view class="item-left">
                                     <view class="image-wrapper"><image src="@/static/img/address.png" mode="aspectFit"></image></view>
                                 </view>
                                 <view class="item-txt">{{ item.lawyer }}</view>
                             </view>
-                            <view class="lawyer-item">
+                            <view class="lawyer-item" style="align-items: center;">
                                 <view class="item-left">
                                     <view class="image-wrapper"><image src="@/static/img/code.png" mode="aspectFit"></image></view>
                                 </view>
@@ -1925,7 +1925,8 @@
                 fuWuHeight:792,//服务内容模块高度
                 chanPinHeight:1983,//产品说明模块高度
                 wendajiaHeight:0,//问大家模块高度
-                windowHeight:0
+                windowHeight:0,
+                langStr:''
             };
 		},
 		created() {
@@ -1991,7 +1992,7 @@
 					this.organization = '人民法院';
 					this.stage = '本诉 (套餐)一审+二审+执行';
 					this.hear_basis = '合同约定的管辖地点';
-					this.hear_addr = '广东广州';
+					this.hear_addr = this.info.list.hear_addr[0];
 					this.qiankuan = '本金1万元以上—5万元以下(含)(人民币)';
 					this.money = '投资人支付';
                     this.is_believe = 1;
@@ -1999,14 +2000,16 @@
                     this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
                     this.serve_offer = '投资人确定'
-                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
+                    this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
+                    this.langStr = ''
 				} else if (this.bearFees == '自费') {
 					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
                     this.defaultTake = ['广东省','广州市']
 					this.hear_addr = '广东省,广州市';
-                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}]
+                    this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}],
+                    this.langStr = ''
                     if (oldVal) {
 						this.getMoney();
 					}
@@ -2084,9 +2087,9 @@
 		methods: {
             scrollToOne(id){　　  　
                     let height1 = this.itemTopHeight + this.itemMainHeight - 44
-                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 88
-                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 88
-                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 300
+                    let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 89
+                    let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + 89
+                    let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.fuWuHeight + this.chanPinHeight  - this.windowHeight + 301
                 this.tabItemValue = id
                 if(id == 1){
                     uni.pageScrollTo({
@@ -2107,12 +2110,11 @@
                 }
             },
             scrollToTwo(id){
-                console.log(this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 530,'')
                 let height1 = this.itemTopHeight + this.itemMainHeight - 44
-                let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 220
-                let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 230
-                let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 240
-                let height5 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + this.chanPinHeight + this.wendajiaHeight + this.wendajiaHeight - this.windowHeight + 300
+                let height2 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + 221
+                let height3 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + 231
+                let height4 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + 241
+                let height5 = this.itemTopHeight + this.itemMainHeight + this.odBoxHeight + this.feiYongHeight + this.fuWuHeight + this.chanPinHeight + this.wendajiaHeight + this.wendajiaHeight - this.windowHeight + 301
                 this.tabItemValue = id
                 if(id == 1){
                     uni.pageScrollTo({
@@ -2289,10 +2291,11 @@
 					organization: this.organization, //审理机构
 					stage: this.stage, //服务阶段
 					offer: this.offer, //服务报价
-					server_address: this.hear_basis + this.hear_addr, //审理地点,
+					server_address:this.hear_addr, //审理地点,
+					profession:this.practiceArea,
 					product_price_id: this.product_price_id,
 					fali_source: this.fali_source,
-          lang_ids:this.lang_ids,
+					lang_ids:this.lang_ids,
 					card_images : this.card_images,//欠款方身份证正反面/姓名 身份证号
 					liaotian_images : this.liaotian_images,//确认欠款金额的聊天截图内容
 					jietiao_images : this.jietiao_images,//借条/欠条/还款承诺书/对账单等文书
@@ -2529,6 +2532,18 @@
             // 语言选中按钮
             langSaveClick(){
                 this.lang_ids = this.popupSelectList || []
+                if(this.lang_ids.length > 0){
+                    let self = this
+                    let list = this.lang_ids.map((item,index)=>{
+                        return self.getDataName(self.langIdData,item)
+                    })
+                    this.langStr = list.join(" ")
+                    if(this.langStr.length > 18){
+                        this.langStr = this.langStr.slice(0,18) + '...'
+                    }
+                }else{
+                    this.langStr = ''
+                }
                 this.closePop('langPopup')
             },
             // 数据匹配（获取名称）
@@ -3302,6 +3317,7 @@
             	.lawyer-item {
             		margin-bottom: 10rpx;
             		display: flex;
+                    
             		.item-left {
             			margin-right: 10rpx;
             			.image-wrapper {
@@ -3333,7 +3349,7 @@
             .save-box{
                width: 60%;
                 height: 60rpx;
-                border-radius: 30rpx;
+                // border-radius: 30rpx;
                 background-color: #F9B804;
                 color: #fff;
                 font-size: 26rpx;

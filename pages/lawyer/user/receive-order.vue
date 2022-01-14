@@ -137,11 +137,10 @@ export default {
 					this.jump('/pages/lawyer/user/service-month', { order_id: item.id });
 				} else if (item.serve_time == '包年') {
 					this.jump('/pages/lawyer/user/service-year', { order_id: item.id });
-				} else if (item.price_type == '投资人支付(不用还)') {
-					
+				} else if (item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付') {
 					// 切换到律师接单选项
 					if(this.current == 2){
-						if(item.price_type == '投资人支付(不用还)'){
+						if(item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付'){
 							this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
 						}else if(item.price_type == '自费'){
 							this.jump('/pages/lawyer/user/service-zifei', { order_id: item.id, status: item.status });
@@ -158,7 +157,7 @@ export default {
 						this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
 					}
 					if (this.userInfo.is_lawyer == '1') {
-						if(item.price_type == '投资人支付(不用还)'){
+						if(item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付'){
 							this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
 						}else if(item.price_type == '自费'){
 							this.jump('/pages/lawyer/user/service-zifei', { order_id: item.id, status: item.status });
@@ -173,7 +172,7 @@ export default {
 				} else {
 					if(item.product == '打官司'){
 						if (this.userInfo.is_lawyer == '1') {
-							if(item.price_type == '投资人支付(不用还)'){
+							if(item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付'){
 								this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
 							}else if(item.price_type == '自费'){
 								this.jump('/pages/lawyer/user/service-zifei', { order_id: item.id, status: item.status });

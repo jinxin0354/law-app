@@ -116,7 +116,7 @@ export default {
 			case_money: '',
 			announce_money: '',
 			enquire: '',
-			lawyer: '1500',
+			lawyer: '0',
 			result: [
 			]
 		};

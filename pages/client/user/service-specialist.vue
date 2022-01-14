@@ -3,7 +3,7 @@
 		<view class="match-top-box">
 			<view class="match-title">尊敬的委托人：</view>
 			<view class="match-txt">您好！很荣幸接受您的委托，法务专员正在审查您的订单，稍后将尽快与您联系。我们将全心全意为您提供优质的服务，感谢您的信任与支持！</view>
-			<view class="match-image-txt">
+			<!-- <view class="match-image-txt">
 				<view class="txt-left">
 					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 				</view>
@@ -14,7 +14,7 @@
 					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 				</view>
 				<view class="txt-right red">请确认您的手机号与您现在登录本软件的账号一致，否则将无法拨打或接听虚拟电话</view>
-			</view>
+			</view> -->
 			<view class="service-list">
 				<button class="service-item active" @click="callLaw">叫一下法务</button>
 				<button class="service-item active" :disabled="isClientServiceOk || isSpecialistServiceOk" @click="$refs.popupServiceOk.open">法务服务完成</button>

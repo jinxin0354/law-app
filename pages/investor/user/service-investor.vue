@@ -164,12 +164,12 @@
 						<view class="why-title">委托人主张的欠款本金</view>
 						<view class="why-txts">{{ approveInfo.result }}</view>
 					</view>
-					<view class="why-box">
+					<view class="why-box" v-if="approveInfo.return_type!=''">
 						<view class="why-title">回款结果</view>
 						<view class="why-txts" style="margin-bottom: 30rpx;">{{ approveInfo.return_type }}</view>
-						<view class="why-title">回款总金额：<span style="font-weight: 300;">￥{{approveInfo.return_money}}</span></view>
-						<view class="why-title">冲销本金：<span style="font-weight: 300;">￥{{approveInfo.against_ben}}</span></view>
-						<view class="why-title">冲销其他款项：<span style="font-weight: 300;">￥{{approveInfo.against_else}}</span></view>
+						<view class="why-title" v-if="approveInfo.return_money!='0.00'">回款总金额：<span style="font-weight: 300;">￥{{approveInfo.return_money}}</span></view>
+						<view class="why-title" v-if="approveInfo.against_ben!='0.00'">冲销本金：<span style="font-weight: 300;">￥{{approveInfo.against_ben}}</span></view>
+						<view class="why-title" v-if="approveInfo.against_else!='0.00'">冲销其他款项：<span style="font-weight: 300;">￥{{approveInfo.against_else}}</span></view>
 					</view>
 					<view class="why-box">
 						<view class="why-title">律师已快递如下文件给我</view>
@@ -179,7 +179,7 @@
 							<view class="" style="margin-left: 5rpx;font-weight: 400;">
 								<view>原件一份</view>
 								<text style="line-height: 55rpx;">
-									<view v-for="i in approveInfo.is_send">{{i}}</view>
+									<view v-for="i in approveInfo.is_send" style="font-size: 26rpx;">{{i}}</view>
 								</text>
 								
 							</view>
@@ -191,17 +191,17 @@
 						<view class="xieyi" style="height: 80rpx;" @click="is_service=!is_service">
 							<image src="../../../static/img/icon/radio.png" v-if="is_service==false" style="width: 34rpx;height: 34rpx;"></image>
 							<image src="../../../static/img/icon/radioed.png" v-if="is_service==true" style="width: 34rpx;height: 34rpx;"></image>
-							<view style="margin-left: 10rpx;font-weight: 300;">我已与委托人、投资人确认服务完成。</view>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已与委托人、律师确认服务完成。</view>
 						</view>
 						<view class="xieyi" style="height: 80rpx;" @click="is_shouyi=!is_shouyi">
 							<image src="../../../static/img/icon/radio.png" v-if="is_shouyi==false" style="width: 34rpx;height: 34rpx;"></image>
 							<image src="../../../static/img/icon/radioed.png" v-if="is_shouyi==true" style="width: 34rpx;height: 34rpx;"></image>
-							<view style="margin-left: 10rpx;font-weight: 300;">我已让委托人向投资人支付完投资收益。</view>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已收完委托人支付的投资收益。</view>
 						</view>
 						<view class="xieyi" @click="is_jiangli=!is_jiangli">
 							<image src="../../../static/img/icon/radio.png" v-if="is_jiangli==false" style="width: 34rpx;height: 34rpx;"></image>
 							<image src="../../../static/img/icon/radioed.png" v-if="is_jiangli==true" style="width: 34rpx;height: 34rpx;"></image>
-							<view style="margin-left: 10rpx;font-weight: 300;">我已与投资人结算完投资人奖励。</view>
+							<view style="margin-left: 10rpx;font-weight: 300;">我已向律师支付完投资人奖励。</view>
 						</view>
 					</view>
 				</scroll-view>
@@ -250,15 +250,17 @@
 
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">
 				<view class="paddingbottom0" style="margin-bottom: 0;" slot="popup-con">
-					<order-popup-statement-content />
+					<order-popup-statement-contents @func="aaa" @funcs ="bbb"/>
  				</view>
 				<view class="ok-box" style="padding: 10rpx;" slot="popup-btn">
 					<text class="amount">合计
-					<text class="blod red"> ¥ 9999.00</text>
+					<text class="blod red"> ¥ {{heji}}</text>
 					</text>
 					<button type="default" class="ok-btn" @click="
-							closePop('popupSettleAccounts');
-							confirmSettleAccounts();">
+						
+							confirmSettleAccounts();"
+						
+							>
 						我要结算
 					</button>
 				</view>
@@ -285,9 +287,11 @@
 	} from '@/common/mixins/specialist_order_state.js';
 	import {
 		share_coupon
-	} from '@/common/mixins/share_coupon.js';
+	} from '@/common/mixins/share_coupon.js'; 
+	
 	export default {
 		mixins: [mixin, share_coupon],
+		
 		data() {
 			return {
 				info: {
@@ -310,11 +314,17 @@
 				],
 				result4: [],
 				approveInfo: {}, //审批信息
-				settleAccountsInfo: {} ,//结算投资人收益
+				func:'',
+				heji:0,
+				touziren_pay:0,
+				jiesuan:{},
+				settleAccountsInfo: {}, //结算投资人收益
 				is_kuaidi:false,
 				is_jiangli:false,
 				is_service:false,
 				is_shouyi:false,
+				flg_check:false,
+
 			};
 		},
 		computed:{
@@ -326,13 +336,25 @@
 				
 			}
 		},
+		
 		onLoad(params) {
+			
 			if (params.order_id) {
 				this.order_id = params.order_id;
 				this.init();
 			}
 		},
+	
 		methods: {
+			aaa(data){
+				this.heji = data.heji_money
+				this.jiesuan = data
+				console.log(data,'data')
+			
+			},
+			bbb(data){
+				this.flg_check = data
+			},
 			async init() {
 				let formData = {
 					id: this.order_id,
@@ -340,6 +362,8 @@
 				};
 				let res = await this.$api('index.orderDetail', formData);
 				this.info = res.data;
+				
+				this.touziren_pay = res.data.order.touziren_pay;
 				this.getOrderState(this.info);
 
 				let formDataLawyer = {
@@ -417,31 +441,56 @@
 				let res = await this.$api('index.t_sure_h5', formData);
 				if (res.code == 1) {
 					var info=res.data;
-					if(res.data.is_send!='') {
-						let kuai=res.data.is_send.split(' ')
+					if(info.is_send!='') {
+						let kuai=info.is_send.split(',')
 						kuai.shift()
 						info.is_send=kuai;
 					}
+					console.log(info)
 					this.approveInfo = info;
 				}
 			},
 			async confirmSettleAccounts() {
-				let formData = {
-					id: this.order_id,
-					token: uni.getStorageSync('token'),
-					type: 3,
-					money: this.settleAccountsInfo.money,
-					price: this.settleAccountsInfo.price,
-					origin: '第' + this.settleAccountsInfo.origin + '次回款收益'
-				};
-				let res = await this.$api('index.money', formData);
-				if (res.code == 1) {
+				
+				console.log(this.jiesuan,'price')
+				if(this.heji==0){
 					uni.showToast({
-						title: res.msg,
-						icon: 'none'
-					});
-					this.init();
+						title:"请填写金额！",
+						icon:"none"
+					})
+				}else{
+					if(this.flg_check==false){
+						uni.showToast({
+							title:"请点击我已与委托人确认付款金额！",
+							icon:'none'
+						})
+					}else{
+						var id = this.order_id
+						var token =  uni.getStorageSync('token')
+						this.jiesuan.id = id
+						this.jiesuan.token = token
+						console.log(this.jiesuan,'jiesuan')
+						// let formData = {
+						// 	id: this.order_id,
+						// 	token: uni.getStorageSync('token'),
+						// 	type: 3,
+						// 	money: this.settleAccountsInfo.money,
+						// 	price: this.settleAccountsInfo.price,
+						// 	origin: '第' + this.settleAccountsInfo.origin + '次回款收益'
+						// };
+						let res = await this.$api('index.money', this.jiesuan);
+						if (res.code == 1) {
+							uni.showToast({
+								title: res.msg,
+								icon: 'none'
+							});
+							this.init();
+						}
+					}
+				
 				}
+			
+		
 			}
 		}
 	};

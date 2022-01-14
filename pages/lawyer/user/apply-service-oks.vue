@@ -185,9 +185,9 @@ export default {
 				return_type:this.tabIndexs
 			};
 			if((this.tabIndex=='全部支持'&& this.tabIndexs=='全额回款')|| this.tabIndex=='全部不支持'){
-				formData.is_send='原件一份'+''+this.kuaidi[1]
+				formData.is_send='原件一份'+','+this.kuaidi[1]
 			}else{
-				formData.is_send='原件一份'+''+this.kuaidi.join('')
+				formData.is_send='原件一份'+','+this.kuaidi.join(',')
 			}
 			
 			let res = await this.$api('index.lawyer_sure', formData);
