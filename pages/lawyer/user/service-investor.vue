@@ -142,6 +142,17 @@
 				</view>
 			</template>
 		</view>
+		
+		<!-- 待收信息 -->
+		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order.payment" @popupShow="popupShow"></order-detail-payment>
+		<!-- 收款详情 -->
+		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order.collection" @popupShow="popupShow"></order-detail-collection>
+		<!-- 待付信息 -->
+		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order.pay" @popupShow="popupShow"></order-detail-pay>
+		<!-- 付款详情 -->
+		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order.nopay" @popupShow="popupShow"></order-detail-nopay>
+		
+		
 		<!-- 待收申请投资费用详情 -->
 		<order-wait-receive-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-apply-invest-cost>
 		<!-- 申请投资费用详情 -->
@@ -308,8 +319,17 @@
 		<order-telephone name="投资人" :phoneNumber="info.order.investor_mobile" ref="telephoneInvestor" v-if="info.order.investor_mobile"></order-telephone>
 		<!-- 投资人收件信息组件 -->
 		<order-invest-inbox-message ref="investInboxMessage" :infoInbo="infoInbo"></order-invest-inbox-message>
+		
+		<!-- 退回投资费用弹窗 -->
+		<return-cost ref="returnCost" :item="current_item"></return-cost>
+		<!-- 结算投资人奖励 -->
+		<settlement-popup ref="settlement" :item="current_item"></settlement-popup>
+		<!-- 申请投资费用 -->
+		<lawyer-apply-cost ref="lawyerApply" :item="current_item"></lawyer-apply-cost>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		
+		
 	</view>
 </template>
 
@@ -323,6 +343,7 @@ export default {
 			info: {
 				order: {}
 			},
+			current_item: {},
 			result: [],
 			order_id: '',
 			reason: '',
@@ -339,6 +360,18 @@ export default {
 		}
 	},
 	methods: {
+		popupShow(item) {
+			if (item.type == 8) {
+				this.current_item = item
+				this.$refs.returnCost.$refs.returnCost.open()
+			} else if (item.type == 3) {
+				this.current_item = item
+				this.$refs.settlement.$refs.settlement.open()
+			} else if (item.type == 7) {
+				this.current_item = item
+				this.$refs.lawyerApply.$refs.lawyerApply.open()
+			}
+		},
 		async showTip() {
 			uni.showToast({
 				title: "已发送给投资人，请联系投资人确认",
@@ -357,7 +390,7 @@ export default {
 		resultChange(e) {
 			this.result = e.detail.value;
 		},
-		async init() {
+		async init() { 
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token')
