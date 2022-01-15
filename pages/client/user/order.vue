@@ -135,13 +135,17 @@ export default {
 					this.jump('/pages/client/user/service-month', { order_id: item.id, status: item.status });
 				} else if (item.serve_time == '包年') {
 					this.jump('/pages/client/user/service-year', { order_id: item.id, status: item.status });
-				} else if (item.price_type == '投资人支付(不用还)') {
+				} else if (item.price_type == '投资人支付(不用还)'  || item.price_type == '投资人支付') {
 					this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
+				} else if(item.price_type == '自费'){
+					this.jump('/pages/client/user/service-zifei', { order_id: item.id, status: item.status });
 				} else {
 					console.log('XX');
-					if(item.product == '打官司'){
+					if(item.price_type == '投资人支付(不用还)'  || item.price_type == '投资人支付'){
 						this.jump('/pages/client/user/service-investor', { order_id: item.id, status: item.status });
-					} else {
+					}else if(item.price_type == '自费') {
+						this.jump('/pages/client/user/service-zifei', { order_id: item.id, status: item.status });
+					}else {
 						this.jump('/pages/client/user/service-face', { order_id: item.id, status: item.status });
 					}
 					

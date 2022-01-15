@@ -9,22 +9,23 @@
 		<view class="bot-con">
 			<view class="od-box">
 				<slot name="payOption"></slot>
-				<view class="od-item">
-					<view class="item-tip require">付款方式</view>
+				<view style="margin-top: 20rpx;">
+					<view class="item-tip" style="margin-bottom: 10rpx;">付款方式<span style="color: #FF0000;">*</span></view>
 					<view class="item-right">
 						<view class="pay-list" style="width: 100%; display: flex; flex-wrap: wrap;">
 							<view class="pay-item" :class="payMethod == '微信' ? 'active' : ''" @click="payMethod = '微信'">
 								<view class="image-wrapper"><image src="@/static/img/pay-icon1.png" mode="aspectFit"></image></view>
 								微信
 							</view>
+							<view class="pay-item" :class="payMethod == '余额' ? 'active' : ''" @click="payMethod = '余额'">
+								<view class="image-wrapper"><image src="@/static/img/pay-icon3.png" mode="aspectFit"></image></view>
+								余额<span style="color: #777777;font-size: 20rpx;margin-left: 10rpx;">{{money}}</span>
+							</view>
 							<view class="pay-item" :class="payMethod == '支付宝' ? 'active' : ''" @click="payMethod = '支付宝'">
 								<view class="image-wrapper"><image src="@/static/img/pay-icon2.png" mode="aspectFit"></image></view>
 								支付宝
 							</view>
-							<view class="pay-item" :class="payMethod == '余额' ? 'active' : ''" @click="payMethod = '余额'">
-								<view class="image-wrapper"><image src="@/static/img/pay-icon3.png" mode="aspectFit"></image></view>
-								余额
-							</view>
+							
 							<view class="pay-item" :class="payMethod == '朋友代付' ? 'active' : ''" @click="payMethod = '朋友代付'">
 								<view class="image-wrapper"><image src="@/static/img/pay-icon4.png" mode="aspectFit"></image></view>
 								朋友代付
@@ -35,7 +36,13 @@
 				<slot name="payOption2"></slot>
 			</view>
 		</view>
-		<view class="ok-box"><button type="default" class="ok-btn" @click="confirmPay" style="margin: -30rpx 100rpx 0;">{{btnText}}</button></view>
+		<view class="pays">
+			<view class="total">
+				合计 <span style="color: #FF0000;font-weight: bold;">￥{{total}}</span>
+			</view>
+			<view class="btn" @click="confirmPay">{{btnText}}</view>
+			<!-- <button type="default" class="ok-btn" @click="confirmPay" style="margin: -30rpx 100rpx 0;">{{btnText}}</button> -->
+		</view>
 	</view>
 </template>
 
@@ -46,7 +53,9 @@ export default {
 		btnText:{
 			type:String,
 			default: "确定" 
-		}
+		},
+		money:'',
+		total:0
 	},
 	data() {
 		return {
@@ -78,9 +87,10 @@ export default {
 	}
 }
 .popup-bottom-box {
-	background-color: #ffffff;
+	background-color: #F5F5F5;
 	overflow: auto;
 	border-radius: 26rpx;
+	
 	.bot-title {
 		display: flex;
 		align-items: center;
@@ -120,6 +130,7 @@ export default {
 		}
 		.od-box {
 			padding: 0;
+			background: none;
 		}
 	}
 }
@@ -134,18 +145,19 @@ export default {
 		justify-content: center;
 		box-sizing: border-box;
 		border: 1rpx solid #eee;
-		border-radius: 10rpx;
+		border-radius: 50rpx;
 		padding: 10rpx;
 		margin-right: 20rpx;
 		margin-bottom: 20rpx;
 		text-align: center;
 		width: calc((100% - 20rpx) / 2);
 		margin-bottom: 20rpx;
+		background: white;
 		&:nth-of-type(2n) {
 			margin-right: 0;
 		}
 		&.active {
-			background-color: rgba(255, 200, 1, 0.2);
+			// background-color: rgba(255, 200, 1, 0.2);
 			border-color: $uni-color-primary;
 		}
 		.image-wrapper {
@@ -159,5 +171,28 @@ export default {
 			}
 		}
 	}
+}
+.pays{
+	margin-left: 30rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-right: 30rpx;
+	margin-bottom: 40rpx;
+}
+.btn{
+	width: 300rpx;
+	height: 60rpx;
+	line-height: 60rpx;
+	border-radius: 38rpx;
+	background: #FFC900;
+	color: white;
+	text-align: center;
+	font-weight: 300;
+	letter-spacing: 1rpx;
+}
+.total{
+	color: #000000;
+	font-size: 28rpx;
 }
 </style>

@@ -206,6 +206,13 @@
 					</view>
 				</view>
 				<view class="od-item">
+					<view class="item-tip">对方正在被法院执行中</view>
+					<view class="item-right">
+						<view class="item-txt" v-if="info.is_fayuan_zhixing == 1">否</view>
+						<view class="item-txt" v-else-if="info.is_fayuan_zhixing == 0">是</view>
+					</view>
+				</view>
+				<view class="od-item">
 					<view class="item-tip">审理机构</view>
 					<view class="item-right">
 						<view class="item-txt">{{ info.organization }}</view>
@@ -241,6 +248,12 @@
 			</view>
 			<template v-if="info.pro_name == '打官司'">
 				<view class="od-item">
+					<view class="item-tip">律师服务语言</view>
+					<view class="item-right">
+						<view class="item-txt">{{ info.lang }}</view>
+					</view>
+				</view>
+				<view class="od-item">
 					<view class="item-tip">服务阶段</view>
 					<view class="item-right">
 						<view class="item-txt">{{info.lawsuit}} {{ info.stage }}</view>
@@ -255,12 +268,18 @@
 			</view>
 			<template v-if="info.pro_name == '打官司' && info.price_type == '投资人支付(不用还)'">
 				<view class="od-item">
+					<view class="item-tip">律师费用</view>
+					<view class="item-right">
+						<view class="item-txt">投资人支付</view>
+					</view>
+				</view>
+				<view class="od-item">
 					<view class="item-tip">投资人承担</view>
 					<view class="item-right"><view class="item-txt">律师费+立案受理费+公告费+异地被告身份查询费</view></view>
 				</view>
 				<view class="od-item">
 					<view class="item-tip">投资人收益</view>
-					<view class="item-right"><view class="item-txt">您回收款物后5日内，按回收款物金额的30％支付投资收益给投资人，不回款不用付。</view></view>
+					<view class="item-right"><view class="item-txt">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。</view></view>
 				</view>
 			</template>
 			<view class="od-item" v-if="info.pro_name != '打官司'">
@@ -297,6 +316,7 @@
 					</view>
 				</view>
 			</template>
+			<template v-if="info.price_type != '投资人支付(不用还)'">
 			<view class="od-item">
 				<view class="item-tip">优惠券</view>
 				<view class="item-right">
@@ -309,6 +329,7 @@
 					<view class="item-txt">{{ info.pay_type }}</view>
 				</view>
 			</view>
+			</template>
 			<template v-if="info.pro_name == '问一下'">
 				<view class="od-item">
 					<view class="item-tip">接通方式</view>
@@ -318,12 +339,14 @@
 				</view>
 			</template>
 			<template v-if="info.pro_name != '问一下'">
+			<template v-if="info.pro_name != '打官司'">
 				<view class="od-item">
 					<view class="item-tip">服务方式</view>
 					<view class="item-right">
 						<view class="item-txt">{{ info.serve_type }}</view>
 					</view>
 				</view>
+			</template>
 			</template>
 			<template v-if="info.pro_name == '代写文书' || info.pro_name == '判案'">
 				<view class="od-item">
@@ -339,7 +362,7 @@
 					<view class="item-right"><view class="item-txt">根据法律规定，律师接受委托后，需与看守所预约好时间，才可会见。</view></view>
 				</view>
 			</template>
-			<template v-if="info.pro_name == '打官司'">
+			<!-- <template v-if="info.pro_name == '打官司'">
 				<view class="od-item">
 					<view class="item-tip">其他费用</view>
 					<view class="item-right">
@@ -347,13 +370,15 @@
 						<view class="item-txt" v-else>国家费用</view>
 					</view>
 				</view>
-			</template>
+			</template> -->
+			<template v-if="info.pro_name != '打官司'">
 			<view class="od-item">
 				<view class="item-tip">服务范围</view>
 				<view class="item-right">
 					<view class="item-txt">{{ info.area_title }}</view>
 				</view>
 			</view>
+			</template>
 			<!-- 项结束 -->
 			<view class="od-item">
 				<view class="item-tip">服务内容</view>

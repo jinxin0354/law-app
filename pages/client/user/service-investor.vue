@@ -257,10 +257,11 @@
 		</uni-popup>
 		<!-- 付款给投资人弹出层 -->
 		<uni-popup ref="payToInvestor" type="center">
-			<scroll-view scroll-top="0" scroll-y="true">
-			<service-popup-pays title="付款给投资人" btnText="我要支付" @closePop="closePop('payToInvestor')"
-				@confirmPay="confirmPayToInvestor">
+			<!-- <scroll-view scroll-top="0" scroll-y="true"> -->
+			<service-popup-pays title="付款给投资人" btnText="我要支付" :money="info.order.user_money" @closePop="closePop('payToInvestor')"
+				@confirmPay="confirmPayToInvestor" :total="getTotalMoney">
 				<template slot="payOption">
+					<scroll-view  :scroll-y="true" style="height: 600rpx;">
 					<view class="flex-item">
 						<view class="od-item flex-item-i">
 						<view class="flex-new-item">
@@ -281,11 +282,11 @@
 							</view>
 						</view>
 					</view>
-
+					
 					<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="require ">委托人主张的欠款本金有多少获得支持</view>
+							<view class="">委托人主张的欠款本金有多少获得支持<span style="color: #FF0000;">*</span></view>
 						</view>
 						<view class="item-right">
 							<view class="service-list">
@@ -304,14 +305,14 @@
 					<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="require">{{swit_flg(moneyparams.chuli_money)[0]}}</view>
+							<view>{{swit_flg(moneyparams.chuli_money)[0]}}<span style="color: #FF0000;">*</span></view>
 							<!-- <view class="require">委托人这次收回了多少钱</view> -->
 						</view>
 						<view class="item-right">
-							<view class="item-txt">
-								<text class="input_icon">¥</text>
-								<input type="number" class="ipt-border" placeholder="输入金额"
-									placeholder-class="placeholder" v-model="moneyparams.money" />
+							<view class="input">
+								<view>￥</view>
+								<input type="number" placeholder="输入金额" v-model="moneyparams.money" />
+								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
 					</view>
@@ -337,92 +338,96 @@
 							</view>
 						</view>
 						<view class="item-right">
-							<view class="item-txt computer_input">
-								<text class="input_icon">¥</text>
-								<!--moneyparams.money*0.3-->
-								<!--  -->
-								<input type="number" class="ipt-border" disabled="disabled" placeholder="待计算"
-									placeholder-class="placeholder" v-model="moneyparams.price" />
+							<view class="input">
+								<view>￥</view>
+								<input type="number" placeholder="待计算" :disabled="true" v-model="getMoney" />
+								<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 							</view>
 						</view>
 					</view>
 					</view>
 					<!-- 和解/调解  -->
-					<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" >
+					<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" style="margin-top: 15rpx;">
 						<view class="od-item flex-item-i">
 							<view class="flex-new-item">
 								<view class="ico"></view>
-								<view class="require">{{swit_flg1(moneyparams.chuli_type)[0]}}</view>
+								<view>{{swit_flg1(moneyparams.chuli_type)[0]}}<span style="color: #FF0000;">*</span></view>
 								<!-- <view class="require">委托人这次收回了多少钱</view> -->
 							</view>
 							<view class="item-right">
-								<view class="item-txt">
-									<text class="input_icon">¥</text>
-									<input type="number" class="ipt-border" placeholder="输入金额"
-										placeholder-class="placeholder" v-model="moneyparams.money" />
+								<view class="input">
+									<view>￥</view>
+									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" />
+									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
 						</view>
 						<view class="od-item flex-item-i">
-								<view class="flex-new-item">
+								<view class="flex-new-item" style="height:100%;">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[1]}}</view>
+									<view>{{swit_flg1(moneyparams.chuli_type)[1]}}<span style="color: #FF0000;">*</span></view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view>￥</view>
+										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" />
+										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
 							</view>
 						<view class="od-item flex-item-i">
 								<view class="flex-new-item">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[2]}}</view>
+									<view>{{swit_flg1(moneyparams.chuli_type)[2]}}</view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view>￥</view>
+										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" />
+										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
 							</view>
 						<view class="od-item flex-item-i">
 								<view class="flex-new-item">
 									<view class="ico"></view>
-									<view class="require">{{swit_flg1(moneyparams.chuli_type)[3]}}</view>
-									<!-- <view class="require">委托人这次收回了多少钱</view> -->
+									<view class="adi-symbol">
+										<view class="adi">{{swit_flg1(moneyparams.chuli_type)[3]}}</view>
+										<view @click="direction()" class="symbol" >
+										</view>
+									</view>
+									<!-- <view style="height: 66rpx;color: #FF5353;">{{swit_flg1(moneyparams.chuli_type)[3]}}<span style="color: #FF0000;">*</span></view>
+									<view class="require">委托人这次收回了多少钱</view> -->
 								</view>
+								
 								<view class="item-right">
-									<view class="item-txt">
-										<text class="input_icon">¥</text>
-										<input type="number" class="ipt-border" placeholder="输入金额"
-											placeholder-class="placeholder" v-model="moneyparams.money" />
+									<view class="input">
+										<view style="color: #FF5353;">￥</view>
+										<input type="number" placeholder="待计算" :disabled="true" v-model="getSunshiMoney" />
+										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
 							</view>
 						
 					</view>
 					<!--  -->
-					<view class="od-item marginbottom10 flex-item" style="margin-top: 15rpx;">
+					<view class="od-item marginbottom10 flex-item" style="margin-top: 15rpx;padding-bottom: 20rpx;">
 						<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
 							<view class="adi-symbol">
-								<view class="adi">委托人逾期付款的违约金*(如无,请填写0)</view>
+								<view class="adi">您逾期付款的违约金*(如无,请填写0)</view>
 								<view @click="direction()" class="symbol" >
 								</view>
 							</view>
 						</view>
 						<view class="item-right">
-							<view class="item-txt">
-								<text class="input_icon">¥</text>
-								<input type="number" class="ipt-border" placeholder="输入金额"
-									placeholder-class="placeholder" v-model="moneyparams.weiyue_money" />
+							<view class="input">
+								<view style="color: #FF5353;">￥</view>
+								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" />
+								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
 						</view>
@@ -460,17 +465,24 @@
 							</view>
 						</view>
 					</template> -->
+					</scroll-view>
 				</template>
+				
 				<template slot="payOption2">
-					<view class="flex-item-i">
+					<!-- <view class="flex-item-i">
 							<label class="radio">
 							<radio value="" color="#ffca00" /><text>我已与委托人确认付款金额</text>
 							</label>
-						</view>	
+						</view>	 -->
+					<view style="display: flex;align-items: center;" @click.stop="is_agree=!is_agree">
+						<image src="../../../static/img/icon/radio.png" v-if="is_agree==false"  style="width: 30rpx;height: 30rpx;"></image>
+						<image src="../../../static/img/icon/radioed.png" v-else style="width: 30rpx;height: 30rpx;"></image>
+						<view style="margin-left: 10rpx;">我已与委托人确认付款金额</view>
+					</view>
 				</template>
-
+					
 			</service-popup-pays>
-			</scroll-view>
+			<!-- </scroll-view> -->
 			<uni-popup ref="direc" type="center">
 				<view class="popup-direc-box">
 					<view class="bot-title">
@@ -575,11 +587,47 @@
 				moneyparams: {
 					chuli_type: "法院判决",
 					chuli_money: "全部支持",
-					money: "",
-					price: "",
-					weiyue_money: ""
-				}
+					money: "",//委托人这次收回了多少钱
+					price: "",//委托人这次应付收益
+					weiyue_money: "",//委托人逾期付款的违约金
+					yuan_money:'',//委托人原来主张的欠款本金金额是多少
+					hejie_money:'',//委托人与欠款方和解时，欠款方同意偿还的欠款本金金额是多少  
+					touzi_money:'',//投资人已经支付的投资费用
+					sunshi_money:'',//委托人应付的投资费用损失
+					total_money:''//合计付款金额
+				},
+				is_agree:false,//是否与投资人确认付款金额
+				
 			};
+		},
+		computed:{
+			getMoney(){
+				if(this.moneyparams.money!=''){
+					let money=this.moneyparams.money*0.3
+					this.moneyparams.price=money.toFixed(2)
+					return money.toFixed(2)
+				}
+			},
+			getSunshiMoney(){
+				if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
+				this.moneyparams.touzi_money!=''){
+					let money=this.moneyparams.yuan_money-this.moneyparams.hejie_money
+					money=(money/this.moneyparams.yuan_money*this.moneyparams.touzi_money).toFixed(2)
+					this.moneyparams.sunshi_money=money
+					return money
+				}
+			},
+			getTotalMoney(){
+				if(this.moneyparams.price!=''&& this.moneyparams.weiyue_money!=''){
+					let money=this.moneyparams.price +this.moneyparams.weiyue_money
+					if(this.moneyparams.sunshi_money!='' && this.moneyparams.chuli_type=='法院判决' && this.moneyparams.chuli_money!='全部支持') money=money+this.moneyparams.sunshi_money
+					this.moneyparams.total_money=parseFloat(money).toFixed(2)
+					return parseFloat(money).toFixed(2)
+				}else{
+					return 0
+				}
+			}
+
 		},
 		onLoad(params) {
 			if (params.order_id) {
@@ -599,8 +647,8 @@
 				n2=n2!='全部不支持'? '1':'0'
 				
 				let obj={
-					'0':['委托人起诉金额总和是多少','委托人应付的投资收益损失为'],
-					'1':['委托人收回了多少钱','委托人这次应付收益']
+					'0':['您起诉金额的总和是多少','您应付的投资收益损失为'],
+					'1':['您这次收回了多少钱','您这次应付投资收益']
 				}
 				return obj[n2]
 			},
@@ -616,6 +664,7 @@
 						break;
 					case '其他方式':
 						n=2;
+						str='法院判决支持的欠款本金金额是多少'
 						break;
 					default:
 						console.log(4);
@@ -634,6 +683,7 @@
 				};
 				let res = await this.$api('index.orderDetail', formData);
 				this.info = res.data;
+				this.moneyparams.touzi_money=res.data.order.touziren_pay
 				this.getOrderState(this.info);
 
 				let d = this.get15MinutesLater(this.info.order.lawyer_time);
@@ -749,7 +799,17 @@
 					id: this.order_id,
 					token: uni.getStorageSync('token'),
 					type: 1, //1 = 付费给投资人 2= 投资人退款请求 3 = 投资人请求结算 4 添加服务 5 包年包月的续费 6付款给律师
-					pay_type: payMethod
+					pay_type: payMethod,
+					chuli_type:this.moneyparams.chuli_type,
+					chuli_money:this.moneyparams.chuli_money,
+					money:this.moneyparams.money,
+					price:this.moneyparams.price,
+					yuan_money:this.moneyparams.yuan_money,
+					hejie_money:this.moneyparams.hejie_money,
+					touzi_money:this.moneyparams.touzi_money,
+					sunshi_money:this.moneyparams.sunshi_money,
+					weiyue_money:this.moneyparams.weiyue_money,
+					heji_money:this.moneyparams.total_money
 				};
 				// TODO回款凭证
 				// if (this.moneyNature == '投资收益') {
@@ -878,8 +938,9 @@
 				margin-left: 7rpx;
 			}
 			.text_icon{
-						margin-left: 10rpx;
-					}
+				margin-left: 10rpx;
+			}
+			
 		}	
 		
 			
@@ -890,6 +951,7 @@
 		// padding: 30rpx;
 		width: 100%;
 		background: #FFFFFF;
+		padding-bottom: 30rpx;
 		border-radius: 24rpx;
 		//每一项内容
 		.flex-item-i{
@@ -897,6 +959,32 @@
 			// margin-top: 30rpx;
 			// margin-bottom: 30rpx;
 			padding: 30rpx 30rpx 0 30rpx;
+			.item-right{
+				display: flex;
+				align-items: center;
+				//新改
+				.input{
+					margin-top: 20rpx;
+					font-size: 26rpx;
+					display: flex;
+					align-items: center;
+					width: 585rpx;
+					height: 60rpx;
+					border-radius: 12rpx;
+					border: 1rpx solid #E0E0E0;
+					padding-left: 17rpx;
+					padding-right: 17rpx;
+					input{
+						width: 430rpx;
+						height: 60rpx;
+						font-size: 26rpx;
+						margin-left: 10rpx;
+						margin-right: 10rpx;
+						letter-spacing: 1rpx;
+						
+					}
+				}
+			}
 		}
 		.service-list{
 			margin-top: 24rpx;

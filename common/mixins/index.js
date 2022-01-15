@@ -77,6 +77,15 @@ export default {
 				this.$bridge.callhandler('openProject', id, res => {});
 			}
 		},
+		// 跳转到群聊
+		navToChat(groupid) {
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				let res = phone.openChat(groupid);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('openChat', groupid, res => {});
+			}
+		},
 		// 下载文档
 		downloadFile(url) {
 			const nav = navigator.userAgent;
