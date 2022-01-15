@@ -142,11 +142,12 @@
 				</view>
 			</template>
 		</view>
-		
 		<!-- 待收信息 -->
-		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order.payment" @popupShow="popupShow"></order-detail-payment>
+		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-payment>
+		2
 		<!-- 收款详情 -->
-		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order.collection" @popupShow="popupShow"></order-detail-collection>
+		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-collection>
+		3
 		<!-- 待付信息 -->
 		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order.pay" @popupShow="popupShow"></order-detail-pay>
 		<!-- 付款详情 -->

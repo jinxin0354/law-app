@@ -2,7 +2,7 @@
 	<view class="popup-bottom-box">
 <view class="bot-con">
 			<view class="od-box">
-		<scroll-view scroll-top="0" scroll-y="true">
+		<scroll-view scroll-top="0" scroll-y="true" style="height: 600rpx;">
 			<view class="flex-item">
 				<!-- 委托人案子以什么方式处理得  -->
 				<view class="od-item flex-item-i">
@@ -764,7 +764,7 @@
 						// border: none;
 						height: 25rpx;
 						text-indent: 24rpx;
-						color: #d4d4d4;
+						color: #000;
 					}
 				}
 

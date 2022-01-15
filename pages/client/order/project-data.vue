@@ -267,32 +267,33 @@
 		onLoad(params){
 			this.type = params.type
 			if (params.card_images) {
-				this.card_images = params.card_images.split(',')
+				this.card_images = JSON.parse(params.card_images);
 			}else{
 				this.card_images = []
 			}
+			console.log(this.card_images,'--------')
 			if (params.liaotian_images) {
-				this.liaotian_images = params.liaotian_images.split(',');
+				this.liaotian_images = JSON.parse(params.liaotian_images);
 			}else{
 				this.liaotian_images = []
 			}
 			if (params.jietiao_images) {
-				this.jietiao_images = params.jietiao_images.split(',');
+				this.jietiao_images = JSON.parse(params.jietiao_images);
 			}else{
 				this.jietiao_images = []
 			}
 			if (params.cuishou_images) {
-				this.cuishou_images = params.cuishou_images.split(',');
+				this.cuishou_images = JSON.parse(params.cuishou_images);
 			}else{
 				this.cuishou_images = []
 			}
 			if (params.huan_images) {
-				this.huan_images = params.huan_images.split(',');
+				this.huan_images = JSON.parse(params.huan_images);
 			}else{
 				this.huan_images = []
 			}
 			if (params.other_images) {
-				this.other_images = params.other_images.split(',');
+				this.other_images = JSON.parse(params.other_images);
 			}else{
 				this.other_images = []
 			}
@@ -308,10 +309,15 @@
 		methods: {
 			//接收文件
 			fileOk(res) {
-				let tempList = [];
-				res.forEach((item, index) => {
-					tempList.push(JSON.parse(item));
-				});
+				console.log(res,'---------file--res')
+				if (res == "nothing") {
+					uni.hideLoading()
+			this.closePop('popupAdd')
+			return
+				}
+				let tempList = res.map((item,index)=>{
+					return JSON.parse(item)
+				})
 				if(this.status == 1){
 					// 欠款方的身份证正反面/姓名、身份证号码
 					this.card_images = this.card_images.concat(tempList);
@@ -331,13 +337,20 @@
 					//您认为有用的其他有用材料
 					this.other_images = this.other_images.concat(tempList);
 				}
+				uni.hideLoading()
+			this.closePop('popupAdd')
 			},
 			//接收图片
 			photoOk(res) {
-				let tempList = [];
-				res.forEach((item, index) => {
-					tempList.push(JSON.parse(item));
-				});
+				if (res == "nothing") {
+						uni.hideLoading()
+				this.closePop('popupAdd')
+				return
+					}
+				let tempList = res.map((item,index)=>{
+					return JSON.parse(item)
+				})
+				console.log(tempList,'=------------tempList')
 			if(this.status == 1){
 				// 欠款方的身份证正反面/姓名、身份证号码
 				this.card_images = this.card_images.concat(tempList);
@@ -357,6 +370,8 @@
 				//您认为有用的其他有用材料
 				this.other_images = this.other_images.concat(tempList);
 			}
+			uni.hideLoading()
+			this.closePop('popupAdd')
 			},
 			popupAdd(status){
 				this.status = status
@@ -455,15 +470,15 @@
 			camera() {
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                    uni.showLoading({
-                	title: '上传中'
-                })
 					phone.camera();
-                    this.closePop('popupAdd')
-                    uni.hideLoading();
+					uni.showLoading({
+						title: '上传中'
+					})
+          this.closePop('popupAdd')
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('camera', {}, data => {
-						let tempList = this.trimSpace(data);
+						let tempList = [];
+						tempList.push(data)
 						if(this.status == 1){
 							// 欠款方的身份证正反面/姓名、身份证号码
 							this.card_images = this.card_images.concat(tempList);
@@ -491,33 +506,31 @@
 			pickPhoto() {
 				const nav = navigator.userAgent;
 				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                    uni.showLoading({
-                    	title: '上传中'
-                    })
+          uni.showLoading({
+            title: '上传中'
+          })
 					phone.pickPhoto();
-                    this.closePop('popupAdd')
-                    uni.hideLoading();
+          this.closePop('popupAdd')
 				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 					this.$bridge.callhandler('pickPhoto', {}, data => {
-						let tempList = this.trimSpace(data);
 						if(this.status == 1){
 							// 欠款方的身份证正反面/姓名、身份证号码
-							this.card_images = this.card_images.concat(tempList);
+							this.card_images = this.card_images.concat(data);
 						}else if(this.status == 2){
 							//确认欠款金额的聊天截图内容
-							this.liaotian_images = this.liaotian_images.concat(tempList);
+							this.liaotian_images = this.liaotian_images.concat(data);
 						}else if(this.status == 3){
 							//借条/欠条/还款承诺书/对账单等文书
-							this.jietiao_images = this.jietiao_images.concat(tempList);
+							this.jietiao_images = this.jietiao_images.concat(data);
 						}else if(this.status == 4){
 							//催收的聊天内容(微信/支付宝/录音/录像)
-							this.cuishou_images = this.cuishou_images.concat(tempList);
+							this.cuishou_images = this.cuishou_images.concat(data);
 						}else if(this.status == 5){
 							//还款记录(包括每次还款金额和还款时间) 
-							this.huan_images = this.huan_images.concat(tempList);
+							this.huan_images = this.huan_images.concat(data);
 						}else if(this.status == 6){
 							//您认为有用的其他有用材料
-							this.other_images = this.other_images.concat(tempList);
+							this.other_images = this.other_images.concat(data);
 						}
 					});
                     this.closePop('popupAdd')
@@ -526,70 +539,59 @@
 			// 选择文件
 			pickFile() {
 				const nav = navigator.userAgent;
-				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-                    uni.showLoading({
-                    	title: '上传中'
-                    })
-					phone.pickFile();
-                    this.closePop('popupAdd')
-                    uni.hideLoading();
-				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-					this.$bridge.callhandler('pickFile', {}, data => {
-						let tempList = this.trimSpace(data);
-						if(this.status == 1){
-							// 欠款方的身份证正反面/姓名、身份证号码
-							this.card_images = this.card_images.concat(tempList);
-						}else if(this.status == 2){
-							//确认欠款金额的聊天截图内容
-							this.liaotian_images = this.liaotian_images.concat(tempList);
-						}else if(this.status == 3){
-							//借条/欠条/还款承诺书/对账单等文书
-							this.jietiao_images = this.jietiao_images.concat(tempList);
-						}else if(this.status == 4){
-							//催收的聊天内容(微信/支付宝/录音/录像)
-							this.cuishou_images = this.cuishou_images.concat(tempList);
-						}else if(this.status == 5){
-							//还款记录(包括每次还款金额和还款时间) 
-							this.huan_images = this.huan_images.concat(tempList);
-						}else if(this.status == 6){
-							//您认为有用的其他有用材料
-							this.other_images = this.other_images.concat(tempList);
-						}
-					});
-                    this.closePop('popupAdd')
-				}
+        uni.showLoading({
+            title: '上传中'
+        })
+				phone.pickFile();
+        uni.hideLoading();
+				this.closePop('popupAdd')
 			},
-            // 去掉数组中的空值
-            trimSpace(array) {
-            	for (var i = 0; i < array.length; i++) {
-            		if (array[i] == '' || array[i] == null || typeof array[i] == 'undefined') {
-            			array.splice(i, 1);
-            			i = i - 1;
-            		}
-            	}
-            	return array;
-            },
 			confirmUpload(isSave) {
 				this.$refs.popupUpload.close();
 				let pages = getCurrentPages();
 				let prevPage = pages[pages.length - 2];
+				console.log(this.card_images,'----------')
 				if (isSave) {
-					prevPage.$vm.card_images = this.card_images.length > 0 ? this.card_images.join(',') : '';
-					prevPage.$vm.liaotian_images = this.liaotian_images.length > 0 ? this.liaotian_images.join(',') : '';
-					prevPage.$vm.jietiao_images = this.jietiao_images.length > 0 ? this.jietiao_images.join(',') : '';
-					prevPage.$vm.cuishou_images = this.cuishou_images.length > 0 ? this.cuishou_images.join(',') : '';
+					prevPage.$vm.card_images = this.card_images.length > 0 ? JSON.stringify(this.card_images) : '';
+					prevPage.$vm.liaotian_images = this.liaotian_images.length > 0 ? JSON.stringify(this.liaotian_images) : '';
+					prevPage.$vm.jietiao_images = this.jietiao_images.length > 0 ? JSON.stringify(this.jietiao_images) : '';
+					prevPage.$vm.cuishou_images = this.cuishou_images.length > 0 ? JSON.stringify(this.jietiao_images) : '';
 					if(this.type == 1){
-						prevPage.$vm.huan_images =   this.huan_images.length > 0 ? this.huan_images.join(',') : '';
+						prevPage.$vm.huan_images =   this.huan_images.length > 0 ? JSON.stringify(this.huan_images) : '';
 					}else{
 						prevPage.$vm.huan_images = ''
 					}
 					
-					prevPage.$vm.other_images = this.other_images.length > 0 ? this.other_images.join(',') : '';
+					prevPage.$vm.other_images = this.other_images.length > 0 ? JSON.stringify(this.other_images) : '';
 				}
+					console.log(JSON.stringify(this.card_images),'-------')
 				uni.navigateBack({
 					delta: 1
 				});
 			},
+		previewImage(item) {
+			if (this.getFileType(item.name) != 'image') {
+				// 是文档,下载
+				const nav = navigator.userAgent;
+				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+					phone.loadOffice(item.url);
+				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+					this.$bridge.callhandler('loadOffice', item.url, data => {});
+				}
+			} else {
+				// 是图片,预览
+				let previewImages = [];
+				this.source.forEach((item, index) => {
+					if (this.getFileType(item.name) == 'image') {
+						previewImages.push(item.url);
+					}
+				});
+				uni.previewImage({
+					urls: previewImages,
+					current: item.url
+				});
+			}
+		}
 			
 		}
 	}

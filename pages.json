@@ -1192,7 +1192,7 @@
             	"enablePullDownRefresh": false
             },
             "meta": {
-            	"auth": true
+            	"auth": false
             }
             
         }

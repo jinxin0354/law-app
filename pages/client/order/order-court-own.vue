@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-        <law-order-nav style="z-index: 999;" :productTitleName='productTitleName'></law-order-nav>
+        <law-order-nav style="z-index: 999;" :shareTitle='shareTitle' :shareContent='shareContent'></law-order-nav>
         <view class="tabs-box" :style="'top:'+windowTop+'px'" v-if="showTab">
             <view class="tab-item-box" v-for="(item,index) in tabList" :key='index'>
                 <view v-if="bearFees != '自费'" :class="item.id == tabItemValue ? 'name-box-one' : 'name-box-two'" @click="scrollToOne(item.id)">
@@ -476,8 +476,7 @@
                 </view>
                 <view class="od-item marginbottom20">
                 	<view class="item-tip" style="padding-right: 20rpx;" @click="download({image:hearAddrUrl})"><view class="center-box">
-                        审理地点<view class="required-box">
-                        *
+                        审理地点<view class="required-box">*
                         </view>
                     </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
@@ -697,7 +696,7 @@
                 <view class="od-item marginbottom20">
                 	<view class="item-tip">
                         <view class="center-box">
-                            付款金额
+                            律师费用金额
                         </view>
                     </view>
                 	<view class="item-right" style="min-height:60rpx;padding-right: 20rpx;">
@@ -922,7 +921,7 @@
                     <view class="item-right" @click="langClick">
                     	<view class="item-txt gray" v-if="lang_ids.length == 0">您希望律师用什么语言与您交流</view>
                     	<view class="service-list inline-list" v-else>
-                    		<view class="service-item active"  :style="lang_ids.length == 1 ? 'width: calc((100% - 50rpx) / 2);margin-top: 10rpx' : 'width: 100%;margin-top: 10rpx'">{{langStr}}</view>
+                    		<view class="service-item active"  :style="lang_ids.length == 1 ? 'width: calc((100% - 20rpx) / 2);margin-top: 10rpx' : 'width: 100%;margin-top: 10rpx'">{{langStr}}</view>
                     	</view>
                     	<!-- <view class="service-list inline-list" v-else>
                     		<view class="service-item active" style="width: calc((100% - 20rpx) / 2);margin:10rpx 10rpx 0rpx 10rpx">{{getDataName(langIdData,lang_ids[0])}}</view>
@@ -943,19 +942,46 @@
                     </view>
 					</view>
 				</view>
-                <view class="od-item marginbottom20">
-                	<view class="item-tip">律师费用</view>
+                <!-- <view class="od-item marginbottom20">
+                	<view class="item-tip">律师费用12</view>
                 	<view class="item-right">
                     <view class="service-list inline-list">
                     	<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">投资人支付</view>
                     </view>
                 	</view>
-                </view>
+                </view> -->
+								<view class="od-item marginbottom20">
+									<view class="item-tip">
+								        <view class="center-box">
+								            付款时间
+								        </view>
+								    </view>
+									<view class="item-right">
+								    <view class="service-list inline-list">
+								    	<view class="service-item active" style="width: 60%;position: relative;">先付后用 任性付
+								        <image class="noback" src="@/static/img/order-noback4.png" mode="aspectFit"></image>
+								        </view>
+								    </view>
+									</view>
+								</view>
+								<view class="od-item marginbottom20">
+									<view class="item-tip">
+								        <view class="center-box">
+								            律师费用金额
+								        </view>
+								    </view>
+									<view class="item-right" style="min-height:60rpx;padding-right: 20rpx;">
+								        <view class="service-list inline-list" >
+													<view class="service-item active" style="color:red;border: 2rpx solid red;position: relative;">￥2500
+														<image class="noback" style="width:100rpx;height: 50rpx;right: -70rpx;top:-26rpx" src="@/static/img/order-noback5.png" mode="aspectFit"></image></view>
+								        </view>
+									</view>
+								</view>
 				<view class="od-item marginbottom20">
 					<view class="item-tip" style="align-items: flex-start;margin-top: 10rpx;" @click="download({image:doc_touziren})">投资人承担<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
-						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;color:red;padding: 6rpx 10rpx;margin-right: 6rpx;">律师费+立案受理费+公告费+异地被告身份查询费</view>
+						<view class="touziren-box">律师费+立案受理费+公告费+异地被告身份查询费</view>
 						<view class="whyIcon" style="align-items:center" @click="gotoJiSuanQi(info.product.product_id)">
 							<image src="@/static/img/jisuanqi-icon.png" mode="aspectFit"></image>
 						</view>
@@ -965,8 +991,7 @@
 					<view class="item-tip" style="align-items: flex-start" @click="$refs.earningsPopup.open()">投资人收益<image src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;padding-right: 20rpx;"></image></view>
 					<view class="item-right">
-						<view class="item-txt" style="border: 1rpx solid red;line-height:50rpx;padding: 6rpx 10rpx;flex:1">
-							<text class="red">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。</text>
+						<view class="touziren-box">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。
 						</view>
                         <view class="whyIcon">
                         	<image ></image>
@@ -1048,15 +1073,16 @@
 			</view>
 		</view>
 		<view class="save-box-two">
-			<checkbox-group @change="checkChange" v-if="bearFees == '投资人支付'">
-				<label class="chekc-group-box" >
-					<checkbox style="transform:scale(0.8);" color="#FFC801" value="1" />
+			<view style="display: flex;align-items: center;" v-if="bearFees == '投资人支付'" @click="checkChange">
+				<image src="../../../static/img/icon/radio.png" v-if="agree==false"  style="width: 30rpx;height: 30rpx;"></image>
+				<image src="../../../static/img/icon/radioed.png" v-else style="width: 30rpx;height: 30rpx;"></image>
+				<label class="chekc-group-box" style="margin-left:10rpx">
 					我已阅读
-					<view class="check-info" @click="download({image:hetong_doc})">
+					<view class="check-info" @click.stop="download({image:hetong_doc})">
 						《债券投资合同》
 					</view>,并同意按上述条款履行
 				</label>
-			</checkbox-group>
+			</view>
 			<view class="save-go-box">
 				<view class="go-left">
 					<view class="left-prize" v-if="bearFees == '投资人支付'">
@@ -1093,12 +1119,11 @@
 		<!-- 债券投资合同组件-->
 		<order-invest-contact ref="investContact">
 			<view class="agree-box" slot="agree-box">
-				<checkbox-group @change="checkChange">
-					<label>
-						<checkbox style="transform:scale(0.8);" color="#FFC801" value="1" />
+					<label @click="checkChange">
+						<image src="../../../static/img/icon/radio.png"  v-if="agree==false"  style="width: 30rpx;height: 30rpx;"></image>
+						<image src="../../../static/img/icon/radioed.png" v-else style="width: 30rpx;height: 30rpx;"></image>
 						我已阅读并同意按上述条款履行
 					</label>
-				</checkbox-group>
 			</view>
 			<view class="ok-box" slot="agree-box"><button type="default" class="ok-btn"
 					@click="bondConfirm">确定并继续下单</button></view>
@@ -1842,7 +1867,7 @@
 				money: '', //律师费
 				moneyList: [], //律师费列表
 				price_type_text: '', //律师费 付款方式
-				agree: '', //同意
+				agree: false, //同意
 				bearFees: '', //费用承担
 				jindu: '', //目前进度
 				self_ident: '', //我的身份
@@ -1926,7 +1951,9 @@
                 chanPinHeight:1983,//产品说明模块高度
                 wendajiaHeight:0,//问大家模块高度
                 windowHeight:0,
-                langStr:''
+                langStr:'',
+								shareTitle:'',//分享标题
+								shareContent:'',//分享内容
             };
 		},
 		created() {
@@ -2002,7 +2029,9 @@
                     this.serve_offer = '投资人确定'
                     this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
                     this.langStr = ''
+										this.lang_ids = []
 				} else if (this.bearFees == '自费') {
+										this.lang_ids = []
 					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
@@ -2172,6 +2201,11 @@
                 this.practiceArea = '广东省,深圳市'
                 this.defaultRegion = ['广东省', '深圳市']
 				this.bearFees = res.data.product.money_type;
+				if(this.bearFees == '投资人支付'){
+					this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
+				}else{
+					this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}]
+				}
                 this.jinduSelectData = res.data.list.jindu || []
 				this.jindu = res.data.list.jindu[0].value_name;
                 this.selfIdentSelectData = res.data.list.self_ident || []
@@ -2213,6 +2247,8 @@
 								this.labelData = res.data.product.label
 								this.productTitleName = res.data.product.product_name
 								this.tags = res.data.product.tags || []
+								this.shareTitle = this.productTitleName + ' ' + this.price
+								this.shareContent = this.labelData.join(' ') + this.tags.join(' ')
 			},
 			async getMoney() {
 				let formData = {
@@ -2244,7 +2280,7 @@
 				this.practiceArea = obj.area;
 			},
 			bondConfirm() {
-				if (this.agree == '1') {
+				if (this.agree) {
 					this.addOrder(this.price_type_text);
 				} else {
 					uni.showToast({
@@ -2256,7 +2292,7 @@
 			confirm() {
 				if (this.bearFees == '投资人支付') {
 					// this.$refs.investContact.$refs.popupBond.open();
-					if (this.agree == '1') {
+					if (this.agree) {
 						this.addOrder(this.price_type_text);
 					} else {
 						uni.showToast({
@@ -2370,8 +2406,9 @@
 				}
 			},
 			// 勾选同意债券投资合同
-			checkChange(e) {
-				this.agree = e.detail.value[0];
+			checkChange() {
+				console.log(this.agree,'-----')
+				this.agree = !this.agree
 			},
 			// 获取服务阶段
 			async getStage() {
@@ -2632,6 +2669,7 @@
                 this.closePop('popupServiceStage')
             },
             hearAddrSelectClick(item){
+							this.practiceArea = item
                 this.hear_addr = item
                 this.closePop('popupTake')
             },
@@ -2644,15 +2682,14 @@
                 }
             },
             popupTakeTwoClick(){
-                this.defaultTak = this.hear_addr.split(',')
+                // this.defaultTake = this.hear_addr.split(',')
                 this.popupTakeTwo = true
             },
             TakeConfirm(res){
-                // if (res.city.label == '市辖区') {
-                // 	this.hear_addr = res.province.label;
-                // } else {
-                // 	this.hear_addr = res.province.label + ',' + res.city.label;
-                // }
+								this.defaultTake = []
+								let province = res.province.label
+								let city = res.city.label
+								this.defaultTake.push(province,city)
                 this.hear_addr = res.province.label + ',' + res.city.label;
                 this.popupTakeTwo = false
             },
@@ -2722,7 +2759,7 @@
 
 	.item-main {
 		width: 100%;
-		height: 312rpx;
+		// height: 312rpx;
 		background-color: #FFFFFF;
 		padding: 20rpx;
 		margin-bottom: 20rpx;
@@ -2768,9 +2805,8 @@
 			background-color: #EEF2F3;
 			width: 100%;
 			height: 66rpx;
-			line-height: 66rpx;
 			display: flex;
-            justify-content: space-between;
+      justify-content: space-between;
 			margin-top: 16rpx;
 			align-items: center;
 			padding: 0rpx 20rpx;
@@ -3522,5 +3558,19 @@
                 }
             }
         }
-        
+        .touziren-box{
+					border: 2rpx solid #EE1414;
+					border-color: #EE1414;
+					line-height:50rpx;
+					flex: 1;
+					margin-left: 10rpx;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding: 6rpx 10rpx;
+					margin-right: 6rpx;
+					position: relative;
+					box-sizing: border-box;
+					color: #EE1414;
+				}
 </style>

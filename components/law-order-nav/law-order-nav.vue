@@ -21,7 +21,8 @@
 <script>
 export default {
     props:{
-      productTitleName:''  
+      shareTitle:'',
+				shareContent:''
     },
 	data() {
 		return {
@@ -34,8 +35,8 @@ export default {
         //分享
         share(){
         	let shareInfo = {
-        		title: this.productTitleName,
-        		content: '分期付 低至1天1.1元 随身顾问 无理由更换律师 免费取消订单',
+        		title: this.shareTitle,
+        		content: this.shareContent,
         		imageUrl: `${this.$API_URL}/source/go.png`,
         		path: `${this.$VIEW_URL}/#/pages/client/order/order-court-own?area_id=${this.$route.query.area_id}&bearFees=${this.$route.query.bearFees}&product_id=${this.$route.query.product_id}&product_image=${this.$route.query.product_image}&product_name=${this.$route.query.product_name}&type=share`
         	};

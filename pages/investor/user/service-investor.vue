@@ -250,7 +250,9 @@
 
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">
 				<view class="paddingbottom0" style="margin-bottom: 0;" slot="popup-con">
+				
 					<order-popup-statement-contents @func="aaa" @funcs ="bbb"/>
+				
  				</view>
 				<view class="ok-box" style="padding: 10rpx;" slot="popup-btn">
 					<text class="amount">合计
@@ -547,5 +549,19 @@
 		border: 1rpx solid #999999;
 		border-radius: 38rpx;
 		color: #000000;
+	}
+	.ok-btn{
+		margin-right: 42rpx;
+		width: 300rpx;
+		height: 60rpx;
+		background: #FFC900;
+		border: 1rpx solid #FFC900;
+		opacity: 1;
+		border-radius: 38rpx;
+		font-size: 30rpx;
+		font-family: PingFang-SC-Medium;
+		color: #FFFFFF;
+		text-align: center;
+		line-height: 60rpx;
 	}
 </style>
