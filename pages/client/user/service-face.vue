@@ -9,7 +9,14 @@
 				</view>
 				<view class="txt-right red">请详细阅读律师给您的委托代理合同，如有疑问， 请随时联系律师为您解答清楚。</view>
 			</view>
-
+      <template v-if="info.order.server_type != '线上电话'">
+        <view class="match-image-txt">
+          <view class="txt-left">
+            <view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
+          </view>
+          <view class="txt-right red">匹配律师成功后15分钟内，如您没有更换律师的，平台将自动在“办公”页面，为您和律师创建本订单的项目和群聊，方便您和律师沟通。</view>
+        </view>
+      </template>
 			<template v-if="info.order.pro_name != '问一下'">
 				<view class="match-image-txt">
 					<view class="txt-left">
@@ -41,7 +48,8 @@
 				<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 				<button class="service-item active" :disabled="isClientServiceOk || isLawyerServiceOk || disableServiceOk" @click="$refs.popupServiceOk.open">服务完成</button>
 				<button class="service-item active" :disabled="isClientRemoveEntrust || isLawyerRemoveEntrust || disableRemoveEntrust" @click="removeEntrust">解除委托</button>
-				<template v-if="info.order.pro_name != '问一下'">
+        <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
+        <template v-if="info.order.pro_name != '问一下'">
 					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
 				</template>
 
