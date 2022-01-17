@@ -361,6 +361,7 @@ export default {
 	},
 	methods: {
 		popupShow(item) {
+			console.log('===');
 			if (item.type == 8) {
 				this.current_item = item
 				this.$refs.returnCost.$refs.returnCost.open()
@@ -368,7 +369,7 @@ export default {
 				this.current_item = item
 				this.$refs.settlement.$refs.settlement.open()
 			} else if (item.type == 7) {
-				this.current_item = item
+				this.current_item = item.popup
 				this.$refs.lawyerApply.$refs.lawyerApply.open()
 			}
 		},

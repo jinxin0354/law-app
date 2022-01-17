@@ -4,7 +4,7 @@
 			<view slot="popup-con" >
 				<view class="flex flex-vertical" style="font-size: 15px;">
 					<view class="flex flex-horizontal flex-center-v item">
-						<text class="flex flex-1">收款人</text>
+						<text class="flex flex-1">付款人</text>
 						<text>投资人</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item">
@@ -12,6 +12,11 @@
 						<text class="money-text">¥{{item.case_money}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item">
+						<text class="flex flex-1">缴纳截止日期</text>
+						<image class="image-icon" src="@/static/img/icon/calendar.png" mode="widthFix"></image>
+						<text style="margin-left: 5px;">{{item.case_time}}</text>
+					</view>
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.case)">
 						<text class="flex flex-1">案件受理费缴纳通知书</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
@@ -20,12 +25,12 @@
 						<text class="flex flex-1">公告费</text>
 						<text class="money-text">¥{{item.announce_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.announce)">
 						<text class="flex flex-1">公告费缴纳通知书</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" >
 						<text class="flex flex-1">异地被告身份查询费</text>
 						<text class="money-text">¥{{item.enquire}}</text>
 					</view>
@@ -33,23 +38,23 @@
 						<text class="flex flex-1">律师费</text>
 						<text class="money-text">¥{{item.lawyer}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.contract)">
 						<text class="flex flex-1">委托代理合同</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.main)">
 						<text class="flex flex-1">委托人主体资料</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.indictment)">
 						<text class="flex flex-1">起诉状（委托人已签章）</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 					
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" @click="clickPhoto(item.note)">
 						<text class="flex flex-1">立案受理通知书</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
@@ -65,7 +70,23 @@
 
 <script>
 	export default {
-		props: ['item']
+		props: ['item'],
+		methods: {
+			clickPhoto(photo) {
+				if (photo == '') {
+					uni.showToast({
+						title: '暂无图片',
+						icon: 'none'
+					})
+					return
+				}
+				uni.previewImage({
+					urls: photo.split(','),
+					indicator: 'number',
+					loop:true
+				})
+			}
+		}
 	}
 </script>
 

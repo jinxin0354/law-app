@@ -16,27 +16,27 @@
 				<view class="flex flex-horizontal" @click="itemClick(item)">
 					<view class="item-money">¥{{item.money}}</view>
 					<view class="flex flex-horizontal flex-1">
-						<view class="flex flex-vertical" style="width: 160px;">
+						<view class="flex flex-vertical" style="width: 180px;">
 							<text>{{item.name}}</text>
 							<text>{{item.time}}</text>
 						</view>
 						<image v-if="item.type == 8 || item.type == 3 || item.type == 7" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 				</view>
-				<view class="flex flex-horizontal flex-center-v btn-back">
+				<view class="flex flex-horizontal flex-center btn-back">
 					<template v-if="!item.isapplay">
 						<!-- <template v-if="item.is_shou == 0"> -->
 						<template v-if="item.is_shou == 0">
-							<button
-								class="ok-btn"
-								type="default"
+							<view
+								class="comfir-btn flex flex-center"
+								style="width: 50%;"
 								@click="
 									current_item = item;
 									$refs.popupReceiveMoney.open();
 								"
 							>
 								我要收款
-							</button>
+							</view>
 						</template>
 						<template v-else>
 							<view class="comfir-btn flex flex-center flex-1" 
@@ -203,7 +203,8 @@ export default {
 			//这里需要再帮后台传一个  shou_type 参数
 			let formData = {
 				id: this.current_item.id,
-				token: uni.getStorageSync('token')
+				token: uni.getStorageSync('token'),
+				shou_type:this.current_item.shou_type
 			};
 			let res = await this.$api('index.cancel_apply', formData);
 			if (res.code == 1) {
@@ -219,7 +220,8 @@ export default {
 			let formData = {
 				id: this.current_item.id,
 				token: uni.getStorageSync('token'),
-				isreduction: isreduction
+				isreduction: isreduction,
+				shou_type:this.current_item.shou_type
 			};
 			let res = await this.$api('latefee.setreply', formData);
 			if (res.code == 1) {
