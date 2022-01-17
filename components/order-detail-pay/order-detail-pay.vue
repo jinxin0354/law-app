@@ -1,6 +1,6 @@
 <template>
 	<view class="flex flex-vertical wait-box">
-		<view class="wait-item flex flex-vertical" >
+		<view class="wait-item flex flex-vertical" v-if="list.tui_pend.length > 0 ">
 			<view class="wait-title">待付信息</view>
 			<!-- 
 				退款缺少弹窗

@@ -150,9 +150,8 @@
 		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-pay>
 		<!-- 付款详情 -->
 		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-nopay>
-		
-		
-		
+		<!--滞纳金-->
+		<order-detail-zhina v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-detail-zhina>
 		<!-- 待收申请投资费用详情 -->
 		<!-- <order-wait-receive-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-apply-invest-cost> -->
 		<!-- 申请投资费用详情 -->
