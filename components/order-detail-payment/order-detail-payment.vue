@@ -3,16 +3,14 @@
 		<view class="wait-item flex flex-vertical" >
 			<view class="wait-title">待收信息</view>
 			<!-- 
-			 pend_text 
-			 这个数组里存放的是 边用边付款
-			 律师请款的数据
-			 列表 有shou_type类型
-			 shou_type = 1 为边用边付，轻松付，先用后附 无忧付类型
-			 shou_type = 2 律师请款
-				律师请款弹窗字段说明
-				付款人，委托人，固定写死
-				请款金额 money
-				请款事由 reason
+			现在问题
+				1.律师请款
+					律师请款弹窗字段说明
+					付款人，委托人，固定写死
+					请款金额 money
+					请款事由 reason
+				
+				2.申请投资费用弹窗内效果
 			 -->
 			<view class="flex flex-vertical item " v-for="item in list.pend_text" >
 				<view class="flex flex-horizontal" @click="itemClick(item)">
@@ -26,15 +24,43 @@
 					</view>
 				</view>
 				<view class="flex flex-horizontal flex-center-v btn-back">
-					<view class="comfir-btn flex flex-center flex-1" 
-					@click="
-						current_item = item;
-						cancelReceiveMoney();
-					"
-					>取消收款</view>
-					<view class="comfir-btn flex flex-center flex-1"
-					 @click="$refs.telephoneInvestor.$refs.popupTel.open()"
-					>催促委托人付款</view>
+					<template v-if="!item.isapplay">
+						<!-- <template v-if="item.is_shou == 0"> -->
+						<template v-if="item.is_shou == 0">
+							<button
+								class="ok-btn"
+								type="default"
+								@click="
+									current_item = item;
+									$refs.popupReceiveMoney.open();
+								"
+							>
+								我要收款
+							</button>
+						</template>
+						<template v-else>
+							<view class="comfir-btn flex flex-center flex-1" 
+								@click="
+									current_item = item;
+									$refs.popupCancelReceive.open();
+								"
+							>
+								取消收款1
+							</view>
+							<view class="comfir-btn flex flex-center flex-1" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款1</view>
+						</template>
+					</template>
+					<template v-else>
+						<view class="comfir-btn flex flex-center flex-1"
+						@click="
+							current_item = item;
+							cancelReceiveMoney();
+						"
+						>取消收款2</view>
+						<view class="comfir-btn flex flex-center flex-1"
+						 @click="$refs.telephoneInvestor.$refs.popupTel.open()"
+						>催促委托人付款2</view>
+					</template>
 				</view>
 			</view>
 			<!-- 
@@ -71,7 +97,7 @@
 					<view class="flex flex-horizontal flex-1">
 						<view class="flex flex-vertical" style="width: 160px;">
 							<text>{{item.name}}</text>
-							<text>{{item.time}}-{{item.is_popup}}</text>
+							<text>{{item.time}}</text>
 						</view>
 						<image v-if="item.type == 8 || item.type == 3 || item.type == 7" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
@@ -90,10 +116,40 @@
 			</view>
 		</view>
 		<!-- 打电话组件 -->
-		<!-- <order-telephone name="委托人" :phoneNumber="info.order.user_mobile" ref="telephoneClient" v-if="info.order.user_mobile"></order-telephone>
-		<order-telephone name="律师" :phoneNumber="info.order.lawyer_mobile" ref="telephoneLawyer" v-if="info.order.lawyer_mobile"></order-telephone>
-		<order-telephone name="投资人" :phoneNumber="info.order.investor_mobile" ref="telephoneInvestor" v-if="info.order.investor_mobile"></order-telephone>
-		 -->
+		 <order-telephone name="委托人" :phoneNumber="list.user_mobile" ref="telephoneClient" v-if="list.user_mobile"></order-telephone>
+		<order-telephone name="律师" :phoneNumber="list.lawyer_mobile" ref="telephoneLawyer" v-if="list.lawyer_mobile"></order-telephone>
+		<order-telephone name="投资人" :phoneNumber="list.investor_mobile" ref="telephoneInvestor" v-if="list.investor_mobile"></order-telephone>
+		
+		 <!-- 我要收款弹出层 -->
+		 <uni-popup ref="popupReceiveMoney" type="dialog">
+		 	<uni-popup-dialog
+		 		type="info"
+		 		okTxt="是"
+		 		cancleTxt="否"
+		 		content="我已与委托人确认付款事宜"
+		 		:before-close="true"
+		 		@confirm="
+		 			closePop('popupReceiveMoney');
+		 			confirmReceiveMoney();
+		 		"
+		 		@close="closePop('popupReceiveMoney')"
+		 	></uni-popup-dialog>
+		 </uni-popup>
+		 <!-- 取消收款弹出层 -->
+		 <uni-popup ref="popupCancelReceive" type="dialog">
+		 	<uni-popup-dialog
+		 		type="info"
+		 		okTxt="是"
+		 		cancleTxt="否"
+		 		content="取消收款"
+		 		:before-close="true"
+		 		@confirm="
+		 			closePop('popupCancelReceive');
+		 			cancelReceiveMoney1();
+		 		"
+		 		@close="closePop('popupCancelReceive')"
+		 	></uni-popup-dialog>
+		 </uni-popup>
 		
 	</view>
 </template>
@@ -103,6 +159,7 @@ export default {
 	props: ['info','list'],
 	data() {
 		return {
+			order:[],
 			current_item:{}
 		};
 	},
@@ -110,10 +167,37 @@ export default {
 		/* console.log('list');
 		console.log(this.list.length);
 		console.log(this.list.pend_text); */
+		this.order = this.list;
 	},
 	methods: {
 		itemClick(item) {
 			this.$emit('popupShow',item)
+		},
+		async confirmReceiveMoney() {
+			let formData = {
+				id: this.order.id,
+				token: uni.getStorageSync('token'),
+				type: 1, //类型 1分期或者先用后付 2我要额外收款
+				fen: this.current_item.fen
+			};
+			let res = await this.$api('index.lawyer_collect', formData);
+			if (res.code == 1) {
+				this.$emit('init');
+			}
+		}, 
+		async cancelReceiveMoney1() {
+			let formData = {
+				id: this.current_item.id,
+				token: uni.getStorageSync('token')
+			};
+			let res = await this.$api('index.lawyer_cancel_collect', formData);
+			if (res.code == 1) {
+				uni.showToast({
+					title: res.msg,
+					icon: 'none'
+				});
+				this.$emit('init');
+			}
 		},
 		async cancelReceiveMoney() {
 			//这里需要再帮后台传一个  shou_type 参数

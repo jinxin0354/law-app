@@ -481,7 +481,7 @@
                     </view><image  src="@/static/img/order-ques.png" mode=""
                 style="width: 30rpx;height: 30rpx"></image></view>
                 	<view class="item-right" @click="popupTakeTwoClick">
-                		<view class="item-txt gray" v-if="!hear_addr">您的案件在哪里审理？</view>
+                		<view class="item-txt gray" v-if="!hear_addr">您的案件在哪里审理</view>
                 		<view class="service-list inline-list" v-else>
                 			<view class="service-item active" style="width: calc((100% - 50rpx) / 2)">{{ hear_addr.replace(/,/g, "") }}</view>
                 		</view>
@@ -1100,7 +1100,7 @@
                     <button v-if="isShare" type="default" class="go-btn" @click="confirm">一键无忧下单</button>
                     <button v-else type="default" class="go-btn" @click="downloadApp">一键无忧下单</button>
                     </view>
-				<view class="go-right" v-else><button type="default" class="go-btn" @click="addOrder">我要下单</button></view>
+				<view class="go-right" v-else><button type="default" class="go-btn" @click="confirm">我要下单</button></view>
 			</view>
 		</view>
 		
@@ -1910,7 +1910,7 @@
                 langIdData:[],//律师语言数据
                 popupSelectList:[],//弹窗中选中的语言
                 moneyTypeData:[],//付款时间
-                serve_offer:'投资人确定',//服务报价
+                serve_offer:'平台统一价',//服务报价
                 offerData:[],//报价方式数据
                 priceTypeData:[],//费用承担
                 money_type:'',
@@ -1942,7 +1942,7 @@
                 tabList:[{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
                 tabItemValue:1,
                 showTab:false,
-                isShare:this.$route.query.type ? false : true,//是否是分享页面
+                isShare:this.$route.query.type=='share' ? false : true,//是否是分享页面
                 itemTopHeight:0,//上方图片高度
                 itemMainHeight:0,//基本信息模块高度
                 odBoxHeight:0,//服务选项模块高度
@@ -1952,8 +1952,8 @@
                 wendajiaHeight:0,//问大家模块高度
                 windowHeight:0,
                 langStr:'',
-								shareTitle:'',//分享标题
-								shareContent:'',//分享内容
+                shareTitle:'',//分享标题
+                shareContent:'',//分享内容
             };
 		},
 		created() {
@@ -2026,17 +2026,18 @@
                     this.is_fayuan_zhixing = 1
                     this.practiceYear = this.productNameData[0].value_name
                     this.practiceArea = '广东省,广州市'
-                    this.serve_offer = '投资人确定'
+                    this.serve_offer = '平台统一价'
                     this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}],
                     this.langStr = ''
 										this.lang_ids = []
 				} else if (this.bearFees == '自费') {
 										this.lang_ids = []
+					this.hear_addr = '';
+                    this.practiceArea = ''
 					this.qiankuan = '都可以'
                     this.serve_offer = '平台统一价'
                     this.practiceYear = this.productNameData[0].value_name
                     this.defaultTake = ['广东省','广州市']
-					this.hear_addr = '广东省,广州市';
                     this.tabList = [{name:'服务选项',id:1},{name:'打官司费用',id:2},{name:'服务内容',id:3},{name:'产品说明',id:4},{name:'问大家',id:5}],
                     this.langStr = ''
                     if (oldVal) {
@@ -2292,6 +2293,7 @@
 			confirm() {
 				if (this.bearFees == '投资人支付') {
 					// this.$refs.investContact.$refs.popupBond.open();
+                    console.log(this.agree,'----------')
 					if (this.agree) {
 						this.addOrder(this.price_type_text);
 					} else {
@@ -3301,7 +3303,7 @@
                 border-radius: 30rpx;
                 border: 1rpx solid #DCDCDC;
                 padding: 10rpx 20rpx;
-                box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.16);
+                // box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.16);
             }
             .lawyer-left {
             	font-weight: bold;

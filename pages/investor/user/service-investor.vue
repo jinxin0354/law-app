@@ -349,9 +349,11 @@
 	
 		methods: {
 			aaa(data){
-				this.heji = data.heji_money
-				this.jiesuan = data
 				console.log(data,'data')
+				this.heji = data.heji_money
+				console.log(this.heji,'datas')
+				this.jiesuan = data
+			
 			
 			},
 			bbb(data){
@@ -486,6 +488,7 @@
 								title: res.msg,
 								icon: 'none'
 							});
+							this.closePop('popupSettleAccounts')
 							this.init();
 						}
 					}

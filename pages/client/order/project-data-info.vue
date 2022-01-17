@@ -22,16 +22,6 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(1)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -57,16 +47,6 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(2)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -92,16 +72,6 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(3)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -127,16 +97,6 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(4)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -162,16 +122,6 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(5)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
@@ -197,54 +147,9 @@
 						</view>
 						<view class="item-name text-ellipsis">{{ item.name }}</view>
 					</template>
-					<!-- 关闭 -->
-					<view class="item-close" @click="closeFile(index)">
-						<view class="image-wrapper"><image src="@/static/img/upload-close.png" mode="aspectFit"></image></view>
-					</view>
-				</view>
-			
-				<view class="upload-item" @click="popupAdd(6)">
-					<view class="item-add">
-						<view class="image-wrapper"><image src="@/static/img/upload-add.png" mode="aspectFit"></image></view>
-					</view>
 				</view>
 			</view>
 		</view>
-		<view class="bottom-box">
-			<view class="ok-box"><button type="default" class="ok-btn" style="border-radius: 50rpx;" @click="confirmUpload(true)">确定</button></view>
-		</view>
-		<uni-popup ref="popupAdd" type="bottom">
-			<order-popup-common-bottom title="" @closePop="closePop('popupAdd')">
-				<view class="popup-con" slot="popup-con">
-					<view class="choose-box flex">
-						<view class="choose-item flex1" @click="camera">
-							<view class="image-wrapper"><image src="@/static/img/upload-camara.png" mode="aspectFit"></image></view>
-							拍照
-						</view>
-						<view class="choose-item flex1" @click="pickPhoto">
-							<view class="image-wrapper"><image src="@/static/img/upload-image.png" mode="aspectFit"></image></view>
-							相册
-						</view>
-						<view class="choose-item flex1" @click="pickFile" v-show="isShowUpFile">
-							<view class="image-wrapper"><image src="@/static/img/upload-file.png" mode="aspectFit"></image></view>
-							文件
-						</view>
-					</view>
-				</view>
-			</order-popup-common-bottom>
-		</uni-popup>
-		<!-- 是否上传弹出层 -->
-		<uni-popup ref="popupUpload" type="dialog">
-			<uni-popup-dialog
-				type="info"
-				okTxt="是"
-				cancleTxt="否"
-				content="保存已上传的资料"
-				:before-close="true"
-				@confirm="confirmUpload(true)"
-				@close="confirmUpload(false)"
-			></uni-popup-dialog>
-		</uni-popup>
 		<law-common ref="lawCommon"></law-common>
 	</view>
 </template>
@@ -255,7 +160,7 @@
 			return {
 				status:1,
 				type:1,//投资人支付1  自费2
-			isShowUpFile: true ,//IOS 不能上传文件，不显示此按钮
+                isShowUpFile: true ,//IOS 不能上传文件，不显示此按钮
 				card_images:[],//欠款方身份证正反面/姓名 身份证号
 				liaotian_images:[],//确认欠款金额的聊天截图内容
 				jietiao_images:[],//借条/欠条/还款承诺书/对账单等文书
@@ -297,86 +202,14 @@
 			}else{
 				this.other_images = []
 			}
-		const nav = navigator.userAgent;
+            const nav = navigator.userAgent;
 			if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.isShowUpFile = false;
 			}
 		},
 	created() {
-		window.fileOk = this.fileOk;
-		window.photoOk = this.photoOk;
 	},
 		methods: {
-			//接收文件
-			fileOk(res) {
-				console.log(res,'---------file--res')
-				if (res == "nothing") {
-					uni.hideLoading()
-			this.closePop('popupAdd')
-			return
-				}
-				let tempList = res.map((item,index)=>{
-					return JSON.parse(item)
-				})
-				if(this.status == 1){
-					// 欠款方的身份证正反面/姓名、身份证号码
-					this.card_images = this.card_images.concat(tempList);
-				}else if(this.status == 2){
-					//确认欠款金额的聊天截图内容
-					this.liaotian_images = this.liaotian_images.concat(tempList);
-				}else if(this.status == 3){
-					//借条/欠条/还款承诺书/对账单等文书
-					this.jietiao_images = this.jietiao_images.concat(tempList);
-				}else if(this.status == 4){
-					//催收的聊天内容(微信/支付宝/录音/录像)
-					this.cuishou_images = this.cuishou_images.concat(tempList);
-				}else if(this.status == 5){
-					//还款记录(包括每次还款金额和还款时间) 
-					this.huan_images = this.huan_images.concat(tempList);
-				}else if(this.status == 6){
-					//您认为有用的其他有用材料
-					this.other_images = this.other_images.concat(tempList);
-				}
-				uni.hideLoading()
-			this.closePop('popupAdd')
-			},
-			//接收图片
-			photoOk(res) {
-				if (res == "nothing") {
-						uni.hideLoading()
-				this.closePop('popupAdd')
-				return
-					}
-				let tempList = res.map((item,index)=>{
-					return JSON.parse(item)
-				})
-				console.log(tempList,'=------------tempList')
-			if(this.status == 1){
-				// 欠款方的身份证正反面/姓名、身份证号码
-				this.card_images = this.card_images.concat(tempList);
-			}else if(this.status == 2){
-				//确认欠款金额的聊天截图内容
-				this.liaotian_images = this.liaotian_images.concat(tempList);
-			}else if(this.status == 3){
-				//借条/欠条/还款承诺书/对账单等文书
-				this.jietiao_images = this.jietiao_images.concat(tempList);
-			}else if(this.status == 4){
-				//催收的聊天内容(微信/支付宝/录音/录像)
-				this.cuishou_images = this.cuishou_images.concat(tempList);
-			}else if(this.status == 5){
-				//还款记录(包括每次还款金额和还款时间) 
-				this.huan_images = this.huan_images.concat(tempList);
-			}else if(this.status == 6){
-				//您认为有用的其他有用材料
-				this.other_images = this.other_images.concat(tempList);
-			}
-			uni.hideLoading()
-			this.closePop('popupAdd')
-			},
-			popupAdd(status){
-				this.status = status
-				this.$refs.popupAdd.open()
-			},
 			getFileType(fileName) {
 				// 后缀获取
 				let suffix = '';
@@ -445,130 +278,6 @@
 				// 其他 文件类型
 				return 'other';
 			},
-			closeFile(index) {
-				if(this.status == 1){
-					// 欠款方的身份证正反面/姓名、身份证号码
-				this.$delete(this.card_images, index);
-				}else if(this.status == 2){
-					//确认欠款金额的聊天截图内容
-				this.$delete(this.liaotian_images, index);
-				}else if(this.status == 3){
-					//借条/欠条/还款承诺书/对账单等文书
-				this.$delete(this.jietiao_images, index);
-				}else if(this.status == 4){
-					//催收的聊天内容(微信/支付宝/录音/录像)
-				this.$delete(this.cuishou_images, index);
-				}else if(this.status == 5){
-					//还款记录(包括每次还款金额和还款时间) 
-				this.$delete(this.huan_images, index);
-				}else if(this.status == 6){
-					//您认为有用的其他有用材料
-				this.$delete(this.other_images, index);
-				}
-			},
-			// 打开摄像头
-			camera() {
-				const nav = navigator.userAgent;
-				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-					phone.camera();
-					uni.showLoading({
-						title: '上传中'
-					})
-          this.closePop('popupAdd')
-				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-					this.$bridge.callhandler('camera', {}, data => {
-						let tempList = [];
-						tempList.push(data)
-						if(this.status == 1){
-							// 欠款方的身份证正反面/姓名、身份证号码
-							this.card_images = this.card_images.concat(tempList);
-						}else if(this.status == 2){
-							//确认欠款金额的聊天截图内容
-							this.liaotian_images = this.liaotian_images.concat(tempList);
-						}else if(this.status == 3){
-							//借条/欠条/还款承诺书/对账单等文书
-							this.jietiao_images = this.jietiao_images.concat(tempList);
-						}else if(this.status == 4){
-							//催收的聊天内容(微信/支付宝/录音/录像)
-							this.cuishou_images = this.cuishou_images.concat(tempList);
-						}else if(this.status == 5){
-							//还款记录(包括每次还款金额和还款时间) 
-							this.huan_images = this.huan_images.concat(tempList);
-						}else if(this.status == 6){
-							//您认为有用的其他有用材料
-							this.other_images = this.other_images.concat(tempList);
-						}
-					});
-                    this.closePop('popupAdd')
-				}
-			},
-			//选择照片
-			pickPhoto() {
-				const nav = navigator.userAgent;
-				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-          uni.showLoading({
-            title: '上传中'
-          })
-					phone.pickPhoto();
-          this.closePop('popupAdd')
-				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-					this.$bridge.callhandler('pickPhoto', {}, data => {
-						if(this.status == 1){
-							// 欠款方的身份证正反面/姓名、身份证号码
-							this.card_images = this.card_images.concat(data);
-						}else if(this.status == 2){
-							//确认欠款金额的聊天截图内容
-							this.liaotian_images = this.liaotian_images.concat(data);
-						}else if(this.status == 3){
-							//借条/欠条/还款承诺书/对账单等文书
-							this.jietiao_images = this.jietiao_images.concat(data);
-						}else if(this.status == 4){
-							//催收的聊天内容(微信/支付宝/录音/录像)
-							this.cuishou_images = this.cuishou_images.concat(data);
-						}else if(this.status == 5){
-							//还款记录(包括每次还款金额和还款时间) 
-							this.huan_images = this.huan_images.concat(data);
-						}else if(this.status == 6){
-							//您认为有用的其他有用材料
-							this.other_images = this.other_images.concat(data);
-						}
-					});
-                    this.closePop('popupAdd')
-				}
-			},
-			// 选择文件
-			pickFile() {
-				const nav = navigator.userAgent;
-        uni.showLoading({
-            title: '上传中'
-        })
-				phone.pickFile();
-        uni.hideLoading();
-				this.closePop('popupAdd')
-			},
-			confirmUpload(isSave) {
-				this.$refs.popupUpload.close();
-				let pages = getCurrentPages();
-				let prevPage = pages[pages.length - 2];
-				console.log(this.card_images,'----------')
-				if (isSave) {
-					prevPage.$vm.card_images = this.card_images.length > 0 ? JSON.stringify(this.card_images) : '';
-					prevPage.$vm.liaotian_images = this.liaotian_images.length > 0 ? JSON.stringify(this.liaotian_images) : '';
-					prevPage.$vm.jietiao_images = this.jietiao_images.length > 0 ? JSON.stringify(this.jietiao_images) : '';
-					prevPage.$vm.cuishou_images = this.cuishou_images.length > 0 ? JSON.stringify(this.jietiao_images) : '';
-					if(this.type == 1){
-						prevPage.$vm.huan_images =   this.huan_images.length > 0 ? JSON.stringify(this.huan_images) : '';
-					}else{
-						prevPage.$vm.huan_images = ''
-					}
-					
-					prevPage.$vm.other_images = this.other_images.length > 0 ? JSON.stringify(this.other_images) : '';
-				}
-					console.log(JSON.stringify(this.card_images),'-------')
-				uni.navigateBack({
-					delta: 1
-				});
-			},
 		previewImage(item,type) {
 			if (this.getFileType(item.name) != 'image') {
 				// 是文档,下载
@@ -581,32 +290,32 @@
 			} else {
 				// 是图片,预览
 				let previewImages = [];
-				let self = this
-				if(type == 1){
-				    previewImages = self.card_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}else if(type == 2){
-				    previewImages = self.liaotian_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}else if(type == 3){
-				    previewImages = self.jietiao_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}else if(type == 4){
-				    previewImages = self.cuishou_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}else if(type == 5){
-				    previewImages = self.huan_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}else if(type == 6){
-				    previewImages = self.other_images.filter((iitem,index)=>{
-				        return self.getFileType(iitem.name) == 'image'
-				    })
-				}
+                let self = this
+                if(type == 1){
+                    previewImages = self.card_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }else if(type == 2){
+                    previewImages = self.liaotian_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }else if(type == 3){
+                    previewImages = self.jietiao_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }else if(type == 4){
+                    previewImages = self.cuishou_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }else if(type == 5){
+                    previewImages = self.huan_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }else if(type == 6){
+                    previewImages = self.other_images.filter((iitem,index)=>{
+                        return self.getFileType(iitem.name) == 'image'
+                    })
+                }
 				uni.previewImage({
 					urls: previewImages,
 					current: item.url

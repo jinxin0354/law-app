@@ -26,7 +26,7 @@ export default {
     },
 	data() {
 		return {
-            isShare:this.$route.query.type ? false : true
+            isShare:this.$route.query.type=='share' ? false : true
 		};
 	},
 	created() {

@@ -1208,6 +1208,15 @@
 			}
             
         }
+        ,{
+            "path" : "pages/client/order/project-data-info",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "项目资料",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

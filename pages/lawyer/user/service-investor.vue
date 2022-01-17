@@ -144,26 +144,25 @@
 		</view>
 		<!-- 待收信息 -->
 		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-payment>
-		2
 		<!-- 收款详情 -->
 		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-collection>
-		3
 		<!-- 待付信息 -->
-		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order.pay" @popupShow="popupShow"></order-detail-pay>
+		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-pay>
 		<!-- 付款详情 -->
-		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order.nopay" @popupShow="popupShow"></order-detail-nopay>
+		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-nopay>
+		
 		
 		
 		<!-- 待收申请投资费用详情 -->
-		<order-wait-receive-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-apply-invest-cost>
+		<!-- <order-wait-receive-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-apply-invest-cost> -->
 		<!-- 申请投资费用详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="申请投资费用" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="申请投资费用" :info="info"></order-common-detail> -->
 		<!-- 待收结算投资人奖励 -->
-		<order-wait-receive-invest-reward v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-invest-reward>
+		<!-- <order-wait-receive-invest-reward v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-invest-reward> -->
 		<!-- 结算投资人奖励详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.reward_pay" title="结算投资人奖励" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.reward_pay" title="结算投资人奖励" :info="info"></order-common-detail> -->
 		<!--退回投资费用详情-->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" title="退回投资费用" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" title="退回投资费用" :info="info"></order-common-detail> -->
 		<!-- 发票列表组件-->
 		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
 		<!-- 产品说明组件 -->
