@@ -50,9 +50,7 @@
 				<button class="service-item active" :disabled="isClientServiceOk || isLawyerServiceOk || disableServiceOk" @click="$refs.popupServiceOk.open">服务完成</button>
 				<button class="service-item active" :disabled="isClientRemoveEntrust || isLawyerRemoveEntrust || disableRemoveEntrust" @click="removeEntrust">解除委托</button>
         <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
-        <template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
-				</template>
+
 
 				<button class="service-item active" style="width: 100%; margin-right: 0;" v-if="!isTimeOver && remainTime" @click="$refs.orderChangeLawyer.$refs.popupChangeLawyer.open()">
 					<uni-countdown
