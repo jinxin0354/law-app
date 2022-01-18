@@ -199,7 +199,7 @@ export default {
 			announce: [],
 			source:[],
 			enquire: '',
-			lawyer: '1500',
+			lawyer: '2500',
 			contract: [],
 			case_list:[],
 			announce_list: [],

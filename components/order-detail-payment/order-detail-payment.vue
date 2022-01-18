@@ -20,7 +20,7 @@
 							<text>{{item.name}}</text>
 							<text>{{item.time}}</text>
 						</view>
-						<image v-if="item.type == 8 || item.type == 3 || item.type == 7" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<image v-if="item.shou_type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 				</view>
 				<view class="flex flex-horizontal flex-center btn-back">
@@ -45,9 +45,9 @@
 									$refs.popupCancelReceive.open();
 								"
 							>
-								取消收款1
+								取消收款
 							</view>
-							<view class="comfir-btn flex flex-center flex-1" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款1</view>
+							<view class="comfir-btn flex flex-center flex-1" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款</view>
 						</template>
 					</template>
 					<template v-else>
@@ -56,10 +56,10 @@
 							current_item = item;
 							cancelReceiveMoney();
 						"
-						>取消收款2</view>
+						>取消收款</view>
 						<view class="comfir-btn flex flex-center flex-1"
 						 @click="$refs.telephoneInvestor.$refs.popupTel.open()"
-						>催促委托人付款2</view>
+						>催促委托人付款</view>
 					</template>
 				</view>
 			</view>
@@ -95,7 +95,7 @@
 				<view class="flex flex-horizontal" @click="itemClick(item)">
 					<view class="item-money">¥{{item.money}}</view>
 					<view class="flex flex-horizontal flex-1">
-						<view class="flex flex-vertical" style="width: 160px;">
+						<view class="flex flex-vertical" style="width: 180px;">
 							<text>{{item.name}}</text>
 							<text>{{item.time}}</text>
 						</view>

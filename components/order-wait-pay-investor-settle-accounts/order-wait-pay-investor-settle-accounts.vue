@@ -1,16 +1,19 @@
 <template>
-	<view>
-		<view class="wait-box" v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
-			<view class="wait-title">待付结算投资收益</view>
-			<view class="wait-item" v-for="(item, index) in info.order.jie_pend">
-				<view class="item-money">￥{{ item.money }}</view>
-				<view class="item-txt">
-					<view class="txt-name">{{ item.name }}</view>
-					<view class="txt-tip">{{ item.time }}</view>
+	<view style="">
+		<view class="wait-box" style="border-radius: 0;border-bottom-left-radius: 26rpx;border-bottom-right-radius: 26rpx;border-top: 1rpx solid #eeeeee;"  v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
+			<!-- <view class="wait-title">待付结算投资收益</view> -->
+			<view class="wait-item flex flex-vertical"  v-for="(item, index) in info.order.jie_pend">
+				<view class="flex flex-horizontal" @click="itemClick(item)">
+					<view class="item-money">￥{{ item.money }}</view>
+					<view class="">
+						<view class="txt-name">{{ item.name }}</view>
+						<view class="txt-tip">{{ item.time }}</view>
+					</view>
+					<image v-if="item.type == 3" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
-				<view class="item-btn">
-					<button
-						class="ok-btn marginbottom10"
+				<view class="item-btn flex flex-center flex-horizontal" style="margin-top: 10px;">
+					<view
+						class="comfir-btn flex flex-1 flex-center"
 						type="default"
 						@click="
 							current_item = item;
@@ -18,10 +21,10 @@
 						"
 					>
 						我要付款
-					</button>
+					</view>
 					<template>
-						<button
-							class="ok-btn"
+						<view
+							class="comfir-btn flex flex-1 flex-center"
 							type="default"
 							@click="
 								current_item = item;
@@ -29,7 +32,7 @@
 							"
 						>
 							退回申请
-						</button>
+						</view>
 					</template>
 				</view>
 			</view>
@@ -63,6 +66,9 @@ export default {
 		window.payOk = this.payOk;
 	},
 	methods: {
+		itemClick(item) {
+			this.$emit('popupShow',item)
+		},
 		async confirmPay(payMethod) {
 			let pay_type;
 			let order_id;
@@ -114,5 +120,13 @@ export default {
 	}
 };
 </script>
+
+<style >
+	.image-r {
+		width: 9px;
+		height: 14px;
+		margin-left: 35px;
+	}
+</style>
 
 <style lang="scss"></style>

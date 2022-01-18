@@ -35,8 +35,8 @@
 				{{ item.requirement }}</text>
 		</view>
 		<view class="item-prize">
-			<text class="prize-num" v-if="item.price_type == '投资人支付(不用还)'">￥投资人支付</text>
-			<text class="prize-num" v-else>￥{{ item.money }}</text>
+			<!-- <text class="prize-num" v-if="item.price_type == '投资人支付(不用还)'">￥投资人支付</text> -->
+			<text class="prize-num">￥{{ item.money }}</text>
 		</view>
 	</view>
 </template>
