@@ -33,18 +33,18 @@
 			</template>
 
 			<template v-else>
+        <view class="match-image-txt" v-if="info.order.pro_name == '问一下'&&info.order.server_type != '线上电话'">
+          <view class="txt-left">
+            <view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
+          </view>
+          <view class="txt-right red">您接单后15分钟内，如委托人没有更换律师的，法力平台将在“办公”页面自动为您创建本案的项目和群聊，方便您和委托人沟通。</view>
+        </view>
 				<view class="match-image-txt">
 					<view class="txt-left">
 						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 					</view>
 					<view class="txt-right red">请先与委托人签署委托代理合同</view>
 				</view>
-        <view class="match-image-txt" v-if="info.order.server_type != '线上电话'">
-          <view class="txt-left">
-            <view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
-          </view>
-          <view class="txt-right red">匹配律师成功后15分钟内，如您没有更换律师的，平台将自动在“办公”页面，为您和律师创建本订单的项目和群聊，方便您和律师沟通。</view>
-        </view>
 				<view class="match-image-txt" v-if="info.order.pro_name != '问一下'">
 					<view class="txt-left">
 						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>

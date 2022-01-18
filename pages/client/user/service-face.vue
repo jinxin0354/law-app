@@ -3,13 +3,7 @@
 		<view class="match-top-box">
 			<view class="match-title">尊敬的委托人：</view>
 			<view class="match-txt">您好！{{ infoLawyer.address }}{{ infoLawyer.lawyer }}律师很荣幸接受您的委托，我们将全心全意为您提供优质的服务！感谢您的信任与支持！</view>
-			<view class="match-image-txt">
-				<view class="txt-left">
-					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
-				</view>
-				<view class="txt-right red">请详细阅读律师给您的委托代理合同，如有疑问， 请随时联系律师为您解答清楚。</view>
-			</view>
-      <template v-if="info.order.server_type != '线上电话'">
+      <template v-if="info.order.pro_name == '问一下'&&info.order.server_type != '线上电话'">
         <view class="match-image-txt">
           <view class="txt-left">
             <view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
@@ -17,6 +11,13 @@
           <view class="txt-right red">匹配律师成功后15分钟内，如您没有更换律师的，平台将自动在“办公”页面，为您和律师创建本订单的项目和群聊，方便您和律师沟通。</view>
         </view>
       </template>
+      <view class="match-image-txt">
+				<view class="txt-left">
+					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
+				</view>
+				<view class="txt-right red">请详细阅读律师给您的委托代理合同，如有疑问， 请随时联系律师为您解答清楚。</view>
+			</view>
+
 			<template v-if="info.order.pro_name != '问一下'">
 				<view class="match-image-txt">
 					<view class="txt-left">
