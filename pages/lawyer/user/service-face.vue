@@ -65,9 +65,6 @@
 			</template>
 			<view class="service-list">
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
-				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
-				</template>
 				<button class="service-item active" @click="$refs.popupOneWantPay.open()" v-if="info.order.pro_name != '问一下'">我要收款</button>
 				<button class="service-item active" :disabled="isLawyerServiceOk || isClientServiceOk || disableServiceOk" @click="$refs.popupServiceOk.open()">服务完成</button>
 				<button class="service-item active" :disabled="isClientRemoveEntrust || isLawyerRemoveEntrust || disableRemoveEntrust" @click="removeEntrust">解除委托</button>
