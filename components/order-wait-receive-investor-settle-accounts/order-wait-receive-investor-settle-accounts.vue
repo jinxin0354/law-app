@@ -1,12 +1,13 @@
 <template>
 	<view>
 		<view class="wait-box" v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
-			<view class="wait-title">待收结算投资收益</view>
+			<view class="wait-title">待收信息</view>
 			<view class="wait-item" v-for="(item, index) in info.order.jie_pend">
 				<view class="item-money">￥{{ item.money }}</view>
-				<view class="item-txt">
+				<view class="item-txt"  @click="itemClick(item)">
 					<view class="txt-name">{{ item.name }}</view>
 					<view class="txt-tip">{{ item.time }}</view>
+					<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
 				<view class="item-btn">
 					<template v-if="item.is_shou == 0">
@@ -69,6 +70,10 @@ export default {
 	},
 	created() {},
 	methods: {
+		itemClick(item) {
+			console.log(item)
+			this.$emit('popupShow',item)
+		},
 		async confirmReceiveMoney() {
 			let formData = {
 				id: this.info.order.id,
@@ -100,4 +105,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	.image-r {
+		width: 9px;
+		height: 14px;
+		margin-left: 35px;
+	}
+</style>

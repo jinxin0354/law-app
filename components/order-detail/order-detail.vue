@@ -266,6 +266,19 @@
 					<view class="item-txt">{{ info.offer_type }}</view>
 				</view>
 			</view>
+            <!-- info.price_type=='自费' -->
+            <view class="od-item" v-if="info.price_type=='自费'">
+            	<view class="item-tip">报价方式</view>
+            	<view class="item-right">
+            		<view class="item-txt">{{ info.offer }}</view>
+            	</view>
+            </view>
+            <view class="od-item" v-if="info.price_type=='自费'">
+            	<view class="item-tip">付款时间</view>
+            	<view class="item-right">
+            		<view class="item-txt">{{ info.pay_time }}</view>
+            	</view>
+            </view>
 				<view class="od-item">
 					<view class="item-tip">律师费用</view>
 					<view class="item-right">

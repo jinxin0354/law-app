@@ -1,12 +1,13 @@
 <template>
 	<view>
 		<view class="wait-box" v-if="info.order.pend_apply && info.order.pend_apply.length > 0">
-			<view class="wait-title">待付申请投资费用</view>
+			<view class="wait-title">待付信息</view>
 			<view class="wait-item" v-for="(item, index) in info.order.pend_apply">
 				<view class="item-money">￥{{ item.money }}</view>
-				<view class="item-txt">
+				<view class="item-txt"  @click="itemClick(item)">
 					<view class="txt-name">{{ item.name }}</view>
 					<view class="txt-tip">{{ item.time }}</view>
+					<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
 				<view class="item-btn">
 					<button
@@ -63,6 +64,10 @@ export default {
 		window.payOk = this.payOk;
 	},
 	methods: {
+		itemClick(item) {
+			console.log(item)
+			this.$emit('popupShow',item)
+		},
 		async confirmPay(payMethod) {
 			let pay_type;
 			let order_id;
@@ -114,4 +119,10 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	.image-r {
+		width: 9px;
+		height: 14px;
+		margin-left: 35px;
+	}
+</style>

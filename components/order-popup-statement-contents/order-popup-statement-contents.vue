@@ -72,7 +72,7 @@
 					<view class="item-right" v-if="index==1">
 						<view class="computer-text">
 							<text class="text-icon">¥</text>
-							<view class="text-cont">
+							<view class="text-cont" >
 								<text v-if="!moneyparams.price"> 待计算</text>
 								<text v-else class="" style="color: #000000;"> {{moneyparams.price}}</text>
 							</view>
@@ -101,10 +101,11 @@
 					<view class="item-right">
 						<view class="item-right" v-if="index>=2">
 							<view class="computer-text">
-								<text class="text-icon">¥</text>
+								<text class="text-icon" >¥</text>
 								<view class="text-cont" v-if="index==2">
+									<text class="text-icon" style="color: #000000;">¥</text>
 									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
-									<view>{{touziren_pay}}</view>
+									<view style="margin-top: 4rpx;">{{touziren_pay}}</view>
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
 								<view class="text-cont" v-if="index==3">
@@ -142,10 +143,11 @@
 					<view class="item-right">
 						<view class="item-right" v-if="index>=2">
 							<view class="computer-text">
-								<text class="text-icon" style="color: #000000;">¥</text>
+								<text class="text-icon" >¥</text>
 								<view class="text-cont" v-if="index==2">
+										<view class="text-icon" style="color: #000000;">¥</view>
 									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
-									<view>{{touziren_pay}}</view>
+									<view style="margin-top: 6rpx;">{{touziren_pay}}</view>
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
 								<view class="text-cont" v-if="index==3">
@@ -453,15 +455,16 @@
 				if(this.jine2!=''){
 					console.log(this.jine1,'jiin1')
 					console.log(this.jine2,'jinn2')
-					if(this.moneyparams.chuli_type=='法院判决'){
+					// if(this.moneyparams.chuli_type=='法院判决'){
+					// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+					// 	this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
+					// 	console.log(this.moneyparams.sunshi_moneys,'shunshimoney')
+					// }
+					// if(this.moneyparams.chuli_type=='和解/调节'){
 						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
 						this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
-						console.log(this.moneyparams.sunshi_moneys,'shunshimoney')
-					}
-					if(this.moneyparams.chuli_type=='和解/调节'){
-						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
-						this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
-					}
+						this.sunshi_money = this.moneyparams.sunshi_moneys
+					// }
 				}
 				
 			}
@@ -482,8 +485,8 @@
 						// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
 						// 	this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
 						// }
-						console.log(this.moneyparams.sunshi_money,'jine3')
-						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.moneyparams.sunshi_money)+parseFloat(this.jine4)
+						console.log(this.sunshi_money,'jine33')
+						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.sunshi_money)+parseFloat(this.jine4)
 					}
 					console.log(this.heji,'hejis')
 					var jine3 = this.jine3*0.3
@@ -579,13 +582,13 @@
 				n2 = n2 != '全部不支持' ? '1' : '0'
 
 				let obj = {
-					'0': ['委托人起诉金额的总和是多少', '委托人应付的投资收益损失为'],
+					'0': ['委托人起诉的金额总和是多少', '委托人应付的投资收益损失为'],
 					'1': ['委托人这次收回了多少钱', '委托人这次应付投资收益']
 				}
 				return obj[n2]
 			},
 			swit_flg1(n) {
-				let str = '您与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
+				let str = '最后获得支持的欠款本金金额是多少'
 				switch (n) {
 					case '法院判决':
 						str = '法院判决支持的欠款本金金额是多少'
@@ -926,7 +929,7 @@
 					.input_icon {
 						position: absolute;
 						font-size: 18rpx;
-						top: 10rpx;
+						top: 12rpx;
 						left: 10rpx;
 						z-index: 8;
 					}
@@ -943,9 +946,10 @@
 
 				.computer-text {
 					display: flex;
-					position: relative;
-					// margin-left: 10rpx;
 					align-items: center;
+					position: relative;
+					margin-left: 10rpx;
+					
 					margin-bottom: 30rpx;
 
 					// color: #d4d4d4;
@@ -960,6 +964,8 @@
 					}
 
 					.text-cont {
+						display: flex;
+						align-items: center;
 						// flex: 1;
 						margin-top: 10rpx;
 						// border: none;
@@ -1181,7 +1187,7 @@
 					.input_icon {
 						position: absolute;
 						font-size: 18rpx;
-						top: 9rpx;
+						top: 12rpx;
 						left: 10rpx;
 						z-index: 8;
 					}

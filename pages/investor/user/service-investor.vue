@@ -103,27 +103,45 @@
 					:disabled="disableApproveRemoveEntrust">审批服务解除</button>
 			</view>
 		</view>
-		<!-- 待收投资收益 -->
+		<!--待收信息-->
 		<order-wait-receive-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info"
-			@init="init"></order-wait-receive-investor-settle-accounts>
-		<!-- 结算投资收益详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
-			:info="info"></order-common-detail>
-		<!-- 待付申请投资费用 -->
-		<order-wait-pay-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+			@init="init" @popupShow="popupShow"></order-wait-receive-investor-settle-accounts>
+			
+		<!--待付信息-->
+		<order-wait-pay-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init" 
+		@popupShow="popupShow">
 		</order-wait-pay-apply-invest-cost>
+		<!--收款详情-->
+		<order-invest-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="收款详情"
+			:info="info" @popupShow="popupShow"></order-invest-detail>
+		<order-invest-tuihui v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" :info="info"
+		@popupShow="popupShow"
+		></order-invest-tuihui>
+		<!--付款详情-->
+		<order-invest-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="付款详情"
+		@popupShow="popupShow"
+			:info="info"></order-invest-detail>
+		<!-- 待收投资收益 -->
+	<!-- 	<order-wait-receive-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info"
+		@init="init" @popupShow="popupShow"></order-wait-receive-investor-settle-accounts> -->
+		<!-- 结算投资收益详情 -->
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
+			:info="info"></order-common-detail> -->
+		<!-- 待付申请投资费用 -->
+		<!-- <order-wait-pay-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+		</order-wait-pay-apply-invest-cost> -->
 		<!-- 申请投资费用详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="申请投资费用"
-			:info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="申请投资费用"
+			:info="info"></order-common-detail> -->
 		<!-- 待付申请投资人奖励 -->
-		<order-wait-pay-invest-reward v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
-		</order-wait-pay-invest-reward>
+		<!-- <order-wait-pay-invest-reward v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+		</order-wait-pay-invest-reward> -->
 		<!-- 投资人奖励详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.reward_pay"
-			title="结算投资人奖励" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.reward_pay"
+			title="结算投资人奖励" :info="info"></order-common-detail> -->
 		<!--退回投资费用详情-->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply"
-			title="退回投资费用" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply"
+			title="退回投资费用" :info="info"></order-common-detail> -->
 		<!-- 发票列表组件-->
 		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
 		<!-- 律师简介 -->
@@ -281,6 +299,14 @@
 			v-if="info.order.investor_mobile"></order-telephone>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		<!--结算投资收益-->
+		<!-- <invest-shouyi ref="investShouyi" :item="current_item"></invest-shouyi> -->
+		<!-- 结算投资人奖励 -->
+		<settlement-popup ref="settlement" :item="current_item"></settlement-popup>
+		<!-- 申请投资费用 -->
+		<lawyer-apply-cost ref="lawyerApply" :item="current_item"></lawyer-apply-cost>
+		<!-- 退回投资费用弹窗 -->
+		<return-cost ref="returnCostTip" :item="current_item"></return-cost>
 	</view>
 </template>
 
@@ -300,6 +326,7 @@
 				info: {
 					order: {}
 				},
+				current_item:{},
 				order_id: '',
 				infoLawyer: {},
 				reason: '',
@@ -339,20 +366,37 @@
 				
 			}
 		},
-		
 		onLoad(params) {
-				this.init();
-				
-		console.log(params.order_id)
 			if (params.order_id) {
-				// 461eb25e-f41b-40ff-bce7-6ccb73a51c8d
-				
 				this.order_id = params.order_id;
 				this.init();
 			}
 		},
 	
 		methods: {
+			popupShow(item) {
+				console.log('post');
+				console.log(item);
+				if (item.type == 8) {
+					this.current_item = item
+					this.$refs.returnCostTip.$refs.returnCost.open()
+				} else if (item.type == 3) {
+					this.current_item = item.popup
+					this.$refs.settlement.$refs.settlement.open()
+					// this.current_item = item
+					// this.$refs.investShouyi.$refs.investShou.open()
+				} else if (item.type == 7) {
+					this.current_item = item.popup
+					this.$refs.lawyerApply.$refs.lawyerApply.open()
+				} else if (item.type == 2) {
+					// 退款弹窗
+					this.current_item = item.popup
+					this.$refs.lawyerTui.$refs.lawyerApply.open()
+				} else if (item.shou_type == 2) {
+					this.current_item = item 
+					this.$refs.lawyerQing.$refs.lawyerApply.open()
+				}
+			},
 			aaa(data){
 				console.log(data,'data')
 				this.heji = data.heji_money
