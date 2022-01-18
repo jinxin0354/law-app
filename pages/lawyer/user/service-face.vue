@@ -71,7 +71,7 @@
 				<button class="service-item active" @click="$refs.popupOneWantPay.open()" v-if="info.order.pro_name != '问一下'">我要收款</button>
 				<button class="service-item active" :disabled="isLawyerServiceOk || isClientServiceOk || disableServiceOk" @click="$refs.popupServiceOk.open()">服务完成</button>
 				<button class="service-item active" :disabled="isClientRemoveEntrust || isLawyerRemoveEntrust || disableRemoveEntrust" @click="removeEntrust">解除委托</button>
-        <button class="service-item active" v-if="info.order.lawyergroupid" @click="navToChat(info.order.lawyergroupid)">办理详情</button>
+        <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid)">办理详情</button>
         <button class="service-item active" v-if="isLawyerServiceOk" style="width: 100%; margin-right: 0;" @click="$refs.telephoneClient.$refs.popupTel.open()">
 					催促委托人确认完成
 					<uni-countdown
