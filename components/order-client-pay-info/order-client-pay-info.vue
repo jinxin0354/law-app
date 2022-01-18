@@ -2,14 +2,25 @@
 	<view>
 		<view class="wait-box" v-if="info.order.pend_text && info.order.pend_text.length > 0">
 			<view class="wait-title">待付信息</view>
+			<!--
+				问题1.
+					律师请款需要弹窗
+				item.money 请款金额
+				item.reason 请款事由
+				
+				问题2.
+					结算投资收益需要弹弹窗
+					
+			-->
 			<view class="wait-item" v-for="(item, index) in info.order.pend_text">
 				<view class="item-item">
 					<view class="item-money">
 						<view>￥{{ item.money }}</view>
 					</view>
-					<view class="item-txt">
+					<view class="item-txt" @click="itemClick(item)">
 						<view class="txt-name">{{ item.name }}</view>
 						<view class="txt-tip">{{ item.time }}</view>
+						<image v-if="item.shou_type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 					<view class="item-btn">
 						<button
@@ -248,6 +259,11 @@ export default {
 		window.payOk = this.payOk;
 	},
 	methods: {
+		itemClick(item) {
+			console.log('item');
+			console.log(item);
+			this.$emit('popupShow',item)
+		},
 		async confirmPay(payMethod) {
 			let pay_type;
 			let order_id;
@@ -453,5 +469,10 @@ export default {
 <style lang="scss">
 	.od-box .od-item .item-right .item-txt{
 		flex-wrap: wrap;
+	}
+	.image-r {
+		width: 9px;
+		height: 14px;
+		margin-left: 35px;
 	}
 </style>

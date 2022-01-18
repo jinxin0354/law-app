@@ -144,11 +144,12 @@
 		<!-- 待付信息
 		按新版设计图直接改样式
 		 -->
-		<order-client-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-client-pay-info>
+		<order-client-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow"></order-client-pay-info>
 		<!-- 待付信息
 				结算投资收益 
 			按新版设计图直接改样式
 		-->
+		
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
 		</order-wait-pay-investor-settle-accounts>
 		
@@ -162,7 +163,6 @@
 		 -->
 		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""
 			:info="info"></order-client-detail-info>
-			
 		<!--
 		待收款
 		-->	
@@ -174,16 +174,16 @@
 			滞纳金
 		-->
 		<!-- 待付信息 -->
-		<!-- <order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info> -->
-		<!-- 付款详情 -->
-		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
-			:info="info"></order-common-detail> -->
-		<!-- 待付结算投资收益 -->
-		<!-- <order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
-		</order-wait-pay-investor-settle-accounts> -->
-		<!-- 结算投资收益详情 -->
-		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
-			:info="info"></order-common-detail> -->
+				<!-- <order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info> -->
+				<!-- 付款详情 -->
+				<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
+					:info="info"></order-common-detail> -->
+				<!-- 待付结算投资收益 -->
+				<!-- <order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+				</order-wait-pay-investor-settle-accounts> -->
+				<!-- 结算投资收益详情 -->
+				<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
+					:info="info"></order-common-detail> -->
 	
 		<!-- 发票列表组件-->
 		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
@@ -598,6 +598,8 @@
 		</order-change-lawyer>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		<!-- 律师请款 -->
+		<lawyer-qing ref="lawyerQing" :item="current_item"></lawyer-qing>
 	</view>
 </template>
 
@@ -684,6 +686,28 @@
 		},
 
 		methods: {
+			popupShow(item) {
+				console.log('popupSow');
+				console.log(item.shou_type);
+				if (item.type == 8) {
+					this.current_item = item
+					this.$refs.returnCostTip.$refs.returnCost.open()
+				} else if (item.type == 3) {
+					this.current_item = item
+					this.$refs.settlement.$refs.settlement.open()
+				} else if (item.type == 7) {
+					this.current_item = item.popup
+					this.$refs.lawyerApply.$refs.lawyerApply.open()
+				} else if (item.type == 2) {
+					// 退款弹窗
+					this.current_item = item.popup
+					this.$refs.lawyerTui.$refs.lawyerApply.open()
+				} else if (item.shou_type == 2) {
+					this.current_item = item 
+					console.log('XX');
+					this.$refs.lawyerQing.$refs.lawyerApply.open()
+				}
+			},
 			close(){
 				this.$refs.direc.close()
 			},
