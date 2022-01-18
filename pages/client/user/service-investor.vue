@@ -141,17 +141,50 @@
 				</view>
 			</template>
 		</view>
-		<!-- 待付信息 -->
-		<order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info>
-		<!-- 付款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
-			:info="info"></order-common-detail>
-		<!-- 待付结算投资收益 -->
+		<!-- 待付信息
+		按新版设计图直接改样式
+		 -->
+		<order-client-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-client-pay-info>
+		<!-- 待付信息
+				结算投资收益 
+			按新版设计图直接改样式
+		-->
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
 		</order-wait-pay-investor-settle-accounts>
+		
+		<!-- 付款详情 -->
+		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
+			:info="info"></order-client-detail>
+		<!-- 
+			付款详情 
+			结算投资收益详情
+			按新版样式修改
+		 -->
+		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""
+			:info="info"></order-client-detail-info>
+			
+		<!--
+		待收款
+		-->	
+		
+		<!--
+			收款详情
+		-->	
+		<!--
+			滞纳金
+		-->
+		<!-- 待付信息 -->
+		<!-- <order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info> -->
+		<!-- 付款详情 -->
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
+			:info="info"></order-common-detail> -->
+		<!-- 待付结算投资收益 -->
+		<!-- <order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+		</order-wait-pay-investor-settle-accounts> -->
 		<!-- 结算投资收益详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
-			:info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="结算投资收益"
+			:info="info"></order-common-detail> -->
+	
 		<!-- 发票列表组件-->
 		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
 		<!-- 律师简介 -->
@@ -266,17 +299,17 @@
 						<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="text">委托人的案子以什么方式处理的<span style="color: #FF0000;">*</span></view>
+							<view class="text">您的案子以什么方式处理的<span style="color: #FF0000;">*</span></view>
 						</view>
 						<view class="item-right">
 							<view class="service-list">
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_type == '法院判决' ? 'active' : ''"
 									@click="moneyparams.chuli_type = '法院判决'">法院判决</view>
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_type == '和解/调解' ? 'active' : ''"
 									@click="moneyparams.chuli_type = '和解/调解'">和解/调解</view>
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_type == '其他方式' ? 'active' : ''"
 									@click="moneyparams.chuli_type = '其他方式'">其他方式</view>
 							</view>
@@ -286,17 +319,17 @@
 					<view class="od-item flex-item-i">
 						<view class="flex-new-item">
 							<view class="ico"></view>
-							<view class="">委托人主张的欠款本金有多少获得支持<span style="color: #FF0000;">*</span></view>
+							<view class="">您主张的欠款本金有多少获得支持<span style="color: #FF0000;">*</span></view>
 						</view>
 						<view class="item-right">
 							<view class="service-list">
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_money == '全部支持' ? 'active' : ''"
 									@click="moneyparams.chuli_money = '全部支持'">全部支持</view>
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_money == '部分支持' ? 'active' : ''"
 									@click="moneyparams.chuli_money = '部分支持'">部分支持</view>
-								<view class="service-item flex1"
+								<view class="service-item flex1" style="border-radius: 38rpx;"
 									:class="moneyparams.chuli_money == '全部不支持' ? 'active' : ''"
 									@click="moneyparams.chuli_money = '全部不支持'">全部不支持</view>
 							</view>
@@ -308,6 +341,7 @@
 							<view>{{swit_flg(moneyparams.chuli_money)[0]}}<span style="color: #FF0000;">*</span></view>
 							<!-- <view class="require">委托人这次收回了多少钱</view> -->
 						</view>
+						<view v-if="moneyparams.chuli_money=='全部不支持'" style="color: #7A7171;font-size: 20rpx;margin-left: 20rpx;">(包括欠款本金、利息/违约金、立案受理费、律师费等)</view>
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
@@ -338,7 +372,7 @@
 							</view>
 						</view>
 						<view class="item-right">
-							<view class="input">
+							<view class="input" style="border: none;">
 								<view>￥</view>
 								<input type="number" placeholder="待计算" :disabled="true" v-model="getMoney" />
 								<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
@@ -347,7 +381,7 @@
 					</view>
 					</view>
 					<!-- 和解/调解  -->
-					<view  class="flex-item" style="margin-top: 15rpx;">
+					<view  class="flex-item" style="margin-top: 15rpx;" v-if="moneyparams.chuli_money!='全部支持'">
 						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'">
 							<view class="flex-new-item">
 								<view class="ico"></view>
@@ -383,7 +417,7 @@
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
-									<view class="input">
+									<view class="input" style="border: none;">
 										<view>￥</view>
 										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
@@ -403,7 +437,7 @@
 								</view>
 								
 								<view class="item-right">
-									<view class="input">
+									<view class="input" style="border: none;">
 										<view style="color: #FF5353;">￥</view>
 										<input type="number" placeholder="待计算" :disabled="true" v-model="moneyparams.sunshi_money" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
@@ -477,7 +511,7 @@
 					<view style="display: flex;align-items: center;" @click.stop="is_agree=!is_agree">
 						<image src="../../../static/img/icon/radio.png" v-if="is_agree==false"  style="width: 30rpx;height: 30rpx;"></image>
 						<image src="../../../static/img/icon/radioed.png" v-else style="width: 30rpx;height: 30rpx;"></image>
-						<view style="margin-left: 10rpx;">我已与委托人确认付款金额</view>
+						<view style="margin-left: 10rpx;">我已与投资人确认付款金额</view>
 					</view>
 				</template>
 					
@@ -494,33 +528,40 @@
 					<view class="od-item flex-item-i">
 							<view class="flex-new-item">
 								<view class="ico"></view>
-								<view class="blod">委托人这次应付投资收益</view>
+								<view class="blod">您这次应付投资收益</view>
 							</view>
 							<view class="item-right">
 								<view class="item-txt">
 									<text class="input_icon">¥</text>
-									<text class="text_icon">委托人起诉的全部金额x30%</text>
+									<text class="text_icon">您这次收回的钱x30%</text>
 								</view>
 							</view>
 						</view>
 						<view class="od-item flex-item-i">
 								<view class="flex-new-item">
 									<view class="ico"></view>
-									<view class="blod">委托人应付的投资费用损失为</view>
+									<view class="blod">您应付的投资费用损失为</view>
 								</view>
 								<view class="item-right">
 									<view class="item-txt">
 										<view class="bt1">法院判决时适用</view>
 										<view class="dl1">
 										<text class="input_icon">¥</text>
-										<view class="text_icon">(委托人原来主张的欠款本金-法院判决支持的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+										<view class="text_icon">(您原来主张的欠款本金-法院判决支持的欠款本金)÷您原来主张的欠款本金×投资人已支付的投资费用</view>
 										</view>
 									</view>
 									<view class="item-txt">
 										<view class="bt1">和解/调解时适用</view>
 										<view class="dl1">
 										<text class="input_icon">¥</text>
-										<view>(委托人原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+										<view>(您原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷您原来主张的欠款本金×投资人已支付的投资费用</view>
+										</view>
+									</view>
+									<view class="item-txt">
+										<view class="bt1">其他方式时适用</view>
+										<view class="dl1">
+										<text class="input_icon">¥</text>
+										<view>(您原来主张的欠款本金-最后获得支持的欠款本金)÷您原来主张的欠款本金×投资人已支付的投资费用</view>
 										</view>
 									</view>
 								</view>
@@ -528,12 +569,12 @@
 						<view class="od-item flex-item-i">
 									<view class="flex-new-item">
 										<view class="ico"></view>
-										<view class="">委托人预期付款的违约金</view>
+										<view class="">您预期付款的违约金</view>
 									</view>
 									<view class="item-right">
 										<view class="item-txt">
 											<text class="input_icon">¥</text>
-											<text>委托人未付款金额×万分之六×逾期天数</text>
+											<text>您未付款金额×万分之六×逾期天数</text>
 										</view>
 									</view>
 								</view>
@@ -678,7 +719,7 @@
 				}
 				let arr=['您原来主张的欠款本金金额是多少',
 				str,
-				'投资人已支付的费用','您应付的投资费用损失为'
+				'投资人已支付的投资费用','您应付的投资费用损失为'
 				]
 				return arr
 			},
@@ -800,6 +841,14 @@
 				}
 			},
 			async confirmPayToInvestor(payMethod) {
+				if(this.is_agree==false){
+					uni.showToast({
+						title:'需先同意与投资人确认付款金额',
+						icon:'none',
+						duration:1000
+					})
+					return;
+				}
 				this.closePop('payToInvestor');
 				let formData = {
 					id: this.order_id,

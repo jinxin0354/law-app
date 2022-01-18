@@ -2031,7 +2031,7 @@
                     this.langStr = ''
 										this.lang_ids = []
 				} else if (this.bearFees == '自费') {
-										this.lang_ids = []
+                    this.lang_ids = []
 					this.hear_addr = '';
                     this.practiceArea = ''
 					this.qiankuan = '都可以'
@@ -2315,7 +2315,7 @@
 					server_name_id: this.practiceYear,
 					offer_type: this.offer_type,
 					money_type: money_type ? money_type : '',
-					money: this.money,
+					money: this.bearFees == '自费' ? this.money : 2500,
 					pay_type: this.pay_type, //无
 					requirement: this.$refs.myrequire.requirement_copy,
 					price_type: this.bearFees, // 费用承担

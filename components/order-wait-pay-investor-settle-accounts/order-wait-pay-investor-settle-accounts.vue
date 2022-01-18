@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="wait-box" v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
-			<view class="wait-title">待付结算投资收益</view>
+			<!-- <view class="wait-title">待付结算投资收益</view> -->
 			<view class="wait-item" v-for="(item, index) in info.order.jie_pend">
 				<view class="item-money">￥{{ item.money }}</view>
 				<view class="item-txt">

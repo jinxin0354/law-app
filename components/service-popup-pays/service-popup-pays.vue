@@ -158,7 +158,8 @@ export default {
 		}
 		&.active {
 			// background-color: rgba(255, 200, 1, 0.2);
-			border-color: $uni-color-primary;
+			// border-color: #F9B804;
+			border: 1rpx solid #F9B804;
 		}
 		.image-wrapper {
 			width: 40rpx;
