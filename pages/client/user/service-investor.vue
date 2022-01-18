@@ -347,8 +347,8 @@
 					</view>
 					</view>
 					<!-- 和解/调解  -->
-					<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" style="margin-top: 15rpx;">
-						<view class="od-item flex-item-i">
+					<view  class="flex-item" style="margin-top: 15rpx;">
+						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'">
 							<view class="flex-new-item">
 								<view class="ico"></view>
 								<view>{{swit_flg1(moneyparams.chuli_type)[0]}}<span style="color: #FF0000;">*</span></view>
@@ -362,7 +362,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="od-item flex-item-i">
+						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'">
 								<view class="flex-new-item" style="height:100%;">
 									<view class="ico"></view>
 									<view>{{swit_flg1(moneyparams.chuli_type)[1]}}<span style="color: #FF0000;">*</span></view>
@@ -376,7 +376,7 @@
 									</view>
 								</view>
 							</view>
-						<view class="od-item flex-item-i">
+						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'||moneyparams.chuli_money=='全部不支持'">
 								<view class="flex-new-item">
 									<view class="ico"></view>
 									<view>{{swit_flg1(moneyparams.chuli_type)[2]}}</view>
@@ -390,7 +390,7 @@
 									</view>
 								</view>
 							</view>
-						<view class="od-item flex-item-i">
+						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'||moneyparams.chuli_money=='全部不支持'">
 								<view class="flex-new-item">
 									<view class="ico"></view>
 									<view class="adi-symbol">
@@ -405,7 +405,7 @@
 								<view class="item-right">
 									<view class="input">
 										<view style="color: #FF5353;">￥</view>
-										<input type="number" placeholder="待计算" :disabled="true" v-model="getSunshiMoney" />
+										<input type="number" placeholder="待计算" :disabled="true" v-model="moneyparams.sunshi_money" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -605,8 +605,12 @@
 				if(this.moneyparams.money!=''){
 					let money=this.moneyparams.money*0.3
 					this.moneyparams.price=money.toFixed(2)
+					if(this.moneyparams.chuli_money=='全部不支持'){
+						this.moneyparams.sunshi_money=this.moneyparams.touzi_money
+					}
 					return money.toFixed(2)
 				}
+				
 			},
 			getSunshiMoney(){
 				if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
@@ -616,6 +620,8 @@
 					this.moneyparams.sunshi_money=money
 					return money
 				}
+				
+				
 			},
 			getTotalMoney(){
 				if(this.moneyparams.price!=''&& this.moneyparams.weiyue_money!=''){

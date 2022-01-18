@@ -75,7 +75,7 @@ export default {
 }
 .coupon-box{
     width:calc((100% - 44rpx) / 2);
-    border: 1rpx solid #EE1414;
+    border: 2rpx solid #EE1414;
     text-align: center;
 }
 </style>

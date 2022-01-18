@@ -2,7 +2,7 @@
 	<view class="popup-bottom-box">
 <view class="bot-con">
 			<view class="od-box">
-		<scroll-view scroll-top="0" scroll-y="true">
+		<scroll-view scroll-top="0" scroll-y="true" style="height: 600rpx;">
 			<view class="flex-item">
 				<!-- 委托人案子以什么方式处理得  -->
 				<view class="od-item flex-item-i">
@@ -30,19 +30,19 @@
 					<view class="item-right">
 						<view class="service-list">
 							<view class="service-item flex1" :class="moneyparams.chuli_money == '全部支持' ? 'active' : ''"
-								@click="moneyparams.chuli_money = '全部支持'">全部支持</view>
+								@click="chuli_moneys('全部支持')">全部支持</view>
 							<view class="service-item flex1" :class="moneyparams.chuli_money == '部分支持' ? 'active' : ''"
-								@click="moneyparams.chuli_money = '部分支持'">部分支持</view>
+								@click="chuli_moneys('部分支持')">部分支持</view>
 							<view class="service-item flex1" :class="moneyparams.chuli_money == '全部不支持' ? 'active' : ''"
-								@click="moneyparams.chuli_money = '全部不支持'">全部不支持</view>
+								@click="chuli_moneys('全部不支持')">全部不支持</view>
 						</view>
 					</view>
 				</view>
 				<!-- 第二部分输入框计算内容 -->
-				<view v-for="(item,index) in swit_flg(moneyparams.chuli_money)" class="od-item flex-item-i">
+				<view v-for="(item,index) in swit_flg(moneyparams.chuli_money)" :key="index" class="od-item flex-item-i">
 					<view class="flex-item-lable">
 						<view class="ico"></view>
-						<!-- swit_flg(moneyparams.chuli_money)[0] -->
+						
 						<view v-if="index==0" class="require">{{item}}
 						</view>
 
@@ -53,7 +53,11 @@
 
 						<!-- <view class="require">委托人这次收回了多少钱</view> -->
 					</view>
-					<view v-if="moneyparams.chuli_money == '全部不支持'" style="color: #d4d4d4;">(包括欠款本金、利息/违约金、立案受理费、律师费等)
+					<view v-if="moneyparams.chuli_money == '全部不支持'"  style="color: #d4d4d4;">
+						<view class="" v-if="index!=1">
+						(包括欠款本金、利息/违约金、立案受理费、律师费等)
+						</view>
+						
 					</view>
 
 					<view class="item-right" v-if="index==0">
@@ -64,19 +68,63 @@
 						</view>
 
 					</view>
+					
 					<view class="item-right" v-if="index==1">
 						<view class="computer-text">
 							<text class="text-icon">¥</text>
 							<view class="text-cont">
 								<text v-if="!moneyparams.price"> 待计算</text>
-								<text v-else class=""> {{moneyparams.price}}</text>
+								<text v-else class="" > {{moneyparams.price}}</text>
 							</view>
 						</view>
 					</view>
 				</view>
-
+					
+				
 
 			</view>
+			<view v-if="moneyparams.chuli_money =='全部不支持'" class="flex-item" style="margin-top: 15rpx;">
+				<view v-for="(item,index) in swit_flg1(moneyparams.chuli_type)"  class="od-item flex-item-is">
+					<view class="flex-item-lable">
+						<view class="ico"  v-if="index>=2"></view>
+						<!-- <view v-if="index<1" class="require">{{item}}</view> -->
+						<!-- <view v-if="index==1">
+							<text>{{item}}</text>
+							<text class="red">*</text></view> -->
+						<view v-if="index==2">{{item}}</view>
+						<view v-else-if="index==3" class="adi-symbol">
+							<view class="adi">{{item}}</view>
+							<view @click="$refs.direc.open('center')" class="symbol"></view>
+						</view>
+			
+					</view>
+					<view class="item-right">
+						<view class="item-right" v-if="index>=2">
+							<view class="computer-text">
+								<text class="text-icon">¥</text>
+								<view class="text-cont" v-if="index==2">
+									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
+									<view>{{touziren_pay}}</view>
+									<text  class=""> {{info.order.area_name}}</text>
+								</view>
+								<view class="text-cont" v-if="index==3">
+									<text v-if="!moneyparams.sunshi_money"> 待计算</text>
+									<text v-else class=""  > {{moneyparams.sunshi_money}}</text>
+								</view>
+							</view>
+						</view>
+					<!-- 	<view v-else class="item-txt">
+							<text class="input_icon">¥</text>
+							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"   :value="jine" :key="index" :id="index"
+							/>
+						</view> -->
+					</view>
+				</view> 
+			
+			</view>
+			<!-- <view class="touziren-boxs" v-if="moneyparams.chuli_money == '全部不支持'" style="margin-top: 20rpx; width: 100%; height: 286rpx; background: #FFFFFF; margin-top: 20rpx;">
+						
+			</view> -->
 			<!-- 第三部分部分支持  -->
 			<view v-if="moneyparams.chuli_money =='部分支持'" class="flex-item" style="margin-top: 15rpx;">
 				<view v-for="(item,index) in swit_flg1(moneyparams.chuli_type)"  class="od-item flex-item-i">
@@ -101,8 +149,8 @@
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
 								<view class="text-cont" v-if="index==3">
-									<text v-if="!moneyparams.prices"> 待计算</text>
-									<text v-else class=""> {{moneyparams.prices}}</text>
+									<text v-if="!moneyparams.sunshi_money"> 待计算</text>
+									<text v-else class=""  > {{moneyparams.sunshi_money}}</text>
 								</view>
 							</view>
 						</view>
@@ -130,8 +178,8 @@
 						<view class="item-txt" style="margin-bottom: 30rpx;">
 
 							<text class="input_icon red1">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"
-								:value="jine4" :id="4" />
+							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"   @input="sendMsg" :value="jine4" :id="4"
+								/>
 
 						</view>
 					</view>
@@ -141,9 +189,9 @@
 
 			<view class="flex-item-i">
 				<!-- <uni-data-checkbox value='[1]' multiple>我已与委托人确认付款金额</uni-data-checkbox> -->
-				<view @click="flg_checks" class="checkbox-style">
-					<view class="check-style">
-						<view :class="flg_check?'check-style1':''">
+				<view @click="flg_checks" class="checkbox-style" >
+					<view class="check-style" style="display: flex; justify-content: center; align-items: center;">
+						<view :class="flg_check?'check-style1':''" >
 
 						</view>
 					</view>
@@ -255,6 +303,7 @@
 					moneys:"",
 					price: "",
 					prices:"",
+					sunshi_money:"",
 					weiyue_money: ""
 				},
 				flg_check: false,
@@ -264,7 +313,50 @@
 				jine3:'',
 				jine4:'',
 				touziren_pay:0,
+				weiyues:'',
+				getMoneys:"",
+				sunshi_money:""
 			};
+		},
+		computed:{
+			getMoney(){
+				if(this.getMoneys!=''){
+					let money=this.getMoneys*0.3
+					this.moneyparams.price=money.toFixed(2)
+					return money.toFixed(2)
+				}
+			},
+			hejiMoney(value){
+				console.log(this.moneyparams.price)
+				console.log(this.weiyues)
+				
+				var heji = parseFloat(this.moneyparams.price) + parseFloat(this.weiyues)
+				console.log(heji)
+				return heji.toFixed(2)
+				// console.log(this.weiyue,'weiyue')
+				// console.log(this.moneyparams,'this.heji')
+				
+			},
+			
+			// getSunshiMoney(){
+			// 	if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
+			// 	this.moneyparams.touzi_money!=''){
+			// 		let money=this.moneyparams.yuan_money-this.moneyparams.hejie_money
+			// 		money=(money/this.moneyparams.yuan_money*this.moneyparams.touzi_money).toFixed(2)
+			// 		this.moneyparams.sunshi_money=money
+			// 		return money
+			// 	}
+			// },
+			// getTotalMoney(){
+			// 	if(this.moneyparams.price!=''&& this.moneyparams.weiyue_money!=''){
+			// 		let money=this.moneyparams.price +this.moneyparams.weiyue_money
+			// 		if(this.moneyparams.sunshi_money!='' && this.moneyparams.chuli_type=='法院判决' && this.moneyparams.chuli_money!='全部支持') money=money+this.moneyparams.sunshi_money
+			// 		this.moneyparams.total_money=parseFloat(money).toFixed(2)
+			// 		return parseFloat(money).toFixed(2)
+			// 	}else{
+			// 		return 0
+			// 	}
+			// }
 		},
 		onLoad(params) {
 			
@@ -278,6 +370,53 @@
 			// direction(){
 
 			// },
+			weiyue(e){
+				var value = e.detail.value
+				console.log(value,'value')
+				
+				console.log(				this.moneyparams,'this.weiyue')
+				if(this.moneyparams.chuli_money=="全部支持"||this.moneyparams.chuli_money=="法院判决"||this.moneyparams.money!=''){
+					console.log('aaa')
+					this.hejiMoney
+					var heji_money = this.hejiMoney
+					this.$emit('func',heji_money)
+		
+					
+				}else if(this.moneyparams.chuli_money=="部分支持"||this.moneyparams.chuli_money=="法院判决"){
+					
+					
+				}
+			},
+			getMsg(e){
+				var value = e.detail.value
+				this.moneyparams.money = value
+				this.getMoney
+				// console.log(e.detail.value)
+				
+			},
+			chuli_moneys(value){
+				if(value=="全部支持"){
+					this.moneyparams.chuli_money = "全部支持"
+					
+				}else if(value=="部分支持"){
+						this.moneyparams.chuli_money = "部分支持"
+				}else if(value=="全部不支持"){
+						this.moneyparams.chuli_money = "全部不支持"
+				}
+				if(this.moneyparams.moneys!=''){
+					this.moneyparams.moneys = ""
+				}
+				this.jine = ''
+				this.jine1 = ''
+				this.jine2 = ''
+				this.jine3 = ''
+				this.jine4 = ''
+				this.moneyparams.price = ""
+				var data = {
+					heji_money:0
+				}
+				this.$emit('func',data)
+			},
 			flg_checks(){
 				if(this.flg_check==true){
 					this.flg_check=false
@@ -314,15 +453,17 @@
 					this.heji = 0
 					}else{
 						if(this.moneyparams.chuli_type=='法院判决'){
-							var a = parseInt(this.jine1) - parseInt(this.jine2)
-							this.moneyparams.prices = a/this.jine1*this.touziren_pay
+							var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+							this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
 						}
 						if(this.moneyparams.chuli_type=='和解/调节'){
-							var a = parseInt(this.jine1) - parseInt(this.jine2)
-							this.moneyparams.prices = a/this.jine1*this.touziren_pay
+							var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+							this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
 						}
-						this.heji = parseInt(this.moneyparams.prices) + parseInt(this.moneyparams.price*0.3)  + parseInt(this.jine4)
+						console.log(this.moneyparams.sunshi_money,'jine3')
+						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.moneyparams.sunshi_money)+parseFloat(this.jine4)
 					}
+					console.log(this.heji,'hejis')
 					this.moneyparams.price = this.jine3*0.3
 				var data= {
 					type:3,
@@ -352,7 +493,7 @@
 				this.heji = 0
 				}else{
 				
-					this.heji =parseInt(this.moneyparams.price) + parseInt(this.jine4)
+					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
 				}
 				var data= {
 					type:3,
@@ -379,7 +520,7 @@
 				this.heji = 0
 				}else{
 					
-					this.heji =parseInt(this.moneyparams.price) + parseInt(this.jine4)
+					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
 				}
 				
 					var data= {
@@ -420,8 +561,8 @@
 						str = '法院判决支持的欠款本金金额是多少'
 						break;
 					case '和解/调解':
-						str = '您与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
-						// n=1;
+						str = '委托人与欠款方和解时,欠款方同意偿还的欠款本金金额是多少'
+						n=1;
 						break;
 					case '其他方式':
 						n = 2;
@@ -430,9 +571,9 @@
 						console.log(4);
 						break;
 				}
-				let arr = ['您原来主张的欠款本金金额是多少',
+				let arr = ['委托人原来主张的欠款本金金额是多少',
 					str,
-					'投资人已支付的费用', '您应付的投资费用损失为'
+					'投资人已支付的费用', '委托人应付的投资费用损失为'
 				]
 				return arr
 			},
@@ -444,7 +585,7 @@
 				let res = await this.$api('index.orderDetail', formData);
 				console.log(res.data.order.touziren_pay,'touzirenopay')
 				this.info = res.data;
-				this.touziren_pay = 10
+				this.touziren_pay = res.data.order.touziren_pay
 				this.getOrderState(this.info);
 
 				let d = this.get15MinutesLater(this.info.order.lawyer_time);
@@ -644,12 +785,13 @@
 		display: flex;
 		align-items: center;
 		// margin-top: 25rpx;
-		align-content: center;
+		// align-content: center;
+		
 
 		.check-style {
 			width: 30rpx;
 			height: 30rpx;
-			border: 1rpx solid #6b6b6b;
+			border: 3rpx solid #707070;
 			position: relative;
 			margin-right: 9rpx;
 			margin-top: 4rpx;
@@ -657,9 +799,6 @@
 			border-radius: 50%;
 
 			.check-style1 {
-				position: absolute;
-				top: 3rpx;
-				left: 3rpx;
 				width: 22rpx;
 				height: 22rpx;
 				background: #ffca00;
@@ -764,7 +903,7 @@
 						// border: none;
 						height: 25rpx;
 						text-indent: 24rpx;
-						color: #d4d4d4;
+						color: #000;
 					}
 				}
 
@@ -934,5 +1073,123 @@
 			}
 		}
 	}
+.flex-item-is {
+			flex-direction: column;
+			// margin-top: 30rpx;
+			// margin-bottom: 30rpx;
+			padding: 10rpx 30rpx 0 30rpx;
+			//每一项内容的上部
+			.flex-item-lable {
+				position: relative;
+				// height: 33rpx;
+				display: flex;
+				align-content: center;
+				line-height: 33rpx;
+				// height: 33rpx;
+			
+				// margin-bottom: 10rpx;
+				//矩形图标
+				.ico {
+					width: 13rpx;
+					height: 33rpx;
+					background: #ffc900;
+					border-radius: 50rpx;
+					margin-right: 7rpx;
+				}
+			
+				.text {}
+			
+				// 标题文字
+				.adi-symbol {
+					position: relative;
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+			
+					// 标题文字
+					.adi {
+						color: #FF5353;
+						font-size: 27rpx;
+					}
+			
+					// 问号图标
+					.symbol {
+						z-index: 99;
+						background: url(@/static/img/question.png);
+						// background: red;
+						background-size: cover;
+						width: 30rpx;
+						height: 30rpx;
+					}
+				}
+			
+			}
+			
+			
 
+			.item-right {
+
+				//圆角选项
+				.service-list {
+					margin-top: 24rpx;
+
+					.service-item {
+						border-radius: 50rpx;
+					}
+				}
+
+				//带付款图标的input空间
+				.item-txt {
+					position: relative;
+
+					// align-content: center;
+					//付款文字样式
+					.input_icon {
+						position: absolute;
+						font-size: 18rpx;
+						top: 9rpx;
+						left: 10rpx;
+						z-index: 8;
+					}
+
+					.ipt-border {
+						flex: 1;
+						margin-top: 10rpx;
+						// border: none;
+						height: 25rpx;
+						text-indent: 24rpx;
+						color: #000;
+					}
+				}
+
+				.computer-text {
+					display: flex;
+					position: relative;
+					// margin-left: 10rpx;
+					align-items: center;
+					margin-bottom: 30rpx;
+
+					// color: #d4d4d4;
+					.text-icon {
+						color: #f00;
+						position: absolute;
+						font-size: 18rpx;
+						top: 16rpx;
+						left: 10rpx;
+						margin-right: 7rpx;
+						z-index: 8;
+					}
+
+					.text-cont {
+						// flex: 1;
+						margin-top: 10rpx;
+						// border: none;
+						margin-left: 40rpx;
+						// text-indent: 24rpx;
+						color: #aaaaaa;
+					}
+				}
+
+			}
+		}
 </style>

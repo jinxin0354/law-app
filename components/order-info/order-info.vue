@@ -2,7 +2,7 @@
 	<view>
 		<view class="od-box" v-if="info">
 			<view class="od-title">
-				订单详情
+				订单详情12
 				<slot name="detail-edit"></slot>
 			</view>
 			<view class="od-item" @click="jump('/pages/client/index/list', { id: info.product_id })">
@@ -299,13 +299,14 @@
 					<view class="item-tip">项目资料</view>
 					<view
 						class="item-right"
-						@click="jump('/pages/client/order/project-data-info', { card_images: info.card_images,liaotian_images:info.liaotian_images,jietiao_images: info.jietiao_images,cuishou_images:info.cuishou_images,other_images:info.other_images,huan_images:info.huan_images,type:info.price_type=='自费'? 2 : 1 })"
+						@click="jump('/pages/client/order/upload', { source: JSON.stringify(info.source), readOnly: true })"
+						v-if="info.source && info.source.length > 0"
 					>
 						<view class="item-txt">查看资料</view>
-						<!-- <view class="item-file" v-if="info.source.length > 0"><image src="@/static/img/order-file.png"></image></view> -->
+						<view class="item-file" v-if="info.source.length > 0"><image src="@/static/img/order-file.png"></image></view>
 						<view class="item-nav"><image src="@/static/img/right.png" mode="aspectFit"></image></view>
 					</view>
-					<!-- <view class="item-right" v-else><view class="item-txt">无</view></view> -->
+					<view class="item-right" v-else><view class="item-txt">无</view></view>
 				</view>
 				<view class="od-item">
 					<view class="item-tip">我的要求</view>

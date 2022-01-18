@@ -81,6 +81,17 @@ video {
 	width: 100%;
 	z-index: 10;
 }
+.comfir-btn {
+	background-color: $uni-color-primary !important;
+	color: #ffffff !important;
+	border-radius: 15px;
+	text-align: center;
+	height: 30px;
+}
+.comfir-btn:nth-child(2n){
+	margin-left: 10px;
+}
+
 .ok-btn {
 	background-color: $uni-color-primary !important;
 	color: #ffffff !important;
@@ -373,7 +384,7 @@ uni-button[disabled][type='default'] {
 		justify-content: center;
 		box-sizing: border-box;
 		width: calc((100% - 40rpx) / 3);
-		border: 1rpx solid #eee;
+		border: 2rpx solid #eee;
 		border-radius: 10rpx;
 		padding: 10rpx 0;
 		margin-right: 20rpx;
@@ -431,6 +442,10 @@ uni-button[disabled][type='default'] {
 		}
 	}
 }
+.money-text {
+	color: #f00;
+}
+
 // 律师服务中,待付信息
 .wait-box {
 	background-color: #ffffff;

@@ -137,7 +137,7 @@
 										<!-- </view> -->
 									</view>
 									<view class="checkbox-item">
-										<view class="why-txt">立案受理通知书 <text style="color: red;">*</text></view>
+										<view class="why-txt">立案受理通知书<text style="color: red;">*</text></view>
 										<upload-add-list key="note_list" :list="note_list" @change="listChange($event,'note_list')" @click="photoType = 'note_list'"></upload-add-list>
 										
 										<!-- <view class="arrow-right"   @click="addPhoto(6)">
