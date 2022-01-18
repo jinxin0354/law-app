@@ -121,7 +121,7 @@ export default {
 };
 </script>
 
-<style>
+<style >
 	.image-r {
 		width: 9px;
 		height: 14px;

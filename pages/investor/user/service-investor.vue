@@ -249,11 +249,12 @@
 		<uni-popup ref="popupSettleAccounts" type="center">
 
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">
-				<view class="paddingbottom0" style="margin-bottom: 0;" slot="popup-con">
+				<view class="paddingbottom0" style="margin-bottom: 0rpx;" slot="popup-con">
 				
 					<order-popup-statement-contents @func="aaa" @funcs ="bbb"/>
 				
  				</view>
+				
 				<view class="ok-box" style="padding: 10rpx;" slot="popup-btn">
 					<text class="amount">合计
 					<text class="blod red"> ¥ {{heji}}</text>
@@ -340,8 +341,12 @@
 		},
 		
 		onLoad(params) {
-			
+				this.init();
+				
+		console.log(params.order_id)
 			if (params.order_id) {
+				// 461eb25e-f41b-40ff-bce7-6ccb73a51c8d
+				
 				this.order_id = params.order_id;
 				this.init();
 			}
@@ -490,6 +495,11 @@
 							});
 							this.closePop('popupSettleAccounts')
 							this.init();
+						}else{
+							uni.showToast({
+								title:res.msg,
+								icon:"none"
+							})
 						}
 					}
 				

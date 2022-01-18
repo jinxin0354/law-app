@@ -34,8 +34,8 @@
 		</view>
 		<!-- 价格 -->
 		<view class="item-prize">
-			<text class="prize-num" v-if="item.price_type == '投资人支付(不用还)'">￥投资人支付</text>
-			<text class="prize-num" v-else>￥{{ item.money }}</text>
+			<!-- <text class="prize-num" v-if="item.price_type == '投资人支付(不用还)'">￥2500.00</text> -->
+			<text class="prize-num">￥{{ item.money }}</text>
 		</view>
 		<!-- 服务规则弹出层 -->
 		<uni-popup ref="popupRule" type="center">

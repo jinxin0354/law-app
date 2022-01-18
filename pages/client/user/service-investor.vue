@@ -149,10 +149,8 @@
 				结算投资收益 
 			按新版设计图直接改样式
 		-->
-		
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
 		</order-wait-pay-investor-settle-accounts>
-		
 		<!-- 付款详情 -->
 		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
 			:info="info"></order-client-detail>
@@ -163,6 +161,7 @@
 		 -->
 		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""  @popupShow="popupShow"
 			:info="info"></order-client-detail-info>
+			
 		<!--
 		待收款
 		-->	
@@ -602,6 +601,8 @@
 		<lawyer-qing ref="lawyerQing" :item="current_item"></lawyer-qing>
 		<!-- 结算投资人奖励 -->
 		<settlement-popup ref="settlement" :type="2" :item="current_item"></settlement-popup>
+		<!--结算投资收益-->
+		<invest-shouyi ref="investShouyi" :item="current_item"></invest-shouyi>
 	</view>
 </template>
 
@@ -619,6 +620,7 @@
 				info: {
 					order: {}
 				},
+				current_item:{},
 				order_id: '',
 				remainTime: {}, //剩余时间
 				isTimeOver: true, //倒计时结束
@@ -696,6 +698,8 @@
 				} else if (item.type == 3) {
 					this.current_item = item.popup
 					this.$refs.settlement.$refs.settlement.open()
+					// this.current_item = item
+					// this.$refs.investShouyi.$refs.investShou.open()
 				} else if (item.type == 7) {
 					this.current_item = item.popup
 					this.$refs.lawyerApply.$refs.lawyerApply.open()

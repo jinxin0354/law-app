@@ -1985,7 +1985,6 @@
         onReady(){
             let self = this
             uni.createSelectorQuery().select("#itemTop").boundingClientRect(function(data) { //data - 各种参数
-            console.log(data)
     　　　  　self.itemTopHeight = data.height
     　　    }).exec()
             uni.createSelectorQuery().select("#itemMain").boundingClientRect(function(data) { //data - 各种参数
@@ -2293,7 +2292,6 @@
 			confirm() {
 				if (this.bearFees == '投资人支付') {
 					// this.$refs.investContact.$refs.popupBond.open();
-                    console.log(this.agree,'----------')
 					if (this.agree) {
 						this.addOrder(this.price_type_text);
 					} else {
@@ -2340,6 +2338,7 @@
 					cuishou_images : this.cuishou_images,//催收的聊天内容(微信/支付宝/录音/录像)
 					huan_images : this.huan_images,//还款记录(包括每次还款金额和还款时间) 
 					other_images : this.other_images,//您认为有用的其他有用材料
+                    coupon_id: this.current_coupon ? this.current_coupon.id : '',
 				};
 
 				if (this.edit_order_id) {
@@ -2409,7 +2408,6 @@
 			},
 			// 勾选同意债券投资合同
 			checkChange() {
-				console.log(this.agree,'-----')
 				this.agree = !this.agree
 			},
 			// 获取服务阶段
@@ -2529,7 +2527,6 @@
                 this.showArea = true
             },
             regionConfirm(res){
-                console.log(res,'-----------')
                 // if (res.city.label == '市辖区') {
                 // 	this.practiceArea = res.province.label;
                 // } else {
@@ -2561,10 +2558,8 @@
             // 选择语言
             langSelectClick(info){
                 if(this.popupSelectList.includes(info.id)){
-                    console.log('取消选择')
                      this.popupSelectList.splice(this.popupSelectList.findIndex(item => item === info.id), 1)
                 }else{
-                    console.log('选择')
                     this.popupSelectList.push(info.id)   
                 }
             },
@@ -2628,10 +2623,8 @@
             // 选择排除律师
             lawyerItemClick(info){
                 if(this.userSelectData.includes(info.id)){
-                    console.log('取消选择')
                      this.userSelectData.splice(this.userSelectData.findIndex(item => item === info.id), 1)
                 }else{
-                    console.log('选择')
                     this.userSelectData.push(info.id)   
                 }
             },
