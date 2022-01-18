@@ -266,13 +266,13 @@
 					<view class="item-txt">{{ info.offer_type }}</view>
 				</view>
 			</view>
-			<template v-if="info.pro_name == '打官司' && info.price_type == '投资人支付(不用还)'">
 				<view class="od-item">
 					<view class="item-tip">律师费用</view>
 					<view class="item-right">
-						<view class="item-txt">投资人支付</view>
+						<view class="item-txt">{{info.fee_money}}</view>
 					</view>
 				</view>
+			<template v-if="info.pro_name == '打官司' && info.price_type == '投资人支付(不用还)'">
 				<view class="od-item">
 					<view class="item-tip">投资人承担</view>
 					<view class="item-right"><view class="item-txt">律师费+立案受理费+公告费+异地被告身份查询费</view></view>
@@ -282,12 +282,12 @@
 					<view class="item-right"><view class="item-txt">您案件债权总额的30%，回款后7日内支付给投资人，不回款不用付。</view></view>
 				</view>
 			</template>
-			<view class="od-item" v-if="info.pro_name != '打官司'">
+			<!-- <view class="od-item" v-if="info.pro_name != '打官司'">
 				<view class="item-tip">律师费用</view>
 				<view class="item-right">
 					<view class="item-txt">￥{{ info.fee_money }}</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="od-item" v-if="info.days_time">
 				<view class="item-tip">应付时间</view>
 				<view class="item-right">

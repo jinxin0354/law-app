@@ -53,9 +53,10 @@
 				<view class="wait-item" v-for="(item, index) in detailLIst">
 					<view class="item-item">
 						<view class="item-money">￥{{ item.money }}</view>
-						<view class="item-txt">
+						<view class="item-txt" @click="itemClick(item)">
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
+							<image v-if="item.shou_type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 						</view>
 						<view class="item-btn">{{ item.status }}</view>
 					</view>
@@ -115,10 +116,19 @@
 export default {
 	props: ['detailLIst', 'title', 'info'],
 	data() {
-		return { tipGrade: '', latefeeInfo: [] };
+		return { 
+			tipGrade: '', 
+			current_item: {},
+			latefeeInfo: [] ,
+			};
 	},
 	created() {},
 	methods: {
+		itemClick(item) {
+			console.log('item');
+			console.log(item);
+			this.$emit('popupShow',item)
+		},
 		// 获取服务级别
 		async getGradeTip(index) {
 			this.$refs.popupGrade.open();
@@ -152,4 +162,9 @@ export default {
 		border-bottom: none;
 	}
 }
+.image-r {
+		width: 9px;
+		height: 14px;
+		margin-left: 35px;
+	}
 </style>

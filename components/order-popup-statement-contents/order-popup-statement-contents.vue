@@ -74,7 +74,7 @@
 							<text class="text-icon">¥</text>
 							<view class="text-cont">
 								<text v-if="!moneyparams.price"> 待计算</text>
-								<text v-else class="" > {{moneyparams.price}}</text>
+								<text v-else class="" style="color: #000000;"> {{moneyparams.price}}</text>
 							</view>
 						</view>
 					</view>
@@ -109,7 +109,7 @@
 								</view>
 								<view class="text-cont" v-if="index==3">
 									<text v-if="!moneyparams.sunshi_money"> 待计算</text>
-									<text v-else class=""  > {{moneyparams.sunshi_money}}</text>
+									<text v-else class="" style="color: #000000;" > {{moneyparams.sunshi_money}}</text>
 								</view>
 							</view>
 						</view>
@@ -142,15 +142,15 @@
 					<view class="item-right">
 						<view class="item-right" v-if="index>=2">
 							<view class="computer-text">
-								<text class="text-icon">¥</text>
+								<text class="text-icon" style="color: #000000;">¥</text>
 								<view class="text-cont" v-if="index==2">
 									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
 									<view>{{touziren_pay}}</view>
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
 								<view class="text-cont" v-if="index==3">
-									<text v-if="!moneyparams.sunshi_money"> 待计算</text>
-									<text v-else class=""  > {{moneyparams.sunshi_money}}</text>
+									<text v-if="moneyparams.sunshi_moneys"> 待计算</text>
+									<text v-else class="" style="color: #000000;"  > {{moneyparams.sunshi_moneys}}</text>
 								</view>
 							</view>
 						</view>
@@ -187,22 +187,23 @@
 			</view>
 			<!-- <template slot="payOption"></template> -->
 
-			<view class="flex-item-i">
-				<!-- <uni-data-checkbox value='[1]' multiple>我已与委托人确认付款金额</uni-data-checkbox> -->
-				<view @click="flg_checks" class="checkbox-style" >
-					<view class="check-style" style="display: flex; justify-content: center; align-items: center;">
-						<view :class="flg_check?'check-style1':''" >
-
-						</view>
-					</view>
-					<!-- <checkbox value="" color="#ffca00" class="check-style" /> -->
-					我已与委托人确认付款金额
-				</view>
-			</view>
+			
 			<!-- <template slot="payOption2"></template> -->
 
 			<!-- </service-popup-statement> -->
 		</scroll-view>
+		<view class="flex-item-i" style="margin-top: 20rpx;">
+			<!-- <uni-data-checkbox value='[1]' multiple>我已与委托人确认付款金额</uni-data-checkbox> -->
+			<view @click="flg_checks" class="checkbox-style" >
+				<view class="check-style" style="display: flex; justify-content: center; align-items: center;">
+					<view :class="flg_check?'check-style1':''" >
+		
+					</view>
+				</view>
+				<!-- <checkbox value="" color="#ffca00" class="check-style" /> -->
+				我已与委托人确认付款金额
+			</view>
+		</view>
 		<uni-popup ref="direc" type="center">
 			<view class="popup-direc-box">
 
@@ -304,6 +305,7 @@
 					price: "",
 					prices:"",
 					sunshi_money:"",
+					sunshi_moneys:"待计算",
 					weiyue_money: ""
 				},
 				flg_check: false,
@@ -315,7 +317,6 @@
 				touziren_pay:0,
 				weiyues:'',
 				getMoneys:"",
-				sunshi_money:""
 			};
 		},
 		computed:{
@@ -359,7 +360,6 @@
 			// }
 		},
 		onLoad(params) {
-			
 			if (params.order_id) {
 				this.order_id = params.order_id;
 				this.init();
@@ -446,25 +446,49 @@
 				if(index==4){
 					this.jine4 = e.detail.value
 				}
-				console.log(this.moneyparams,'this.moneyparams')
+				
 				if(this.moneyparams.chuli_money=='部分支持'){
+					
+			if(this.jine1!=''){
+				if(this.jine2!=''){
+					console.log(this.jine1,'jiin1')
+					console.log(this.jine2,'jinn2')
+					if(this.moneyparams.chuli_type=='法院判决'){
+						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+						this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
+						console.log(this.moneyparams.sunshi_moneys,'shunshimoney')
+					}
+					if(this.moneyparams.chuli_type=='和解/调节'){
+						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+						this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
+					}
+				}
+				
+			}
+			
+			
+			
+			
+			
 			
 					if(this.jine1==''||this.jine2==''||this.jine3==''||this.jine4==''){
 					this.heji = 0
 					}else{
-						if(this.moneyparams.chuli_type=='法院判决'){
-							var a = parseFloat(this.jine1) - parseFloat(this.jine2)
-							this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
-						}
-						if(this.moneyparams.chuli_type=='和解/调节'){
-							var a = parseFloat(this.jine1) - parseFloat(this.jine2)
-							this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
-						}
+						// if(this.moneyparams.chuli_type=='法院判决'){
+						// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+						// 	this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
+						// }
+						// if(this.moneyparams.chuli_type=='和解/调节'){
+						// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
+						// 	this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
+						// }
 						console.log(this.moneyparams.sunshi_money,'jine3')
 						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.moneyparams.sunshi_money)+parseFloat(this.jine4)
 					}
 					console.log(this.heji,'hejis')
-					this.moneyparams.price = this.jine3*0.3
+					var jine3 = this.jine3*0.3
+				
+					this.moneyparams.price =jine3.toFixed(2)
 				var data= {
 					type:3,
 					chuli_money:this.moneyparams.chuli_money,
@@ -474,7 +498,7 @@
 					yuan_money:this.jine1,
 					hejie_money:this.jine2,//和解时穿的参数
 					touzi_money:this.touziren_pay,
-					sunshi_monet:this.moneyparams.prices*0.3,
+					sunshi_monet:this.sunshi_money,
 					weiyue_money:this.jine4,
 					heji_money:this.heji,
 					
@@ -486,40 +510,46 @@
 				}
 			if(this.moneyparams.chuli_money=='全部支持'){
 			console.log('quanbuzhichi')
+			console.log(this.jine3,'jine3')
 				if(this.jine3!=''){
-					this.moneyparams.price = this.jine3*0.3
+					var jine3 = this.jine3*0.3
+					console.log(jine3,'333333333')
+					this.moneyparams.price = jine3.toFixed(2)
 				}
 				if(this.jine3==''||this.jine4==''){
 				this.heji = 0
 				}else{
-				
 					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
 				}
+				console.log(this.moneyparams.price,'jksadhjdhauisduiajkdhaiujk')
 				var data= {
 					type:3,
 					chuli_money:this.moneyparams.chuli_money,
 					money:this.jine3,
 					chuli_type:this.moneyparams.chuli_type,
-					price:this.moneyparams.price*0.3,
+					price:this.moneyparams.price,
 					yuan_money:this.jine1,
 					hejie_money:this.jine2,//和解时穿的参数
 					touzi_money:this.touziren_pay,
-					sunshi_monet:this.moneyparams.prices*0.3,
+					sunshi_monet:this.sunshi_money,
 					weiyue_money:this.jine4,
 					heji_money:this.heji,
 					
 				}
+				console.log(data,'datassss')
 				 this.$emit('func',data)
 				
 			}
 			if(this.moneyparams.chuli_money=='全部不支持'){
 				if(this.jine3!=''){
-					this.moneyparams.price = this.jine3*0.3
+					var jine3 = this.jine3*0.3
+					this.moneyparams.price = jine3.toFixed(2)
+				
 				}
 				if(this.jine3==''||this.jine4==''){
 				this.heji = 0
 				}else{
-					
+				
 					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
 				}
 				
@@ -532,7 +562,7 @@
 						yuan_money:this.jine1,
 						hejie_money:this.jine2,//和解时穿的参数
 						touzi_money:this.touziren_pay,
-						sunshi_monet:this.moneyparams.prices*0.3,
+						sunshi_monet:this.sunshi_money,
 						weiyue_money:this.jine4,
 						heji_money:this.heji,
 					
@@ -549,7 +579,7 @@
 				n2 = n2 != '全部不支持' ? '1' : '0'
 
 				let obj = {
-					'0': ['委托人起诉金额总和是多少', '委托人应付的投资收益损失为'],
+					'0': ['委托人起诉金额的总和是多少', '委托人应付的投资收益损失为'],
 					'1': ['委托人这次收回了多少钱', '委托人这次应付投资收益']
 				}
 				return obj[n2]
@@ -573,11 +603,12 @@
 				}
 				let arr = ['委托人原来主张的欠款本金金额是多少',
 					str,
-					'投资人已支付的费用', '委托人应付的投资费用损失为'
+					'投资人已支付的投资费用', '委托人应付的投资费用损失为'
 				]
 				return arr
 			},
 			async init() {
+				
 				let formData = {
 					id: this.order_id,
 					token: uni.getStorageSync('token')
@@ -769,6 +800,7 @@
 		}
 		.od-box {
 			padding: 0;
+			
 			// height: 800rpx;
 			background: #f5f5f5;
 		}
@@ -886,13 +918,15 @@
 				//带付款图标的input空间
 				.item-txt {
 					position: relative;
-
+					display: flex;
+					align-content: center;
+					
 					// align-content: center;
 					//付款文字样式
 					.input_icon {
 						position: absolute;
 						font-size: 18rpx;
-						top: 9rpx;
+						top: 10rpx;
 						left: 10rpx;
 						z-index: 8;
 					}
@@ -929,7 +963,7 @@
 						// flex: 1;
 						margin-top: 10rpx;
 						// border: none;
-						margin-left: 40rpx;
+						margin-left: 50rpx;
 						// text-indent: 24rpx;
 						color: #aaaaaa;
 					}
@@ -1023,7 +1057,7 @@
 					// 标题文字
 					.adi {
 						color: #FF5353;
-						font-size: 27rpx;
+						font-size: 28rpx;
 					}
 			
 					// 问号图标
