@@ -11,7 +11,7 @@
 						<text class="flex flex-1">投资人收益金额</text>
 						<text class="money-text">¥{{item.money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+		<!-- 			<view class="flex flex-horizontal flex-center-v item">
 						<text class="flex flex-1">委托人回款的银行流水</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						
@@ -22,7 +22,7 @@
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
-					</view>
+					</view> -->
 					<view class="flex flex-horizontal flex-center-v item">
 						<text class="flex flex-1">您的奖励余额</text>
 						<text class="money-text">¥{{item.money}}</text>

@@ -3,29 +3,42 @@
 		<view class="wait-box" v-if="info.order.pend_text && info.order.pend_text.length > 0">
 			<view class="wait-title">滞纳金</view>
 			<view class="wait-item" v-for="(item, index) in info.order.pend_text">
-				<view class="item-item">
-					<view class="item-money">￥{{ item.money }}</view>
-					<view class="item-txt">
-						<view class="txt-name">{{ item.name }}</view>
-						<view class="txt-tip">{{ item.time }}</view>
+				<view class="item-item flex flex-vertical">
+					<view class="flex flex-horizontal">
+						<view class="item-money">￥{{ item.money }}</view>
+						<view class="item-txt">
+							<view class="txt-name">{{ item.name }}</view>
+							<view class="txt-tip">{{ item.time }}</view>
+						</view>
 					</view>
-					<view class="item-btn">
+					<view class="item-item" style="margin-top: 10px;" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
+						<view class="item-money">
+							<view>￥{{ item.late_fee }}</view>
+						</view>
+						<view class="item-txt">
+							<view class="txt-name">
+								<view class="name-tip text-ellipsis">滞纳金</view>
+								<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+							</view>
+						</view>
+					</view>
+					<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
 						<template v-if="!item.isapplay">
 							<template v-if="item.is_shou == 0">
-								<button
-									class="ok-btn"
-									type="default"
+								<view
+									class="comfir-btn flex flex-center"
+									style="width: 50%;"
 									@click="
 										current_item = item;
 										$refs.popupReceiveMoney.open();
 									"
 								>
 									我要收款
-								</button>
+								</view>
 							</template>
 							<template v-else>
-								<button
-									class="ok-btn marginbottom10"
+								<view
+									class="comfir-btn flex flex-center flex-1"
 									type="default"
 									@click="
 										current_item = item;
@@ -33,39 +46,26 @@
 									"
 								>
 									取消收款
-								</button>
-								<button class="ok-btn" type="default" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款</button>
+								</view>
+								<view class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款</view>
 							</template>
 						</template>
 						<template v-else>
-							<button
-								class="ok-btn marginbottom10"
-								type="default"
+							<view
+								class="comfir-btn flex flex-center "
+								style="width: 50%;"
 								@click="
 									current_item = item;
 									checkFeeDeatail(1);
 								"
 							>
 								同意减免
-							</button>
+							</view>
 						</template>
-					</view>
-				</view>
-				<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
-					<view class="item-money">
-						<view>￥{{ item.late_fee }}</view>
-					</view>
-					<view class="item-txt">
-						<view class="txt-name">
-							<view class="name-tip text-ellipsis">滞纳金</view>
-							<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
-						</view>
-					</view>
-					<view class="item-btn">
 						<template v-if="item.is_shou == 0">
-							<button
+							<view
 							 v-if="!item.isapplay"
-								class="ok-btn marginbottom10"
+								class="comfir-btn flex flex-center flex-1"
 								type="default"
 								@click.stop="
 									current_item = item;
@@ -73,10 +73,10 @@
 								"
 							>
 								减免滞纳金
-							</button>
-							<button
+							</view>
+							<view
 								v-else
-								class="ok-btn marginbottom10"
+								class="comfir-btn flex flex-center flex-1"
 								type="default"
 								@click.stop="
 									current_item = item;
@@ -84,10 +84,11 @@
 								"
 							>
 								退回申请
-							</button>
+							</view>
 						</template>
 					</view>
 				</view>
+				
 			</view>
 		</view>
 		<!-- 我要收款弹出层 -->
@@ -148,7 +149,7 @@
 						</view>
 					</scroll-view>
 					<view class="fee-tip">亲爱的, 滞纳金能减免就减免了吧, 立马收钱, 落袋为安~</view>
-					<view class="ok-box"><button type="default" class="ok-btn" @click="closePop('popupFeeDetail')">朕知道了</button></view>
+					<view class="ok-box flex flex-center"><button type="default"  style="width: 50%;border-radius: 20px;" class="ok-btn" @click="closePop('popupFeeDetail')">我知道了</button></view>
 				</template>
 			</order-popup-common>
 		</uni-popup>

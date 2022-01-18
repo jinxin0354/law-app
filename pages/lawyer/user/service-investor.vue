@@ -320,11 +320,15 @@
 		<order-invest-inbox-message ref="investInboxMessage" :infoInbo="infoInbo"></order-invest-inbox-message>
 		
 		<!-- 退回投资费用弹窗 -->
-		<return-cost ref="returnCost" :item="current_item"></return-cost>
+		<return-cost ref="returnCostTip" :item="current_item"></return-cost>
 		<!-- 结算投资人奖励 -->
 		<settlement-popup ref="settlement" :item="current_item"></settlement-popup>
 		<!-- 申请投资费用 -->
 		<lawyer-apply-cost ref="lawyerApply" :item="current_item"></lawyer-apply-cost>
+		<!-- 律师请款 -->
+		<lawyer-qing ref="lawyerQing" :item="current_item"></lawyer-qing>
+		<!-- 律师退款 -->
+		<lawyer-tuikuan ref="lawyerTui" :item="current_item"></lawyer-tuikuan>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
 		
@@ -360,16 +364,22 @@ export default {
 	},
 	methods: {
 		popupShow(item) {
-			console.log('===');
 			if (item.type == 8) {
 				this.current_item = item
-				this.$refs.returnCost.$refs.returnCost.open()
+				this.$refs.returnCostTip.$refs.returnCost.open()
 			} else if (item.type == 3) {
 				this.current_item = item
 				this.$refs.settlement.$refs.settlement.open()
 			} else if (item.type == 7) {
 				this.current_item = item.popup
 				this.$refs.lawyerApply.$refs.lawyerApply.open()
+			} else if (item.type == 2) {
+				// 退款弹窗
+				this.current_item = item.popup
+				this.$refs.lawyerTui.$refs.lawyerApply.open()
+			} else if (item.shou_type == 2) {
+				this.current_item = item 
+				this.$refs.lawyerQing.$refs.lawyerApply.open()
 			}
 		},
 		async showTip() {

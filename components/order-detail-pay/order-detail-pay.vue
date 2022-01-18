@@ -1,6 +1,6 @@
 <template>
-	<view class="flex flex-vertical wait-box">
-		<view class="wait-item flex flex-vertical" v-if="list.tui_pend.length > 0 ">
+	<view class="flex flex-vertical wait-box"  v-if="list.tui_pend.length > 0 ">
+		<view class="wait-item flex flex-vertical">
 			<view class="wait-title">待付信息</view>
 			<!-- 
 				退款缺少弹窗
@@ -14,7 +14,7 @@
 							<text>{{item.new_name}}</text>
 							<text>{{item.new_time}}</text>
 						</view>
-						<image v-if="item.type == 8 || item.type == 3 || item.type == 7" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<image v-if="item.type == 8 || item.type == 3 || item.type == 7 || item.type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 				</view>
 				<view class="flex flex-horizontal flex-center-v btn-back">
