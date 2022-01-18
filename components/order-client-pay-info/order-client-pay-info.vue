@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view class="wait-box" v-if="info.order.pend_text && info.order.pend_text.length > 0">
+		<view class="wait-box" style="margin-bottom: 0;border-bottom-left-radius: 0;border-bottom-right-radius: 0;" v-if="info.order.pend_text && info.order.pend_text.length > 0">
 			<view class="wait-title">待付信息</view>
 			<!--
 				问题1.
@@ -12,30 +12,34 @@
 					结算投资收益需要弹弹窗
 					
 			-->
-			<view class="wait-item" v-for="(item, index) in info.order.pend_text">
-				<view class="item-item">
-					<view class="item-money">
-						<view>￥{{ item.money }}</view>
-					</view>
-					<view class="item-txt" @click="itemClick(item)">
-						<view class="txt-name">{{ item.name }}</view>
-						<view class="txt-tip">{{ item.time }}</view>
+			<view class="wait-item"  v-for="(item, index) in info.order.pend_text">
+				<view class="item-item flex flex-vertical">
+					<view class="flex flex-horizontal " @click="itemClick(item)">
+						<view class="item-money">
+							<view>￥{{ item.money }}</view>
+						</view>
+						<view class="" >
+							<view class="txt-name">{{ item.name }}</view>
+							<view class="txt-tip">{{ item.time }}</view>
+						</view>
 						<image v-if="item.shou_type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						
 					</view>
-					<view class="item-btn">
-						<button
-							class="ok-btn marginbottom10"
+					<view class="item-btn flex flex-horizontal flex-center " style="margin-top: 10px;">
+						<view
+							class="comfir-btn flex flex-1 flex-center"
 							type="default"
+							style="max-width: 50%;"
 							@click="
 								current_item = item;
 								$refs.popupWantPay.open();
 							"
 						>
 							我要付款
-						</button>
+						</view>
 						<template v-if="item.is_shou == 1">
-							<button
-								class="ok-btn"
+							<view
+								class="comfir-btn flex flex-1 flex-center"
 								type="default"
 								@click="
 									current_item = item;
@@ -43,7 +47,7 @@
 								"
 							>
 								退回申请
-							</button>
+							</view>
 						</template>
 					</view>
 				</view>
@@ -260,8 +264,6 @@ export default {
 	},
 	methods: {
 		itemClick(item) {
-			console.log('item');
-			console.log(item);
 			this.$emit('popupShow',item)
 		},
 		async confirmPay(payMethod) {

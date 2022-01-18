@@ -150,18 +150,18 @@
 			按新版设计图直接改样式
 		-->
 		
-		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init">
+		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
 		</order-wait-pay-investor-settle-accounts>
 		
 		<!-- 付款详情 -->
-		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情"
+		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
 			:info="info"></order-client-detail>
 		<!-- 
 			付款详情 
 			结算投资收益详情
 			按新版样式修改
 		 -->
-		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""
+		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""  @popupShow="popupShow"
 			:info="info"></order-client-detail-info>
 		<!--
 		待收款
@@ -600,6 +600,8 @@
 		<law-common ref="lawCommon"></law-common>
 		<!-- 律师请款 -->
 		<lawyer-qing ref="lawyerQing" :item="current_item"></lawyer-qing>
+		<!-- 结算投资人奖励 -->
+		<settlement-popup ref="settlement" :type="2" :item="current_item"></settlement-popup>
 	</view>
 </template>
 
@@ -622,6 +624,7 @@
 				isTimeOver: true, //倒计时结束
 				infoLawyer: {},
 				reason: '',
+				current_item: {},
 				isTipShow: false,
 				infoInbo: {}, //投资人收件信息信息
 				payToInvestorInfo: {}, //付款给投资人信息
@@ -687,13 +690,11 @@
 
 		methods: {
 			popupShow(item) {
-				console.log('popupSow');
-				console.log(item.shou_type);
 				if (item.type == 8) {
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
 				} else if (item.type == 3) {
-					this.current_item = item
+					this.current_item = item.popup
 					this.$refs.settlement.$refs.settlement.open()
 				} else if (item.type == 7) {
 					this.current_item = item.popup
@@ -704,7 +705,6 @@
 					this.$refs.lawyerTui.$refs.lawyerApply.open()
 				} else if (item.shou_type == 2) {
 					this.current_item = item 
-					console.log('XX');
 					this.$refs.lawyerQing.$refs.lawyerApply.open()
 				}
 			},

@@ -51,12 +51,13 @@
 			<view class="wait-box" v-if="detailLIst && detailLIst.length > 0">
 				<view class="wait-title">{{ title }}</view>
 				<view class="wait-item" v-for="(item, index) in detailLIst">
-					<view class="item-item">
+					<view class="item-item" @click="itemClick(item)">
 						<view class="item-money">￥{{ item.money }}</view>
 						<view class="item-txt">
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
 						</view>
+						<image  class="image-r" v-if="item.shou_type == 2" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn">{{ item.status }}</view>
 					</view>
 
@@ -119,6 +120,9 @@ export default {
 	},
 	created() {},
 	methods: {
+		itemClick(item) {
+			this.$emit('popupShow',item)
+		},
 		// 获取服务级别
 		async getGradeTip(index) {
 			this.$refs.popupGrade.open();
@@ -144,7 +148,12 @@ export default {
 	}
 };
 </script>
-
+<style>
+	.image-r {
+		width: 9px;
+		height: 14px;
+	}
+</style>
 <style lang="scss">
 .add-service-item {
 	border-bottom: 1rpx solid #eeeeee;
