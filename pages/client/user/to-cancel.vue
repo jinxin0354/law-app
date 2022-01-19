@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="match-top-box">
+		<view class="match-top-box" v-if="order_fee > 0">
 			<view class="fontweightbold">退款金额</view>
 			<view>退款至您平台账户，您可在"我的"-"余额"里查看</view>
 			<view>

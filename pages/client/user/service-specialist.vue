@@ -16,7 +16,7 @@
 				<view class="txt-right red">请确认您的手机号与您现在登录本软件的账号一致，否则将无法拨打或接听虚拟电话</view>
 			</view> -->
 			<view class="service-list">
-				<button class="service-item active" @click="callLaw">叫一下法务</button>
+				<button class="service-item active" @click="$refs.telephoneFawu.$refs.popupTel.open()">联系法务专员</button>
 				<button class="service-item active" :disabled="isClientServiceOk || isSpecialistServiceOk" @click="$refs.popupServiceOk.open">法务服务完成</button>
 				<button
 					class="service-item active"
@@ -34,6 +34,8 @@
 				</view>
 			</template>
 		</view>
+		<order-telephone name="法务专员" :phoneNumber="info.order.fawu_mobile" ref="telephoneFawu"
+			v-if="info.order.fawu_mobile"></order-telephone>
 		<!-- 案件主体信息 -->
 		<order-case :info="info" :key="new Date().getTime() + 'case'">
 			<template slot="case-edit">

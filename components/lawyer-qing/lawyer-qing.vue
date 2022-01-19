@@ -8,7 +8,7 @@
 						<text>委托人</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item">
-						<text class="flex flex-1">案件受理费</text>
+						<text class="flex flex-1">请款金额</text>
 						<text class="money-text">¥{{item.money}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v" style="padding: 10px 15px;">

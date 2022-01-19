@@ -701,7 +701,7 @@
                     </view>
                 	<view class="item-right" style="min-height:60rpx;padding-right: 20rpx;">
                         <view class="service-list inline-list" v-if="offer == '千里马'" style="color:red;font-weight: 700;margin-left: 10rpx;">
-                            ￥{{ total }}
+                            ￥{{ price }}
                         </view>
                         <view class="service-list inline-list" v-if="offer == '活马'" style="color:red;font-weight: 700;;margin-left: 10rpx;">
                             前期费用：{{total}}(下单时付)
@@ -2648,9 +2648,11 @@
             },
             // 付款时间点击选项
             priceSelectClick(info){
+				console.log()
                 this.product_price_id = info.id;
                 this.price_type_text = info.price_type_text;
                 this.money = info.price;//前期费用
+				this.price = info.price;
                 this.later_money = info.later_money || ''//后期费用
                 this.total = info.total || 0//后期费用
                 this.closePop('priceTypePopup')

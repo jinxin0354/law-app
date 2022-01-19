@@ -21,8 +21,18 @@
 						<image src="@/static/img/warning.png" mode="aspectFit"></image>
 					</view>
 				</view>
+				<view class="txt-right green">服务流程：律师法院立案-律师向投资人申请投资费用-律师办案-回款后让律师指导您向投资人支付投资收益-未全额回款时让律师将投资人追加为共同执行人-法院终结执行-律师移交资料给您-您和律师确认服务完成-投资人确认服务完成。
+</view>
+			</view>
+			<view class="match-image-txt">
+				<view class="txt-left">
+					<view class="image-wrapper">
+						<image src="@/static/img/warning.png" mode="aspectFit"></image>
+					</view>
+				</view>
 				<view class="txt-right green">请先联系律师帮您审查案件的胜诉率，再让律师向投资人申请投资费用。</view>
 			</view>
+			<template v-if="isTipShow">
 			<view class="match-image-txt">
 				<view class="txt-left">
 					<view class="image-wrapper">
@@ -31,7 +41,6 @@
 				</view>
 				<view class="txt-right green">请到法力app“办公”页面的群聊里，查看办案全流程，与律师沟通，跟进律师工作，考核办案质量。</view>
 			</view>
-			<template v-if="isTipShow">
 				<view class="match-image-txt">
 					<view class="txt-left">
 						<view class="image-wrapper">
@@ -340,7 +349,7 @@
 							<view>{{swit_flg(moneyparams.chuli_money)[0]}}<span style="color: #FF0000;">*</span></view>
 							<!-- <view class="require">委托人这次收回了多少钱</view> -->
 						</view>
-						<view v-if="moneyparams.chuli_money=='全部不支持'" style="color: #7A7171;font-size: 20rpx;margin-left: 20rpx;">(包括欠款本金、利息/违约金、立案受理费、律师费等)</view>
+						<view v-if="moneyparams.chuli_money=='全部不支持'" style="color: #7A7171;font-size: 24rpx;margin-left: 20rpx;">(包括欠款本金、利息/违约金、立案受理费、律师费等)</view>
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
@@ -363,7 +372,7 @@
 								<view class="adi-symbol">
 									<!--  -->
 									<!-- <view class="adi">委托人这次应付投资利益</view> -->
-									<view class="adi">{{swit_flg(moneyparams.chuli_money)[1]}}</view>
+									<view class="adi" style="font-size: 28rpx;">{{swit_flg(moneyparams.chuli_money)[1]}}</view>
 									<view @click="direction()" class="symbol">
 										<!-- <image src="@/static/img/question.png"> -->
 									</view>
@@ -398,13 +407,14 @@
 						<view class="od-item flex-item-i" v-if="moneyparams.chuli_money =='部分支持'">
 								<view class="flex-new-item" style="height:100%;">
 									<view class="ico"></view>
+									<!-- <view v-if="moneyparams.chuli_type=='其他方式'&&moneyparams.chuli_money=='部分支持'">最后获得支持的欠款本金金额是多少<span style="color: #FF0000;">*</span></view> -->
 									<view>{{swit_flg1(moneyparams.chuli_type)[1]}}<span style="color: #FF0000;">*</span></view>
 									<!-- <view class="require">委托人这次收回了多少钱</view> -->
 								</view>
 								<view class="item-right">
 									<view class="input">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" />
+										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'moneyparams.hejie_money')" pattern="[0-9]*" />
 										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
@@ -427,7 +437,7 @@
 								<view class="flex-new-item">
 									<view class="ico"></view>
 									<view class="adi-symbol">
-										<view class="adi">{{swit_flg1(moneyparams.chuli_type)[3]}}</view>
+										<view class="adi" style="font-size: 28rpx;">{{swit_flg1(moneyparams.chuli_type)[3]}}</view>
 										<view @click="direction()" class="symbol" >
 										</view>
 									</view>
@@ -451,7 +461,7 @@
 						<view class="flex-new-item">
 							<view class="ico"></view>
 							<view class="adi-symbol">
-								<view class="adi">您逾期付款的违约金*(如无,请填写0)</view>
+								<view class="adi" style="font-size: 28rpx;">您逾期付款的违约金*(如无,请填写0)</view>
 								<view @click="direction()" class="symbol" >
 								</view>
 							</view>
@@ -663,18 +673,16 @@
 			getSunshiMoney(){
 				if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
 				this.moneyparams.touzi_money!=''){
-					let money=this.moneyparams.yuan_money-this.moneyparams.hejie_money
-					money=(money/this.moneyparams.yuan_money*this.moneyparams.touzi_money).toFixed(2)
+					let money=parseFloat(this.moneyparams.yuan_money)-parseFloat(this.moneyparams.hejie_money)
+					money=(money/parseFloat(this.moneyparams.yuan_money)*parseFloat(this.moneyparams.touzi_money)).toFixed(2)
 					this.moneyparams.sunshi_money=money
-					return money
+					return this.moneyparams.hejie_money
 				}
-				
-				
 			},
 			getTotalMoney(){
 				if(this.moneyparams.price!=''&& this.moneyparams.weiyue_money!=''){
-					let money=this.moneyparams.price +this.moneyparams.weiyue_money
-					if(this.moneyparams.sunshi_money!='' && this.moneyparams.chuli_type=='法院判决' && this.moneyparams.chuli_money!='全部支持') money=money+this.moneyparams.sunshi_money
+					let money=parseFloat(this.moneyparams.price)+parseFloat(this.moneyparams.weiyue_money)
+					if(this.moneyparams.sunshi_money!=''&&this.moneyparams.chuli_money!='全部支持') money=money+parseFloat(this.moneyparams.sunshi_money)
 					this.moneyparams.total_money=parseFloat(money).toFixed(2)
 					return parseFloat(money).toFixed(2)
 				}else{
@@ -739,7 +747,7 @@
 						break;
 					case '其他方式':
 						n=2;
-						str='法院判决支持的欠款本金金额是多少'
+						str='最后获得支持的欠款本金金额是多少'
 						break;
 					default:
 						console.log(4);
@@ -940,7 +948,18 @@
 						order_id: this.order_id
 					});
 				}
-			}
+			},
+			inputChange(e,type){
+				this.$nextTick(() => {
+					this[type] = e.detail.value.replace(/\D/g,'')
+					if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
+					this.moneyparams.touzi_money!=''){
+						let money=parseFloat(this.moneyparams.yuan_money)-parseFloat(this.moneyparams.hejie_money)
+						money=(money/parseFloat(this.moneyparams.yuan_money)*parseFloat(this.moneyparams.touzi_money)).toFixed(2)
+						this.moneyparams.sunshi_money=money
+					}
+				})
+			},
 		}
 	};
 </script>

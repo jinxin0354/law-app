@@ -18,6 +18,13 @@
 				<view class="txt-left">
 					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 				</view>
+				<view class="txt-right green">服务流程：法院立案-向投资人申请投资费用-与欠款方谈和解尽快结案-回款后指导委托人向投资人支付投资收益-未全额回款时将投资人追加为共同执行人-法院终结执行-移交资料给委托人和投资人-委托人和投资人确认服务完成。</view>
+			</view>
+			
+			<view class="match-image-txt">
+				<view class="txt-left">
+					<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
+				</view>
 				<view class="txt-right green">请先帮委托人审查案件的胜诉率，再向投资人申请投资费用，避免造成委托人的损失。</view>
 			</view>
 			<view class="match-image-txt">
@@ -37,19 +44,13 @@
 					<view class="txt-left">
 						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 					</view>
-					<view class="txt-right green">取得《案件受理费交纳通知书》后，您可点击“申请投资费用”按钮，向投资人领取案件受理费、公告费、异地被告身份证明查询费及律师费。</view>
+					<view class="txt-right green">取得《案件受理费交纳通知书》后，您可点击“申请投资费用”按钮，向投资人领取案件受理费、公告费、异地被告身份查询费及律师费。每个案件投资费用限额4400.00元，如超出限额的，请先与投资人协商好再申请。投资人不同意承担的，请指引委托人及时支付，避免产生违约。</view>
 				</view>
 				<view class="match-image-txt">
 					<view class="txt-left">
 						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
 					</view>
 					<view class="txt-right green">委托人回收款物后5日内，请联系委托人在其法力app上，点击“付款给投资人”按钮，向投资人支付投资收益，避免逾期产生迟延支付滞纳金。</view>
-				</view>
-				<view class="match-image-txt">
-					<view class="txt-left">
-						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
-					</view>
-					<view class="txt-right green">委托人向投资人支付投资收益后，您可点击“结算投资人奖励”按钮，向投资人领取额外的投资收益奖励。</view>
 				</view>
 				<view class="match-image-txt">
 					<view class="txt-left">
