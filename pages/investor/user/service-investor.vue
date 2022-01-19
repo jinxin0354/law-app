@@ -301,6 +301,7 @@
 		<law-common ref="lawCommon"></law-common>
 		<!--结算投资收益-->
 		<!-- <invest-shouyi ref="investShouyi" :item="current_item"></invest-shouyi> -->
+		<end-invest-profit ref="investShouyi" :item="current_item"></end-invest-profit>
 		<!-- 结算投资人奖励 -->
 		<settlement-popup ref="settlement" :item="current_item"></settlement-popup>
 		<!-- 申请投资费用 -->
@@ -382,7 +383,7 @@
 					this.$refs.returnCostTip.$refs.returnCost.open()
 				} else if (item.type == 3) {
 					this.current_item = item.popup
-					this.$refs.settlement.$refs.settlement.open()
+					this.$refs.investShouyi.$refs.investShou.open()
 					// this.current_item = item
 					// this.$refs.investShouyi.$refs.investShou.open()
 				} else if (item.type == 7) {

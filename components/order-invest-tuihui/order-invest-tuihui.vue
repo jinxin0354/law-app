@@ -56,9 +56,9 @@
 						<view class="item-txt" @click="itemClick(item)">
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
-							<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 						</view>
-						<view class="item-btn">{{ item.status }}</view>
+						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
 					</view>
 
 					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">

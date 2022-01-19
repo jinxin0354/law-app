@@ -2,16 +2,19 @@
 	<view>
 		<view class="wait-box" v-if="info.order.pend_apply && info.order.pend_apply.length > 0">
 			<view class="wait-title">待付信息</view>
-			<view class="wait-item" v-for="(item, index) in info.order.pend_apply">
-				<view class="item-money">￥{{ item.money }}</view>
-				<view class="item-txt"  @click="itemClick(item)">
-					<view class="txt-name">{{ item.name }}</view>
-					<view class="txt-tip">{{ item.time }}</view>
+			<view class="wait-item flex flex-vertical" v-for="(item, index) in info.order.pend_apply">
+				<view class="flex flex-horizontal">
+					<view class="item-money">￥{{ item.money }}</view>
+					<view class=""  @click="itemClick(item)">
+						<view class="txt-name">{{ item.name }}</view>
+						<view class="txt-tip">{{ item.time }}</view>
+					</view>
 					<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
-				<view class="item-btn">
-					<button
-						class="ok-btn marginbottom10"
+				
+				<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
+					<view
+						class="comfir-btn flex flex-center flex1"
 						type="default"
 						@click="
 							current_item = item;
@@ -19,19 +22,17 @@
 						"
 					>
 						我要付款
-					</button>
-					<template>
-						<button
-							class="ok-btn"
-							type="default"
-							@click="
-								current_item = item;
-								backApply();
-							"
-						>
-							退回申请
-						</button>
-					</template>
+					</view>
+					<view
+						class="comfir-btn flex flex-center flex1"
+						type="default"
+						@click="
+							current_item = item;
+							backApply();
+						"
+					>
+						退回申请
+					</view>
 				</view>
 			</view>
 		</view>

@@ -2,17 +2,18 @@
 	<view>
 		<view class="wait-box" v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
 			<view class="wait-title">待收信息</view>
-			<view class="wait-item" v-for="(item, index) in info.order.jie_pend">
-				<view class="item-money">￥{{ item.money }}</view>
-				<view class="item-txt"  @click="itemClick(item)">
-					<view class="txt-name">{{ item.name }}</view>
-					<view class="txt-tip">{{ item.time }}</view>
+			<view class="wait-item flex flex-vertical" v-for="(item, index) in info.order.jie_pend">
+				<view class="flex flex-horizontal">
+					<view class="item-money">￥{{ item.money }}</view>
+					<view class=""  @click="itemClick(item)">
+						<view class="txt-name">{{ item.name }}</view>
+						<view class="txt-tip">{{ item.time }}</view>
+					</view>
 					<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
-				<view class="item-btn">
-					<template v-if="item.is_shou == 0">
-						<button
-							class="ok-btn"
+				<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
+						<view v-if="item.is_shou == 0"
+							class="comfir-btn flex flex-center flex1"
 							type="default"
 							@click="
 								current_item = item;
@@ -20,11 +21,9 @@
 							"
 						>
 							我要收款
-						</button>
-					</template>
-					<template v-else>
-						<button
-							class="ok-btn marginbottom10"
+						</view>
+						<view v-else
+							class="comfir-btn flex flex-center flex1 "
 							type="default"
 							@click="
 								current_item = item;
@@ -32,9 +31,8 @@
 							"
 						>
 							取消收款
-						</button>
-						<button class="ok-btn" type="default" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款</button>
-					</template>
+						</view>
+						<view class="comfir-btn flex flex-center flex1 " type="default" @click="$refs.telephoneClient.$refs.popupTel.open()">催促委托人付款</view>
 				</view>
 			</view>
 		</view>
