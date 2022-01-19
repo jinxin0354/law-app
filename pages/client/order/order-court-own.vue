@@ -2592,7 +2592,13 @@
                 }
             },
             priceTypeSelectClick(item){
-                this.bearFees = item
+                this.bearFees = item;
+				if(item == '投资人支付'){
+					this.price = '2500';
+				}else{
+					this.price = this.info.product.price;
+					this.money = this.info.product.price;
+				}
                 this.closePop('priceTypeSelectPopop')
             },
             offerSelectClick(item){
