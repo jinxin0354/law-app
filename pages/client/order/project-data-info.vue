@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<view class="module-box">
+		<view class="module-box" v-if="card_images != '[]' && card_images != ''">
 			<view class="module-title-box">
 				欠款方的身份证正反面/姓名、身份证号码
 			</view>
@@ -25,7 +25,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="module-box">
+		<view class="module-box"  v-if="liaotian_images != '[]' && liaotian_images != ''">
 			<view class="module-title-box">
 				确认欠款金额的聊天内容（微信/支付宝/录音/录像/短信）
 			</view>
@@ -50,7 +50,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="module-box">
+		<view class="module-box" v-if="jietiao_images != '[]' && jietiao_images != ''">
 			<view class="module-title-box">
 				 借条/欠条/还款承诺书/对账单等文书
 			</view>
@@ -75,7 +75,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="module-box">
+		<view class="module-box" v-if="cuishou_images != '[]' && cuishou_images != ''">
 			<view class="module-title-box">
 				 催收的聊天内容(微信/支付宝/录音/录像/短信)
 			</view>
@@ -100,7 +100,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="module-box" v-if="type == 1">
+		<view class="module-box" v-if="type == 1 && huan_images != '[]' && huan_images != ''" >
 			<view class="module-title-box">
 				 还款记录(包括每次还款金额和还款时间) 
 			</view>
@@ -125,7 +125,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="module-box">
+		<view class="module-box" v-if="other_images != '[]' && other_images != ''">
 			<view class="module-title-box">
 				 您认为有用的其他有用材料
 			</view>

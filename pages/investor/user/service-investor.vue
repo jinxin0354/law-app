@@ -23,8 +23,17 @@
 						<image src="@/static/img/warning.png" mode="aspectFit"></image>
 					</view>
 				</view>
+				<view class="txt-right green">服务流程：律师法院立案-律师向您申请投资费用-律师办案-回款后让律师指导委托人向您支付投资收益-未全额回款时让律师将您追加为共同执行人-法院终结执行-律师移交资料给您-律师和委托人确认服务完成-您确认服务完成。</view>
+			</view>
+			<view class="match-image-txt">
+				<view class="txt-left">
+					<view class="image-wrapper">
+						<image src="@/static/img/warning.png" mode="aspectFit"></image>
+					</view>
+				</view>
 				<view class="txt-right green">请指引律师在其法力app上，点击“申请投资费用”按钮，代委托人向您申请支付案件受理费、公告费、异地被告身份证明查询费及律师费。</view>
 			</view>
+			<template v-if="isTipShow">
 			<view class="match-image-txt">
 				<view class="txt-left">
 					<view class="image-wrapper">
@@ -33,7 +42,6 @@
 				</view>
 				<view class="txt-right green">请您及时支付投资费用，避免逾期损害委托人权益，产生赔偿责任。</view>
 			</view>
-			<template v-if="isTipShow">
 				<view class="match-image-txt">
 					<view class="txt-left">
 						<view class="image-wrapper">
@@ -41,16 +49,8 @@
 						</view>
 					</view>
 					<view class="txt-right green">
-						委托人回收款物后，请指引委托人在其法力app上，点击“付款给投资人”按钮，向您支付投资收益；或者您可点击“结算投资收益”按钮，向委托人申请支付投资收益。
+						委托人回收款物后，请指引委托人在其法力app上，点击“付款给投资人”按钮，向您支付投资收益；或者您可点击“结算收益”按钮，向委托人申请支付投资收益。
 					</view>
-				</view>
-				<view class="match-image-txt">
-					<view class="txt-left">
-						<view class="image-wrapper">
-							<image src="@/static/img/warning.png" mode="aspectFit"></image>
-						</view>
-					</view>
-					<view class="txt-right green">委托人向您支付投资收益后，请指引律师在其法力app上，点击“结算投资人奖励”按钮，向您申请支付投资人奖励。</view>
 				</view>
 				<view class="match-image-txt">
 					<view class="txt-left">
@@ -67,7 +67,17 @@
 						</view>
 					</view>
 					<view class="txt-right green">
-						您支付投资费用后，如律师或委托人申请解除委托的，请先与委托人和律师协商一致。如需要收回投资费用的，请指引律师在其法力app上，点击“退回投资费用”按钮办理。如需要委托人支付赔偿的，请指引委托人在其法力app上，点击“付款给投资人”按钮办理。
+						您支付投资费用后，如律师或委托人申请解除委托的，请先与委托人和律师协商一致。如需要收回投资费用的，请指引律师在其法力app上，点击“退回投资费用”按钮办理。
+					</view>
+				</view>
+				<view class="match-image-txt">
+					<view class="txt-left">
+						<view class="image-wrapper">
+							<image src="@/static/img/warning.png" mode="aspectFit"></image>
+						</view>
+					</view>
+					<view class="txt-right green">
+						如需要委托人赔偿损失的，请指引委托人在其法力app上，点击“付款给投资人”按钮办理；或者您可点击“结算收益”按钮，向委托人申请支付投资收益损失和投资费用损失。
 					</view>
 				</view>
 				<view class="match-image-txt">
@@ -269,11 +279,11 @@
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">
 				<view class="paddingbottom0" style="margin-bottom: 0rpx;" slot="popup-con">
 				
-					<order-popup-statement-contents @func="aaa" @funcs ="bbb"/>
+					<order-popup-statement-contents @func="aaa" @funcs ="bbb" :touziren_pay="touziren_pay"/>
 				
  				</view>
 				
-				<view class="ok-box" style="padding: 10rpx;" slot="popup-btn">
+				<view class="ok-box" style="padding: 10rpx;" slot="popup-btn" >
 					<text class="amount">合计
 					<text class="blod red"> ¥ {{heji}}</text>
 					</text>
@@ -376,8 +386,8 @@
 	
 		methods: {
 			popupShow(item) {
-				console.log('post');
-				console.log(item);
+				// console.log('post');
+				// console.log(item);
 				if (item.type == 8) {
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
@@ -399,12 +409,8 @@
 				}
 			},
 			aaa(data){
-				console.log(data,'data')
 				this.heji = data.heji_money
-				console.log(this.heji,'datas')
 				this.jiesuan = data
-			
-			
 			},
 			bbb(data){
 				this.flg_check = data
@@ -500,13 +506,13 @@
 						kuai.shift()
 						info.is_send=kuai;
 					}
-					console.log(info)
+					
 					this.approveInfo = info;
 				}
 			},
 			async confirmSettleAccounts() {
 				
-				console.log(this.jiesuan,'price')
+			
 				if(this.heji==0){
 					uni.showToast({
 						title:"请填写金额！",
@@ -523,7 +529,7 @@
 						var token =  uni.getStorageSync('token')
 						this.jiesuan.id = id
 						this.jiesuan.token = token
-						console.log(this.jiesuan,'jiesuan')
+					
 						// let formData = {
 						// 	id: this.order_id,
 						// 	token: uni.getStorageSync('token'),

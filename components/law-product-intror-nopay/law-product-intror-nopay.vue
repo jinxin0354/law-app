@@ -40,8 +40,8 @@
 		</template>
 		<template v-if="item.product_name == '打官司' && item.money_type == 26">
 			<view class="item-black">
-				<text class="tip-item">{{ item.area_name }}</text>
-				<text class="tip-item">垫资追款包执行</text>
+				<text class="tip-item" style="margin-right:8rpx;">{{ item.area_name }}</text>
+				<text class="tip-item"> 您追款 我出钱 不回款 不收钱</text>
 			</view>
 		</template>
 		<template v-if="item.product_name == '打官司' && item.money_type == 27">
@@ -57,7 +57,7 @@
 				<text class="tip-item">会见1次</text>
 			</view>
 		</template>
-		<view class="item-black">
+		<!-- <view class="item-black">
 			<text class="tip-item">
 				(
 				<template v-if="item.product_name == '打官司' && item.money_type == 26">
@@ -65,7 +65,7 @@
 				</template>
 				{{ item.serve_name }})
 			</text>
-		</view>
+		</view> -->
 		<view class="item-label">
 			<view class="label-txt" v-for="(item_child, index_child) in item.label">{{ item_child }}</view>
 		</view>

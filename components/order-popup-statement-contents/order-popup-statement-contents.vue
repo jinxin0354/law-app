@@ -61,7 +61,7 @@
 					</view>
 
 					<view class="item-right" v-if="index==0">
-						<view class="item-txt">
+						<view class="item-txt ">
 							<text class="input_icon">¥</text>
 							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg" :value="jine3" :id="3"
 								/>
@@ -70,7 +70,7 @@
 					</view>
 					
 					<view class="item-right" v-if="index==1">
-						<view class="computer-text">
+						<view class="computer-texts">
 							<text class="text-icon">¥</text>
 							<view class="text-cont" >
 								<text v-if="!moneyparams.price"> 待计算</text>
@@ -101,16 +101,26 @@
 					<view class="item-right">
 						<view class="item-right" v-if="index>=2">
 							<view class="computer-text">
-								<text class="text-icon" >¥</text>
-								<view class="text-cont" v-if="index==2">
-									<text class="text-icon" style="color: #000000;">¥</text>
-									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
-									<view style="margin-top: 4rpx;">{{touziren_pay}}</view>
+							
+								<view class="text-conts" v-if="index==2">
+									<view class="flex-align-center">
+										<text class="text-icons" style="color: #000000;">¥</text>
+										<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
+										<view >{{touziren_pay}}</view>
+									</view>
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
-								<view class="text-cont" v-if="index==3">
-									<text v-if="!moneyparams.sunshi_money"> 待计算</text>
-									<text v-else class="" style="color: #000000;" > {{moneyparams.sunshi_money}}</text>
+								<view class="text-conts" v-if="index==3">
+									
+								<!-- 	<view class="flex-align-center" v-if="!moneyparams.sunshi_money">
+										<text class="text-icons" >¥</text>
+										<text > 待计算</text>
+									</view> -->
+									<view class="flex-align-center" >
+										<text class="text-icons" >¥</text>
+										<text  class="" style="color: #AAAAAA;" > {{touziren_pay}}</text>
+									</view>
+									
 								</view>
 							</view>
 						</view>
@@ -143,20 +153,29 @@
 					<view class="item-right">
 						<view class="item-right" v-if="index>=2">
 							<view class="computer-text">
-								<text class="text-icon" >¥</text>
-								<view class="text-cont" v-if="index==2">
-										<view class="text-icon" style="color: #000000;">¥</view>
-									<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
-									<view style="margin-top: 6rpx;">{{touziren_pay}}</view>
+							
+								<view class="text-cont"  v-if="index==2">
+										<view class="flex-align-center">
+											<view class="text-icon " style="color: #000000; 	">¥</view>
+											<!-- <text v-if="!moneyparams.price" style="color: #000000;">待计算</text> -->
+											<view style="margin-top: 6rpx;">{{touziren_pay}}</view>
+										</view>
 									<text  class=""> {{info.order.area_name}}</text>
 								</view>
-								<view class="text-cont" v-if="index==3">
-									<text v-if="moneyparams.sunshi_moneys"> 待计算</text>
-									<text v-else class="" style="color: #000000;"  > {{moneyparams.sunshi_moneys}}</text>
+								<view class="text-conts" v-if="index==3">
+										<view class="flex-align-center" v-if="!moneyparams.sunshi_moneys">
+											<view class="text-icons" >¥</view>
+											<text>待计算</text>
+										</view>
+										<view class="flex-align-center"  v-else>
+											<text class="text-icons" >¥</text>
+												<text class="" style="color: #000000;"  > {{moneyparams.sunshi_moneys}}</text>
+										</view>
+								
 								</view>
 							</view>
 						</view>
-						<view v-else class="item-txt">
+						<view v-else class="item-txt flex-align-center">
 							<text class="input_icon">¥</text>
 							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"   :value="jine" :key="index" :id="index"
 							/>
@@ -284,6 +303,11 @@
 	} from '@/common/mixins/share_coupon.js';
 	export default {
 		mixins: [mixin, share_coupon],
+		props:{
+			touziren_pay:{
+				type:String
+			}
+		},
 		data() {
 			return {
 				info: {
@@ -316,51 +340,13 @@
 				jine2:'',
 				jine3:'',
 				jine4:'',
-				touziren_pay:0,
+				
 				weiyues:'',
 				getMoneys:"",
 			};
 		},
-		computed:{
-			getMoney(){
-				if(this.getMoneys!=''){
-					let money=this.getMoneys*0.3
-					this.moneyparams.price=money.toFixed(2)
-					return money.toFixed(2)
-				}
-			},
-			hejiMoney(value){
-				console.log(this.moneyparams.price)
-				console.log(this.weiyues)
-				
-				var heji = parseFloat(this.moneyparams.price) + parseFloat(this.weiyues)
-				console.log(heji)
-				return heji.toFixed(2)
-				// console.log(this.weiyue,'weiyue')
-				// console.log(this.moneyparams,'this.heji')
-				
-			},
-			
-			// getSunshiMoney(){
-			// 	if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
-			// 	this.moneyparams.touzi_money!=''){
-			// 		let money=this.moneyparams.yuan_money-this.moneyparams.hejie_money
-			// 		money=(money/this.moneyparams.yuan_money*this.moneyparams.touzi_money).toFixed(2)
-			// 		this.moneyparams.sunshi_money=money
-			// 		return money
-			// 	}
-			// },
-			// getTotalMoney(){
-			// 	if(this.moneyparams.price!=''&& this.moneyparams.weiyue_money!=''){
-			// 		let money=this.moneyparams.price +this.moneyparams.weiyue_money
-			// 		if(this.moneyparams.sunshi_money!='' && this.moneyparams.chuli_type=='法院判决' && this.moneyparams.chuli_money!='全部支持') money=money+this.moneyparams.sunshi_money
-			// 		this.moneyparams.total_money=parseFloat(money).toFixed(2)
-			// 		return parseFloat(money).toFixed(2)
-			// 	}else{
-			// 		return 0
-			// 	}
-			// }
-		},
+	
+		
 		onLoad(params) {
 			if (params.order_id) {
 				this.order_id = params.order_id;
@@ -374,11 +360,11 @@
 			// },
 			weiyue(e){
 				var value = e.detail.value
-				console.log(value,'value')
+			
 				
-				console.log(				this.moneyparams,'this.weiyue')
+			
 				if(this.moneyparams.chuli_money=="全部支持"||this.moneyparams.chuli_money=="法院判决"||this.moneyparams.money!=''){
-					console.log('aaa')
+				
 					this.hejiMoney
 					var heji_money = this.hejiMoney
 					this.$emit('func',heji_money)
@@ -393,7 +379,7 @@
 				var value = e.detail.value
 				this.moneyparams.money = value
 				this.getMoney
-				// console.log(e.detail.value)
+			
 				
 			},
 			chuli_moneys(value){
@@ -428,13 +414,13 @@
 				var flg_check=this.flg_check
 				
 				this.$emit('funcs',flg_check)
-				console.log(this.flg_check)
+			
 			},
 			close() {
 				this.$refs.direc.close()
 			},
 			sendMsg(e){
-				console.log(this.moneyparams.price,'price')
+			
 				var index = e.currentTarget.id
 				if(index==0){
 					this.jine1 = e.detail.value
@@ -453,17 +439,22 @@
 					
 			if(this.jine1!=''){
 				if(this.jine2!=''){
-					console.log(this.jine1,'jiin1')
-					console.log(this.jine2,'jinn2')
+			
 					// if(this.moneyparams.chuli_type=='法院判决'){
 					// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
 					// 	this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
-					// 	console.log(this.moneyparams.sunshi_moneys,'shunshimoney')
+					
 					// }
 					// if(this.moneyparams.chuli_type=='和解/调节'){
 						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
-						this.moneyparams.sunshi_moneys = a/this.jine1*this.touziren_pay
-						this.sunshi_money = this.moneyparams.sunshi_moneys
+				
+						var achu= a/parseFloat(this.jine1)
+							
+				
+						 var ass= achu*parseFloat(this.touziren_pay)
+						 		 this.moneyparams.sunshi_moneys  = ass.toFixed(2)
+							
+						//this.sunshi_money = this.moneyparams.sunshi_moneys
 					// }
 				}
 				
@@ -485,10 +476,10 @@
 						// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
 						// 	this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
 						// }
-						console.log(this.sunshi_money,'jine33')
-						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.sunshi_money)+parseFloat(this.jine4)
+					
+						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.moneyparams.sunshi_moneys)+parseFloat(this.jine4)
 					}
-					console.log(this.heji,'hejis')
+				
 					var jine3 = this.jine3*0.3
 				
 					this.moneyparams.price =jine3.toFixed(2)
@@ -512,19 +503,19 @@
 					 this.$emit('func',data)
 				}
 			if(this.moneyparams.chuli_money=='全部支持'){
-			console.log('quanbuzhichi')
-			console.log(this.jine3,'jine3')
+			
 				if(this.jine3!=''){
 					var jine3 = this.jine3*0.3
-					console.log(jine3,'333333333')
+				
 					this.moneyparams.price = jine3.toFixed(2)
 				}
 				if(this.jine3==''||this.jine4==''){
 				this.heji = 0
 				}else{
-					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
+					var a =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
+					this.heji = a.toFixed(2)
 				}
-				console.log(this.moneyparams.price,'jksadhjdhauisduiajkdhaiujk')
+				
 				var data= {
 					type:3,
 					chuli_money:this.moneyparams.chuli_money,
@@ -539,7 +530,7 @@
 					heji_money:this.heji,
 					
 				}
-				console.log(data,'datassss')
+			
 				 this.$emit('func',data)
 				
 			}
@@ -553,7 +544,9 @@
 				this.heji = 0
 				}else{
 				
-					this.heji =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
+					var a =parseFloat(this.moneyparams.price) + parseFloat(this.touziren_pay)
+					var ass =a + parseFloat(this.jine4)
+					this.heji =ass.toFixed(2)
 				}
 				
 					var data= {
@@ -574,7 +567,7 @@
 					 this.$emit('func',data)
 			}
 		
-				console.log(this.heji,'heji')	
+			
 				
 			},
 			
@@ -601,7 +594,7 @@
 						n = 2;
 						break;
 					default:
-						console.log(4);
+						// console.log(4);
 						break;
 				}
 				let arr = ['委托人原来主张的欠款本金金额是多少',
@@ -617,8 +610,9 @@
 					token: uni.getStorageSync('token')
 				};
 				let res = await this.$api('index.orderDetail', formData);
-				console.log(res.data.order.touziren_pay,'touzirenopay')
+			
 				this.info = res.data;
+				
 				this.touziren_pay = res.data.order.touziren_pay
 				this.getOrderState(this.info);
 
@@ -928,8 +922,8 @@
 					//付款文字样式
 					.input_icon {
 						position: absolute;
-						font-size: 18rpx;
-						top: 12rpx;
+						font-size: 30rpx;
+						top: 10rpx;
 						left: 10rpx;
 						z-index: 8;
 					}
@@ -956,7 +950,7 @@
 					.text-icon {
 						color: #f00;
 						position: absolute;
-						font-size: 18rpx;
+						font-size: 26rpx;
 						top: 16rpx;
 						left: 10rpx;
 						margin-right: 7rpx;
@@ -1186,8 +1180,8 @@
 					//付款文字样式
 					.input_icon {
 						position: absolute;
-						font-size: 18rpx;
-						top: 12rpx;
+						font-size: 30rpx;
+						top: 10rpx;
 						left: 10rpx;
 						z-index: 8;
 					}
@@ -1213,7 +1207,7 @@
 					.text-icon {
 						color: #f00;
 						position: absolute;
-						font-size: 18rpx;
+						font-size: 26rpx;
 						top: 16rpx;
 						left: 10rpx;
 						margin-right: 7rpx;
@@ -1232,4 +1226,41 @@
 
 			}
 		}
+		.computer-texts{
+			display: flex;
+			align-items: center;
+			color: #AAAAAA;
+				margin-top: 14rpx;
+				margin-bottom: 40rpx;
+		}
+		.computer-texts .text-icon{
+			margin-left: 18rpx;
+		
+		}
+	.computer-texts	.text-cont{
+		margin-left: 14rpx;
+		
+	}
+	.flex-align-center{
+		display: flex;
+		align-items: center;
+	}
+	.text-icons {
+						color: #f00;
+						
+						font-size: 26rpx;
+						margin-left: 10rpx;
+						margin-right: 14rpx;
+					
+					}
+					.text-conts {
+						display: flex;
+						align-items: center;
+						// flex: 1;
+						margin-top: 10rpx;
+						// border: none;
+					
+						// text-indent: 24rpx;
+						color: #aaaaaa;
+					}
 </style>
