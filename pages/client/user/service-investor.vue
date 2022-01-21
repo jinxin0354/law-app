@@ -162,10 +162,8 @@
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
 		</order-wait-pay-investor-settle-accounts>
 		<!-- 付款详情 -->
-		
 		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
 			:info="info"></order-client-detail>
-
 		<!-- 
 			付款详情 
 			结算投资收益详情
@@ -173,7 +171,6 @@
 		 -->
 		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""  @popupShow="popupShow"
 			:info="info"></order-client-detail-info>
-			
 		<!--
 		待收款
 		-->	
@@ -358,7 +355,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
-								<input type="number" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -404,7 +401,7 @@
 							<view class="item-right">
 								<view class="input">
 									<view>￥</view>
-									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" />
+									<input type="text" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" />
 									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
@@ -419,7 +416,7 @@
 								<view class="item-right">
 									<view class="input">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'moneyparams.hejie_money')" pattern="[0-9]*" />
+										<input type="text" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'moneyparams.hejie_money')" pattern="[0-9]*" />
 										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
@@ -433,7 +430,7 @@
 								<view class="item-right">
 									<view class="input" style="border: none;">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" />
+										<input type="text" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -474,7 +471,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view style="color: #FF5353;">￥</view>
-								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -707,7 +704,7 @@
 				if (item.type == 8) {
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
-				} else if (item.type == 3) {
+				} else if (item.type == 3 || item.type == 1) {
 					/* this.current_item = item.popup
 					this.$refs.settlement.$refs.settlement.open() */
 					// this.current_item = item
@@ -985,8 +982,8 @@
 							this.moneyparams.sunshi_money=money
 						}
 					}
-					
 				})
+				
 			},
 		}
 	};

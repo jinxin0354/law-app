@@ -1777,7 +1777,14 @@
                     </view>
                 </view>
             </u-modal>
-            <u-modal v-model="shareShow" :zoom="false">请点击右上角按钮在其他浏览器打开</u-modal>
+            <u-modal v-model="shareShow" :zoom="false" class="model-box">
+                <view class="modal-title">
+                    温馨提示
+                </view>
+                <view class="modal-content">
+                    请点击右上角按钮在其他浏览器打开
+                </view>
+            </u-modal>
 		<!-- 其他费用或有温馨提示 -->
 		<order-common-tip ref="orderCommonTipMaybe">
 			<view class="warm-tip-box" style="padding: 0 30rpx;">
@@ -1986,7 +1993,6 @@
             
 		},
 		onLoad(params) {
-                    this.shareShow = true
             if(params.type=='share'){
              this.downloadApp()   
             }

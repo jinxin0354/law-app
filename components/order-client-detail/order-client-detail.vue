@@ -57,7 +57,7 @@
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
 						</view>
-						<image  class="image-r" v-if="item.shou_type == 2" src="@/static/img/right.png" mode="widthFix"></image>
+						<image  class="image-r" v-if="item.shou_type == 2 || item.type == 1" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
 					</view>
 

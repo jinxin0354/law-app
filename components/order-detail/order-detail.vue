@@ -266,6 +266,7 @@
 					<view class="item-txt">{{ info.offer_type }}</view>
 				</view>
 			</view>
+            <!-- info.price_type=='自费' -->
             <view class="od-item" v-if="info.price_type=='自费'">
             	<view class="item-tip">报价方式</view>
             	<view class="item-right">
@@ -275,15 +276,25 @@
             <view class="od-item" v-if="info.price_type=='自费'">
             	<view class="item-tip">付款时间</view>
             	<view class="item-right">
-            		<view class="item-txt">{{ info.pay_time }}</view>
+            		<view class="item-txt"><!-- {{ info.pay_time }} -->{{ info.money_type }}</view>
             	</view>
             </view>
-				<view class="od-item">
-					<view class="item-tip">律师费用</view>
-					<view class="item-right">
-						<view class="item-txt">{{info.fee_money}}</view>
-					</view>
+			<template v-if="info.pro_name == '打官司'">
+			<view class="od-item">
+				<view class="item-tip">律师费用金额</view>
+				<view class="item-right">
+					<view class="item-txt">{{info.fee_money}}</view>
 				</view>
+			</view>
+			</template>
+			<template v-if="info.pro_name != '打官司'">
+			<view class="od-item">
+				<view class="item-tip">律师费用</view>
+				<view class="item-right">
+					<view class="item-txt">{{info.fee_money}}</view>
+				</view>
+			</view>
+			</template>
 			<template v-if="info.pro_name == '打官司' && info.price_type == '投资人支付(不用还)'">
 				<view class="od-item">
 					<view class="item-tip">投资人承担</view>
@@ -606,6 +617,6 @@ export default {
 	display: flex;
 }
 .item-tip{
-	margin-top: 10rpx;
+	margin-top: 11rpx;
 }
 </style>
