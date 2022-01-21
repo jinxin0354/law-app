@@ -55,7 +55,7 @@
 						<view class="item-money">￥{{ item.money }}</view>
 						<view class="item-txt"  @click="itemClick(item)">
 							<view class="txt-name">{{ item.name }}</view>
-							<view class="txt-tip">{{ item.new_time }}</view>
+							<view class="txt-tip">{{ item.time }}</view>
 						</view>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>

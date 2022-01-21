@@ -12,7 +12,7 @@
 				
 				2.申请投资费用弹窗内效果
 			 -->
-			<view class="flex flex-horizontal item " v-for="item in list.pay_text" @click="itemClick(item)">
+			<!-- <view class="flex flex-horizontal item " v-for="item in list.pay_text" @click="itemClick(item)">
 				<view class="item-money">¥{{item.money}}</view>
 				<view class="flex flex-horizontal flex-1">
 					<view class="flex flex-vertical">
@@ -25,7 +25,7 @@
 						<text class="status-text">{{item.status}}</text>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="flex flex-horizontal item " v-for="item in list.pay_apply" @click="itemClick(item)">
 				<view class="item-money">¥{{item.money}}</view>
 				<view class="flex flex-horizontal flex-1">

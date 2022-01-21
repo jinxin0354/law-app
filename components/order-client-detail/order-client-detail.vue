@@ -74,6 +74,31 @@
 						<view class="item-btn"></view>
 					</view>
 				</view>
+				
+				<view class="wait-item" v-for="(item, index) in info.order.jie_pay">
+					<view class="item-item" @click="itemClick(item)">
+						<view class="item-money">￥{{ item.money }}</view>
+						<view class="item-txt" @click="itemClick(item)">
+							<view class="txt-name">{{ item.name }}</view>
+							<view class="txt-tip">{{ item.time }}</view>
+						</view>
+						<image  class="image-r" v-if="item.type == 3"" src="@/static/img/right.png" mode="widthFix"></image>
+						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
+					</view>
+				
+					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
+						<view class="item-money">
+							<view>￥{{ item.late_fee }}</view>
+						</view>
+						<view class="item-txt">
+							<view class="txt-name">
+								<view class="name-tip text-ellipsis">滞纳金</view>
+								<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+							</view>
+						</view>
+						<view class="item-btn"></view>
+					</view>
+				</view>
 			</view>
 		</template>
 		<!-- 级别提示 -->

@@ -12,7 +12,7 @@
 				
 				2.申请投资费用弹窗内效果
 			 -->
-			<view class="flex flex-vertical item " v-for="item in list.pend_text" >
+			<!-- <view class="flex flex-vertical item " v-for="item in list.pend_text" >
 				<view class="flex flex-horizontal" @click="itemClick(item)">
 					<view class="item-money">¥{{item.money}}</view>
 					<view class="flex flex-horizontal flex-1">
@@ -25,7 +25,6 @@
 				</view>
 				<view class="flex flex-horizontal flex-center btn-back">
 					<template v-if="!item.isapplay">
-						<!-- <template v-if="item.is_shou == 0"> -->
 						<template v-if="item.is_shou == 0">
 							<view
 								class="comfir-btn flex flex-center"
@@ -62,7 +61,7 @@
 						>催促委托人付款</view>
 					</template>
 				</view>
-			</view>
+			</view> -->
 			<!-- 
 			律师申请投资费用 
 			pend_apply 这个数组里存放的只有 律师申请费用的数据

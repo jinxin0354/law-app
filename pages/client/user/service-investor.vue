@@ -169,8 +169,8 @@
 			结算投资收益详情
 			按新版样式修改
 		 -->
-		<order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""  @popupShow="popupShow"
-			:info="info"></order-client-detail-info>
+		<!-- <order-client-detail-info v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title=""  @popupShow="popupShow"
+			:info="info"></order-client-detail-info> -->
 		<!--
 		待收款
 		-->	
@@ -401,7 +401,7 @@
 							<view class="item-right">
 								<view class="input">
 									<view>￥</view>
-									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'yuan_money')" pattern="[0-9]*" />
+									<input type="text" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'yuan_money')" pattern="[0-9]*" />
 									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
@@ -416,7 +416,7 @@
 								<view class="item-right">
 									<view class="input">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'hejie_money')" pattern="[0-9]*" />
+										<input type="text" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'hejie_money')" pattern="[0-9]*" />
 										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
@@ -430,7 +430,7 @@
 								<view class="item-right">
 									<view class="input" style="border: none;">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'touzi_money')" pattern="[0-9]*" />
+										<input type="text" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'touzi_money')" pattern="[0-9]*" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -471,7 +471,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view style="color: #FF5353;">￥</view>
-								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'weiyue_money')" pattern="[0-9]*" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'weiyue_money')" pattern="[0-9]*" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
