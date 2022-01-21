@@ -33,6 +33,10 @@
 									<text>{{ item.product_money.split('*')[0] }}</text>
 									<text class="item-fq">x{{ item.product_money.split('*')[1] }}</text>
 								</template>
+								<template v-else-if="String(item.product_money).indexOf('(投资人支付') > 0">
+									<text>{{ item.product_money.split('(投资人支付')[0] }}</text>
+									<text class="item-fq">(投资人支付)</text>
+								</template>
 								<template v-else>
 									<text>{{ item.product_money }}</text>
 								</template>

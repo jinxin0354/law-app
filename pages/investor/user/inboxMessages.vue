@@ -174,4 +174,7 @@ export default {
 		}
 	}
 }
+.item-tip{
+	margin-top: 9rpx;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view style="">
-		<view class="wait-box" style="border-radius: 0;border-bottom-left-radius: 26rpx;border-bottom-right-radius: 26rpx;border-top: 1rpx solid #eeeeee;"  v-if="info.order.jie_pend && info.order.jie_pend.length > 0">
-			<!-- <view class="wait-title">待付结算投资收益</view> -->
+		<view class="wait-box" style="border-radius: 0;border-bottom-left-radius: 26rpx;border-bottom-right-radius: 26rpx;border-top: 1rpx solid #eeeeee;" v-if="(info.order.jie_pend && info.order.jie_pend.length > 0)">
+			 <view class="wait-title" v-if="(info.order.jie_pend && info.order.jie_pend.length > 0) && info.order.pend_text == ''">待付信息</view>
 			<view class="wait-item flex flex-vertical"  v-for="(item, index) in info.order.jie_pend">
 				<view class="flex flex-horizontal" @click="itemClick(item)">
 					<view class="item-money">￥{{ item.money }}</view>

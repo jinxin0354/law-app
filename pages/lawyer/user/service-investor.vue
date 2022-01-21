@@ -66,12 +66,6 @@
 					</view>
 					<view class="txt-right green">申请的投资费用超出实际支出有余的，请点击“退回投资费用”按钮，将多余的投资费用原路退回给投资人，避免增加委托人的负担。</view>
 				</view>
-				<view class="match-image-txt">
-					<view class="txt-left">
-						<view class="image-wrapper"><image src="@/static/img/warning.png" mode="aspectFit"></image></view>
-					</view>
-					<view class="txt-right green">案件办结后，点击“服务完成”按钮前，请务必先与投资人结算完投资人奖励，以免产生纠纷影响平台划转服务费用给您。</view>
-				</view>
 			</template>
 
 			<view class="service-list">
@@ -104,9 +98,9 @@
 				<!-- <button class="service-item active" style="width: 100%; margin-right: 0;" @click="jump('/pages/lawyer/user/apply-invest-award', { order_id: order_id })" >
 					结算投资人奖励
 				</button> -->
-				<button class="service-item active" style="width: 100%; margin-right: 0;" @click="$refs.returnCost.$refs.returnCost.open()">
+			<!-- 	<button class="service-item active" style="width: 100%; margin-right: 0;" @click="$refs.returnCost.$refs.returnCost.open()">
 					结算投资人奖励
-				</button>
+				</button> -->
 				<button
 					class="service-item active"
 					v-if="isLawyerServiceOk & !isClientServiceOk"
@@ -164,7 +158,7 @@
 		<!--退回投资费用详情-->
 		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" title="退回投资费用" :info="info"></order-common-detail> -->
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 产品说明组件 -->
 		<order-unfold-product title="产品说明" :isBold="true" :img_src="info.order.desc_content"></order-unfold-product>
 		<!-- 案件主体信息 -->
@@ -507,5 +501,9 @@ export default {
 		// margin-left: 7.5px;
 		// margin-top:4px;
 		margin-right: 5px;
+	}
+//下半部分圆角矩形
+	.service-item {
+		border-radius: 50rpx;
 	}
 </style>

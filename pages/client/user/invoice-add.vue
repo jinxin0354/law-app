@@ -248,4 +248,7 @@ export default {
 .tip-box {
 	padding: 20rpx 30rpx;
 }
+.item-tip{
+	margin-top: 12rpx;
+}
 </style>

@@ -160,4 +160,7 @@ export default {
 		}
 	}
 }
+.item-tip{
+	margin-top: 12rpx;
+}
 </style>

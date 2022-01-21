@@ -102,7 +102,8 @@
 				<button class="service-item active" @click="$refs.popupSettleAccounts.open()">结算投资收益</button>
 				<button class="service-item active"
 					@click="jump('/pages/investor/user/inboxMessages', { order_id: order_id })">投资人收件信息</button>
-				<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button>
+			<!-- 	<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
+				<button class="service-item active"  @click="jumpToWeb">债权投资合同</button>
 				<button class="service-item active" @click="
 						initApprove();
 						$refs.popupApproveServiceOk.open();
@@ -153,7 +154,7 @@
 		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply"
 			title="退回投资费用" :info="info"></order-common-detail> -->
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer"
 			:random="new Date().getTime()"></order-lawyer-intro>
@@ -279,7 +280,7 @@
 			<order-popup-statement title="结算收益" @closePop="closePop('popupSettleAccounts')">
 				<view class="paddingbottom0" style="margin-bottom: 0rpx;" slot="popup-con">
 				
-					<order-popup-statement-contents @func="aaa" @funcs ="bbb" :touziren_pay="touziren_pay"/>
+					<order-popup-statement-contents @func="aaa" @funcs ="bbb" :touziren_pay="touziren_pay" :msgs = "msgs"/>
 				
  				</view>
 				
@@ -365,7 +366,7 @@
 				is_service:false,
 				is_shouyi:false,
 				flg_check:false,
-
+				msgs:false,
 			};
 		},
 		computed:{
@@ -392,7 +393,7 @@
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
 				} else if (item.type == 3) {
-					this.current_item = item.popup
+					this.current_item = item
 					this.$refs.investShouyi.$refs.investShou.open()
 					// this.current_item = item
 					// this.$refs.investShouyi.$refs.investShou.open()
@@ -406,6 +407,16 @@
 				} else if (item.shou_type == 2) {
 					this.current_item = item 
 					this.$refs.lawyerQing.$refs.lawyerApply.open()
+				}
+			},
+			async jumpToWeb() {
+				let url = this.info.order.zhaiquan_hetong;
+				console.log(url);
+				const nav = navigator.userAgent;
+				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+					phone.loadOffice(url);
+				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+					this.$bridge.callhandler('loadOffice', url, data => {});
 				}
 			},
 			aaa(data){
@@ -545,6 +556,8 @@
 								icon: 'none'
 							});
 							this.closePop('popupSettleAccounts')
+							
+							this.heji=0;
 							this.init();
 						}else{
 							uni.showToast({
@@ -627,5 +640,9 @@
 		color: #FFFFFF;
 		text-align: center;
 		line-height: 60rpx;
+	}
+	//下半部分圆角矩形
+	.service-item {
+		border-radius: 50rpx;
 	}
 </style>

@@ -100,7 +100,7 @@
 			<service-popup-pay title="我要付款" btnText="我要支付" @closePop="closePop('popupWantPay')" @confirmPay="confirmPay">
 				<template slot="payOption">
 					<view class="od-item marginbottom20">
-						<view class="item-tip require">付款金额</view>
+						<view class="item-tip require" style="margin-top: 8rpx;">付款金额</view>
 						<view class="item-right">
 							<view class="item-txt red" v-if="current_item.final_money">￥{{ current_item.final_money }}</view>
 							<view class="item-txt red" v-else>￥{{ current_item.money }}</view>

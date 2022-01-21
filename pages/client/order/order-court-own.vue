@@ -55,7 +55,7 @@
 				<image class="bottom-sure" src="@/static/img/order-sure.png" mode=""></image>
 				<text class="bottom-left">服务保障 </text>
 				<text class="bottom-order"></text>
-				<text class="bottom-txt">{{tags.join(',')}}</text>
+				<text class="bottom-txt">{{tags.join('.')}}</text>
                 </view>
 				<image class="bottom-img" src="@/static/img/right.png" mode="aspectFit"></image>
 			</view>
@@ -733,7 +733,7 @@
                 </view>
                 
                 <!-- 优惠券组件 -->
-                <order-user-coupon :info="info" v-if="Object.keys(info.product).length > 0" @getCoupon="getCoupon"></order-user-coupon>
+                <order-user-coupon :info="info" v-if="Object.keys(info.product).length > 0 && offer!='还魂马'" @getCoupon="getCoupon"></order-user-coupon>
                 <!-- 付款方式组件 -->
                 <!-- 选千里马-先用后付或还魂马时，付费方式字段隐藏 -->
                 <!-- <template v-if="price_type_text != '先用后付 无忧付' && offer != '还魂马'">
@@ -1057,7 +1057,7 @@
 			</view>
 		</order-unfold-new>
 		<!-- 产品说明组件 -->
-		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="info.product.desc_content"></order-unfold-product-new>
+		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="product_desc"></order-unfold-product-new>
 
 		<view class="od-box" :style="bearFees == '自费' ? 'margin-bottom:22rpx' : 'margin-bottom:88rpx'" id='wendajia'>
 			<view class="od-item"
@@ -1762,6 +1762,22 @@
         <u-picker mode="region" v-model="showArea" :params="params" :default-region="defaultRegion"
         	confirm-color="#FFC801" @confirm="regionConfirm" title='选择律师执业区域'>
             </u-picker>
+            <u-modal v-model="showAddr" :zoom="false" class="model-box" confirmText='返回重选' cancelText='愿意承担' showCancelButton confirmColor='#F9B804' @confirm='modalConfirm' @cancel='modalCancel'>
+                <view class="slot-content">
+                    <view class="modal-title">
+                        温馨提示
+                    </view>
+                    <view class="modal-content">
+                        您选择的审理地点{{hear_addr.replace(/,/g, "")}}不在律师执业区域以内，将产生如下事项：<br/>
+                        <view style="margin:10rpx 0rpx">
+                            1.律师出差异地办事，将产生交通费，住宿费，办公费等；<br/>
+                            2.律师需要提前安排出差时间，而且对当地环境不熟悉，办事效率可能会受到影响；<br/>                            
+                        </view>
+                        您是否愿意接受并承担相关费用？
+                    </view>
+                </view>
+            </u-modal>
+            <u-modal v-model="shareShow" :zoom="false">请点击右上角按钮在其他浏览器打开</u-modal>
 		<!-- 其他费用或有温馨提示 -->
 		<order-common-tip ref="orderCommonTipMaybe">
 			<view class="warm-tip-box" style="padding: 0 30rpx;">
@@ -1853,6 +1869,7 @@
 					list: {},
 					product: {}
 				},
+				product_desc:'',
 				serviceType: '', //服务方式
 				practiceChoose: '智能匹配', //挑选方式
 				practiceYear: '', //执业年限
@@ -1954,6 +1971,8 @@
                 langStr:'',
                 shareTitle:'',//分享标题
                 shareContent:'',//分享内容
+                showAddr:false,
+                shareShow:false
             };
 		},
 		created() {
@@ -1967,6 +1986,10 @@
             
 		},
 		onLoad(params) {
+                    this.shareShow = true
+            if(params.type=='share'){
+             this.downloadApp()   
+            }
 			// 编辑
 			if (params.order_id) {
 				this.edit_order_id = params.order_id;
@@ -2197,9 +2220,10 @@
 				this.money = res.data.product.price;
 				this.serviceType = res.data.product.product_type;
 				this.practiceChoose = res.data.product.choose;
+				this.product_desc =  res.data.product.desc_content;
 				// this.practiceArea = res.data.product.profession_name;
                 this.practiceArea = '广东省,深圳市'
-                this.defaultRegion = ['广东省', '深圳市']
+                this.defaultRegion = ['广东省','深圳市']
 				this.bearFees = res.data.product.money_type;
 				if(this.bearFees == '投资人支付'){
 					this.tabList = [{name:'服务选项',id:1},{name:'服务内容',id:2},{name:'产品说明',id:3},{name:'问大家',id:4}]
@@ -2268,6 +2292,7 @@
 				this.price_type_text = res.data.length > 0 ? res.data[0].price_type_text : '';
 				this.sell = res.data.length > 0 ? res.data[0].sell : '';
                 this.total = res.data.length > 0 ? res.data[0].total : 0;
+				this.price = this.money;
 			},
 			// 优惠券
 			getCoupon(current_coupon) {
@@ -2301,9 +2326,34 @@
 						});
 					}
 				} else {
-					this.addOrder(this.price_type_text);
+                    if(!this.practiceArea){
+                        uni.showToast({
+                        	title: '请选择律师执业区域',
+                        	icon: 'none'
+                        });
+                        return
+                    }
+                    if(!this.hear_addr){
+                        uni.showToast({
+                        	title: '请选择审理地点',
+                        	icon: 'none'
+                        });
+                        return
+                    }
+                    if(this.hear_addr == this.practiceArea){
+                        this.addOrder(this.price_type_text);
+                    }else{
+                        this.showAddr = true
+                        return
+                    }
 				}
 			},
+            modalConfirm(){
+                this.showAddr = false
+            },
+            modalCancel(){
+                this.addOrder(this.price_type_text);
+            },
 			async addOrder(money_type) {
 				let formData = {
 					token: uni.getStorageSync('token'),
@@ -2353,8 +2403,9 @@
 					if (this.edit_order_id) {
 						this.order_id = this.edit_order_id;
 						if (money_type == '先用后付 无忧付') {
-							this.replace('/pages/client/user/match', {
-								order_id: this.order_id
+							this.replace('/pages/specialist/user/service-specialist', {
+								order_id: this.order_id,
+								status:0,
 							});
 						} else {
 							let formDataPay = {
@@ -2523,7 +2574,7 @@
                 this.closePop('productNameSelectPopop')
             },
             practiceAreaClick(){
-                this.defaultRegion = this.practiceArea.split(',')
+                // this.defaultRegion = this.practiceArea.split(',')
                 this.showArea = true
             },
             regionConfirm(res){
@@ -2532,6 +2583,10 @@
                 // } else {
                 // 	this.practiceArea = res.province.label + ',' + res.city.label || '';
                 // } 
+                this.defaultTake = []
+                let province = res.province.label
+                let city = res.city.label
+                this.defaultTake.push(province,city)
                 this.practiceArea = res.province.label + ',' + res.city.label;
                 this.showArea = false
             },
@@ -2592,7 +2647,15 @@
                 }
             },
             priceTypeSelectClick(item){
-                this.bearFees = item
+                this.bearFees = item;
+				if(item == '投资人支付'){
+					this.price = '2500';
+					this.product_desc = this.info.product.desc_content_touziren;
+				}else{
+					this.price = this.info.product.price;
+					this.money = this.info.product.price;
+					this.product_desc = this.info.product.desc_content_zifei;
+				}
                 this.closePop('priceTypeSelectPopop')
             },
             offerSelectClick(item){
@@ -2693,7 +2756,8 @@
             downloadApp(){
                 let ua = window.navigator.userAgent.toLowerCase()
                 if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-                    alert('请点击右上角按钮在其他浏览器打开')
+                    // alert('请点击右上角按钮在其他浏览器打开')
+                    this.shareShow = true
                 }else{
                     window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.lifakeji.lark.business.law'
                 }
@@ -3570,4 +3634,20 @@
 					box-sizing: border-box;
 					color: #EE1414;
 				}
+                .model-box /deep/ .u-model__title{
+                    display: none;
+                }
+                .modal-title{
+                    font-size: 36rpx;
+                    font-weight: 700;
+                    height: 80rpx;
+                    color: #000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .modal-content{
+                    line-height: 45rpx;
+                    padding: 0rpx 30rpx 20rpx 30rpx;
+                }
 </style>
