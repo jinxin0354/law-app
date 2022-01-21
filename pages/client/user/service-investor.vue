@@ -355,7 +355,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
-								<input type="text" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" pattern="[0-9]*" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -401,7 +401,7 @@
 							<view class="item-right">
 								<view class="input">
 									<view>￥</view>
-									<input type="text" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" />
+									<input type="text" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" pattern="[0-9]*" />
 									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
@@ -430,7 +430,7 @@
 								<view class="item-right">
 									<view class="input" style="border: none;">
 										<view>￥</view>
-										<input type="text" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" />
+										<input type="text" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" pattern="[0-9]*" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -471,7 +471,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view style="color: #FF5353;">￥</view>
-								<input type="text" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" pattern="[0-9]*" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>

@@ -63,7 +63,7 @@
 					<view class="item-right" v-if="index==0">
 						<view class="item-txt ">
 							<text class="input_icon">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg" :value="jine3" :id="3"
+							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg" :value="jine3" :id="3" pattern="[0-9]*"
 								/>
 						</view>
 
@@ -177,7 +177,7 @@
 						</view>
 						<view v-else class="item-txt flex-align-center">
 							<text class="input_icon">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"   :value="jine" :key="index" :id="index"
+							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"   :value="jine" :key="index" :id="index" pattern="[0-9]*"
 							/>
 						</view>
 					</view>
@@ -199,7 +199,7 @@
 						<view class="item-txt" style="margin-bottom: 30rpx;">
 
 							<text class="input_icon red1">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"   @input="sendMsg" :value="jine4" :id="4"
+							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"   @input="sendMsg" :value="jine4" :id="4" pattern="[0-9]*"
 								/>
 
 						</view>

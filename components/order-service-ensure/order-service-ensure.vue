@@ -1,5 +1,5 @@
 <template>
-	<uni-popup ref="popupEnsure" type="center">
+	<uni-popup ref="popupEnsure" type="bottom">
 		<order-popup-common title="服务保障" @closePop="closePop('popupEnsure')">
 			<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
 				<view class="con-item" v-for="(item, index) in info.product.pro_tags_item">

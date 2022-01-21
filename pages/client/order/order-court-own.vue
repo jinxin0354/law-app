@@ -55,7 +55,7 @@
 				<image class="bottom-sure" src="@/static/img/order-sure.png" mode=""></image>
 				<text class="bottom-left">服务保障 </text>
 				<text class="bottom-order"></text>
-				<text class="bottom-txt">{{tags.join('.')}}</text>
+				<text class="bottom-txt">{{tags.join('·')}}</text>
                 </view>
 				<image class="bottom-img" src="@/static/img/right.png" mode="aspectFit"></image>
 			</view>
@@ -1979,7 +1979,8 @@
                 shareTitle:'',//分享标题
                 shareContent:'',//分享内容
                 showAddr:false,
-                shareShow:false
+                shareShow:false,
+                isAddr:false
             };
 		},
 		created() {
@@ -2332,33 +2333,24 @@
 						});
 					}
 				} else {
-                    if(!this.practiceArea){
-                        uni.showToast({
-                        	title: '请选择律师执业区域',
-                        	icon: 'none'
-                        });
-                        return
-                    }
-                    if(!this.hear_addr){
-                        uni.showToast({
-                        	title: '请选择审理地点',
-                        	icon: 'none'
-                        });
-                        return
-                    }
-                    if(this.hear_addr == this.practiceArea){
+                    if(this.isAddr){
                         this.addOrder(this.price_type_text);
                     }else{
                         this.showAddr = true
-                        return
                     }
+                    
 				}
 			},
+            // 返回重选
             modalConfirm(){
+                this.isAddr = false
                 this.showAddr = false
             },
+            // 愿意承担
             modalCancel(){
-                this.addOrder(this.price_type_text);
+                this.isAddr = true
+                this.showAddr = false
+                // this.addOrder(this.price_type_text);
             },
 			async addOrder(money_type) {
 				let formData = {
@@ -2584,17 +2576,13 @@
                 this.showArea = true
             },
             regionConfirm(res){
-                // if (res.city.label == '市辖区') {
-                // 	this.practiceArea = res.province.label;
-                // } else {
-                // 	this.practiceArea = res.province.label + ',' + res.city.label || '';
-                // } 
                 this.defaultTake = []
                 let province = res.province.label
                 let city = res.city.label
                 this.defaultTake.push(province,city)
                 this.practiceArea = res.province.label + ',' + res.city.label;
                 this.showArea = false
+                this.addrConfirm()
             },
             // 律师语言选择
             langClick(){
@@ -2758,6 +2746,7 @@
 								this.defaultTake.push(province,city)
                 this.hear_addr = res.province.label + ',' + res.city.label;
                 this.popupTakeTwo = false
+                this.addrConfirm()
             },
             downloadApp(){
                 let ua = window.navigator.userAgent.toLowerCase()
@@ -2766,6 +2755,13 @@
                     this.shareShow = true
                 }else{
                     window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.lifakeji.lark.business.law'
+                }
+            },
+            addrConfirm(){
+                if(this.practiceArea && this.hear_addr){
+                    if(this.hear_addr != this.practiceArea){
+                        this.showAddr = true
+                    }
                 }
             }
             
