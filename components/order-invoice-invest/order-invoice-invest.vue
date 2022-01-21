@@ -11,9 +11,10 @@
 							current_item = item;
 							$refs.popupInvoiceDetail.open();
 						"
+						
 					>
 						<view class="txt-name">
-							<view class="name-tip text-ellipsis">{{ item.name }}</view>
+							<view class=" text-ellipsis" style="width: 180px;">{{ item.name }}</view>
 							<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
 						</view>
 						<view class="txt-tip">{{ item.createtime }}</view>
@@ -27,8 +28,8 @@
 					</template>
 				</view>
 				<template v-if="userInfo.id == info.order.user_id">
-					<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
-						<view  v-if="item.is_receipt == 1"
+					<view v-if="item.is_receipt == 1" class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
+						<view  
 							class="comfir-btn flex flex-center flex-1"
 							type="default"
 							@click="
