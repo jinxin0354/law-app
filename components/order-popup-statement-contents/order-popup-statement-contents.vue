@@ -305,7 +305,7 @@
 		mixins: [mixin, share_coupon],
 		props:{
 			touziren_pay:{
-				type:String
+				type:[String,Number]
 			},
 			msgs:{
 				type:Boolean

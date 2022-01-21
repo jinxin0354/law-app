@@ -123,7 +123,7 @@
 		@popupShow="popupShow">
 		</order-wait-pay-apply-invest-cost>
 		<!--收款详情-->
-		<order-invest-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.jie_pay" title="收款详情"
+		<order-invest-detail :detailLIst="info.order.jie_pay" title="收款详情"
 			:info="info" @popupShow="popupShow"></order-invest-detail>
 		<order-invest-tuihui v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" :info="info"
 		@popupShow="popupShow"
@@ -392,7 +392,7 @@
 				if (item.type == 8) {
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
-				} else if (item.type == 3) {
+				} else if (item.type == 3 || item.type == 1) {
 					this.current_item = item
 					this.$refs.investShouyi.$refs.investShou.open()
 					// this.current_item = item
