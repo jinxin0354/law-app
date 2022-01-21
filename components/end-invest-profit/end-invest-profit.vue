@@ -1,55 +1,67 @@
 <template>
 	<uni-popup ref="investShou" type="center">
-		<order-popup-common title="结算收益" @closePop="closePop('investShou')">
+		<order-popup-common title="结算投资收益" @closePop="closePop('investShou')">
 			<view slot="popup-con" >
 				<view class="flex flex-vertical" style="font-size: 15px;">
 					<view class="flex flex-horizontal flex-center-v item">
-						<text >委托人的案子以什么方式处理的</text>
+						<text >{{shenfen}}的案子以什么方式处理的</text>
 						<view class="flex flex-1"></view>
-						<text>和解/调解</text>
+						<text>{{item.chuli_type}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item">
-						<text >委托人主张的欠款本金有多少获得支持</text>
+						<text >{{shenfen}}主张的欠款本金有多少获得支持</text>
 						<view class="flex flex-1"></view>
-						<text >部分支持</text>
+						<text >{{item.chuli_money}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item">
-						<text >委托人这次收回了多少钱</text>
+						<text >{{shenfen}}这次收回了多少钱</text>
 						<view class="flex flex-1"></view>
-						<text >¥999</text>
+						<text >¥{{item.new_money}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item" @click="$refs.direc.open()">
-						<text >委托人这次应付投资收益</text>
+						<text >{{shenfen}}这次应付投资收益</text>
 						<view class="symbol"></view>
 						<view class="flex flex-1"></view>
-						<text class="money-text">¥999</text>
+						<text class="money-text">¥{{item.heji_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
-						<text >委托人原来主张的欠款本金金额是多少</text>
+					
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.chuli_money == '部分支持'">
+						<text >{{shenfen}}原来主张的欠款本金金额是多少</text>
 						<view class="flex flex-1"></view>
-						<text >¥999</text>
+						<text >¥{{item.yuan_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
-						<text >委托人与欠款方和解时，欠款方同意偿还的欠款本金金额是多少</text>
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.chuli_type == '和解/调解'">
+						<text >{{shenfen}}与欠款方和解时，欠款方同意偿还的欠款本金金额是多少</text>
 						<view class="flex flex-1"></view>
-						<text >¥999</text>
+						<text >¥{{item.hejie_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.chuli_money == '部分支持' && item.chuli_type == '法院判决'">
+						<text >法院判决支持的欠款本金金额是多少</text>
+						<view class="flex flex-1"></view>
+						<text >¥{{item.hejie_money}}</text>
+					</view>
+					
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.chuli_money == '部分支持' && item.chuli_type == '其他方式'">
+						<text >最后获得支持的欠款本金金额是多少</text>
+						<view class="flex flex-1"></view>
+						<text >¥{{item.hejie_money}}</text>
+					</view>
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.chuli_money != '全部支持'">
 						<text >投资人已支付的投资费用</text>
 						<view class="flex flex-1"></view>
-						<text >¥999</text>
+						<text >¥{{item.touzi_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item" @click="$refs.direc.open()">
-						<text >委托人应付的投资费用损失为</text>
+					<view class="flex flex-horizontal flex-center-v item" @click="$refs.direc.open()" v-if="item.chuli_money != '全部支持'">
+						<text >{{shenfen}}应付的投资费用损失为</text>
 						<view class="symbol"></view>
 						<view class="flex flex-1"></view>
-						<text class="money-text">¥999</text>
+						<text class="money-text">¥{{item.sunshi_money}}</text>
 					</view>
 					<view class="flex flex-horizontal flex-center-v item" @click="$refs.direc.open()">
-						<text >委托人逾期付款的违约金</text>
+						<text >{{shenfen}}逾期付款的违约金</text>
 						<view class="symbol"></view>
 						<view class="flex flex-1"></view>
-						<text class="money-text">¥999</text>
+						<text class="money-text">¥{{item.weiyue_money}}</text>
 					</view>
 				</view>
 			</view>
@@ -123,6 +135,21 @@
 <script>
 	export default {
 		props: ['item'],
+		data() {
+			return { 
+				tipGrade: '',
+				is_weituo:0,
+				shenfen:'您',
+				};
+		},
+		created() {
+			console.log(22);
+			let userinfo = uni.getStorageSync('userInfo');
+			this.is_weituo = userinfo.is_touziren;
+			if(this.is_weituo == 1){
+				this.shenfen = '委托人'
+			}
+		},
 		methods: {
 			close() {
 				this.$refs.direc.close()

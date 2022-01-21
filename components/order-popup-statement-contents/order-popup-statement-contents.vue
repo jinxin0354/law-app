@@ -306,6 +306,9 @@
 		props:{
 			touziren_pay:{
 				type:String
+			},
+			msgs:{
+				type:Boolean
 			}
 		},
 		data() {
@@ -352,6 +355,8 @@
 				this.order_id = params.order_id;
 				this.init();
 			}
+		
+		
 		},
 
 		methods: {
@@ -420,21 +425,41 @@
 				this.$refs.direc.close()
 			},
 			sendMsg(e){
-			
+		
 				var index = e.currentTarget.id
 				if(index==0){
 					this.jine1 = e.detail.value
+					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
+									this.$nextTick(function() {
+										this.jine1 = e.value.replace(inputRule , '');
+									})
 				}
 				if(index==1){
 					this.jine2 = e.detail.value
+					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
+									this.$nextTick(function() {
+										this.jine2 = e.value.replace(inputRule , '');
+									})
 				}
 				if(index==3){
 					this.jine3 = e.detail.value
+					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
+									this.$nextTick(function() {
+										this.jine3 = e.value.replace(inputRule , '');
+									})
 				}
 				if(index==4){
 					this.jine4 = e.detail.value
+					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
+									this.$nextTick(function() {
+										this.jine4 = e.value.replace(inputRule , '');
+									})
 				}
-				
+			this.$nextTick(() => {
+				this[type] = e.detail.value.replace(/\D/g,'')
+			})
+			
+					
 				if(this.moneyparams.chuli_money=='部分支持'){
 					
 			if(this.jine1!=''){

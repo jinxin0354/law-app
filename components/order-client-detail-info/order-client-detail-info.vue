@@ -49,7 +49,7 @@
 		</template>
 		<template v-else>
 			<view class="wait-box" v-if="detailLIst && detailLIst.length > 0">
-				<view class="wait-title">{{ title }}</view>
+				<view class="wait-title" v-if="this.info.order.pay_text == ''">付款详情 </view>
 				<view class="wait-item" v-for="(item, index) in detailLIst">
 					<view class="item-item" @click="itemClick(item)">
 						<view class="item-money">￥{{ item.money }}</view>
@@ -120,7 +120,9 @@ export default {
 			tipGrade: '', latefeeInfo: [] ,current_item: {},
 			};
 	},
-	created() {},
+	created() {
+		//console.log(this.info.order.pay_text);
+	},
 	methods: {
 		itemClick(item) {
 			this.$emit('popupShow',item)

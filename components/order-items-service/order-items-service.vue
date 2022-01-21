@@ -241,7 +241,7 @@
             .save-box{
                width: 60%;
                 height: 60rpx;
-                border-radius: 30rpx;
+                // border-radius: 30rpx;
                 background-color: #F9B804;
                 color: #fff;
                 font-size: 26rpx;

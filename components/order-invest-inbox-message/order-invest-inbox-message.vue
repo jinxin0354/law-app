@@ -45,4 +45,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+	.item-tip{
+		margin-top: 10rpx;
+	}
+</style>

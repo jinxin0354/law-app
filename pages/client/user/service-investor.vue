@@ -104,7 +104,8 @@
 				<button class="service-item active" @click="$refs.payToInvestor.open()">付款给投资人</button>
 				<button class="service-item active"
 					@click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
-				<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button>
+			<!-- 	<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
+				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 				<button class="service-item active"
 					:disabled="isClientServiceOk || isLawyerServiceOk || disableServiceOk"
 					@click="$refs.popupServiceOk.open">服务完成</button>
@@ -161,8 +162,10 @@
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
 		</order-wait-pay-investor-settle-accounts>
 		<!-- 付款详情 -->
+		
 		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
 			:info="info"></order-client-detail>
+
 		<!-- 
 			付款详情 
 			结算投资收益详情
@@ -194,7 +197,9 @@
 					:info="info"></order-common-detail> -->
 	
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
+<!-- 		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list> -->
+
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer"
 			:random="new Date().getTime()"></order-lawyer-intro>
@@ -353,7 +358,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
-								<input type="number" placeholder="输入金额" v-model="moneyparams.money" />
+								<input type="number" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -399,7 +404,7 @@
 							<view class="item-right">
 								<view class="input">
 									<view>￥</view>
-									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" />
+									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" />
 									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
@@ -428,7 +433,7 @@
 								<view class="item-right">
 									<view class="input" style="border: none;">
 										<view>￥</view>
-										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" />
+										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -469,7 +474,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view style="color: #FF5353;">￥</view>
-								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" />
+								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -612,7 +617,7 @@
 		<!-- 结算投资人奖励 -->
 		<settlement-popup ref="settlement" :type="2" :item="current_item"></settlement-popup>
 		<!--结算投资收益-->
-		<invest-shouyi ref="investShouyi" :item="current_item"></invest-shouyi>
+		<end-invest-profit ref="investShouyi" :item="current_item"></end-invest-profit>
 	</view>
 </template>
 
@@ -668,7 +673,6 @@
 					}
 					return money.toFixed(2)
 				}
-				
 			},
 			getSunshiMoney(){
 				if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
@@ -704,10 +708,12 @@
 					this.current_item = item
 					this.$refs.returnCostTip.$refs.returnCost.open()
 				} else if (item.type == 3) {
-					this.current_item = item.popup
-					this.$refs.settlement.$refs.settlement.open()
+					/* this.current_item = item.popup
+					this.$refs.settlement.$refs.settlement.open() */
 					// this.current_item = item
 					// this.$refs.investShouyi.$refs.investShou.open()
+					this.current_item = item
+					this.$refs.investShouyi.$refs.investShou.open()
 				} else if (item.type == 7) {
 					this.current_item = item.popup
 					this.$refs.lawyerApply.$refs.lawyerApply.open()
@@ -718,6 +724,16 @@
 				} else if (item.shou_type == 2) {
 					this.current_item = item 
 					this.$refs.lawyerQing.$refs.lawyerApply.open()
+				}
+			},
+			async jumpToWeb() {
+				let url = this.info.order.zhaiquan_hetong;
+				console.log(url);
+				const nav = navigator.userAgent;
+				if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+					phone.loadOffice(url);
+				} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+					this.$bridge.callhandler('loadOffice', url, data => {});
 				}
 			},
 			close(){
@@ -939,6 +955,15 @@
 						});
 						this.init();
 					}
+					this.moneyparams.money=''
+					this.moneyparams.price=''
+					this.moneyparams.weiyue_money=''
+					this.moneyparams.yuan_money=''
+					this.moneyparams.hejie_money=''
+					this.moneyparams.touzi_money=''
+					this.moneyparams.sunshi_money=''
+					this.moneyparams.total_money=''
+					
 				}
 			},
 			payOk(res) {
@@ -952,12 +977,15 @@
 			inputChange(e,type){
 				this.$nextTick(() => {
 					this[type] = e.detail.value.replace(/\D/g,'')
-					if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
-					this.moneyparams.touzi_money!=''){
-						let money=parseFloat(this.moneyparams.yuan_money)-parseFloat(this.moneyparams.hejie_money)
-						money=(money/parseFloat(this.moneyparams.yuan_money)*parseFloat(this.moneyparams.touzi_money)).toFixed(2)
-						this.moneyparams.sunshi_money=money
+					if(type=='moneyparams.hejie_money'){
+						if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
+						this.moneyparams.touzi_money!=''){
+							let money=parseFloat(this.moneyparams.yuan_money)-parseFloat(this.moneyparams.hejie_money)
+							money=(money/parseFloat(this.moneyparams.yuan_money)*parseFloat(this.moneyparams.touzi_money)).toFixed(2)
+							this.moneyparams.sunshi_money=money
+						}
 					}
+					
 				})
 			},
 		}
@@ -1159,4 +1187,8 @@
 		}
 
 	}
+//下半部分圆角矩形
+.service-item {
+	border-radius: 50rpx;
+}
 </style>

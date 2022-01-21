@@ -53,25 +53,25 @@
 							<view class="item-txt">{{ item.tax }}</view>
 						</view>
 					</view>
-					<view class="od-item">
+					<view class="od-item" v-if="item.address != '' && item.address != null">
 						<view class="item-tip">公司地址</view>
 						<view class="item-right">
 							<view class="item-txt">{{ item.address }}</view>
 						</view>
 					</view>
-					<view class="od-item">
+					<view class="od-item" v-if="item.tel != '' && item.tel != null">
 						<view class="item-tip">电话号码</view>
 						<view class="item-right">
 							<view class="item-txt">{{ item.tel }}</view>
 						</view>
 					</view>
-					<view class="od-item">
+					<view class="od-item" v-if="item.bank != ''  && item.bank != null">
 						<view class="item-tip">开户银行</view>
 						<view class="item-right">
 							<view class="item-txt">{{ item.bank }}</view>
 						</view>
 					</view>
-					<view class="od-item">
+					<view class="od-item" v-if="item.bank_account != '' && item.bank_account != null">
 						<view class="item-tip">银行账户</view>
 						<view class="item-right">
 							<view class="item-txt">{{ item.bank_account }}</view>
@@ -272,5 +272,8 @@ export default {
 		width: 30rpx;
 		margin-right: 10rpx;
 	}
+}
+.item-tip{
+	margin-top: 13rpx;
 }
 </style>

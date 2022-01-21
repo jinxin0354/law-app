@@ -85,8 +85,8 @@
 				<text class="tip-item">{{ item.server_address }}</text>
 			</view>
 			<view class="item-tip text-ellipsis">
-				<text class="tip-item">{{ item.area_name }}</text>
-				<text class="tip-item">{{ item.serve_type }}</text>
+				<!-- <text class="tip-item">{{ item.area_name }}</text> -->
+				<!-- <text class="tip-item">{{ item.serve_type }}</text> -->
 			</view>
 		</template>
 	</view>
