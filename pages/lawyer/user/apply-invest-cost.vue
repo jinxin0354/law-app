@@ -174,9 +174,9 @@
 				"
 			>
 				<view class="">
-					本案累计申请金额已超过
-					<text class="red">3400</text>
-					元， 需要投资人审批，请先与投资人协 商一致。
+					本案累计申请金额已超出限额
+					<text class="red">4400</text>
+					元，超限部分需要投资人审批，请先与投资人协商一致。
 				</view>
 			</uni-popup-dialog>
 		</uni-popup>
@@ -294,8 +294,22 @@ export default {
 				return;
 			}
 			
-			let sum = Number(this.case_money) + Number(this.announce_money) + Number(this.enquire) + Number(this.lawyer);
-			if (sum > 3400) {
+			let sum = 0
+			if (this.result.indexOf('checkValue1') != -1) {
+				sum = sum + Number(this.case_money);
+			}
+			if (this.result.indexOf('checkValue2') != -1) {
+				sum = sum + Number(this.announce_money);
+			}
+			if (this.result.indexOf('checkValue3') != -1) {
+				sum = sum + Number(this.enquire);
+			}
+			if (this.apply_lawyer == 0) {
+				if (this.result.indexOf('checkValue4') != -1) {
+					sum = sum + Number(this.lawyer);
+				}
+			}
+			if (sum > 4400) {
 				this.$refs.popupOver5000.open();
 				return;
 			}
