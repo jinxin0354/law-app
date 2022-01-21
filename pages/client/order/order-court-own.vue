@@ -2643,7 +2643,7 @@
             priceTypeSelectClick(item){
                 this.bearFees = item;
 				if(item == '投资人支付'){
-					this.price = '2500';
+					this.price = '2500 (投资人支付)';
 					this.product_desc = this.info.product.desc_content_touziren;
 				}else{
 					this.price = this.info.product.price;

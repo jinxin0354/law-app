@@ -248,7 +248,7 @@
 			<uni-popup-dialog type="info" title="解除委托" okTxt="确认" cancleTxt="取消" :showClose="true" :before-close="true"
 				@confirm="confirmReason" @close="closePop('popupEntrustOk')">
 				<view class="dialog-tip">解除原因</view>
-				<textarea placeholder="把解除原因告诉律师吧，让律师改进工作！" :focus="true" placeholder-class="placeholder"
+				<textarea placeholder="把解除原因告诉律师和投资人吧，让他们改进工作。" :focus="true" placeholder-class="placeholder"
 					class="dialog-textarea" v-model="reason" />
 				<view class="dialog-tip" style="margin-top: 10rpx;">我已与律师、投资人确认解除委托</view>
 			</uni-popup-dialog>
@@ -355,7 +355,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view>￥</view>
-								<input type="text" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'moneyparams.money')" pattern="[0-9]*" />
+								<input type="text" placeholder="输入金额" v-model="moneyparams.money" @input="inputChange($event,'money')" pattern="[0-9]*" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -401,7 +401,7 @@
 							<view class="item-right">
 								<view class="input">
 									<view>￥</view>
-									<input type="text" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'moneyparams.yuan_money')" pattern="[0-9]*" />
+									<input type="number" placeholder="输入金额" v-model="moneyparams.yuan_money" @input="inputChange($event,'yuan_money')" pattern="[0-9]*" />
 									<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 								</view>
 							</view>
@@ -416,7 +416,7 @@
 								<view class="item-right">
 									<view class="input">
 										<view>￥</view>
-										<input type="text" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'moneyparams.hejie_money')" pattern="[0-9]*" />
+										<input type="number" placeholder="输入金额" v-model="moneyparams.hejie_money" @input="inputChange($event,'hejie_money')" pattern="[0-9]*" />
 										<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 									</view>
 								</view>
@@ -430,7 +430,7 @@
 								<view class="item-right">
 									<view class="input" style="border: none;">
 										<view>￥</view>
-										<input type="text" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'moneyparams.touzi_money')" pattern="[0-9]*" />
+										<input type="number" placeholder="输入金额" :disabled="true" v-model="moneyparams.touzi_money" @input="inputChange($event,'touzi_money')" pattern="[0-9]*" />
 										<!-- <image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image> -->
 									</view>
 								</view>
@@ -471,7 +471,7 @@
 						<view class="item-right">
 							<view class="input">
 								<view style="color: #FF5353;">￥</view>
-								<input type="text" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'moneyparams.weiyue_money')" pattern="[0-9]*" />
+								<input type="number" placeholder="输入金额" v-model="moneyparams.weiyue_money" @input="inputChange($event,'weiyue_money')" pattern="[0-9]*" />
 								<image src="../../../static/img/icon/write.png" style="width: 19rpx;height: 20rpx;"></image>
 							</view>
 						</view>
@@ -850,11 +850,11 @@
 			},
 			// TODO 解除委托判断是否支付
 			removeEntrust() {
-				if (this.info.order.pend_text.length > 0) {
+				/* if (this.info.order.pend_text.length > 0) {
 					this.$refs.popupRemoveEntrust.open();
-				} else {
+				} else { */
 					this.$refs.popupEntrustOk.open();
-				}
+				//}
 			},
 			async confirmServiceOk() {
 				let formData = {
@@ -973,7 +973,8 @@
 			},
 			inputChange(e,type){
 				this.$nextTick(() => {
-					this[type] = e.detail.value.replace(/\D/g,'')
+					// this[type] = e.detail.value.replace(/\D/g,'')
+					this.$set(this.moneyparams,type,e.detail.value.replace(/\D/g,''))
 					if(type=='moneyparams.hejie_money'){
 						if(this.moneyparams.yuan_money!=''&&this.moneyparams.hejie_money!=''&&
 						this.moneyparams.touzi_money!=''){
@@ -982,6 +983,7 @@
 							this.moneyparams.sunshi_money=money
 						}
 					}
+					console.log(this.moneyparams.money)
 				})
 				
 			},
