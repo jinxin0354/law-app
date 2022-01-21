@@ -2,52 +2,49 @@
 	<view>
 		<view class="wait-box" v-if="info.order.receipt && info.order.receipt.length > 0">
 			<view class="wait-title">开发票</view>
-			<view class="wait-item" v-for="(item, index) in info.order.receipt">
-				<view class="item-money">￥{{ item.money }}</view>
-				<view
-					class="item-txt"
-					@click="
-						current_item = item;
-						$refs.popupInvoiceDetail.open();
-					"
-				>
-					<view class="txt-name">
-						<view class="name-tip text-ellipsis">{{ item.name }}</view>
-						<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+			<view class="wait-item flex flex-vertical" v-for="(item, index) in info.order.receipt">
+				<view class="flex flex-horizontal">
+					<view class="item-money">￥{{ item.money }}</view>
+					<view
+						class="item-txt"
+						@click="
+							current_item = item;
+							$refs.popupInvoiceDetail.open();
+						"
+					>
+						<view class="txt-name">
+							<view class="name-tip text-ellipsis">{{ item.name }}</view>
+							<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+						</view>
+						<view class="txt-tip">{{ item.createtime }}</view>
 					</view>
-					<view class="txt-tip">{{ item.createtime }}</view>
+					<template v-if="item.is_receipt == 0">
+						取消开票
+					</template>
+					<template v-if="item.is_receipt == 2">
+						已开具
+					</template>
 				</view>
 				<template v-if="userInfo.id == info.order.user_id">
-					<view class="item-btn">
-						<template v-if="item.is_receipt == 0">
+					<view v-if="item.is_receipt == 1"  class="item-btn  flex flex-horizontal flex-center" style="margin-top: 10px;">
+						<view
+							class="comfir-btn flex flex-center flex-1"
+							type="default"
+							@click="
+								current_item = item;
+								$refs.popupCancelInvoice.open();
+							"
+						>
 							取消开票
-						</template>
-						<template v-else-if="item.is_receipt == 1">
-							<button
-								class="ok-btn marginbottom10"
-								type="default"
-								@click="
-									current_item = item;
-									$refs.popupCancelInvoice.open();
-								"
-							>
-								取消开票
-							</button>
-							<button class="ok-btn" type="default" @click="$refs.telephoneLawyer.$refs.popupTel.open()">催促开票</button>
-						</template>
-						<template v-else-if="item.is_receipt == 2">
-							已开具
-						</template>
+						</view>
+						<view class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneLawyer.$refs.popupTel.open()">催促开票</view>
 					</view>
 				</template>
-				<template v-else>
-					<view class="item-btn">
-						<template v-if="item.is_receipt == 0">
-							取消开票
-						</template>
-						<template v-else-if="item.is_receipt == 1">
-							<button
-								class="ok-btn"
+				<template  v-else >
+					<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
+						<template v-if="item.is_receipt == 1">
+							<view
+								class="comfir-btn flex flex-center flex-1"
 								type="default"
 								@click="
 									current_item = item;
@@ -55,10 +52,7 @@
 								"
 							>
 								已开具并邮寄
-							</button>
-						</template>
-						<template v-else-if="item.is_receipt == 2">
-							已开具
+							</view>
 						</template>
 					</view>
 				</template>
@@ -168,13 +162,14 @@
 						</template>
 					</view>
 					<template v-if="userInfo.id == info.order.user_id">
-						<view class="ok-box"><button type="default" class="ok-btn" @click="$refs.popupInvoiceDetail.close">朕知道了</button></view>
+						<view class="ok-box flex flex-center"><button type="default" class="ok-btn" style="width: 50%;border-radius: 20px;" @click="$refs.popupInvoiceDetail.close">朕知道了</button></view>
 					</template>
 					<template v-else>
 						<view class="ok-box">
-							<button type="default" class="ok-btn" @click="copy">一键复制信息</button>
+							<button type="default" class="ok-btn" style="border-radius: 20px;" @click="copy">一键复制信息</button>
 							<button
 								type="default"
+								style="border-radius: 20px;"
 								class="ok-btn"
 								@click="
 									$refs.popupInvoiceDetail.close();
@@ -288,11 +283,6 @@ export default {
 }
 .ok-box {
 	display: flex;
-	.ok-btn {
-		flex: 1;
-		&:nth-of-type(1) {
-			margin-right: 20rpx;
-		}
-	}
+	
 }
 </style>
