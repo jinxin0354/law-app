@@ -1,5 +1,5 @@
 <template>
-	<view class="flex flex-vertical wait-box" v-if="list.pay_text.length > 0 ">
+	<view class="flex flex-vertical wait-box" v-if="(list.pay_text && list.pay_text.length > 0) || (list.pay_apply && list.pay_apply.length > 0) ">
 		<view class="wait-item flex flex-vertical" >
 			<view class="wait-title">收款详情</view>
 			<!--

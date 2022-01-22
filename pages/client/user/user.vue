@@ -46,7 +46,13 @@ export default {
 			this.$Router.replace('/');
 		},
 		toOrder() {
-			if (this.userInfo.user_type == 1) {
+			this.userInfo.is_weituo;
+			if (this.userInfo.is_weituo == 1) {
+				this.jump('/pages/client/user/order');
+			} else {
+				this.jump('/pages/lawyer/user/receive-order');
+			} 
+			/* if (this.userInfo.user_type == 1) {
 				this.jump('/pages/client/user/order');
 			} else if (this.userInfo.user_type == 2) {
 				this.jump('/pages/specialist/user/receive-order');
@@ -54,7 +60,7 @@ export default {
 				this.jump('/pages/lawyer/user/receive-order');
 			}else if (this.userInfo.user_type == 4) {
 				this.jump('/pages/lawyer/user/receive-order');
-			}
+			} */
 		}
 	}
 };

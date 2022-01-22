@@ -63,6 +63,7 @@
 						</view>
 					</template>
 					<view class="top-right gray" v-else-if="(item.product != '打官司' && item.status == 16) || item.status == 6">服务完成</view>
+					<view class="top-right gray" v-else-if="(item.product == '打官司' && item.status == 12) || item.status == 6">服务完成</view>
 					<view class="top-right gray" v-else-if="item.product != '打官司' && item.status == 17">服务解除</view>
 				</view>
 
@@ -117,11 +118,13 @@ export default {
 			this.loadData(1,'refresh');
 		},
 		navTo(item) {
-			console.log("nav")
-			console.log(this.current)
+			console.log(item.product)
+			console.log(item.status)
 			
 			if (item.status == -1 || item.status == 99) {
 				this.jump('/pages/lawyer/user/order-cancel', { order_id: item.id });
+			} else if (item.product == '打官司' && item.status == 12) {
+				this.jump('/pages/lawyer/user/service-ok', { order_id: item.id });
 			} else if (
 				item.status == 3 ||
 				item.status == 14 ||
@@ -241,7 +244,7 @@ export default {
 	},
 	//加载更多
 	onReachBottom() {
-		this.loadData(1);
+		this.loadData(this.current);
 	}
 };
 </script>

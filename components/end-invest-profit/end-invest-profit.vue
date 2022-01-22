@@ -1,6 +1,9 @@
 <template>
 	<uni-popup ref="investShou" type="center">
-		<order-popup-common title="结算投资收益" @closePop="closePop('investShou')">
+		<order-popup-common :title="topTitle" @closePop="closePop('investShou')">
+			<view>
+			
+			</view>
 			<view slot="popup-con" >
 				<view class="flex flex-vertical" style="font-size: 15px;">
 					<view class="flex flex-horizontal flex-center-v item">
@@ -84,33 +87,33 @@
 				<view class="od-item flex-item-i">
 					<view class="flex-item-lable">
 						<view class="ico"></view>
-						<view class="blod">委托人这次应付投资收益</view>
+						<view class="blod">{{shenfen}}这次应付投资收益</view>
 					</view>
 					<view class="item-right">
 						<view class="item-txt">
 							<text class="input_icon">¥</text>
-							<text class="text_icon">委托人起诉的全部金额x30%</text>
+							<text class="text_icon">{{shenfen}}起诉的全部金额x30%</text>
 						</view>
 					</view>
 				</view>
 				<view class="od-item flex-item-i">
 					<view class="flex-item-lable">
 						<view class="ico"></view>
-						<view class="blod">委托人应付的投资费用损失为</view>
+						<view class="blod">{{shenfen}}应付的投资费用损失为</view>
 					</view>
 					<view class="item-right">
 						<view class="item-txt1">
 							<view class="bt1">法院判决时适用</view>
 							<view class="dl1">
 								<text class="input_icon">¥</text>
-								<view class="text_icon">(委托人原来主张的欠款本金-法院判决支持的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+								<view class="text_icon">({{shenfen}}原来主张的欠款本金-法院判决支持的欠款本金)÷{{shenfen}}原来主张的欠款本金×投资人已支付的投资费用</view>
 							</view>
 						</view>
 						<view class="item-txt1">
 							<view class="bt1">和解/调解时适用</view>
 							<view class="dl1">
 								<text class="input_icon">¥</text>
-								<view class="text_icon">(委托人原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷委托人原来主张的欠款本金×投资人已支付的投资费用</view>
+								<view class="text_icon">({{shenfen}}原来主张的欠款本金-和解时欠款方同意偿还的欠款本金)÷{{shenfen}}原来主张的欠款本金×投资人已支付的投资费用</view>
 							</view>
 						</view>
 					</view>
@@ -118,12 +121,12 @@
 				<view class="od-item flex-item-i">
 					<view class="flex-item-lable">
 						<view class="ico"></view>
-						<view class="">委托人预期付款的违约金</view>
+						<view class="">{{shenfen}}预期付款的违约金</view>
 					</view>
 					<view class="item-right">
 						<view class="item-txt">
 							<text class="input_icon">¥</text>
-							<text>委托人未付款金额×万分之六×逾期天数</text>
+							<text>{{shenfen}}未付款金额×万分之六×逾期天数</text>
 						</view>
 					</view>
 				</view>
@@ -138,6 +141,7 @@
 		data() {
 			return { 
 				tipGrade: '',
+				topTitle: '付款给投资人',
 				is_weituo:0,
 				shenfen:'您',
 				};
@@ -148,6 +152,7 @@
 			this.is_weituo = userinfo.is_touziren;
 			if(this.is_weituo == 1){
 				this.shenfen = '委托人'
+				this.topTitle = '结算投资收益';
 			}
 		},
 		methods: {

@@ -302,4 +302,6 @@ export default {
 	display: flex;
 
 }
+.item-right{}
+.item-tip{margin-top: 10rpx;}
 </style>

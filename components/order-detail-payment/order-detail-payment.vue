@@ -1,5 +1,5 @@
 <template>
-	<view class="flex flex-vertical wait-box" v-if="list.pend_text.length > 0 ">
+	<view class="flex flex-vertical wait-box" v-if="(list.pend_text && list.pend_text.length > 0) || (list.pend_apply && list.pend_apply.length > 0)  ">
 		<view class="wait-item flex flex-vertical" >
 			<view class="wait-title">待收信息</view>
 			<!-- 
@@ -163,9 +163,9 @@ export default {
 		};
 	},
 	created() {
-		/* console.log('list');
+		console.log('list');
 		console.log(this.list.length);
-		console.log(this.list.pend_text); */
+		console.log(this.list.pend_text); 
 		this.order = this.list;
 	},
 	methods: {

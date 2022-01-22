@@ -692,6 +692,10 @@
 			}
 
 		},
+		created() {
+			// 安卓
+			window.payOk = this.payOk;
+		},
 		onLoad(params) {
 			if (params.order_id) {
 				this.order_id = params.order_id;

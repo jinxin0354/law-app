@@ -8,7 +8,8 @@
 				<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()">联系律师</button>
 				<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
-				<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button>
+				<!-- <button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
+				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 			</view>
 			<law-nav></law-nav>
 		</view>
@@ -51,6 +52,15 @@ export default {
 		}
 	},
 	methods: {
+		async jumpToWeb() {
+			let url = this.info.order.zhaiquan_hetong
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				phone.loadOffice(url);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('loadOffice', url, data => {});
+			}
+		},
 		async init() {
 			let formData = {
 				id: this.order_id,
@@ -88,5 +98,7 @@ export default {
 .nav-list {
 	margin: 0 -30rpx;
 }
-
+.service-item {
+		border-radius: 50rpx;
+	}
 </style>
