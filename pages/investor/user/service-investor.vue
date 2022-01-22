@@ -77,7 +77,7 @@
 						</view>
 					</view>
 					<view class="txt-right green">
-						如需要委托人赔偿损失的，请指引委托人在其法力app上，点击“付款给投资人”按钮办理；或者您可点击“结算收益”按钮，向委托人申请支付投资收益损失和投资费用损失。
+					如需要委托人赔偿损失的，请指引委托人在其法力app上，点击“付款给投资人”按钮办理；或者您可点击“结算收益”按钮，向委托人申请支付投资收益损失和投资费用损失。
 					</view>
 				</view>
 				<view class="match-image-txt">
@@ -87,7 +87,17 @@
 						</view>
 					</view>
 					<view class="txt-right green">
-						案件办结后，在您审批服务完成时，请：1、核对是否已收齐律师快递的案件相关材料，并注意区分原件、复印件；2、与委托人结算完您应收的投资收益；3、与律师结算完您应付的投资人奖励。如有疑问，请联系律师协助处理。
+						案件办结后，在您审批服务完成时，请：<br/>1、核对是否已收齐律师快递的案件相关材料，并注意区分原件、复印件；<br/>2、与委托人结算完您应收的投资收益或投资收益损失或投资费用损失；
+					</view>
+				</view>
+				<view class="match-image-txt">
+					<view class="txt-left">
+						<view class="image-wrapper">
+							<image src="@/static/img/warning.png" mode="aspectFit"></image>
+						</view>
+					</view>
+					<view class="txt-right green">
+						如有疑问，请联系律师协助处理。
 					</view>
 				</view>
 			</template>
@@ -164,23 +174,24 @@
 		<order-detail ref="orderAllDetail" :info="info.order"></order-detail>
 		<!-- 审批服务解除弹出层 -->
 		<uni-popup ref="popupApproveServiceRemove" type="center">
-			<order-popup-common title="审批服务解除" @closePop="closePop('popupApproveServiceRemove')">
-				<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
-					<checkbox-group class="ck-box">
-						<label class="ck-item">
-							<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
-							我已与委托人、律师确认解除委托。
-						</label>
-						<label class="ck-item">
-							<checkbox color="#FFC801" style="transform: scale(0.7)" :checked="true" :disabled="true" />
-							律师已将全部投资费用原路退回给我。
-						</label>
-					</checkbox-group>
+			<order-popup-common title="审批服务解除" style="padding-bottom: 50rpx;" @closePop="closePop('popupApproveServiceRemove')">
+				<scroll-view class="popup-con" scroll-y="true" slot="popup-con" style="margin-top: 53rpx;">
+					<view style="height: 80rpx;display: flex;margin-left: 90rpx;" @click="shenpi_jiechu_one=!shenpi_jiechu_one">
+						<image src="../../../static/img/icon/radio.png" v-if="shenpi_jiechu_one==false" style="width: 34rpx;height: 34rpx;"></image>
+						<image src="../../../static/img/icon/radioed.png" v-if="shenpi_jiechu_one==true" style="width: 34rpx;height: 34rpx;"></image>
+						<view style="margin-left: 10rpx;font-weight: 300;">我已与委托人、律师确认解除委托。</view>
+					</view>
+					<view style="height: 80rpx;display: flex;margin-left: 90rpx;" @click="shenpi_jiechu_two=!shenpi_jiechu_two">
+						<image src="../../../static/img/icon/radio.png" v-if="shenpi_jiechu_two==false" style="width: 34rpx;height: 34rpx;"></image>
+						<image src="../../../static/img/icon/radioed.png" v-if="shenpi_jiechu_two==true" style="width: 34rpx;height: 34rpx;"></image>
+						<view style="margin-left: 10rpx;font-weight: 300;">律师已将全部投资费用原路退回给我。</view>
+					</view>
+
 				</scroll-view>
-				<view class="service-list" style="padding-left: 20rpx; " slot="popup-btn">
-					<button class="service-item active flex1"
+				<view class="service-list" style="padding-left: 20rpx;margin-top: 80rpx;" slot="popup-btn">
+					<button class="service-item active flex1" style="font-size: 30rpx;"
 						@click="$refs.popupSureRemoveEntrust.open()">确认服务解除</button>
-					<button class="service-item active flex1"
+					<button class="service-item active flex1" style="font-size: 30rpx;"
 						@click="$refs.popupNoSureRemoveEntrust.open()">不确认服务解除</button>
 				</view>
 			</order-popup-common>
@@ -367,6 +378,9 @@
 				is_shouyi:false,
 				flg_check:false,
 				msgs:false,
+				shenpi_jiechu_one:false,//审批解除同意按钮1
+				shenpi_jiechu_two:false,//审批解除同意按钮2
+				
 			};
 		},
 		computed:{
@@ -644,5 +658,7 @@
 	//下半部分圆角矩形
 	.service-item {
 		border-radius: 50rpx;
+		height: 76rpx;
+		
 	}
 </style>

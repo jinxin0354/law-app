@@ -274,6 +274,6 @@ export default {
 	}
 }
 .item-tip{
-	margin-top: 13rpx;
+	line-height: 50rpx;
 }
 </style>

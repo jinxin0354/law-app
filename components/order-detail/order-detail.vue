@@ -273,13 +273,14 @@
             		<view class="item-txt">{{ info.offer }}</view>
             	</view>
             </view>
-            <view class="od-item" v-if="info.price_type=='自费'">
-            	<view class="item-tip">付款时间</view>
-            	<view class="item-right">
-            		<view class="item-txt"><!-- {{ info.pay_time }} -->{{ info.money_type }}</view>
-            	</view>
-            </view>
+            
 			<template v-if="info.pro_name == '打官司'">
+			<view class="od-item">
+				<view class="item-tip">付款时间</view>
+				<view class="item-right">
+					<view class="item-txt"><!-- {{ info.pay_time }} -->{{ info.money_type }}</view>
+				</view>
+			</view>
 			<view class="od-item">
 				<view class="item-tip">律师费用金额</view>
 				<view class="item-right">

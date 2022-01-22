@@ -111,13 +111,13 @@
 					@click="$refs.popupServiceOk.open">服务完成</button>
 				<button class="service-item active" @click="removeEntrust"
 					:disabled="isClientRemoveEntrust || isLawyerRemoveEntrust || disableRemoveEntrust">解除委托</button>
-				<button class="service-item active" style="width: 100%; margin-right: 0;"
+				<!-- <button class="service-item active" style="width: 100%; margin-right: 0;"
 					v-if="!isTimeOver && remainTime" @click="$refs.orderChangeLawyer.$refs.popupChangeLawyer.open()">
 					<uni-countdown :show-day="false" :hour="remainTime.hour" :minute="remainTime.minute"
 						:second="remainTime.second" color="#f00" splitorColor="#f00" backgroundColor="#FFC801"
 						@timeup="timeup"></uni-countdown>
 					无理由更换律师
-				</button>
+				</button> -->
 				<button class="service-item active" v-if="isClientServiceOk & !isLawyerServiceOk"
 					style="width: 100%; margin-right: 0;" @click="$refs.telephoneLawyer.$refs.popupTel.open()">
 					催促律师确认完成

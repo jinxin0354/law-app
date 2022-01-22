@@ -86,7 +86,7 @@
 				</button>
 				<button
 					class="service-item active"
-					@click="jump('/pages/lawyer/user/apply-invest-cost', { order_id: order_id, investor_mobile: info.order.investor_mobile, apply_lawyer: info.order.apply_lawyer })"
+					@click="jump('/pages/lawyer/user/apply-invest-cost', { order_id: order_id, investor_mobile: info.order.investor_mobile, apply_lawyer: info.order.apply_lawyer,apply_pay:info.order.apply_pay,is_apply_pay: info.order.is_apply_pay})"
 				>
 				
 					申请投资费用
@@ -221,12 +221,12 @@
 			>
 				<view class="dialog-tip">解除委托原因：</view>
 				<view class="dialog-tip">{{ info.order.lawyer_remove }}</view>
-				<view class="" style="display: flex;font-size: 30rpx;margin-top: 30rpx;" @click="queren_jiechu_weitui_one=!queren_jiechu_weitui_one">
+				<view style="display: flex;font-size: 30rpx;margin-top: 30rpx;width: 100%;" @click="queren_jiechu_weitui_one=!queren_jiechu_weitui_one">
 					<image src="../../../static/img/icon/radio.png" v-if="queren_jiechu_weitui_one==false"  style="width: 34rpx;height: 34rpx;"></image>
 					<image src="../../../static/img/icon/radioed.png" v-if="queren_jiechu_weitui_one==true" style="width: 34rpx;height: 34rpx;"></image>
 					<view style="margin-left: 10rpx;">我已与委托人、投资人确认解除委托。</view>
 				</view>
-				<view style="display: flex;font-size: 30rpx;margin-top: 20rpx;" @click="queren_jiechu_weitui_two=!queren_jiechu_weitui_two">
+				<view style="display: flex;font-size: 30rpx;margin-top: 20rpx;width: 100%;" @click="queren_jiechu_weitui_two=!queren_jiechu_weitui_two">
 					<image src="../../../static/img/icon/radio.png" v-if="queren_jiechu_weitui_two==false"  style="width: 34rpx;height: 34rpx;"></image>
 					<image src="../../../static/img/icon/radioed.png" v-if="queren_jiechu_weitui_two==true" style="width: 34rpx;height: 34rpx;"></image>
 					<view style="margin-left: 10rpx;">我已将全部投资费用原路退回给投资人</view>

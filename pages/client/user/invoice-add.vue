@@ -249,6 +249,6 @@ export default {
 	padding: 20rpx 30rpx;
 }
 .item-tip{
-	margin-top: 12rpx;
+	line-height: 62rpx;
 }
 </style>

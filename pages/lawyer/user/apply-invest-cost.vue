@@ -175,7 +175,7 @@
 			>
 				<view class="">
 					本案累计申请金额已超出限额
-					<text class="red">4400</text>
+					<text class="red">{{chaochu}}</text>
 					元，超限部分需要投资人审批，请先与投资人协商一致。
 				</view>
 			</uni-popup-dialog>
@@ -218,12 +218,21 @@ export default {
 			],
 			photoType: 'case_list',
 			investor_mobile: '',
-			apply_lawyer: 0 //是否申请投资费用1申请  0未申请过律师费
+			apply_lawyer: 0 ,//是否申请投资费用1申请  0未申请过律师费,
+			chaochu:0,
+			apply_pay:0,//已经申请的投资费用
+			is_apply_pay:0,//是否已经申请过律师费 1已申请 0未申请
 		};
 	},
 	onLoad(params) {
 		if (params.order_id) {
 			this.order_id = params.order_id;
+		}
+		if(params.apply_pay){
+			this.apply_pay = params.apply_pay;
+		}
+		if (params.is_apply_pay) {
+			this.is_apply_pay = params.is_apply_pay;
 		}
 		if (params.investor_mobile) {
 			this.investor_mobile = params.investor_mobile;
@@ -309,9 +318,16 @@ export default {
 					sum = sum + Number(this.lawyer);
 				}
 			}
-			if (sum > 4400) {
+			
+			let limit_m = Number(this.apply_pay)+sum;
+				
+			if (limit_m > 4400) {
+				this.chaochu = limit_m-4400;
 				this.$refs.popupOver5000.open();
 				return;
+			}
+			if(this.is_apply_pay == 1){
+				this.lawyer = 0;
 			}
 			if (sum < 0.01) {
 				uni.showToast({
