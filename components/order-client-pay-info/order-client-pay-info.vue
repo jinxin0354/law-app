@@ -20,9 +20,9 @@
 						</view>
 						<view class="" >
 							<view class="txt-name">{{ item.name }}</view>
-							<view class="txt-tip">{{ item.time }}</view>
+							<view class="txt-tip" style="margin-top: 20rpx;">{{ item.time }}</view>
 						</view>
-						<image v-if="item.shou_type == 2 || item.type == 1" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<image v-if="item.shou_type == 2 || item.type == 1" class="image-r" style="width: 17rpx;height: 28rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 						
 					</view>
 					<view class="item-btn flex flex-horizontal flex-center " style="margin-top: 10px;">

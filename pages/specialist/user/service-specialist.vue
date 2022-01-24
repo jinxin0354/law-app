@@ -388,6 +388,7 @@
 					area_id: this.info.order.fali_serve_area_id,
 					product_name: this.info.order.pro_name,
 					bearFees: this.info.order.price_type,
+					product_image:this.info.order.bg_image,
 					type: 'change'
 				};
 				this.jump('/pages/client/order/order-court-own', params);

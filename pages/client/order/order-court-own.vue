@@ -2416,6 +2416,7 @@
 					huan_images : this.huan_images,//还款记录(包括每次还款金额和还款时间) 
 					other_images : this.other_images,//您认为有用的其他有用材料
                     coupon_id: this.current_coupon ? this.current_coupon.id : '',
+					bg_image:this.product_image,
 				};
 
 				if (this.edit_order_id) {

@@ -86,7 +86,7 @@ export default {
 				token: uni.getStorageSync('token')
 			};
 			let res = await this.$api('index.read_notice', formData);
-
+			
 			if (this.userInfo.id == item.user_id) {// 委托人
 				if (item.status == -1) {
 					if (item.cancel_type == 1) {
@@ -126,7 +126,7 @@ export default {
 					this.jump('/pages/client/user/service-specialist', { order_id: item.order_id });
 				}
 			} 
-			else if (this.userInfo.user_type == 3 || this.userInfo.user_type == 4) {// 律师和投资人
+			else if (this.userInfo.is_lawyer == 1 || this.userInfo.is_touziren == 1) {// 律师和投资人
 				if (item.status == -1 || item.status == 99) {
 					this.jump('/pages/lawyer/user/order-cancel', { order_id: item.order_id });
 				}
@@ -146,9 +146,9 @@ export default {
 					} else if (item.serve_time == '包年') {
 						this.jump('/pages/lawyer/user/service-year', { order_id: item.order_id });
 					} else if (item.price_type == '投资人支付(不用还)') {
-						if (this.userInfo.user_type == '3') {
+						if (this.userInfo.is_lawyer == '1') {
 							this.jump('/pages/lawyer/user/service-investor', { order_id: item.order_id });
-						} else if (this.userInfo.user_type == '4') {
+						} else if (this.userInfo.is_touziren == '1') {
 							this.jump('/pages/investor/user/service-investor', { order_id: item.order_id });
 						}
 					} else {
@@ -163,7 +163,8 @@ export default {
 				}
 			} 
 			
-			else if (this.userInfo.user_type == 2) {// 法务
+			else if (this.userInfo.is_fawu == 1) {// 法务_
+			console.log('法务服务完成        -----'+this.userInfo.user_type)
 				if (item.status == -1) {
 					this.jump('/pages/lawyer/user/order-cancel', { order_id: item.order_id });
 				} else if (item.status == 12) {

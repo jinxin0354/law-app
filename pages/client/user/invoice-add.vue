@@ -18,28 +18,28 @@
 				</view>
 			</view>
 
-			<view class="od-item">
+			<view class="od-item" >
 				<view class="item-tip require">名称</view>
-				<view class="item-right">
+				<view class="item-right" style="height: 68rpx;">
 					<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.name" /></view>
 				</view>
 			</view>
 			<template v-if="info.type == 1">
 				<view class="od-item">
 					<view class="item-tip require">税号</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.tax" /></view>
 					</view>
 				</view>
 				<view class="od-item">
 					<view class="item-tip">公司地址</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.address" /></view>
 					</view>
 				</view>
 				<view class="od-item">
 					<view class="item-tip">电话号码</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.tel" /></view>
 					</view>
 				</view>
@@ -53,7 +53,7 @@
 				</view>
 				<view class="od-item">
 					<view class="item-tip">银行账户</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.bank_account" /></view>
 					</view>
 				</view>
@@ -68,20 +68,20 @@
 			</view>
 			<view class="od-item">
 				<view class="item-tip require">详细地址</view>
-				<view class="item-right">
+				<view class="item-right" style="height: 68rpx;">
 					<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.send_address" /></view>
 				</view>
 			</view>
 			<template v-if="info.type == 1">
 				<view class="od-item">
 					<view class="item-tip require">收件人</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.consignee" /></view>
 					</view>
 				</view>
 				<view class="od-item">
 					<view class="item-tip require">联系电话</view>
-					<view class="item-right">
+					<view class="item-right" style="height: 68rpx;">
 						<view class="item-txt"><input class="ipt" type="text" value="" placeholder="请输入" placeholder-class="placeholder" v-model="info.phone" /></view>
 					</view>
 				</view>

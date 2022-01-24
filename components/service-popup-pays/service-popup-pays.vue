@@ -13,11 +13,11 @@
 					<view class="item-tip" style="margin-bottom: 10rpx;">付款方式<span style="color: #FF0000;">*</span></view>
 					<view class="item-right">
 						<view class="pay-list" style="width: 100%; display: flex; flex-wrap: wrap;">
-							<view class="pay-item" :style="payMethod == '微信' ? 'border:3rpx solid #F9B804;' : 'padding:11rpx;'" @click="payMethod = '微信'">
+							<view class="pay-item" :style="payMethod == '微信' ? 'border:3rpx solid #F9B804;' : 'padding:12rpx;'" @click="payMethod = '微信'">
 								<view class="image-wrapper"><image src="@/static/img/pay-icon1.png" mode="aspectFit"></image></view>
 								微信
 							</view>
-							<view class="pay-item" :style="payMethod == '余额' ? 'border:3rpx solid #F9B804;' : 'padding:11rpx;'" @click="payMethod = '余额'">
+							<view class="pay-item" :style="payMethod == '余额' ? 'border:3rpx solid #F9B804;' : 'padding:12rpx;'" @click="payMethod = '余额'">
 								<view class="image-wrapper"><image src="@/static/img/pay-icon3.png" mode="aspectFit"></image></view>
 								余额<span style="color: #777777;font-size: 20rpx;margin-left: 10rpx;">{{money}}</span>
 							</view>
