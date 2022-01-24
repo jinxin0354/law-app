@@ -19,17 +19,15 @@
 						<view class="txt-tip">{{ item.new_create }}</view>
 						
 					</view>
-					<text style="color: #999" v-if="item.is_receipt == 2">
+					<template v-if="item.is_receipt == 2">
 						已开具
-					</text>
-					<text style="color: #999" v-else-if="item.is_receipt == 0">
+					</template>
+					<template v-if="item.is_receipt == 0">
 						取消开票
-					</text>
-					<text style="color: #999" v-else-if="item.status == 2">
-						已开具
-					</text>
+					</template>
 				</view>
-				<template v-if="userInfo.id == info.order.user_id">
+				{{item.user_id}}
+				<template v-if="userInfo.id == item.user_id">
 					<view v-if="item.is_receipt == 1" class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
 						<view  
 							class="comfir-btn flex flex-center flex-1"
@@ -49,7 +47,7 @@
 						<!-- <template v-if="item.is_receipt == 0">
 							取消开票
 						</template> -->
-						<template v-if="item.status == 1">
+						<template v-if="item.is_receipt == 1">
 							<view
 								class="comfir-btn flex flex-center flex-1"
 								type="default"
@@ -61,6 +59,9 @@
 								已开具并邮寄
 							</view>
 						</template>
+						<!-- <template v-else-if="item.is_receipt == 2">
+							已开具
+						</template> -->
 					</view>
 				</template>
 			</view>
