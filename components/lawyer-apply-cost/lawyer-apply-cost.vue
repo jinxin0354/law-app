@@ -80,6 +80,8 @@
 					})
 					return
 				}
+				
+				
 				this.previewImages(photo.split(','));
 				
 				// uni.previewImage({
