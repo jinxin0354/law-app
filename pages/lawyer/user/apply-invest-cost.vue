@@ -398,17 +398,24 @@ export default {
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
-				case_money:Number(this.case_money),
 				case_time: this.case_time,
-				announce_money: Number(this.announce_money),
 				announce: this.getUrlParams(this.announce_list),
-				enquire: Number(this.enquire),	
 				case: this.getUrlParams(this.case_list),
 				contract: this.getUrlParams(this.contract_list),
 				main: this.getUrlParams(this.main_list),
 				indictment: this.getUrlParams(this.indictment_list),
 				note: this.getUrlParams(this.note_list),
 			};
+			
+			if (this.result.indexOf('checkValue1') != -1) {
+				formData.case_money = Number(this.case_money)
+			}
+			if (this.result.indexOf('checkValue2') != -1) {
+				formData.announce_money = Number(this.announce_money)
+			}
+			if (this.result.indexOf('checkValue3') != -1) {
+				formData.enquire = Number(this.enquire)
+			}
 			
 			if (this.apply_lawyer == 0 && this.result.indexOf('checkValue4') != -1) {
 				formData.lawyer =  Number(this.lawyer)
