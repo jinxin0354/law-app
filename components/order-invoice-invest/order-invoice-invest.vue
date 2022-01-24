@@ -13,8 +13,8 @@
 						"
 					>
 						<view class="txt-name">
-							<view class=" text-ellipsis" style="width: 180px;">{{ item.name }}</view>
-							<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+							<view class=" text-ellipsis" style="width: 170px;">{{ item.name }}</view>
+							<view class="txt-nav"><image src="@/static/img/right.png" style="width: 16rpx;height: 28rpx;" mode="widthFix"></image></view>
 						</view>
 						<view class="txt-tip">{{ item.new_create }}</view>
 						
@@ -42,11 +42,12 @@
 					</view>
 				</template>
 				<template v-else>
+					
 					<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
 						<!-- <template v-if="item.is_receipt == 0">
 							取消开票
 						</template> -->
-						<template v-if="item.is_receipt == 1">
+						<template v-if="item.status == 1">
 							<view
 								class="comfir-btn flex flex-center flex-1"
 								type="default"
@@ -58,9 +59,9 @@
 								已开具并邮寄
 							</view>
 						</template>
-						<!-- <template v-else-if="item.is_receipt == 2">
+						 <template v-else-if="item.status == 2">
 							已开具
-						</template> -->
+						</template>
 					</view>
 				</template>
 			</view>

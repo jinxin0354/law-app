@@ -9,7 +9,7 @@
 						<view class="txt-name">{{ item.name }}</view>
 						<view class="txt-tip" style="margin-top: 20rpx;">{{ item.time }}</view>
 					</view>
-					<image v-if="item.type == 3" class="image-r" style="width: 17rpx;height: 28rpx;" src="@/static/img/right.png" mode="widthFix"></image>
+					<image v-if="item.type == 3" class="image-r" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
 				<view class="item-btn flex flex-center flex-horizontal" style="margin-top: 10px;">
 					<view
