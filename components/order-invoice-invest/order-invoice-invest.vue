@@ -22,8 +22,11 @@
 					<template v-if="item.is_receipt == 2">
 						已开具
 					</template>
-					<template v-if="item.is_receipt == 0">
+					<template v-else-if="item.is_receipt == 0">
 						取消开票
+					</template>
+					<template v-else-if="item.status == 2">
+						已开具
 					</template>
 				</view>
 				<template v-if="userInfo.id == info.order.user_id">
@@ -42,7 +45,6 @@
 					</view>
 				</template>
 				<template v-else>
-					
 					<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
 						<!-- <template v-if="item.is_receipt == 0">
 							取消开票
@@ -58,9 +60,6 @@
 							>
 								已开具并邮寄
 							</view>
-						</template>
-						 <template v-else-if="item.status == 2">
-							已开具
 						</template>
 					</view>
 				</template>
