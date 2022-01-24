@@ -1,7 +1,7 @@
 <template>
 	<view class="detail-item">
 		<view class="item-title">
-			<view style="display: flex;align-items: center;" @click="download({image:docZifei})">
+			<view style="display: flex;align-items: center;color:#000000;font-weight: 700;" @click="download({image:docZifei})">
 				打官司费用
 				<image  src="@/static/img/order-ques.png" mode=""
 				style="width: 30rpx;height: 30rpx;margin-left: 10rpx;"></image>

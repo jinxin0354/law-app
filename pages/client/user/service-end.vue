@@ -9,7 +9,7 @@
 					<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()" v-if="info.order.serve_time != '15分钟'">联系律师</button>
 					<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 					<template v-if="info.order.pro_name != '问一下'">
-						<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
+					<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
 					</template>
 					<template v-if="info.order.pro_name != '问一下' && info.order.pro_name != '打官司'">
 						<button class="service-item active" @click="$refs.popupPayToLaw.open()">付款给律师</button>
@@ -28,9 +28,23 @@
 		<!-- 录音组件 -->
 		<order-record v-if="Object.keys(info.order).length > 0 && info.order.serve_time == '15分钟'" :info="info" @init="init"></order-record>
 		<!-- 待付信息 -->
-		<order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info>
+		<!-- <order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info> -->
 		<!-- 付款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" :info="info"></order-common-detail> -->
+		<!-- 待付信息
+		按新版设计图直接改样式
+		 -->
+		<order-client-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow"></order-client-pay-info>
+		<!-- 待付信息
+				结算投资收益 
+			按新版设计图直接改样式
+		-->
+		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
+		</order-wait-pay-investor-settle-accounts>
+		<!-- 付款详情 -->
+		<order-client-detail v-if="Object.keys(info.order.pay_text).length > 0 || Object.keys(info.order.jie_pay).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
+			:info="info"></order-client-detail>
+		
 		<!-- 增加服务详情 -->
 		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail>
 		<!-- 续费详情 -->
@@ -74,6 +88,12 @@
 		</uni-popup>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		<!-- 律师请款 -->
+		<lawyer-qing ref="lawyerQing" :item="current_item"></lawyer-qing>
+		<!-- 结算投资人奖励 -->
+		<settlement-popup ref="settlement" :type="2" :item="current_item"></settlement-popup>
+		<!--结算投资收益-->
+		<end-invest-profit ref="investShouyi" :item="current_item"></end-invest-profit>
 	</view>
 </template>
 
@@ -87,6 +107,7 @@ export default {
 			info: {
 				order: {}
 			},
+			current_item:{},
 			order_id: '',
 			infoLawyer: {},
 			infoInbo: {},
@@ -108,6 +129,29 @@ export default {
 				phone.loadOffice(url);
 			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
 				this.$bridge.callhandler('loadOffice', url, data => {});
+			}
+		},
+		popupShow(item) {
+			if (item.type == 8) {
+				this.current_item = item
+				this.$refs.returnCostTip.$refs.returnCost.open()
+			} else if (item.type == 3 || item.type == 1) {
+				/* this.current_item = item.popup
+				this.$refs.settlement.$refs.settlement.open() */
+				// this.current_item = item
+				// this.$refs.investShouyi.$refs.investShou.open()
+				this.current_item = item
+				this.$refs.investShouyi.$refs.investShou.open()
+			} else if (item.type == 7) {
+				this.current_item = item.popup
+				this.$refs.lawyerApply.$refs.lawyerApply.open()
+			} else if (item.type == 2) {
+				// 退款弹窗
+				this.current_item = item.popup
+				this.$refs.lawyerTui.$refs.lawyerApply.open()
+			} else if (item.shou_type == 2) {
+				this.current_item = item 
+				this.$refs.lawyerQing.$refs.lawyerApply.open()
 			}
 		},
 		async init() {
@@ -184,4 +228,7 @@ export default {
 .nav-list {
 	margin: 0 -30rpx;
 }
+.service-item {
+		border-radius: 50rpx;
+	}
 </style>

@@ -3,7 +3,7 @@
 		<order-pop-common title="服务保障" @closePop="closePop('popupEnsure')">
 			<scroll-view class="popup-con" scroll-y="true" slot="popup-con">
 				<view class="con-item" >
-				<image src="@/static/img/order-service.png" mode="widthFix"></image>
+				<image :src="imageUrl" mode="widthFix"></image>
 				</view>
 			</scroll-view>
 			<view class="ok-box" slot="popup-btn"><button type="default" class="ok-btn" @click="closePop('popupEnsure')">朕知道了</button></view>
@@ -13,12 +13,23 @@
 
 <script>
 export default {
-	props: ['info'],
+	props: ['info','bearFees'],
 	data() {
-		return {};
+		return {
+            imageUrl:this.bearFees == '自费' ? require('@/static/img/order-service.png') : require('@/static/img/order-service-1.png')
+        };
 	},
 	created() {},
-	methods: {}
+	methods: {},
+    watch:{
+        'bearFees':function(val){
+            if(val == '自费'){
+                this.imageUrl = require('@/static/img/order-service.png')
+            }else{
+                this.imageUrl = require('@/static/img/order-service-1.png')
+            }
+        }
+    }
 };
 </script>
 

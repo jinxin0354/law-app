@@ -5,10 +5,13 @@
 			<view class="match-txt">您好！您的法律服务已经解除，请您返回商城主页参与其他订单。感谢您的信任与支持！祝您生活愉快，身体健康。</view>
 			<view class="service-list">
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
+				<button class="service-item active" @click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
+				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
+				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 				<template v-if="info.order.pro_name != '问一下'">
 					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
 				</template>
-				<button class="service-item active" @click="$refs.popupPayToLaw.open()">退款</button>
+				<!-- <button class="service-item active" @click="$refs.popupPayToLaw.open()">退款</button> -->
 			</view>
 			<law-nav></law-nav>
 		</view>
@@ -59,6 +62,8 @@
 		<order-telephone name="投资人" :phoneNumber="info.order.investor_mobile" ref="telephoneInvestor" v-if="info.order.investor_mobile"></order-telephone>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		<!-- 投资人收件信息组件 -->
+		<order-invest-inbox-message ref="investInboxMessage" :infoInbo="infoInbo"></order-invest-inbox-message>
 	</view>
 </template>
 
@@ -71,6 +76,7 @@ export default {
 			info: {
 				order: {}
 			},
+			infoInbo: {},
 			order_id: '',
 			payToPrice: '',
 			payToReason: ''
@@ -83,6 +89,15 @@ export default {
 		}
 	},
 	methods: {
+		async jumpToWeb() {
+			let url = this.info.order.zhaiquan_hetong
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				phone.loadOffice(url);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('loadOffice', url, data => {});
+			}
+		},
 		async init() {
 			let formData = {
 				id: this.order_id,
@@ -90,6 +105,16 @@ export default {
 			};
 			let res = await this.$api('index.orderDetail', formData);
 			this.info = res.data;
+			if(this.info.order.investor_id){
+				let formDataInbo = {
+					id: this.info.order.investor_id,
+					token: uni.getStorageSync('token')
+				};
+				let resInbo = await this.$api('index.investor_address', formDataInbo);
+				if (resInbo.code == 1) {
+					this.infoInbo = resInbo.data;
+				}
+			}
 		},
 		// 退款-支付
 		async confirmPayToLaw(payMethod) {
@@ -146,4 +171,7 @@ export default {
 .nav-list {
 	margin: 0 -30rpx;
 }
+.service-item {
+		border-radius: 50rpx;
+	}
 </style>

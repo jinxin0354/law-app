@@ -16,7 +16,7 @@
 				<textarea :placeholder="placeholder" :focus="focus" v-model="val" placeholder-class="placeholder"/>
 			</slot>
 		</view>
-		<view class="uni-dialog-button-group">
+		<view class="uni-dialog-button-group" v-if="okTxt!=''||cancleTxt!=''">
 			<view class="uni-dialog-button uni-border-right" @click="closeDialog" v-if="cancleTxt">
 				<text class="uni-dialog-button-text">{{cancleTxt}}</text>
 			</view>

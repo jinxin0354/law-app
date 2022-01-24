@@ -284,18 +284,20 @@ export default {
 				fen: this.current_item.fen,
 				pay_type: pay_type
 			};
-
+			
+			var that=this;
 			let resPay = await this.$pay(formDataPay);
 			if (resPay == 1) {
-				this.$refs.popupWantPay.close();
-				this.$emit('init');
+				that.$refs.popupWantPay.close();
+				that.$emit('init');
 			}
 		},
 		payOk(res) {
+			var that=this;
 			// 安卓0 支付成功，-1 支付失败， -2取消支付
 			if (res == '0') {
-				this.$refs.popupWantPay.close();
-				this.$emit('init');
+				that.$refs.popupWantPay.close();
+				that.$emit('init');
 			}
 		},
 		async backApply() {
@@ -473,8 +475,8 @@ export default {
 		flex-wrap: wrap;
 	}
 	.image-r {
-		width: 9px;
-		height: 14px;
+		width: 8px;
+		height: 12px;
 		margin-left: 35px;
 	}
 </style>

@@ -72,7 +72,8 @@
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
 				<button class="service-item active" @click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
+					<!-- <button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button> -->
+					 <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid)">办理详情</button>
 				</template>
 				<button
 					class="service-item active"
@@ -86,7 +87,7 @@
 				</button>
 				<button
 					class="service-item active"
-					@click="jump('/pages/lawyer/user/apply-invest-cost', { order_id: order_id, investor_mobile: info.order.investor_mobile, apply_lawyer: info.order.apply_lawyer })"
+					@click="jump('/pages/lawyer/user/apply-invest-cost', { order_id: order_id, investor_mobile: info.order.investor_mobile, apply_lawyer: info.order.apply_lawyer,apply_pay:info.order.apply_pay,is_apply_pay: info.order.is_apply_pay})"
 				>
 				
 					申请投资费用
@@ -212,15 +213,26 @@
 		<uni-popup ref="popupSureRemoveEntrust" type="dialog">
 			<uni-popup-dialog
 				type="info"
-				okTxt="是"
-				cancleTxt="否"
+				okTxt=""
+				title="确认解除委托"
 				:before-close="true"
-				@confirm="sureRemoveEntrust(1, 'popupSureRemoveEntrust')"
+				:showClose="true"
+
 				@close="closePop('popupSureRemoveEntrust')"
 			>
 				<view class="dialog-tip">解除委托原因：</view>
 				<view class="dialog-tip">{{ info.order.lawyer_remove }}</view>
-				<view class="dialog-tip-line">我确认解除委托</view>
+				<view style="display: flex;font-size: 30rpx;margin-top: 30rpx;width: 100%;" @click="queren_jiechu_weitui_one=!queren_jiechu_weitui_one">
+					<image src="../../../static/img/icon/radio.png" v-if="queren_jiechu_weitui_one==false"  style="width: 34rpx;height: 34rpx;"></image>
+					<image src="../../../static/img/icon/radioed.png" v-if="queren_jiechu_weitui_one==true" style="width: 34rpx;height: 34rpx;"></image>
+					<view style="margin-left: 10rpx;">我已与委托人、投资人确认解除委托。</view>
+				</view>
+				<view style="display: flex;font-size: 30rpx;margin-top: 20rpx;width: 100%;" @click="queren_jiechu_weitui_two=!queren_jiechu_weitui_two">
+					<image src="../../../static/img/icon/radio.png" v-if="queren_jiechu_weitui_two==false"  style="width: 34rpx;height: 34rpx;"></image>
+					<image src="../../../static/img/icon/radioed.png" v-if="queren_jiechu_weitui_two==true" style="width: 34rpx;height: 34rpx;"></image>
+					<view style="margin-left: 10rpx;">我已将全部投资费用原路退回给投资人</view>
+				</view>
+				<view class="btns" :class="queren_jiechu_weitui_three==true?'btnss':''" @click="sureRemoveEntrust(1, 'popupSureRemoveEntrust')">我要确认</view>
 			</uni-popup-dialog>
 		</uni-popup>
 		<!-- 不确认解除委托弹出层 -->
@@ -348,8 +360,20 @@ export default {
 			isLinkInvestor: false, //是否联系投资人
 			isTipShow: false,
 			infoInbo: {},
-			isReceipt: false //是否显示我要付款按钮
+			isReceipt: false ,//是否显示我要付款按钮
+			queren_jiechu_weitui_one:false,//确认解除委托弹框的单选1
+			queren_jiechu_weitui_two:false,//确认解除委托弹框的单选2
+			
 		};
+	},
+	computed:{
+		queren_jiechu_weitui_three(){
+			if(this.queren_jiechu_weitui_one==true&&this.queren_jiechu_weitui_two==true){
+				return true;
+			}else{
+				return false;
+			}
+		}
 	},
 	onLoad(params) {
 		if (params.order_id) {
@@ -433,6 +457,16 @@ export default {
 			}
 		},
 		async sureRemoveEntrust(status, pop) {
+			if(status==1){
+				if(this.queren_jiechu_weitui_one!=true||this.queren_jiechu_weitui_two!=true){
+					uni.showToast({
+						title:'需先同意以下内容',
+						icon:'none',
+						duration:1000
+					})
+					return;
+				}
+			}
 			let formData = {
 				id: this.order_id,
 				token: uni.getStorageSync('token'),
@@ -505,5 +539,21 @@ export default {
 //下半部分圆角矩形
 	.service-item {
 		border-radius: 50rpx;
+	}
+	
+	.btns{
+		width: 360rpx;
+		height: 76rpx;
+		border-radius: 38rpx;
+		background: #F2F2F2;
+		color: #999999;
+		font-size: 30rpx;
+		line-height: 76rpx;
+		text-align: center;
+		margin-top: 56rpx;
+	}
+	.btnss{
+		background: #FFC900;
+		color: white;
 	}
 </style>

@@ -63,7 +63,7 @@
 					<view class="item-right" v-if="index==0">
 						<view class="item-txt ">
 							<text class="input_icon">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg" :value="jine3" :id="3" pattern="[0-9]*"
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg($event,'jine3')" v-model="moneyparams.jine3"  pattern="[0-9]*"
 								/>
 						</view>
 
@@ -175,11 +175,17 @@
 								</view>
 							</view>
 						</view>
-						<view v-else class="item-txt flex-align-center">
+						<view  class="item-txt flex-align-center" v-if="index==0">
 							<text class="input_icon">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg"   :value="jine" :key="index" :id="index" pattern="[0-9]*"
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg($event,'jine1')"  v-model="moneyparams.jine1" pattern="[0-9]*"
 							/>
 						</view>
+						<view  class="item-txt flex-align-center" v-if="index==1">
+							<text class="input_icon">¥</text>
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg($event,'jine2')"   v-model="moneyparams.jine2" pattern="[0-9]*"
+							/>
+						</view>
+					
 					</view>
 				</view> 
 
@@ -199,7 +205,7 @@
 						<view class="item-txt" style="margin-bottom: 30rpx;">
 
 							<text class="input_icon red1">¥</text>
-							<input type="number" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"   @input="sendMsg" :value="jine4" :id="4" pattern="[0-9]*"
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"   @input="sendMsg($event,'jine4')" v-model="moneyparams.jine4" pattern="[0-9]*"
 								/>
 
 						</view>
@@ -335,14 +341,18 @@
 					prices:"",
 					sunshi_money:"",
 					sunshi_moneys:"待计算",
-					weiyue_money: ""
+					weiyue_money: "",
+					jine1:"",
+					jine2:"",
+					jine3:"",
+					jine4:"",
 				},
 				flg_check: false,
-				jine:'',
-				jine1:'',
-				jine2:'',
-				jine3:'',
-				jine4:'',
+				// jine:'',
+				// jine1:'',
+				// jine2:'',
+				// jine3:'',
+				// jine4:'',
 				
 				weiyues:'',
 				getMoneys:"",
@@ -388,6 +398,19 @@
 				
 			},
 			chuli_moneys(value){
+				console.log(value)
+					this.moneyparams.jine1 = ""
+					this.moneyparams.jine2 = ""
+					this.moneyparams.jine3 = ""
+					this.moneyparams.jine4 = ""
+					this.moneyparams.price = ""
+				
+				
+			
+				var data = {
+					heji_money:0
+				}
+				this.$emit('func',data)
 				if(value=="全部支持"){
 					this.moneyparams.chuli_money = "全部支持"
 					
@@ -399,16 +422,6 @@
 				if(this.moneyparams.moneys!=''){
 					this.moneyparams.moneys = ""
 				}
-				this.jine = ''
-				this.jine1 = ''
-				this.jine2 = ''
-				this.jine3 = ''
-				this.jine4 = ''
-				this.moneyparams.price = ""
-				var data = {
-					heji_money:0
-				}
-				this.$emit('func',data)
 			},
 			flg_checks(){
 				if(this.flg_check==true){
@@ -424,46 +437,18 @@
 			close() {
 				this.$refs.direc.close()
 			},
-			sendMsg(e){
+			sendMsg(e,type){
+				this.$nextTick(() => {
+						this.$set(this.moneyparams,type,e.detail.value.replace(/\D/g,''))
+						})
+				
 		
-				var index = e.currentTarget.id
-				if(index==0){
-					this.jine1 = e.detail.value
-					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
-									this.$nextTick(function() {
-										this.jine1 = e.value.replace(inputRule , '');
-									})
-				}
-				if(index==1){
-					this.jine2 = e.detail.value
-					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
-									this.$nextTick(function() {
-										this.jine2 = e.value.replace(inputRule , '');
-									})
-				}
-				if(index==3){
-					this.jine3 = e.detail.value
-					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
-									this.$nextTick(function() {
-										this.jine3 = e.value.replace(inputRule , '');
-									})
-				}
-				if(index==4){
-					this.jine4 = e.detail.value
-					const inputRule = /^(0+)|[^\d]+/g  //修改inputRule 的值
-									this.$nextTick(function() {
-										this.jine4 = e.value.replace(inputRule , '');
-									})
-				}
-			this.$nextTick(() => {
-				this[type] = e.detail.value.replace(/\D/g,'')
-			})
 			
 					
 				if(this.moneyparams.chuli_money=='部分支持'){
 					
-			if(this.jine1!=''){
-				if(this.jine2!=''){
+			if(this.moneyparams.jine1!=''){
+				if(this.moneyparams.jine2!=''){
 			
 					// if(this.moneyparams.chuli_type=='法院判决'){
 					// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
@@ -471,13 +456,18 @@
 					
 					// }
 					// if(this.moneyparams.chuli_type=='和解/调节'){
-						var a = parseFloat(this.jine1) - parseFloat(this.jine2)
-				
-						var achu= a/parseFloat(this.jine1)
-							
-				
-						 var ass= achu*parseFloat(this.touziren_pay)
-						 		 this.moneyparams.sunshi_moneys  = ass.toFixed(2)
+						if(this.moneyparams.jine1!=0 &&this.moneyparams.jine2!=0){
+							var a = parseFloat(this.moneyparams.jine1) - parseFloat(this.moneyparams.jine2)
+							var achu= a/parseFloat(this.moneyparams.jine1)
+							 var ass= achu*parseFloat(this.touziren_pay)
+								  this.moneyparams.sunshi_moneys  = ass.toFixed(2)
+						}else{
+							console.log('aaa')
+							this.moneyparams.sunshi_moneys = '0'
+						}
+					
+						 
+						 		
 							
 						//this.sunshi_money = this.moneyparams.sunshi_moneys
 					// }
@@ -490,7 +480,7 @@
 			
 			
 			
-					if(this.jine1==''||this.jine2==''||this.jine3==''||this.jine4==''){
+					if(this.moneyparams.jine1==''||this.moneyparams.jine2==''||this.moneyparams.jine3==''||this.moneyparams.jine4==''){
 					this.heji = 0
 					}else{
 						// if(this.moneyparams.chuli_type=='法院判决'){
@@ -502,23 +492,23 @@
 						// 	this.moneyparams.sunshi_money = a/this.jine1*this.touziren_pay
 						// }
 					
-						this.heji = parseFloat(this.jine3*0.3) + parseFloat(this.moneyparams.sunshi_moneys)+parseFloat(this.jine4)
+						this.heji = parseFloat(this.moneyparams.jine3*0.3) + parseFloat(this.moneyparams.sunshi_moneys)+parseFloat(this.moneyparams.jine4)
 					}
 				
-					var jine3 = this.jine3*0.3
+					var jine3 = this.moneyparams.jine3*0.3
 				
 					this.moneyparams.price =jine3.toFixed(2)
 				var data= {
 					type:3,
 					chuli_money:this.moneyparams.chuli_money,
-					money:this.jine3,
+					money:this.moneyparams.jine3,
 					chuli_type:this.moneyparams.chuli_type,
 					price:this.moneyparams.price*0.3,
-					yuan_money:this.jine1,
-					hejie_money:this.jine2,//和解时穿的参数
+					yuan_money:this.moneyparams.jine1,
+					hejie_money:this.moneyparams.jine2,//和解时穿的参数
 					touzi_money:this.touziren_pay,
 					sunshi_monet:this.sunshi_money,
-					weiyue_money:this.jine4,
+					weiyue_money:this.moneyparams.jine4,
 					heji_money:this.heji,
 					
 				
@@ -530,28 +520,28 @@
 			if(this.moneyparams.chuli_money=='全部支持'){
 			
 				if(this.jine3!=''){
-					var jine3 = this.jine3*0.3
+					var jine3 = this.moneyparams.jine3*0.3
 				
 					this.moneyparams.price = jine3.toFixed(2)
 				}
-				if(this.jine3==''||this.jine4==''){
+				if(this.moneyparams.jine3==''||this.moneyparams.jine4==''){
 				this.heji = 0
 				}else{
-					var a =parseFloat(this.moneyparams.price) + parseFloat(this.jine4)
+					var a =parseFloat(this.moneyparams.price) + parseFloat(this.moneyparams.jine4)
 					this.heji = a.toFixed(2)
 				}
 				
 				var data= {
 					type:3,
 					chuli_money:this.moneyparams.chuli_money,
-					money:this.jine3,
+					money:this.moneyparams.jine3,
 					chuli_type:this.moneyparams.chuli_type,
 					price:this.moneyparams.price,
-					yuan_money:this.jine1,
-					hejie_money:this.jine2,//和解时穿的参数
+					yuan_money:this.moneyparams.jine1,
+					hejie_money:this.moneyparams.jine2,//和解时穿的参数
 					touzi_money:this.touziren_pay,
 					sunshi_monet:this.sunshi_money,
-					weiyue_money:this.jine4,
+					weiyue_money:this.moneyparams.jine4,
 					heji_money:this.heji,
 					
 				}
@@ -560,31 +550,31 @@
 				
 			}
 			if(this.moneyparams.chuli_money=='全部不支持'){
-				if(this.jine3!=''){
-					var jine3 = this.jine3*0.3
+				if(this.moneyparams.jine3!=''){
+					var jine3 = this.moneyparams.jine3*0.3
 					this.moneyparams.price = jine3.toFixed(2)
 				
 				}
-				if(this.jine3==''||this.jine4==''){
+				if(this.moneyparams.jine3==''||this.moneyparams.jine4==''){
 				this.heji = 0
 				}else{
 				
 					var a =parseFloat(this.moneyparams.price) + parseFloat(this.touziren_pay)
-					var ass =a + parseFloat(this.jine4)
+					var ass =a + parseFloat(this.moneyparams.jine4)
 					this.heji =ass.toFixed(2)
 				}
 				
 					var data= {
 						type:3,
 						chuli_money:this.moneyparams.chuli_money,
-						money:this.jine3,
+						money:this.moneyparams.jine3,
 						chuli_type:this.moneyparams.chuli_type,
 						price:this.moneyparams.price*0.3,
-						yuan_money:this.jine1,
-						hejie_money:this.jine2,//和解时穿的参数
+						yuan_money:this.moneyparams.jine1,
+						hejie_money:this.moneyparams.jine2,//和解时穿的参数
 						touzi_money:this.touziren_pay,
 						sunshi_monet:this.sunshi_money,
-						weiyue_money:this.jine4,
+						weiyue_money:this.moneyparams.jine4,
 						heji_money:this.heji,
 					
 					}

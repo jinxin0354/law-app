@@ -25,7 +25,7 @@
 						<text class="flex flex-1">公告费</text>
 						<text class="money-text">¥{{item.announce_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item" v-if="item.clickPhoto != ''" @click="clickPhoto(item.announce)">
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.announce != ''" @click="clickPhoto(item.announce)">
 						<text class="flex flex-1">公告费缴纳通知书</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>

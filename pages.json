@@ -356,6 +356,26 @@
 			}
 		},
 		{
+			"path": "pages/client/user/service-end",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/client/user/service-jiechu",
+			"style": {
+				"navigationBarTitleText": "服务解除",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
 			"path": "pages/client/user/lawyer-detail",
 			"style": {
 				"navigationBarTitleText": "律师详情",
@@ -694,6 +714,16 @@
 		},
 		{
 			"path": "pages/lawyer/user/service-ok",
+			"style": {
+				"navigationBarTitleText": "服务完成",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/lawyer/user/service-end",
 			"style": {
 				"navigationBarTitleText": "服务完成",
 				"enablePullDownRefresh": true

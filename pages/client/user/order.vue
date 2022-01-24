@@ -57,7 +57,7 @@
 					</template>
 
 					<view class="top-right gray" v-else-if="(item.product != '打官司' && item.status == 16) || item.status == 6">服务完成</view>
-
+<view class="top-right gray" v-else-if="(item.product == '打官司' && item.status == 12) || item.status == 6">服务解除</view>
 					<view class="top-right gray" v-else-if="item.product != '打官司' && item.status == 17">服务解除</view>
 
 					<view class="top-right gray" v-else-if="item.status == 1 || item.status == 2 || item.status == 13 || item.status == 18">法务服务中</view>
@@ -120,6 +120,8 @@ export default {
 				this.jump('/pages/client/user/match', { order_id: item.id });
 			} else if (item.product == '打官司' && item.status == 0) {
 				this.jump('/pages/client/user/match-specialist', { order_id: item.id });
+			} else if(item.product == '打官司' && item.status == 12){
+				this.jump('/pages/client/user/service-jiechu', { order_id: item.id }); //订单结束
 			} else if (
 				item.status == 3 ||
 				item.status == 14 ||
@@ -151,7 +153,11 @@ export default {
 					
 				}
 			} else if ((item.product != '打官司' && item.status == 16) || item.status == 6) {
-				this.jump('/pages/client/user/service-ok', { order_id: item.id });
+				if(item.price_type == '投资人支付(不用还)'){
+					this.jump('/pages/client/user/service-end', { order_id: item.id });
+				}else {
+					this.jump('/pages/client/user/service-ok', { order_id: item.id });
+				}
 			} else if (item.product != '打官司' && item.status == 17) {
 				this.jump('/pages/client/user/service-remove', { order_id: item.id });
 			} else if (item.status == 1 || item.status == 2 || item.status == 13 || item.status == 18) {

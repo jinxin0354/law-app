@@ -88,7 +88,7 @@ export default {
 				fen: this.current_item.fen,
 				pay_type: pay_type
 			};
-
+			
 			let resPay = await this.$pay(formDataPay);
 			if (resPay == 1) {
 				this.$refs.popupWantPay.close();
@@ -101,6 +101,7 @@ export default {
 				this.$refs.popupWantPay.close();
 				this.$emit('init');
 			}
+			
 		},
 		async backApply() {
 			let formData = {

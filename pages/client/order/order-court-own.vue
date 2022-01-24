@@ -1060,11 +1060,11 @@
 		<order-unfold-product-new id='chanPin' title="产品说明" :isSpread='true' :img_src="product_desc"></order-unfold-product-new>
 
 		<view class="od-box" :style="bearFees == '自费' ? 'margin-bottom:22rpx' : 'margin-bottom:88rpx'" id='wendajia'>
-			<view class="od-item"
+			<view class="od-item" style="display: block;"
 				@click="jump('/pages/client/order/ask', { id: info.product.id, product_name: info.product.product })">
-				<view class="item-tip">问大家</view>
-				<view class="item-right">
-					<view class="item-txt">产品有疑问，进去问问用过的人吧</view>
+				<view class="item-tip" style="color:#000;font-weight: 700;margin-bottom: 22rpx;">问大家</view>
+				<view class="item-right" >
+					<view class="item-txt" style="margin-left:0rpx">产品有疑问，进去问问用过的人吧</view>
 					<view class="gray" style="line-height: 60rpx;" v-if="info.ques_count">{{ info.ques_count }}</view>
 					<view class="item-nav">
 						<image src="@/static/img/right.png" mode="aspectFit"></image>
@@ -1112,7 +1112,7 @@
 				:key="new Date().getTime()" :info="info"></order-popup-service>
 		</uni-popup>
 		<!-- 服务保障新组件 -->
-		<order-service ref="orderService" v-if="Object.keys(info.product).length > 0" :info="info"></order-service>
+		<order-service ref="orderService" v-if="Object.keys(info.product).length > 0" :bearFees='bearFees' :info="info"></order-service>
 		<!-- 服务保障组件 -->
 		<order-service-ensure ref="orderServiceEnsure" v-if="Object.keys(info.product).length > 0" :info="info">
 		</order-service-ensure>
@@ -1781,7 +1781,7 @@
                 <view class="modal-title">
                     温馨提示
                 </view>
-                <view class="modal-content">
+                <view class="share-content">
                     请点击右上角按钮在其他浏览器打开
                 </view>
             </u-modal>
@@ -1992,11 +1992,31 @@
                 }
             });
             
+            
 		},
-		onLoad(params) {
-            if(params.type=='share'){
-             this.downloadApp()   
+        mounted(){
+            if(this.$route.query.type=='share'){
+             // this.downloadApp() /
+               let ua = window.navigator.userAgent.toLowerCase()
+               if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                   // alert('请点击右上角按钮在其他浏览器打开')
+                   // this.shareShow = true
+               }else{
+                   window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.lifakeji.lark.business.law'
+               }
             }
+        },
+		onLoad(params) {
+            // if(params.type=='share'){
+            //  // this.downloadApp() /
+            //    let ua = window.navigator.userAgent.toLowerCase()
+            //    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            //        // alert('请点击右上角按钮在其他浏览器打开')
+            //        // this.shareShow = true
+            //    }else{
+            //        window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.lifakeji.lark.business.law'
+            //    }
+            // }
 			// 编辑
 			if (params.order_id) {
 				this.edit_order_id = params.order_id;
@@ -2229,7 +2249,7 @@
 				this.practiceChoose = res.data.product.choose;
 				this.product_desc =  res.data.product.desc_content;
 				// this.practiceArea = res.data.product.profession_name;
-                this.practiceArea = '广东省,深圳市'
+                // this.practiceArea = '广东省,深圳市'
                 this.defaultRegion = ['广东省','深圳市']
 				this.bearFees = res.data.product.money_type;
 				if(this.bearFees == '投资人支付'){
@@ -2247,7 +2267,7 @@
 				this.organization = res.data.product.organization;
 				this.stage = res.data.list.stage[0];
 				this.hear_basis = res.data.list.hear_basis[0];
-				this.hear_addr = res.data.list.hear_addr[0];
+				// this.hear_addr = res.data.list.hear_addr[0];
 				this.requirement = res.data.product.requirement || '';
 				this.offer = res.data.product.offer;
 				this.offerList = res.data.list.offer;
@@ -2300,6 +2320,14 @@
 				this.sell = res.data.length > 0 ? res.data[0].sell : '';
                 this.total = res.data.length > 0 ? res.data[0].total : 0;
 				this.price = this.money;
+				if(this.later_money != '' && this.later_money != null){
+					if(this.price){
+						this.price = this.price +'+'+ this.later_money;
+					}else{
+						this.price = this.later_money;
+					}
+					
+				}
 			},
 			// 优惠券
 			getCoupon(current_coupon) {
@@ -2345,6 +2373,7 @@
             modalConfirm(){
                 this.isAddr = false
                 this.showAddr = false
+                this.showArea = true
             },
             // 愿意承担
             modalCancel(){
@@ -3651,5 +3680,10 @@
                 .modal-content{
                     line-height: 45rpx;
                     padding: 0rpx 30rpx 20rpx 30rpx;
+                }
+                .share-content{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
 </style>

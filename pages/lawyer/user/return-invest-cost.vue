@@ -12,7 +12,7 @@
 						<checkbox-group @change="resultChange">
 							<view class="flex flex-horizontal flex-center-v">
 								<label>
-									<view class="flex flex-horizontal flex-center-v" >
+									<view class="flex flex-horizontal flex-center-v"  style="margin-top: -3rpx;">
 										<image v-if="result.indexOf('checkValue1') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;" value="checkValue1"  />
@@ -30,7 +30,7 @@
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
 								<label>
-									<view class="flex flex-horizontal flex-center-v">
+									<view class="flex flex-horizontal flex-center-v" style="margin-top: -3rpx;">
 										<image v-if="result.indexOf('checkValue2') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue2" />
@@ -46,7 +46,7 @@
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
 								<label>
-									<view class="flex flex-horizontal flex-center-v">
+									<view class="flex flex-horizontal flex-center-v" style="margin-top: -7rpx;">
 										<image v-if="result.indexOf('checkValue3') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue3"   />
@@ -66,7 +66,7 @@
 							</view>
 							<view class="flex flex-horizontal flex-center-v item">
 								<label>
-									<view class="flex flex-horizontal flex-center-v">
+									<view class="flex flex-horizontal flex-center-v" style="margin-top: -5rpx;">
 									<image v-if="result.indexOf('checkValue4') == -1" class="check-img" src="@/static/img/icon/icon_check.png" mode="aspectFit"></image>
 										<image v-else class="check-img" src="@/static/img/icon/icon_checked.png"  mode="aspectFit"></image>
 										<checkbox color="#FFC801" style="transform: scale(0.7);display: none;"  value="checkValue4"   />
@@ -116,7 +116,7 @@ export default {
 			case_money: '',
 			announce_money: '',
 			enquire: '',
-			lawyer: '0',
+			lawyer: '2500',
 			result: [
 			]
 		};

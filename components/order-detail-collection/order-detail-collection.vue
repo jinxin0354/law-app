@@ -1,5 +1,5 @@
 <template>
-	<view class="flex flex-vertical wait-box" v-if="list.pay_text.length > 0 ">
+	<view class="flex flex-vertical wait-box" v-if="(list.pay_text && list.pay_text.length > 0) || (list.pay_apply && list.pay_apply.length > 0) ">
 		<view class="wait-item flex flex-vertical" >
 			<view class="wait-title">收款详情</view>
 			<!--
@@ -12,7 +12,7 @@
 				
 				2.申请投资费用弹窗内效果
 			 -->
-			<view class="flex flex-horizontal item " v-for="item in list.pay_text" @click="itemClick(item)">
+			<!-- <view class="flex flex-horizontal item " v-for="item in list.pay_text" @click="itemClick(item)">
 				<view class="item-money">¥{{item.money}}</view>
 				<view class="flex flex-horizontal flex-1">
 					<view class="flex flex-vertical">
@@ -25,7 +25,7 @@
 						<text class="status-text">{{item.status}}</text>
 					</view>
 				</view>
-			</view>
+			</view> -->
 			<view class="flex flex-horizontal item " v-for="item in list.pay_apply" @click="itemClick(item)">
 				<view class="item-money">¥{{item.money}}</view>
 				<view class="flex flex-horizontal flex-1">
