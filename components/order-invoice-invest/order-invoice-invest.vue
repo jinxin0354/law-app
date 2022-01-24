@@ -11,7 +11,6 @@
 							current_item = item;
 							$refs.popupInvoiceDetail.open();
 						"
-						
 					>
 						<view class="txt-name">
 							<view class=" text-ellipsis" style="width: 180px;">{{ item.name }}</view>
