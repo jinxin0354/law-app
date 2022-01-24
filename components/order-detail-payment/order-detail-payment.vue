@@ -110,7 +110,7 @@
 					>取消收款</view>
 					<view class="comfir-btn flex flex-center flex-1"
 					 @click="$refs.telephoneInvestor.$refs.popupTel.open()"
-					>催促委托人付款</view>
+					>催促投资人付款</view>
 				</view>
 			</view>
 		</view>
