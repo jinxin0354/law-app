@@ -19,15 +19,15 @@
 						<view class="txt-tip">{{ item.new_create }}</view>
 						
 					</view>
-					<template v-if="item.is_receipt == 2">
+					<text style="color: #999" v-if="item.is_receipt == 2">
 						已开具
-					</template>
-					<template v-else-if="item.is_receipt == 0">
+					</text>
+					<text style="color: #999" v-else-if="item.is_receipt == 0">
 						取消开票
-					</template>
-					<template v-else-if="item.status == 2">
+					</text>
+					<text style="color: #999" v-else-if="item.status == 2">
 						已开具
-					</template>
+					</text>
 				</view>
 				<template v-if="userInfo.id == info.order.user_id">
 					<view v-if="item.is_receipt == 1" class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
