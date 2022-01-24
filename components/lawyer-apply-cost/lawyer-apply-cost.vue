@@ -7,11 +7,11 @@
 						<text class="flex flex-1">付款人</text>
 						<text>投资人</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.case_money > 0">
 						<text class="flex flex-1">案件受理费</text>
 						<text class="money-text">¥{{item.case_money}}</text>
 					</view>
-					<view class="flex flex-horizontal flex-center-v item">
+					<view class="flex flex-horizontal flex-center-v item" v-if="item.case_time != ''">
 						<text class="flex flex-1">缴纳截止日期</text>
 						<image class="image-icon" src="@/static/img/icon/calendar.png" mode="widthFix"></image>
 						<text style="margin-left: 5px;">{{item.case_time}}</text>
@@ -53,7 +53,6 @@
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
-					
 					<view class="flex flex-horizontal flex-center-v item"  v-if="item.note != ''" @click="clickPhoto(item.note)">
 						<text class="flex flex-1">立案受理通知书</text>
 						<image class="image-icon" src="@/static/img/icon/list_icon.png" mode="widthFix"></image>
@@ -80,7 +79,6 @@
 					})
 					return
 				}
-				
 				
 				this.previewImages(photo.split(','));
 				
