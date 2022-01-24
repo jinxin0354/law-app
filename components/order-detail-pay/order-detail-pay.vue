@@ -1,5 +1,5 @@
 <template>
-	<view class="flex flex-vertical wait-box"  v-if="list.tui_pend.length > 0 ">
+	<view class="flex flex-vertical wait-box"  v-if="(list.tui_pend && list.tui_pend.length > 0)">
 		<view class="wait-item flex flex-vertical">
 			<view class="wait-title">待付信息</view>
 			<!-- 
@@ -32,7 +32,8 @@
 					>退回申请</view>
 				</view>
 			</view>
-			<view class="flex flex-vertical item " v-for="item in list.pend_tui_apply" >
+			<!-- 退回投资费用 -->
+			<!-- <view class="flex flex-vertical item " v-for="item in list.pend_tui_apply" >
 				<view class="flex flex-horizontal" @click="itemClick(item)">
 					<view class="item-money">¥{{item.money}}</view>
 					<view class="flex flex-horizontal flex-1">
@@ -40,24 +41,25 @@
 							<text>{{item.new_name}}</text>
 							<text>{{item.new_time}}</text>
 						</view>
-						<image v-if="item.type == 8 || item.type == 3 || item.type == 7" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 					</view>
 				</view>
 				<view class="flex flex-horizontal flex-center-v btn-back">
 					<view class="comfir-btn flex flex-center flex-1" 
 					@click="
 						current_item = item;
-						$refs.popupCancelReceive.open();
+						$refs.popupWantPay.open();
 					"
 					>我要付款</view>
 					<view class="comfir-btn flex flex-center flex-1"
 					@click.stop="
 						current_item = item;
-						$refs.popupReturnApplyMoney.open();
+						$refs.popupReturnReason.open();
 					"
 					>退回申请</view>
 				</view>
-			</view>
+			</view> -->
+			
 		</view>
 		<!-- 取消收款弹出层 -->
 		<uni-popup ref="popupCancelReceive" type="dialog">

@@ -13,6 +13,24 @@
 			</view>
 			<law-nav></law-nav>
 		</view>
+		<!--待收信息-->
+		<order-wait-receive-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info"
+			@init="init" @popupShow="popupShow"></order-wait-receive-investor-settle-accounts>
+			
+		<!--待付信息-->
+		<order-wait-pay-apply-invest-cost v-if="Object.keys(info.order).length > 0" :info="info" @init="init" 
+		@popupShow="popupShow">
+		</order-wait-pay-apply-invest-cost>
+		<!--收款详情-->
+		<order-invest-detail v-if="Object.keys(info.order.jie_pay).length > 0 || Object.keys(info.order.pay_text).length > 0 || Object.keys(info.order.pend_tui_apply).length > 0"  :detailLIst="info.order.jie_pay" title="收款详情"
+			:info="info" @popupShow="popupShow"></order-invest-detail>
+		<!-- <order-invest-tuihui v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" :info="info"
+		@popupShow="popupShow"
+		></order-invest-tuihui> -->
+		<!--付款详情-->
+		<order-invest-pay v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="付款详情"
+		@popupShow="popupShow"
+			:info="info"></order-invest-pay>
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer" :random="new Date().getTime()"></order-lawyer-intro>
 		<!-- 案件主体信息 -->
@@ -30,6 +48,15 @@
 		<order-invest-inbox-message ref="investInboxMessage" :infoInbo="infoInbo"></order-invest-inbox-message>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
+		<!--结算投资收益-->
+		<!-- <invest-shouyi ref="investShouyi" :item="current_item"></invest-shouyi> -->
+		<end-invest-profit ref="investShouyi" :item="current_item"></end-invest-profit>
+		<!-- 结算投资人奖励 -->
+		<settlement-popup ref="settlement" :item="current_item"></settlement-popup>
+		<!-- 申请投资费用 -->
+		<lawyer-apply-cost ref="lawyerApply" :item="current_item"></lawyer-apply-cost>
+		<!-- 退回投资费用弹窗 -->
+		<return-cost ref="returnCostTip" :item="current_item"></return-cost>
 	</view>
 </template>
 
@@ -42,7 +69,8 @@ export default {
 			},
 			order_id: '',
 			infoLawyer: {},
-			infoInbo: {}
+			infoInbo: {},
+			current_item:{},
 		};
 	},
 	onLoad(params) {
@@ -52,6 +80,29 @@ export default {
 		}
 	},
 	methods: {
+		popupShow(item) {
+			// console.log('post');
+			// console.log(item);
+			if (item.type == 8) {
+				this.current_item = item
+				this.$refs.returnCostTip.$refs.returnCost.open()
+			} else if (item.type == 3 || item.type == 1) {
+				this.current_item = item
+				this.$refs.investShouyi.$refs.investShou.open()
+				// this.current_item = item
+				// this.$refs.investShouyi.$refs.investShou.open()
+			} else if (item.type == 7) {
+				this.current_item = item.popup
+				this.$refs.lawyerApply.$refs.lawyerApply.open()
+			} else if (item.type == 2) {
+				// 退款弹窗
+				this.current_item = item.popup
+				this.$refs.lawyerTui.$refs.lawyerApply.open()
+			} else if (item.shou_type == 2) {
+				this.current_item = item 
+				this.$refs.lawyerQing.$refs.lawyerApply.open()
+			}
+		},
 		async jumpToWeb() {
 			let url = this.info.order.zhaiquan_hetong
 			const nav = navigator.userAgent;

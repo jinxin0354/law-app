@@ -17,7 +17,7 @@
 							<view class=" text-ellipsis" style="width: 180px;">{{ item.name }}</view>
 							<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
 						</view>
-						<view class="txt-tip">{{ item.createtime }}</view>
+						<view class="txt-tip">{{ item.new_create }}</view>
 						
 					</view>
 					<template v-if="item.is_receipt == 2">

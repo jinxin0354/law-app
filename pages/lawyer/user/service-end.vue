@@ -6,14 +6,13 @@
 			<view class="service-list">
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()" v-if="info.order.serve_time != '15分钟'">联系委托人</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<!-- <button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button> -->
 					 <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid)">办理详情</button>
 				</template>
-				<button class="service-item active" @click="$refs.popupOneWantPay.open()" v-if="info.order.pro_name != '问一下'">我要收款</button>
+				<button class="service-item active" @click="$refs.popupOneWantPay.open()" v-if="info.order.pro_name != '问一下' && info.order.price_type != '投资人支付(不用还)'">我要收款</button>
 				<template v-if="info.order.price_type == '投资人支付(不用还)'">
 					<button class="service-item active" @click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
-					<button class="service-item active">投资人收件信息</button>
-					<button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button>
+					<button class="service-item active"  @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
+					<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 				</template>
 			</view>
 			<law-nav></law-nav>
@@ -21,9 +20,19 @@
 		<!-- 录音组件 -->
 		<order-record v-if="Object.keys(info.order).length > 0 && info.order.serve_time == '15分钟'" :info="info" @init="init"></order-record>
 		<!-- 待收信息-->
-		<order-wait-receive-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-info>
+		<!-- <order-wait-receive-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-info> -->
 		<!-- 收款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="收款详情":info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="收款详情":info="info"></order-common-detail> -->
+		<!-- 待收信息 -->
+		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-payment>
+		<!-- 收款详情 -->
+		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-collection>
+		<!-- 待付信息 -->
+		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-pay>
+		<!-- 付款详情 -->
+		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-nopay>
+		<!--滞纳金-->
+		<order-detail-zhina v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-detail-zhina>
 		<!-- 增加服务详情 -->
 		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail>
 		<!-- 续费详情 -->
@@ -78,6 +87,8 @@
 				<view class="dialog-tip-line" style="padding-top: 25rpx; padding-bottom: 0;">我已与委托人确认付款事宜</view>
 			</uni-popup-dialog>
 		</uni-popup>
+		<!-- 投资人收件信息组件 -->
+		<order-invest-inbox-message ref="investInboxMessage" :infoInbo="infoInbo"></order-invest-inbox-message>
 		<!-- 全局通用组件 -->
 		<law-common ref="lawCommon"></law-common>
 	</view>
@@ -93,6 +104,7 @@ export default {
 				order: {}
 			},
 			order_id: '',
+			infoInbo: {},
 			onePrice: '', // 第一部分我要收款价格
 			oneReason: '' // 第一部分我要收款原因
 		};
@@ -111,6 +123,19 @@ export default {
 			};
 			let res = await this.$api('index.orderDetail', formData);
 			this.info = res.data;
+			let resInbo = await this.$api('index.investor_address', formDataInbo);
+			if (resInbo.code == 1) {
+				this.infoInbo = resInbo.data;
+			}
+		},
+		async jumpToWeb() {
+			let url = this.info.order.zhaiquan_hetong
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				phone.loadOffice(url);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('loadOffice', url, data => {});
+			}
 		},
 		// 第一部分我要收款
 		async confirmOneWantPay() {
@@ -156,5 +181,7 @@ export default {
 .nav-list {
 	margin: 0 -30rpx;
 }
-
+.service-item {
+		border-radius: 50rpx;
+	}
 </style>

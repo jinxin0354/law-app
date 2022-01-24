@@ -1,6 +1,6 @@
 <template>
 	<view class="detail-item">
-		<view class="item-title" :class="isBold ? 'bold' : ''">{{ title }}</view>
+		<view class="item-title" :class="isBold ? 'bold' : 'weight'">{{ title }}</view>
 		<view class="item-intro intro_txt" :class="isDown ? 'heightMy' : ''">
 			<image v-if="title == '产品说明'" :src="img_src" style="width: 100%" mode="widthFix"></image>
 		</view>
@@ -45,6 +45,10 @@ export default {
 .bold {
 	font-weight: bold;
 	color: #000 !important;
+}
+.weight{
+	color: #000 !important;
+    font-weight: 700;
 }
 .detail-item {
 	background-color: #ffffff;

@@ -48,44 +48,19 @@
 			</view>
 		</template>
 		<template v-else>
-			<view class="wait-box" v-if="(detailLIst && detailLIst.length > 0) || (info.order.jie_pay || info.order.jie_pay.length > 0)">
+			<view class="wait-box" v-if="detailLIst && detailLIst.length > 0">
 				<view class="wait-title">{{ title }}</view>
 				<view class="wait-item" v-for="(item, index) in detailLIst">
-					<view class="item-item" @click="itemClick(item)">
+					<view class="item-item">
 						<view class="item-money">￥{{ item.money }}</view>
 						<view class="item-txt" @click="itemClick(item)">
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
 						</view>
-						<image  class="image-r" v-if="item.shou_type == 2 || item.type == 1" src="@/static/img/right.png" mode="widthFix"></image>
+						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
 					</view>
 
-					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
-						<view class="item-money">
-							<view>￥{{ item.late_fee }}</view>
-						</view>
-						<view class="item-txt">
-							<view class="txt-name">
-								<view class="name-tip text-ellipsis">滞纳金</view>
-								<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
-							</view>
-						</view>
-						<view class="item-btn"></view>
-					</view>
-				</view>
-				
-				<view class="wait-item" v-for="(item, index) in info.order.jie_pay">
-					<view class="item-item" @click="itemClick(item)">
-						<view class="item-money">￥{{ item.money }}</view>
-						<view class="item-txt" @click="itemClick(item)">
-							<view class="txt-name">{{ item.name }}</view>
-							<view class="txt-tip">{{ item.new_time }}</view>
-						</view>
-						<image  class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
-						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
-					</view>
-				
 					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
 						<view class="item-money">
 							<view>￥{{ item.late_fee }}</view>
@@ -141,15 +116,12 @@
 export default {
 	props: ['detailLIst', 'title', 'info'],
 	data() {
-		return { 
-			tipGrade: '', 
-			current_item: {},
-			latefeeInfo: [] ,
-			};
+		return { tipGrade: '', latefeeInfo: [] ,current_item: {}};
 	},
 	created() {},
 	methods: {
 		itemClick(item) {
+			console.log(item);
 			this.$emit('popupShow',item)
 		},
 		// 获取服务级别
@@ -177,12 +149,7 @@ export default {
 	}
 };
 </script>
-<style>
-	.image-r {
-		width: 9px;
-		height: 14px;
-	}
-</style>
+
 <style lang="scss">
 .add-service-item {
 	border-bottom: 1rpx solid #eeeeee;
@@ -191,8 +158,8 @@ export default {
 	}
 }
 .image-r {
-		width: 9px;
-		height: 14px;
-		margin-left: 35px;
-	}
+	width: 9px;
+	height: 14px;
+	margin-left: 35px;
+}
 </style>

@@ -107,7 +107,7 @@
 				<button class="service-item active"
 					@click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
+					<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
 				</template>
 				<button class="service-item active" @click="$refs.popupSettleAccounts.open()">结算投资收益</button>
 				<button class="service-item active"
@@ -133,16 +133,15 @@
 		@popupShow="popupShow">
 		</order-wait-pay-apply-invest-cost>
 		<!--收款详情-->
-		<order-invest-detail :detailLIst="info.order.jie_pay" title="收款详情"
+		<order-invest-detail v-if="Object.keys(info.order.jie_pay).length > 0 || Object.keys(info.order.pay_text).length > 0 || Object.keys(info.order.pend_tui_apply).length > 0"  :detailLIst="info.order.jie_pay" title="收款详情"
 			:info="info" @popupShow="popupShow"></order-invest-detail>
-		<order-invest-tuihui v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" :info="info"
+		<!-- <order-invest-tuihui v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_tui_apply" :info="info"
 		@popupShow="popupShow"
-		></order-invest-tuihui>
+		></order-invest-tuihui> -->
 		<!--付款详情-->
-		<order-invest-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="付款详情"
+		<order-invest-pay v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_apply" title="付款详情"
 		@popupShow="popupShow"
-			:info="info"></order-invest-detail>
-		<!-- 待收投资收益 -->
+			:info="info"></order-invest-pay>
 	<!-- 	<order-wait-receive-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info"
 		@init="init" @popupShow="popupShow"></order-wait-receive-investor-settle-accounts> -->
 		<!-- 结算投资收益详情 -->

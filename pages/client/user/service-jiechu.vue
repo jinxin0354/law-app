@@ -7,20 +7,20 @@
 			<template v-if="Object.keys(info.order).length > 0">
 				<view class="service-list">
 					<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()" v-if="info.order.serve_time != '15分钟'">联系律师</button>
-					<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 					<template v-if="info.order.pro_name != '问一下'">
 						<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
 					</template>
-					<template v-if="info.order.pro_name != '问一下' && info.order.pro_name != '打官司'">
+					<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id ,isInvestor:true})">开发票</button>
+					
+					<!-- <template v-if="info.order.pro_name != '问一下'">
 						<button class="service-item active" @click="$refs.popupPayToLaw.open()">付款给律师</button>
-					</template>
+					</template> -->
 					<template v-if="info.order.price_type == '投资人支付(不用还)'">
 						<button class="service-item active" @click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
 						<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
-						<!-- <button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
 						<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 					</template>
-					<button class="service-item active" v-if="info.order.pro_name !='打官司'" @click="jump('/pages/client/user/evaluate', { order_id: order_id,lawyer_id: info.order.lawyer})">评价有礼</button>
+				<!-- 	<button class="service-item active" @click="jump('/pages/client/user/evaluate', { order_id: order_id,lawyer_id: info.order.lawyer})">评价有礼</button> -->
 				</view>
 			</template>
 			<law-nav></law-nav>
@@ -101,15 +101,6 @@ export default {
 		}
 	},
 	methods: {
-		async jumpToWeb() {
-			let url = this.info.order.zhaiquan_hetong
-			const nav = navigator.userAgent;
-			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
-				phone.loadOffice(url);
-			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-				this.$bridge.callhandler('loadOffice', url, data => {});
-			}
-		},
 		async init() {
 			let formData = {
 				id: this.order_id,
@@ -134,6 +125,15 @@ export default {
 				if (resInbo.code == 1) {
 					this.infoInbo = resInbo.data;
 				}
+			}
+		},
+		async jumpToWeb() {
+			let url = this.info.order.zhaiquan_hetong
+			const nav = navigator.userAgent;
+			if (nav.indexOf('Android') > -1 || nav.indexOf('Adr') > -1) {
+				phone.loadOffice(url);
+			} else if (!!nav.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+				this.$bridge.callhandler('loadOffice', url, data => {});
 			}
 		},
 		// 付款给律师-支付
@@ -183,5 +183,9 @@ export default {
 }
 .nav-list {
 	margin: 0 -30rpx;
+}
+//下半部分圆角矩形
+.service-item {
+	border-radius: 50rpx;
 }
 </style>

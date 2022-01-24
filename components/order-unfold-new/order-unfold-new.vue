@@ -1,6 +1,6 @@
 <template>
 	<view class="detail-item">
-		<view class="item-title" :class="isBold ? 'bold' : ''">{{ title }}</view>
+		<view class="item-title" :class="isBold ? 'bold' : 'weight'">{{ title }}</view>
 <!-- 		<template v-if="title == '服务内容'">
 			<view class="item-intro intro_txt"><slot name="unfold-con"></slot></view>
 		</template>
@@ -47,6 +47,10 @@ export default {
 .bold {
 	font-weight: bold;
 	color: #000 !important;
+}
+.weight{
+	color: #000 !important;
+    font-weight: 700;
 }
 .detail-item {
 	background-color: #ffffff;

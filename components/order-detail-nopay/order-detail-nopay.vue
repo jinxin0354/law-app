@@ -1,11 +1,7 @@
 <template>
-	<view class="flex flex-vertical wait-box" v-if="list.tui_pay.length > 0 ">
+	<view class="flex flex-vertical wait-box" v-if="(list.tui_pay.length > 0) || (list.pay_tui_apply.length > 0) ">
 		<view class="wait-item flex flex-vertical" >
 			<view class="wait-title">付款详情</view>
-			<!--
-				退款缺少弹窗
-				弹框内容从 item.popup 读取 
-			 -->
 			<view class="flex flex-horizontal item " v-for="item in list.tui_pay" @click="itemClick(item)">
 				<view class="item-money">¥{{item.money}}</view>
 				<view class="flex flex-horizontal flex-1">

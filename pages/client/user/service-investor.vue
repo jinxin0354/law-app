@@ -97,7 +97,9 @@
 				<button class="service-item active"
 					@click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
 				<template>
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
+					<!-- <button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button> -->
+				<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
+		
 				</template>
 				<button class="service-item active"
 					@click="jump('/pages/client/user/invoice', { order_id: order_id, isInvestor: true })">开发票</button>
@@ -162,7 +164,7 @@
 		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
 		</order-wait-pay-investor-settle-accounts>
 		<!-- 付款详情 -->
-		<order-client-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
+		<order-client-detail v-if="Object.keys(info.order.pay_text).length > 0 || Object.keys(info.order.jie_pay).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
 			:info="info"></order-client-detail>
 		<!-- 
 			付款详情 

@@ -72,7 +72,8 @@
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
 				<button class="service-item active" @click="$refs.telephoneInvestor.$refs.popupTel.open()">联系投资人</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
+					<!-- <button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button> -->
+					 <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid)">办理详情</button>
 				</template>
 				<button
 					class="service-item active"

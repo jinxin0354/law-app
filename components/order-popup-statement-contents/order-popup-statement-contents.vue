@@ -177,12 +177,12 @@
 						</view>
 						<view  class="item-txt flex-align-center" v-if="index==0">
 							<text class="input_icon">¥</text>
-							<input type="text" class="ipt-border" placeholder="输入金额1" placeholder-class="placeholder"  @input="sendMsg($event,'jine1')"  v-model="moneyparams.jine1" pattern="[0-9]*"
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg($event,'jine1')"  v-model="moneyparams.jine1" pattern="[0-9]*"
 							/>
 						</view>
 						<view  class="item-txt flex-align-center" v-if="index==1">
 							<text class="input_icon">¥</text>
-							<input type="text" class="ipt-border" placeholder="输入金额2" placeholder-class="placeholder"  @input="sendMsg($event,'jine2')"   v-model="moneyparams.jine2" pattern="[0-9]*"
+							<input type="text" class="ipt-border" placeholder="输入金额" placeholder-class="placeholder"  @input="sendMsg($event,'jine2')"   v-model="moneyparams.jine2" pattern="[0-9]*"
 							/>
 						</view>
 					
@@ -447,8 +447,8 @@
 					
 				if(this.moneyparams.chuli_money=='部分支持'){
 					
-			if(this.jine1!=''){
-				if(this.jine2!=''){
+			if(this.moneyparams.jine1!=''){
+				if(this.moneyparams.jine2!=''){
 			
 					// if(this.moneyparams.chuli_type=='法院判决'){
 					// 	var a = parseFloat(this.jine1) - parseFloat(this.jine2)
@@ -456,13 +456,18 @@
 					
 					// }
 					// if(this.moneyparams.chuli_type=='和解/调节'){
-						var a = parseFloat(this.moneyparams.jine1) - parseFloat(this.moneyparams.jine2)
-				
-						var achu= a/parseFloat(this.moneyparams.jine1)
-							
-				
-						 var ass= achu*parseFloat(this.touziren_pay)
-						 		 this.moneyparams.sunshi_moneys  = ass.toFixed(2)
+						if(this.moneyparams.jine1!=0 &&this.moneyparams.jine2!=0){
+							var a = parseFloat(this.moneyparams.jine1) - parseFloat(this.moneyparams.jine2)
+							var achu= a/parseFloat(this.moneyparams.jine1)
+							 var ass= achu*parseFloat(this.touziren_pay)
+								  this.moneyparams.sunshi_moneys  = ass.toFixed(2)
+						}else{
+							console.log('aaa')
+							this.moneyparams.sunshi_moneys = '0'
+						}
+					
+						 
+						 		
 							
 						//this.sunshi_money = this.moneyparams.sunshi_moneys
 					// }

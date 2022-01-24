@@ -7,7 +7,7 @@
 				<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 				<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()">联系律师</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail">项目详情</button>
+					<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
 				</template>
 				<button class="service-item active" @click="$refs.popupApplyRefund.open()">申请退款</button>
 				<button class="service-item active" @click="jump('/pages/client/user/evaluate', { order_id: order_id,lawyer_id: info.order.lawyer})">评价有礼</button>

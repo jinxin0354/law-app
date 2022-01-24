@@ -26,6 +26,8 @@
 
 					<!-- 后台状态:-1=取消订单,0=未接单,1=法务接单,2=法务点击完成,3=律师接单,4=律师点击完成,6=投资人完成,8=委托人解除法务服务,9=法务解除法务服务,10=委托人解除律师服务,11=律师解除律师服务,12=订单结束,13=委托人点击完成法务,14=委托人点击律师,15=法务完成,16=律师完成,17=等待投资人确认解除,18=法务编辑中 -->
 					<view class="top-right gray" v-if="item.status == -1 || item.status == 99">订单取消</view>
+					<view class="top-right gray" v-else-if="item.status == 1 || item.status == 2 || item.status == 13 || item.status == 18">法务服务中</view>
+						<view class="top-right gray" v-else-if="item.status == 15">法务服务完成</view>
 					<template
 						v-if="
 							item.status == 3 ||
@@ -63,7 +65,7 @@
 						</view>
 					</template>
 					<view class="top-right gray" v-else-if="(item.product != '打官司' && item.status == 16) || item.status == 6">服务完成</view>
-					<view class="top-right gray" v-else-if="(item.product == '打官司' && item.status == 12) || item.status == 6">服务完成</view>
+					<view class="top-right gray" v-else-if="(item.product == '打官司' && item.status == 12) || item.status == 6">服务解除</view>
 					<view class="top-right gray" v-else-if="item.product != '打官司' && item.status == 17">服务解除</view>
 				</view>
 
@@ -118,13 +120,38 @@ export default {
 			this.loadData(1,'refresh');
 		},
 		navTo(item) {
-			console.log(item.product)
-			console.log(item.status)
-			
 			if (item.status == -1 || item.status == 99) {
 				this.jump('/pages/lawyer/user/order-cancel', { order_id: item.id });
-			} else if (item.product == '打官司' && item.status == 12) {
-				this.jump('/pages/lawyer/user/service-ok', { order_id: item.id });
+			} else if (item.product == '打官司' && item.status == 6) {
+				if(this.userInfo.is_weituo == '1'){
+						this.jump('/pages/client/user/service-end', { order_id: item.id });
+				}
+				if(this.userInfo.is_lawyer == '1'){
+						this.jump('/pages/lawyer/user/service-end', { order_id: item.id });
+				}
+				if( this.userInfo.is_fawu == '1'){
+						this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+				}
+				if(this.userInfo.is_touziren == '1'){
+						this.jump('/pages/investor/user/service-ok', { order_id: item.id });
+				}
+			} else if (item.product == '打官司' && item.status == 12) { //解除委托
+				if(this.current == 3){
+					this.jump('/pages/lawyer/user/service-remove', { order_id: item.id });
+				}
+				if( this.userInfo.is_fawu == '1'){
+						this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+				}
+				if (this.userInfo.is_touziren == '1') {
+					this.jump('/pages/investor/user/service-ok', { order_id: item.id, status: item.status });
+					//this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
+				}
+			}else if (item.product == '打官司' && item.status == 15) { //法务服务完成
+				if( this.userInfo.is_fawu == '1'){
+						this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+				}
+			} else if(item.status == 1 || item.status == 2 || item.status == 13 || item.status == 18){
+				this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
 			} else if (
 				item.status == 3 ||
 				item.status == 14 ||

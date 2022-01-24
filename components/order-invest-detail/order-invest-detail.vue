@@ -1,61 +1,16 @@
 <template>
 	<view>
 		<template v-if="title == '续费详情'">
-			<view class="od-box" v-if="detailLIst && detailLIst.length > 0">
-				<view class="wait-title">续费详情</view>
-				<view class="add-service-item" v-for="(item, index) in detailLIst">
-					<view class="od-item" v-for="(item_c, index_c) in item.origin.split(',')">
-						<template v-if="item_c.split(':')[0] == '服务级别'">
-							<view class="item-tip">{{ item_c.split(':')[0] }}</view>
-							<view class="item-right" @click="getGradeTip(index)">
-								<view class="item-txt">{{ item_c.split(':')[1] }}</view>
-								<view class="item-nav"><image src="@/static/img/right.png" mode="aspectFit"></image></view>
-							</view>
-						</template>
-						<template v-else>
-							<view class="item-tip">{{ item_c.split(':')[0] }}</view>
-							<view class="item-right">
-								<view class="item-txt">{{ item_c.split(':')[1] }}</view>
-							</view>
-						</template>
-					</view>
-					<view class="od-item">
-						<view class="item-tip">律师费用</view>
-						<view class="item-right">
-							<view class="item-txt red">￥{{ item.money }}(8折)</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</template>
-		<template v-else-if="title == '增加服务'">
-			<view class="od-box" v-if="detailLIst && detailLIst.length > 0">
-				<view class="wait-title">增加服务</view>
-				<view class="add-service-item" v-for="(item, index) in detailLIst">
-					<view class="od-item" v-for="(item_c, index_c) in item.origin.split(',')">
-						<view class="item-tip">{{ item_c.split(':')[0] }}</view>
-						<view class="item-right">
-							<view class="item-txt">{{ item_c.split(':')[1] }}</view>
-						</view>
-					</view>
-					<view class="od-item">
-						<view class="item-tip">律师费用</view>
-						<view class="item-right">
-							<view class="item-txt red">￥{{ item.money }}(8折)</view>
-						</view>
-					</view>
-				</view>
-			</view>
 		</template>
 		<template v-else>
-			<view class="wait-box" v-if="detailLIst || info.order.pay_text">
-				<view class="wait-title">{{ title }}</view>
+			<view class="wait-box" v-if="detailLIst || info.order.pay_text.length > 0">
+				<view class="wait-title"  v-if="detailLIst || info.order.pay_text.length > 0">{{ title }}</view>
 				<view class="wait-item" v-for="(item, index) in detailLIst">
 					<view class="item-item">
 						<view class="item-money">￥{{ item.money }}</view>
 						<view class="item-txt"  @click="itemClick(item)">
 							<view class="txt-name">{{ item.name }}</view>
-							<view class="txt-tip">{{ item.time }}</view>
+							<view class="txt-tip">{{ item.new_time }}</view>
 						</view>
 						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
@@ -74,6 +29,29 @@
 					</view>
 				</view>
 				<view class="wait-item" v-for="(item, index) in info.order.pay_text">
+					<view class="item-item">
+						<view class="item-money">￥{{ item.money }}</view>
+						<view class="item-txt"  @click="itemClick(item)">
+							<view class="txt-name">{{ item.name }}</view>
+							<view class="txt-tip">{{ item.new_time }}</view>
+						</view>
+						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
+					</view>
+					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
+						<view class="item-money">
+							<view>￥{{ item.late_fee }}</view>
+						</view>
+						<view class="item-txt">
+							<view class="txt-name">
+								<view class="name-tip text-ellipsis">滞纳金</view>
+								<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+							</view>
+						</view>
+						<view class="item-btn"></view>
+					</view>
+				</view>
+				<view class="wait-item" v-for="(item, index) in info.order.pay_tui_apply">
 					<view class="item-item">
 						<view class="item-money">￥{{ item.money }}</view>
 						<view class="item-txt"  @click="itemClick(item)">
@@ -141,7 +119,8 @@ export default {
 		return { tipGrade: '', latefeeInfo: [],current_item: {} };
 	},
 	created() {
-		console.log('XX');
+		console.log('XX1');
+		console.log(this.detailLIst);
 		console.log(this.info.order.pay_text);
 	},
 	methods: {
