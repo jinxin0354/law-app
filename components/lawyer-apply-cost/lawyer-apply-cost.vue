@@ -80,11 +80,14 @@
 					})
 					return
 				}
-				uni.previewImage({
-					urls: photo.split(','),
-					indicator: 'number',
-					loop:true
-				})
+				this.previewImages(photo.split(','));
+				
+				// uni.previewImage({
+				// 	urls: photo.split(','),
+				// 	indicator: 'number',
+				// 	current: 0,
+				// 	loop:true
+				// })
 			}
 		}
 	}
