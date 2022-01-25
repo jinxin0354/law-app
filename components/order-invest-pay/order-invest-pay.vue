@@ -9,7 +9,7 @@
 							<view class="item-tip">{{ item_c.split(':')[0] }}</view>
 							<view class="item-right" @click="getGradeTip(index)">
 								<view class="item-txt">{{ item_c.split(':')[1] }}</view>
-								<view class="item-nav"><image src="@/static/img/right.png" mode="aspectFit"></image></view>
+								<view class="item-nav"><image src="@/static/img/right.png" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" mode="aspectFit"></image></view>
 							</view>
 						</template>
 						<template v-else>
@@ -57,8 +57,8 @@
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
 						</view>
-						<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
-						<view class="item-btn" style="min-width: 80px;">{{ item.status }}</view>
+						<image class="image-r" src="@/static/img/right.png" mode="widthFix" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;"></image>
+						<view class="item-btn">{{ item.status }}</view>
 					</view>
 
 					<view class="item-item" v-if="item.late_fee && Number(item.late_fee)" @click="lateFeeDetail(item)">
@@ -68,7 +68,7 @@
 						<view class="item-txt">
 							<view class="txt-name">
 								<view class="name-tip text-ellipsis">滞纳金</view>
-								<view class="txt-nav"><image src="@/static/img/right.png" mode="widthFix"></image></view>
+								<view class="txt-nav"><image src="@/static/img/right.png" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" mode="widthFix"></image></view>
 							</view>
 						</view>
 						<view class="item-btn"></view>
@@ -160,6 +160,6 @@ export default {
 .image-r {
 	width: 9px;
 	height: 14px;
-	margin-left: 35px;
+	margin-left: 20px;
 }
 </style>

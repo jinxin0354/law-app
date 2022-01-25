@@ -7,7 +7,7 @@
 			<template v-if="Object.keys(info.order).length > 0">
 				<view class="service-list">
 					<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()" v-if="info.order.serve_time != '15分钟'">联系律师</button>
-					<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
+					<!-- <button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button> -->
 					<template v-if="info.order.pro_name != '问一下'">
 						<button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid )">办理详情</button>
 					</template>

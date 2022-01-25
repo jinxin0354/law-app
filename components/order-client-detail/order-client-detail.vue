@@ -57,7 +57,7 @@
 							<view class="txt-name">{{ item.name }}</view>
 							<view class="txt-tip">{{ item.time }}</view>
 						</view>
-						<image  class="image-r" v-if="item.shou_type == 2 || item.type == 1" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
+						<image class="image-r" v-if="item.shou_type == 2 || item.type == 1" style="width:16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 						<view class="item-btn">{{ item.status }}</view>
 					</view>
 
@@ -179,7 +179,7 @@ export default {
 </script>
 <style>
 	.image-r {
-		width: 8px;
+		width: 9px;
 		height: 14px;
 	}
 </style>
@@ -191,7 +191,7 @@ export default {
 	}
 }
 .image-r {
-		width: 8px;
+		width: 9px;
 		height: 14px;
 		margin-left: 5px;
 	}

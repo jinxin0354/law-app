@@ -131,6 +131,7 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
 	data() {
 		return {
@@ -151,6 +152,9 @@ export default {
 			this.init();
 		}
 	},
+	computed: {
+		...mapGetters(['userInfo'])
+	},
 	methods: {
 		async init() {
 			let formData = {
@@ -160,6 +164,9 @@ export default {
 			this.info = res.data;
 			if (this.info.length > 0) {
 				this.current_id = this.info[0].id;
+			}
+			if(this.userInfo.is_weituo == 1){
+				this.isInvestor = true;
 			}
 		},
 		async confirm() {

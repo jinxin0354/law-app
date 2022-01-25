@@ -120,30 +120,42 @@ export default {
 			this.loadData(1,'refresh');
 		},
 		navTo(item) {
+			console.log('receuve-order');
+			console.log(item.product);
+			console.log(item.status);
+			console.log('receuve-order');
 			if (item.status == -1 || item.status == 99) {
-				this.jump('/pages/lawyer/user/order-cancel', { order_id: item.id });
+				if(this.userInfo.is_weituo == '1'){
+						this.jump('/pages/user/user/order-cancel', { order_id: item.id });
+				}
+				if( this.userInfo.is_fawu == '1'){
+						this.jump('/pages/specialist/user/order-cancel', { order_id: item.id });
+				}
 			} else if (item.product == '打官司' && item.status == 6) {
 				if(this.userInfo.is_weituo == '1'){
 						this.jump('/pages/client/user/service-end', { order_id: item.id });
 				}
-				if(this.userInfo.is_lawyer == '1'){
-						this.jump('/pages/lawyer/user/service-end', { order_id: item.id });
-				}
 				if( this.userInfo.is_fawu == '1'){
 						this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+				}
+				if(this.userInfo.is_lawyer == '1'){
+						this.jump('/pages/lawyer/user/service-end', { order_id: item.id });
 				}
 				if(this.userInfo.is_touziren == '1'){
 						this.jump('/pages/investor/user/service-ok', { order_id: item.id });
 				}
 			} else if (item.product == '打官司' && item.status == 12) { //解除委托
-				if(this.current == 3){
-					this.jump('/pages/lawyer/user/service-remove', { order_id: item.id });
+				if(this.userInfo.is_weituo == '1'){
+						this.jump('/pages/client/user/service-jiechu', { order_id: item.id });
+				}
+				if( this.userInfo.is_lawyer == '1'){
+					this.jump('/pages/lawyer/user/service-jiechu', { order_id: item.id });
 				}
 				if( this.userInfo.is_fawu == '1'){
 						this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
 				}
 				if (this.userInfo.is_touziren == '1') {
-					this.jump('/pages/investor/user/service-ok', { order_id: item.id, status: item.status });
+					this.jump('/pages/investor/user/service-remove', { order_id: item.id, status: item.status });
 					//this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
 				}
 			}else if (item.product == '打官司' && item.status == 15) { //法务服务完成

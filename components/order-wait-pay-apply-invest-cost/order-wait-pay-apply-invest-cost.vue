@@ -9,7 +9,7 @@
 						<view class="txt-name">{{ item.name }}</view>
 						<view class="txt-tip">{{ item.time }}</view>
 					</view>
-					<image class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+					<image class="image-r" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 				</view>
 				
 				<view class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">

@@ -472,9 +472,11 @@
 				};
 				let res = await this.$api('index.t_sure_remove', formData);
 				if (res.code == 1) {
+					console.log(pop);
 					if (pop == 'popupSureRemoveEntrust') {
 						this.closePop('popupSureRemoveEntrust');
-						this.replace('/pages/investor/user/service-ok', {
+						this.closePop('popupApproveServiceRemove');
+						this.replace('/pages/investor/user/service-remove', {
 							order_id: this.order_id
 						});
 					} else if (pop == 'popupNoSureRemoveEntrust') {

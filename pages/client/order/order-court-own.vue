@@ -2028,6 +2028,7 @@
 				this.area_id = params.area_id;
 				this.product_name = params.product_name;
 				this.product_image = params.product_image;
+				this.sale = params.sale;
 				this.init();
 			}
             
@@ -2294,7 +2295,7 @@
 								this.huan_images = res.data.product.huan_images || ''//还款记录(包括每次还款金额和还款时间) 
 								this.other_images = res.data.product.other_images || ''//您认为有用的其他有用材料
 								this.price = res.data.product.price || '0' //价格
-								this.sale = res.data.product.sale || '0' //销量
+								//this.sale = res.data.product.sale || '0' //销量
 								this.labelData = res.data.product.label
 								this.productTitleName = res.data.product.product_name
 								this.tags = res.data.product.tags || []

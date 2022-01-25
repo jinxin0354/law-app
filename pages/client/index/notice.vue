@@ -1,11 +1,11 @@
 <template>
 	<view class="content">
 		<view class="service-list">
-			<view class="service-item active" @click="replace('/pages/client/user/order')" v-if="userInfo.user_type != 1">
+			<view class="service-item active" @click="replace('/pages/client/user/order')" v-if="userInfo.is_weituo == 1">
 				<view class="item-txt">我的订单({{ info.user_order }})</view>
 				<image src="@/static/img/white-right-arrow.png" mode="widthFix"></image>
 			</view>
-			<view class="service-item active" @click="replace('/pages/lawyer/user/receive-order')" v-if="userInfo.user_type == 3 || userInfo.user_type == 4">
+			<view class="service-item active" @click="replace('/pages/lawyer/user/receive-order')" v-if="userInfo.is_lawyer == 1 || userInfo.is_fawu == 1 || userInfo.is_touziren == 1">
 				<view class="item-txt">我的接单({{ info.lawyer_order }})</view>
 				<image src="@/static/img/white-right-arrow.png" mode="widthFix"></image>
 			</view>
@@ -88,15 +88,46 @@ export default {
 			let res = await this.$api('index.read_notice', formData);
 			
 			if (this.userInfo.id == item.user_id) {// 委托人
+				console.log('notice');
+				console.log(item.status);
+				console.log(item);
+				console.log('notice_end');
+				
 				if (item.status == -1) {
 					if (item.cancel_type == 1) {
 						this.jump('/pages/client/user/order-cancel', { order_id: item.order_id });
 					} else if (item.cancel_type == 2) {
 						this.jump('/pages/client/user/auto-cancel', { order_id: item.order_id });
 					}
-				} else if ((item.product != '打官司' && item.status == 0) || item.status == 15) {
+				} else if (item.product_id == '6' && item.status == 6) {
+					if(this.userInfo.is_weituo == '1'){
+							this.jump('/pages/client/user/service-end', { order_id: item.id });
+					}
+					if(this.userInfo.is_lawyer == '1'){
+							this.jump('/pages/lawyer/user/service-end', { order_id: item.id });
+					}
+					if( this.userInfo.is_fawu == '1'){
+							this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+					}
+					if(this.userInfo.is_touziren == '1'){
+							this.jump('/pages/investor/user/service-ok', { order_id: item.id });
+					}
+				} else if (item.product_id == '6' && item.status == 12) { //解除委托
+					if(this.userInfo.is_weituo == '1'){
+							this.jump('/pages/client/user/service-jiechu', { order_id: item.id });
+					}
+					if( this.userInfo.is_lawyer == '1'){
+						this.jump('/pages/lawyer/user/service-jiechu', { order_id: item.id });
+					}
+					if( this.userInfo.is_fawu == '1'){
+							this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+					}
+					if (this.userInfo.is_touziren == '1') {
+						this.jump('/pages/investor/user/service-remove', { order_id: item.id, status: item.status });
+					}
+				} else if ((item.product_id != '6' && item.status == 0) || item.status == 15) {
 					this.jump('/pages/client/user/match', { order_id: item.order_id });
-				} else if (item.product == '打官司' && item.status == 0) {
+				} else if (item.product_id == '6' && item.status == 0) {
 					this.jump('/pages/client/user/match-specialist', { order_id: item.order_id });
 				} else if (
 					item.status == 3 ||
@@ -104,8 +135,8 @@ export default {
 					item.status == 4 ||
 					item.status == 10 ||
 					item.status == 11 ||
-					(item.product == '打官司' && item.status == 16) ||
-					(item.product == '打官司' && item.status == 17)
+					(item.product_id == '6' && item.status == 16) ||
+					(item.product_id == '6' && item.status == 17)
 				) {
 					if (item.serve_time == '15分钟') {
 						this.jump('/pages/client/user/service-minute', { order_id: item.order_id });
@@ -118,9 +149,9 @@ export default {
 					} else {
 						this.jump('/pages/client/user/service-face', { order_id: item.order_id });
 					}
-				} else if ((item.product != '打官司' && item.status == 16) || item.status == 6) {
+				} else if ((item.product_id != '6' && item.status == 16) || item.status == 6) {
 					this.jump('/pages/client/user/service-ok', { order_id: item.order_id });
-				} else if (item.product != '打官司' && item.status == 17) {
+				} else if (item.product_id != '6' && item.status == 17) {
 					this.jump('/pages/client/user/service-remove', { order_id: item.order_id });
 				} else if (item.status == 1 || item.status == 2 || item.status == 13 || item.status == 18) {
 					this.jump('/pages/client/user/service-specialist', { order_id: item.order_id });
@@ -136,8 +167,8 @@ export default {
 					item.status == 4 ||
 					item.status == 10 ||
 					item.status == 11 ||
-					(item.product == '打官司' && item.status == 16) ||
-					(item.product == '打官司' && item.status == 17)
+					(item.product_id == '6' && item.status == 16) ||
+					(item.product_id == '6' && item.status == 17)
 				) {
 					if (item.serve_time == '15分钟') {
 						this.jump('/pages/lawyer/user/service-minute', { order_id: item.order_id });
@@ -152,7 +183,25 @@ export default {
 							this.jump('/pages/investor/user/service-investor', { order_id: item.order_id });
 						}
 					} else {
-						this.jump('/pages/lawyer/user/service-face', { order_id: item.order_id });
+						if(item.product_id == '6'){
+							if (this.userInfo.is_lawyer == '1') {
+								if(item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付'){
+									this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+								}else if(item.price_type == '自费'){
+									this.jump('/pages/lawyer/user/service-zifei', { order_id: item.id, status: item.status });
+								} else {
+									this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+								}
+							} else if (this.userInfo.is_touziren == '1') {
+								this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
+							}else if(this.userInfo.is_fawu == '1'){
+								this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
+							} else{
+								this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+							}
+						} else {
+							this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+						}
 					}
 				} else if (item.product != '打官司' && item.status == 16) {
 					this.jump('/pages/lawyer/user/service-ok', { order_id: item.order_id });

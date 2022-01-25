@@ -116,25 +116,25 @@
 									<view class="item-txt">{{ current_item.tax }}</view>
 								</view>
 							</view>
-							<view class="od-item" v-if="current_item.address != null">
+							<view class="od-item" v-if="current_item.address != null && current_item.address != ''">
 								<view class="item-tip">公司地址</view>
 								<view class="item-right">
 									<view class="item-txt">{{ current_item.address }}</view>
 								</view>
 							</view>
-							<view class="od-item" v-if="current_item.tel != null">
+							<view class="od-item" v-if="current_item.tel != null && current_item.tel != ''">
 								<view class="item-tip">电话号码</view>
 								<view class="item-right">
 									<view class="item-txt">{{ current_item.tel }}</view>
 								</view>
 							</view>
-							<view class="od-item" v-if="current_item.bank != null">
+							<view class="od-item" v-if="current_item.bank != null && current_item.bank != ''">
 								<view class="item-tip">开户银行</view>
 								<view class="item-right">
 									<view class="item-txt">{{ current_item.bank }}</view>
 								</view>
 							</view>
-							<view class="od-item" v-if="current_item.bank_account != null">
+							<view class="od-item" v-if="current_item.bank_account != null && current_item.bank_account != ''">
 								<view class="item-tip">银行账户</view>
 								<view class="item-right">
 									<view class="item-txt">{{ current_item.bank_account }}</view>
@@ -173,8 +173,59 @@
 					</template>
 					<template v-else>
 						<view class="ok-box"> 
-							<button type="default" class="ok-btn" style="border-radius: 20px;" @click="copy">一键复制信息</button>
-							<button
+							<button type="default" class="ok-btn" style="border-radius: 20px;" @click="copy">一键复制信息
+							</button>
+							<!-- {{userInfo.id}}-{{ current_item.user_id }}-{{current_item.send_id}}
+							{{current_item}} -->
+							<!--
+							律师给委托人开发票
+							
+							-->
+							<!--登录的是委托人-->
+							<template v-if="userInfo.id == info.order.user_id">
+								<!--跟律师-->
+								<button v-if="current_item.send_id == current_item.lawyer"
+									type="default"
+									style="border-radius: 20px;"
+									class="ok-btn"
+									@click="$refs.popupInvoiceDetail.close();$refs.telephoneClient.$refs.telephoneLawyer.open();">电话核对信息</button>
+								<!--跟投资人核对-->
+								<button
+									v-if="current_item.send_id == current_item.investor"
+									type="default"
+									style="border-radius: 20px;"
+									class="ok-btn"
+									@click="$refs.popupInvoiceDetail.close();$refs.telephoneClient.$refs.popupTel.open();">电话核对信息</button>
+							</template>
+							<!--登录的是律师-->
+							<template v-if="userInfo.is_lawyer == 1">
+								 <button
+									v-if="userInfo.id == current_item.send_id && current_item.user_id==current_item.investor"
+									type="default"
+									style="border-radius: 20px;"
+									class="ok-btn"
+									@click="$refs.popupInvoiceDetail.close();$refs.telephoneInvestor.$refs.popupTel.open();">电话核对信息</button> 
+									<button
+									v-if="userInfo.id == current_item.send_id && current_item.user_id != current_item.investor"
+									type="default"
+									style="border-radius: 20px;"
+									class="ok-btn"
+									@click="$refs.popupInvoiceDetail.close();$refs.telephoneClient.$refs.popupTel.open();">电话核对信息</button> 
+							</template>
+							<!--登录的是投资人-->
+							<template v-if="userInfo.is_touziren == 1">
+								<button v-if="current_item.user_id == current_item.investor && current_item.send_id==current_item.lawyer"
+									type="default"
+									style="border-radius: 20px;"
+									class="ok-btn"
+									@click="$refs.popupInvoiceDetail.close();$refs.telephoneLawyer.$refs.popupTel.open();">电话核对信息</button>
+									<button v-if="userInfo.id == current_item.send_id"
+										type="default"
+										style="border-radius: 20px;"
+										class="ok-btn"
+										@click="$refs.popupInvoiceDetail.close();$refs.telephoneClient.$refs.popupTel.open();">电话核对信息</button>
+							</template>
+							<!-- <button
 								type="default"
 								style="border-radius: 20px;"
 								class="ok-btn"
@@ -184,7 +235,7 @@
 								"
 							>
 								电话核对信息
-							</button>
+							</button> -->
 						</view>
 					</template>
 				</template>
@@ -219,7 +270,12 @@ export default {
 			current_item: {}
 		};
 	},
-	created() {},
+	created() {
+		
+		console.log('发票current_item');
+		console.log(this.info.order.receipt);
+		console.log('发票current_item-end');
+	},
 	computed: {
 		...mapGetters(['userInfo'])
 	},

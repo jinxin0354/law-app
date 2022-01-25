@@ -9,7 +9,7 @@
 						<text>{{item.new_name}}</text>
 						<text>{{item.new_time}}</text>
 					</view>
-					<image v-if="item.type == 8 || item.type == 3 || item.type == 7 || item.type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+					<image v-if="item.type == 8 || item.type == 3 || item.type == 7 || item.type == 2" class="image-r" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 					<view class="flex flex-horizontal flex-1">
 						<view class="flex flex-1"></view>
 						<text class="status-text">{{item.status}}</text>
@@ -23,7 +23,7 @@
 						<text>{{item.new_name}}</text>
 						<text>{{item.new_time}}</text>
 					</view>
-					<image v-if="item.type == 8 || item.type == 3 || item.type == 7 || item.type == 2" class="image-r" src="@/static/img/right.png" mode="widthFix"></image>
+					<image v-if="item.type == 8 || item.type == 3 || item.type == 7 || item.type == 2" class="image-r" style="width: 16rpx;height: 28rpx;margin-top: 6rpx;" src="@/static/img/right.png" mode="widthFix"></image>
 					<view class="flex flex-horizontal flex-1">
 						<view class="flex flex-1"></view>
 						<text class="status-text">{{item.status}}</text>

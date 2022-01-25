@@ -129,14 +129,14 @@ export const mixin = {
 			// 投资人确认完成
 			else if (this.status == 6) {
 				if (this.userInfo.id == orderInfo.order.user_id) { //委托人
-					this.replace('/pages/client/user/service-ok', {
+					this.replace('/pages/client/user/service-end', {
 						order_id: orderInfo.order.id
 					});
-				} else if(this.userInfo.user_type == 3) { //律师
-					this.replace('/pages/lawyer/user/service-ok', {
+				} else if(this.userInfo.is_lawyer == 1) { //律师
+					this.replace('/pages/lawyer/user/service-end', {
 						order_id: orderInfo.order.id
 					});
-				}else if(this.userInfo.user_type == 4) { //投资人
+				}else if(this.userInfo.is_touziren == 1) { //投资人
 					this.replace('/pages/investor/user/service-ok', {
 						order_id: orderInfo.order.id
 					});
@@ -144,7 +144,7 @@ export const mixin = {
 			}
 			// 投资人确认解除服务
 			else if (this.status == 12) {
-				console.log(this.userInfo.is_touziren+'--');
+				console.log('------------');
 				if (this.userInfo.id == orderInfo.order.user_id) { //委托人
 					if(orderInfo.order.pro_name == '打官司'){
 						this.replace('/pages/client/user/service-jiechu', {
@@ -165,7 +165,6 @@ export const mixin = {
 							order_id: orderInfo.order.id
 						});
 					}
-					
 				}else if(this.userInfo.is_touziren == 1) { //投资人
 					this.replace('/pages/investor/user/service-remove', {
 						order_id: orderInfo.order.id

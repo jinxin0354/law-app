@@ -2,11 +2,11 @@
 	<view class="content">
 		<view class="match-top-box">
 			<view class="match-title">尊敬的投资人：</view>
-			<view class="match-txt">您好！本案法律服务已经完成。感谢您的信任与支持！祝您生活愉快，身体健康。</view>
+			<view class="match-txt"> 您好！您的法律服务已经解除，请您返回商城主页参与其他订单。感谢您的信任与支持！祝您生活愉快，身体健康。</view>
 			<view class="service-list">
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
 				<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()">联系律师</button>
-				<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
+				<!-- <button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button> -->
 				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
 				<!-- <button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
 				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>

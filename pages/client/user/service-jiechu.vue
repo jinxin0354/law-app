@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="match-top-box">
 			<view class="match-title">尊敬的委托人：</view>
-			<view class="match-txt">您好！您的法律服务已经完成。如您需要其他法律服务，请点击以下按钮下单。感谢您的信任与支持！祝您生活愉快，身体健康。</view>
+			<view class="match-txt">  您好！您的法律服务已经解除，如您需要其他法律服务，请点击以下按钮下单。感谢您的信任与支持！祝您生活愉快，身体健康。</view>
 			<!-- 功能按钮 -->
 			<template v-if="Object.keys(info.order).length > 0">
 				<view class="service-list">
@@ -28,15 +28,25 @@
 		<!-- 录音组件 -->
 		<order-record v-if="Object.keys(info.order).length > 0 && info.order.serve_time == '15分钟'" :info="info" @init="init"></order-record>
 		<!-- 待付信息 -->
-		<order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info>
+		<!-- <order-wait-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-info> -->
 		<!-- 付款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="付款详情" :info="info"></order-common-detail> -->
 		<!-- 增加服务详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail> -->
 		<!-- 续费详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail> -->
+		<order-client-pay-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow"></order-client-pay-info>
+		<!-- 待付信息
+				结算投资收益 
+			按新版设计图直接改样式
+		-->
+		<order-wait-pay-investor-settle-accounts v-if="Object.keys(info.order).length > 0" :info="info" @init="init" @popupShow="popupShow">
+		</order-wait-pay-investor-settle-accounts>
+		<!-- 付款详情 -->
+		<order-client-detail v-if="Object.keys(info.order.pay_text).length > 0 || Object.keys(info.order.jie_pay).length > 0" :detailLIst="info.order.pay_text" title="付款详情" @popupShow="popupShow"
+			:info="info"></order-client-detail>
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer" :random="new Date().getTime()"></order-lawyer-intro>
 		<!-- 案件主体信息 -->
