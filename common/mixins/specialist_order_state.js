@@ -23,7 +23,10 @@ export const mixin = {
 	methods: {
 		// 用在法务服务中和律师服务中
 		getOrderState(orderInfo) {
+		
+			console.log('specialist_order_state');
 			this.status = orderInfo.order.status;
+			console.log('this.status'+this.status);
 			// 订单取消
 			if (this.status == -1) {
 				this.replace('/pages/client/user/order-cancel', {
@@ -141,15 +144,29 @@ export const mixin = {
 			}
 			// 投资人确认解除服务
 			else if (this.status == 12) {
+				console.log(this.userInfo.is_touziren+'--');
 				if (this.userInfo.id == orderInfo.order.user_id) { //委托人
-					this.replace('/pages/client/user/service-remove', {
-						order_id: orderInfo.order.id
-					});
+					if(orderInfo.order.pro_name == '打官司'){
+						this.replace('/pages/client/user/service-jiechu', {
+							order_id: orderInfo.order.id
+						});
+					}else{
+						this.replace('/pages/client/user/service-remove', {
+							order_id: orderInfo.order.id
+						});
+					}
 				} else if(this.userInfo.user_type == 3) { //律师
-					this.replace('/pages/lawyer/user/service-remove', {
-						order_id: orderInfo.order.id
-					});
-				}else if(this.userInfo.user_type == 4) { //投资人
+					if(orderInfo.order.pro_name == '打官司'){
+						this.replace('/pages/lawyer/user/service-jiechu', {
+							order_id: orderInfo.order.id
+						});
+					}else{
+						this.replace('/pages/lawyer/user/service-remove', {
+							order_id: orderInfo.order.id
+						});
+					}
+					
+				}else if(this.userInfo.is_touziren == 1) { //投资人
 					this.replace('/pages/investor/user/service-remove', {
 						order_id: orderInfo.order.id
 					});

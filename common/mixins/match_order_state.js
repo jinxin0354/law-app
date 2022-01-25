@@ -22,6 +22,7 @@ export const mixin = {
 		// 用在委托人律师匹配中，除了打官司外的产品
 		getOrderState(orderInfo) {
 			this.status = orderInfo.order.status;
+			console.log('match_order_state');
 			if (
 				this.status == 3 ||
 				this.status == 14 ||

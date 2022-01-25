@@ -26,7 +26,6 @@
 						取消开票
 					</template>
 				</view>
-				{{item.user_id}}
 				<template v-if="userInfo.id == item.user_id">
 					<view v-if="item.is_receipt == 1" class="item-btn flex flex-horizontal flex-center" style="margin-top: 10px;">
 						<view  

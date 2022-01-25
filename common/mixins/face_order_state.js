@@ -20,6 +20,7 @@ export const mixin = {
 	methods: {
 		// 用在律师服务中
 		getOrderState(orderInfo) {
+			console.log('face_order_state');
 			this.status = orderInfo.order.status;
 			if (this.status == -1) {
 				this.replace('/pages/client/user/order-cancel', {

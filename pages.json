@@ -753,6 +753,16 @@
 			}
 		},
 		{
+			"path": "pages/lawyer/user/service-jiechu",
+			"style": {
+				"navigationBarTitleText": "服务解除",
+				"enablePullDownRefresh": true
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
 			"path": "pages/lawyer/user/dead-date",
 			"style": {
 				"navigationBarTitleText": "请选择缴纳截止日",
@@ -878,6 +888,16 @@
 			"path": "pages/investor/user/sure-service-ok",
 			"style": {
 				"navigationBarTitleText": "审批服务完成",
+				"enablePullDownRefresh": false
+			},
+			"meta": {
+				"auth": true
+			}
+		},
+		{
+			"path": "pages/investor/user/service-remove",
+			"style": {
+				"navigationBarTitleText": "服务解除",
 				"enablePullDownRefresh": false
 			},
 			"meta": {

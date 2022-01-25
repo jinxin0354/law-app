@@ -18,19 +18,27 @@
 		<!-- 录音组件 -->
 		<order-record v-if="Object.keys(info.order).length > 0 && info.order.serve_time == '15分钟'" :info="info" @init="init"></order-record>
 		<!-- 待收信息-->
-		<order-wait-receive-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-info>
+		<!-- <order-wait-receive-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-receive-info> -->
 		<!-- 待付退款信息 -->
-		<order-wait-pay-return-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-return-info>
+		<!-- <order-wait-pay-return-info v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-wait-pay-return-info> -->
 		<!-- 收款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="收款详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.pay_text" title="收款详情" :info="info"></order-common-detail> -->
 		<!-- 退款详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.tui_pay" title="退款详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.tui_pay" title="退款详情" :info="info"></order-common-detail> -->
+		<!-- 待收信息 -->
+		<order-detail-payment v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-payment>
+		<!-- 收款详情 -->
+		<order-detail-collection v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-collection>
+		<!-- 待付信息 -->
+		<order-detail-pay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-pay>
+		<!-- 付款详情 -->
+		<order-detail-nopay v-if="Object.keys(info.order).length > 0" :list="info.order" @popupShow="popupShow"></order-detail-nopay>
 		<!-- 增加服务详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.server_pay" title="增加服务" :info="info"></order-common-detail> -->
 		<!-- 续费详情 -->
-		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail>
+		<!-- <order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail> -->
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 产品说明组件 -->
 		<order-unfold-product title="产品说明" :isBold="true" :img_src="info.order.desc_content"></order-unfold-product>
 		<!-- 订单详情  -->
@@ -171,4 +179,7 @@ export default {
 .nav-list {
 	margin: 0 -30rpx;
 }
+.service-item {
+		border-radius: 50rpx;
+	}
 </style>
