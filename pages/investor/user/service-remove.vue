@@ -6,7 +6,7 @@
 			<view class="service-list">
 				<button class="service-item active" @click="$refs.telephoneClient.$refs.popupTel.open()">联系委托人</button>
 				<button class="service-item active" @click="$refs.telephoneLawyer.$refs.popupTel.open()">联系律师</button>
-				<!-- <button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button> -->
+				<button class="service-item active" @click="jump('/pages/client/user/invoice', { order_id: order_id })">开发票</button>
 				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
 				<!-- <button class="service-item active" @click="$refs.investContact.$refs.popupBond.open()">债权投资合同</button> -->
 				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
@@ -32,7 +32,7 @@
 		@popupShow="popupShow"
 			:info="info"></order-invest-pay>
 			<!-- 发票列表组件-->
-			<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer" :random="new Date().getTime()"></order-lawyer-intro>
 		<!-- 案件主体信息 -->

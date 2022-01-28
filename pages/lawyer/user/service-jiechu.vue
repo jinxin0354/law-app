@@ -9,7 +9,7 @@
 				<button class="service-item active" @click="$refs.investInboxMessage.$refs.popupInbo.open()">投资人收件信息</button>
 				<button class="service-item active" @click="jumpToWeb">债权投资合同</button>
 				<template v-if="info.order.pro_name != '问一下'">
-					<button class="service-item active" @click="navToProDetail(info.order.project_id)">项目详情</button>
+					 <button class="service-item active" v-if="info.order.usergroupid" @click="navToChat(info.order.usergroupid)">办理详情</button>
 				</template>
 				<!-- <button class="service-item active" @click="$refs.popupPayToLaw.open()">退款</button> -->
 			</view>

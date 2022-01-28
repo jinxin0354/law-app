@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="service-list">
-			<view class="service-item active" @click="replace('/pages/client/user/order')" v-if="userInfo.is_weituo == 1">
+			<view class="service-item active" @click="replace('/pages/client/user/order')">
 				<view class="item-txt">我的订单({{ info.user_order }})</view>
 				<image src="@/static/img/white-right-arrow.png" mode="widthFix"></image>
 			</view>
@@ -101,29 +101,29 @@ export default {
 					}
 				} else if (item.product_id == '6' && item.status == 6) {
 					if(this.userInfo.is_weituo == '1'){
-							this.jump('/pages/client/user/service-end', { order_id: item.id });
+							this.jump('/pages/client/user/service-end', { order_id: item.order_id });
 					}
 					if(this.userInfo.is_lawyer == '1'){
-							this.jump('/pages/lawyer/user/service-end', { order_id: item.id });
+							this.jump('/pages/lawyer/user/service-end', { order_id: item.order_id });
 					}
 					if( this.userInfo.is_fawu == '1'){
-							this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+							this.jump('/pages/specialist/user/service-ok', { order_id: item.order_id });
 					}
 					if(this.userInfo.is_touziren == '1'){
-							this.jump('/pages/investor/user/service-ok', { order_id: item.id });
+							this.jump('/pages/investor/user/service-ok', { order_id: item.order_id });
 					}
 				} else if (item.product_id == '6' && item.status == 12) { //解除委托
 					if(this.userInfo.is_weituo == '1'){
-							this.jump('/pages/client/user/service-jiechu', { order_id: item.id });
+							this.jump('/pages/client/user/service-jiechu', { order_id: item.order_id });
 					}
 					if( this.userInfo.is_lawyer == '1'){
-						this.jump('/pages/lawyer/user/service-jiechu', { order_id: item.id });
+						this.jump('/pages/lawyer/user/service-jiechu', { order_id: item.order_id });
 					}
 					if( this.userInfo.is_fawu == '1'){
-							this.jump('/pages/specialist/user/service-ok', { order_id: item.id });
+							this.jump('/pages/specialist/user/service-ok', { order_id: item.order_id });
 					}
 					if (this.userInfo.is_touziren == '1') {
-						this.jump('/pages/investor/user/service-remove', { order_id: item.id, status: item.status });
+						this.jump('/pages/investor/user/service-remove', { order_id: item.order_id, status: item.status });
 					}
 				} else if ((item.product_id != '6' && item.status == 0) || item.status == 15) {
 					this.jump('/pages/client/user/match', { order_id: item.order_id });
@@ -144,8 +144,10 @@ export default {
 						this.jump('/pages/client/user/service-month', { order_id: item.order_id });
 					} else if (item.serve_time == '包年') {
 						this.jump('/pages/client/user/service-year', { order_id: item.order_id });
-					} else if (item.price_type == '投资人支付(不用还)') {
+					} else if (item.price_type == '26') {
 						this.jump('/pages/client/user/service-investor', { order_id: item.order_id });
+					}else if (item.price_type == '27') {
+						this.jump('/pages/client/user/service-zifei', { order_id: item.order_id });
 					} else {
 						this.jump('/pages/client/user/service-face', { order_id: item.order_id });
 					}
@@ -160,8 +162,7 @@ export default {
 			else if (this.userInfo.is_lawyer == 1 || this.userInfo.is_touziren == 1) {// 律师和投资人
 				if (item.status == -1 || item.status == 99) {
 					this.jump('/pages/lawyer/user/order-cancel', { order_id: item.order_id });
-				}
-				else if (
+				}else if (
 					item.status == 3 ||
 					item.status == 14 ||
 					item.status == 4 ||
@@ -176,7 +177,7 @@ export default {
 						this.jump('/pages/lawyer/user/service-month', { order_id: item.order_id });
 					} else if (item.serve_time == '包年') {
 						this.jump('/pages/lawyer/user/service-year', { order_id: item.order_id });
-					} else if (item.price_type == '投资人支付(不用还)') {
+					} else if (item.price_type == '26') {
 						if (this.userInfo.is_lawyer == '1') {
 							this.jump('/pages/lawyer/user/service-investor', { order_id: item.order_id });
 						} else if (this.userInfo.is_touziren == '1') {
@@ -185,35 +186,61 @@ export default {
 					} else {
 						if(item.product_id == '6'){
 							if (this.userInfo.is_lawyer == '1') {
-								if(item.price_type == '投资人支付(不用还)' || item.price_type == '投资人支付'){
-									this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
-								}else if(item.price_type == '自费'){
-									this.jump('/pages/lawyer/user/service-zifei', { order_id: item.id, status: item.status });
+								if(item.price_type == '26'){
+									this.jump('/pages/lawyer/user/service-investor', { order_id: item.order_id, status: item.status });
+								}else if(item.price_type == '27'){
+									this.jump('/pages/lawyer/user/service-zifei', { order_id: item.order_id, status: item.status });
 								} else {
-									this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+									this.jump('/pages/lawyer/user/service-face', { order_id: item.order_id });
 								}
 							} else if (this.userInfo.is_touziren == '1') {
-								this.jump('/pages/investor/user/service-investor', { order_id: item.id, status: item.status });
+								this.jump('/pages/investor/user/service-investor', { order_id: item.order_id, status: item.status });
 							}else if(this.userInfo.is_fawu == '1'){
-								this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
+								this.jump('/pages/specialist/user/service-specialist', { order_id: item.order_id, status: item.status });
 							} else{
-								this.jump('/pages/lawyer/user/service-investor', { order_id: item.id, status: item.status });
+								this.jump('/pages/lawyer/user/service-investor', { order_id: item.order_id, status: item.status });
 							}
 						} else {
-							this.jump('/pages/lawyer/user/service-face', { order_id: item.id });
+							this.jump('/pages/lawyer/user/service-face', { order_id: item.order_id });
 						}
 					}
-				} else if (item.product != '打官司' && item.status == 16) {
+				} else if (item.product_id != '6' && item.status == 16) {
 					this.jump('/pages/lawyer/user/service-ok', { order_id: item.order_id });
 				} else if (item.status == 6) {
-					this.jump('/pages/investor/user/service-ok', { order_id: item.order_id });
-				} else if (item.product != '打官司' && item.status == 17) {
+					if (item.product_id == '6') {
+						if(this.userInfo.is_weituo == '1'){
+								this.jump('/pages/client/user/service-end', { order_id: item.order_id });
+						}
+						if(this.userInfo.is_lawyer == '1'){
+								this.jump('/pages/lawyer/user/service-end', { order_id: item.order_id });
+						}
+						if( this.userInfo.is_fawu == '1'){
+								this.jump('/pages/specialist/user/service-ok', { order_id: item.order_id });
+						}
+						if(this.userInfo.is_touziren == '1'){
+								this.jump('/pages/investor/user/service-ok', { order_id: item.order_id });
+						}
+					} else{
+						this.jump('/pages/investor/user/service-ok', { order_id: item.order_id });
+					}	
+				} else if (item.product_id != '6' && item.status == 17) {
 					this.jump('/pages/lawyer/user/service-remove', { order_id: item.order_id });
 				}
-			} 
-			
-			else if (this.userInfo.is_fawu == 1) {// 法务_
-			console.log('法务服务完成        -----'+this.userInfo.user_type)
+			} else if(item.status == 12){
+				if(this.userInfo.is_weituo == '1'){
+						this.jump('/pages/client/user/service-jiechu', { order_id: item.order_id });
+				}
+				if( this.userInfo.is_lawyer == '1'){
+					this.jump('/pages/lawyer/user/service-jiechu', { order_id: item.order_id });
+				}
+				if( this.userInfo.is_fawu == '1'){
+						this.jump('/pages/specialist/user/service-ok', { order_id: item.order_id });
+				}
+				if (this.userInfo.is_touziren == '1') {
+					this.jump('/pages/investor/user/service-remove', { order_id: item.order_id, status: item.status });
+				}
+			}else if (this.userInfo.is_fawu == 1) {// 法务_
+				console.log('法务服务完成        -----'+this.userInfo.user_type)
 				if (item.status == -1) {
 					this.jump('/pages/lawyer/user/order-cancel', { order_id: item.order_id });
 				} else if (item.status == 12) {

@@ -38,7 +38,24 @@
 						>
 							取消开票
 						</view>
-						<view class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneLawyer.$refs.popupTel.open()">催促开票</view>
+						<!--登录的是委托人-->
+						<template v-if="userInfo.id == info.order.user_id">
+							<!--催促律师-->
+							<view  v-if="userInfo.id == item.user_id && item.send_id == item.lawyer"
+							class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneLawyer.$refs.popupTel.open()">催促开票</view>
+							<!--催促投资人-->
+							<view  v-if="userInfo.id == item.user_id && item.send_id == item.investor"
+							class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneInvestor.$refs.popupTel.open()">催促开票</view>
+						</template>
+						<!--登录的是律师-->
+						<template v-if="userInfo.is_lawyer == 1">
+						</template>
+						<!--登录的是投资人-->
+						<template v-if="userInfo.is_touziren == 1">
+							<view  
+							class="comfir-btn flex flex-center flex-1" type="default" @click="$refs.telephoneLawyer.$refs.popupTel.open()">催促开票</view>
+						</template>
+						
 					</view>
 				</template>
 				<template v-else>

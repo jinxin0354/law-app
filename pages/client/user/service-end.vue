@@ -50,7 +50,7 @@
 		<!-- 续费详情 -->
 		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail>
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 律师简介 -->
 		<order-lawyer-intro v-if="Object.keys(infoLawyer).length > 0" :infoLawyer="infoLawyer" :random="new Date().getTime()"></order-lawyer-intro>
 		<!-- 案件主体信息 -->
@@ -169,7 +169,7 @@ export default {
 			let resLawyer = await this.$api('index.lawyerDetail', formDataLawyer);
 			this.infoLawyer = resLawyer.data;
 
-			if (this.pro_name == '问一下' && this.info.order.investor_id) {
+			if (this.info.order.investor_id) {
 				let formDataInbo = {
 					id: this.info.order.investor_id,
 					token: uni.getStorageSync('token')

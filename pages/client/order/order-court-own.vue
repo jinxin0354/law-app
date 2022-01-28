@@ -85,14 +85,15 @@
                         </view>
                     </view>
                 </view>
-                <view class="item-right" @click="$refs.priceTypeSelectPopop.open()">
+                <!-- <view class="item-right" @click="$refs.priceTypeSelectPopop.open()"> -->
+                <view class="item-right">
                 	<view class="service-list inline-list">
                 		<view class="service-item active" style="position: relative;">{{bearFees}}
                             <image v-if="bearFees == '投资人支付'" style="right:-52rpx;top:-16rpx" class="noback" src="@/static/img/order-noback.png" mode="aspectFit"></image>
                         </view>
                 	</view>
                     <view class="item-nav">
-                    	<image src="@/static/img/right.png" mode="aspectFit"></image>
+                    	<!-- <image src="@/static/img/right.png" mode="aspectFit"></image> -->
                     </view>
                 </view>
 			</view>

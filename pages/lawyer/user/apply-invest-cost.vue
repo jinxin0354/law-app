@@ -320,9 +320,11 @@ export default {
 			}
 			
 			let limit_m = Number(this.apply_pay)+sum;
-				
 			if (limit_m > 4400) {
-				this.chaochu = limit_m-4400;
+				if(Number(this.apply_pay)<4400){
+					sum = sum - (4400 - Number(this.apply_pay));
+				}
+				this.chaochu = sum;
 				this.$refs.popupOver5000.open();
 				return;
 			}
@@ -336,61 +338,61 @@ export default {
 				})
 				return;
 			}
-			if (this.result.indexOf('checkValue1') != -1) {
-				if (this.case_list.length <= 0) {
-					uni.showToast({
-						title: '案件受理费缴纳通知书为必填项',
-						icon: 'none'
-					})
-					return;
-				}
-			}
+			// if (this.result.indexOf('checkValue1') != -1) {
+			// 	if (this.case_list.length <= 0) {
+			// 		uni.showToast({
+			// 			title: '案件受理费缴纳通知书为必填项',
+			// 			icon: 'none'
+			// 		})
+			// 		return;
+			// 	}
+			// }
 			
-			if (this.result.indexOf('checkValue2') != -1) {
-				if (this.announce_list.length <= 0) {
-					uni.showToast({
-						title: '公告费缴费通知书为必填项',
-						icon: 'none'
-					})
-					return;
-				}
-			}
+			// if (this.result.indexOf('checkValue2') != -1) {
+			// 	if (this.announce_list.length <= 0) {
+			// 		uni.showToast({
+			// 			title: '公告费缴费通知书为必填项',
+			// 			icon: 'none'
+			// 		})
+			// 		return;
+			// 	}
+			// }
 			
-			if (this.apply_lawyer == 0) {
-				if (this.result.indexOf('checkValue4') != -1) {
-					if (this.contract_list.length <= 0) {
-						uni.showToast({
-							title: '委托代理合同为必填项',
-							icon: 'none'
-						})
-						return;
-					}
+			// if (this.apply_lawyer == 0) {
+			// 	if (this.result.indexOf('checkValue4') != -1) {
+			// 		if (this.contract_list.length <= 0) {
+			// 			uni.showToast({
+			// 				title: '委托代理合同为必填项',
+			// 				icon: 'none'
+			// 			})
+			// 			return;
+			// 		}
 					
-					if (this.main_list.length <= 0) {
-						uni.showToast({
-							title: '委托人主体资料为必填项',
-							icon: 'none'
-						})
-						return;
-					}
+			// 		if (this.main_list.length <= 0) {
+			// 			uni.showToast({
+			// 				title: '委托人主体资料为必填项',
+			// 				icon: 'none'
+			// 			})
+			// 			return;
+			// 		}
 					
-					if (this.indictment_list.length <= 0) {
-						uni.showToast({
-							title: '起诉状（委托人已签章）为必填项',
-							icon: 'none'
-						})
-						return;
-					}
+			// 		if (this.indictment_list.length <= 0) {
+			// 			uni.showToast({
+			// 				title: '起诉状（委托人已签章）为必填项',
+			// 				icon: 'none'
+			// 			})
+			// 			return;
+			// 		}
 					
-					if (this.note_list.length <= 0) {
-						uni.showToast({
-							title: '立案受理通知书为必填项',
-							icon: 'none'
-						})
-						return;
-					}
-				}
-			}
+			// 		if (this.note_list.length <= 0) {
+			// 			uni.showToast({
+			// 				title: '立案受理通知书为必填项',
+			// 				icon: 'none'
+			// 			})
+			// 			return;
+			// 		}
+			// 	}
+			// }
 			
 			this.addInfo();
 		},

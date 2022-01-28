@@ -36,7 +36,7 @@
 				</view>
 			</view>
 			<view class="bottom-right">
-				<view class="bottom-raidus" v-if="info.notice_status == 0"></view>
+				<view class="bottom-raidus" v-if="notice_status == 1"></view>
 				<view class="bottom-arrow"><image src="@/static/img/gray-right-arrow.png" mode="widthFix"></image></view>
 			</view>
 		</view>
@@ -256,7 +256,8 @@ export default {
 			infoNotices: '',
 			showCard: false, //开启补充身份信息认证
 			showInfo: false ,//开启未认证提醒
-			token: uni.getStorageSync('token')
+			token: uni.getStorageSync('token'),
+			notice_status: 0,
 		};
 	},
 	created() {
@@ -456,6 +457,8 @@ export default {
 				this.page++;
 				this.dataList = this.dataList.concat(dataList);
 				this.loadingType = res.data.current_page >= res.data.total_page ? 'nomore' : 'more';
+				this.info = res.data;
+				this.notice_status = res.data.notice_status;
 			}
 		},
 		goInvite(item) {
@@ -475,8 +478,19 @@ export default {
 			this.$refs.popupWantOrder.open();
 		},
 		async receiveOrder() {
-			//3是法律
-			if (this.userInfo.is_lawyer== 1) {
+			//法务
+			 if (this.userInfo.is_fawu == '1') {
+				let formData = {
+					token: uni.getStorageSync('token'),
+					id: this.current_item.id
+				};
+				let res = await this.$api('index.f_getOrder', formData);
+				if (res.code == 1) {
+					this.closePop('popupWantOrder');
+					let item = this.current_item;
+					this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
+				}
+			}else if (this.userInfo.is_lawyer== 1) { //律师
 				let formData = {
 					token: uni.getStorageSync('token'),
 					id: this.current_item.id
@@ -498,19 +512,8 @@ export default {
 						this.jump('/pages/lawyer/user/service-face', { order_id: item.id, status: item.status });
 					}
 				}
-				//1是法务
-			} else if (this.userInfo.is_fawu == '1') {
-				let formData = {
-					token: uni.getStorageSync('token'),
-					id: this.current_item.id
-				};
-				let res = await this.$api('index.f_getOrder', formData);
-				if (res.code == 1) {
-					this.closePop('popupWantOrder');
-					let item = this.current_item;
-					this.jump('/pages/specialist/user/service-specialist', { order_id: item.id, status: item.status });
-				}
-			}
+				
+			} 
 		},
 		openCoupons() {
 			this.initCoupons();

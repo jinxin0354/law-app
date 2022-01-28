@@ -120,7 +120,9 @@
 	.od-title {
 		display: flex;
 	}
-
+	.item-tip{
+		line-height: 58rpx;
+	}
 	.case-title {
 		margin-bottom: 10rpx;
 		position: relative;

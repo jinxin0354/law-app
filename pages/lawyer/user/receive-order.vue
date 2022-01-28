@@ -173,6 +173,7 @@ export default {
 				(item.product == '打官司' && item.status == 16) ||
 				(item.product == '打官司' && item.status == 17)
 			) {
+				console.log('AA');
 				if (item.serve_time == '15分钟') {
 					this.jump('/pages/lawyer/user/service-minute', { order_id: item.id });
 				} else if (item.serve_time == '连续包月') {

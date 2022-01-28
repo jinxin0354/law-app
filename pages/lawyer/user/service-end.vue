@@ -38,7 +38,7 @@
 		<!-- 续费详情 -->
 		<order-common-detail v-if="Object.keys(info.order).length > 0" :detailLIst="info.order.xu_pay" title="续费详情" :info="info"></order-common-detail>
 		<!-- 发票列表组件-->
-		<order-invoice-list v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-list>
+		<order-invoice-invest v-if="Object.keys(info.order).length > 0" :info="info" @init="init"></order-invoice-invest>
 		<!-- 产品说明组件 -->
 		<order-unfold-product title="产品说明" :isBold="true" :img_src="info.order.desc_content"></order-unfold-product>
 		<!-- 案件主体信息 -->
@@ -123,9 +123,15 @@ export default {
 			};
 			let res = await this.$api('index.orderDetail', formData);
 			this.info = res.data;
-			let resInbo = await this.$api('index.investor_address', formDataInbo);
-			if (resInbo.code == 1) {
-				this.infoInbo = resInbo.data;
+			if (this.info.order.investor_id) {
+				let formDataInbo = {
+					id: this.info.order.investor_id,
+					token: uni.getStorageSync('token')
+				};
+				let resInbo = await this.$api('index.investor_address', formDataInbo);
+				if (resInbo.code == 1) {
+					this.infoInbo = resInbo.data;
+				}
 			}
 		},
 		async jumpToWeb() {

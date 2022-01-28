@@ -34,9 +34,9 @@
 		<order-detail ref="orderAllDetail" :info="info.order" :key="new Date().getTime()">
 			<template slot="detail-edit">
 				<view class="gray red" style="width: 200rpx;font-size: 26rpx;">（跟委托人确定后再改）</view>
-				<button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()"
+				<!-- <button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()"
 					v-if="!isEdit">更改订单</button>
-				<button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()" v-else>催促委托人确认并付款</button>
+				<button type="default" class="ok-btn" @click="$refs.popupChangeOrder.open()" v-else>催促委托人确认并付款</button> -->
 			</template>
 		</order-detail>
 		<!-- 服务完成弹出层 -->
@@ -408,7 +408,9 @@
 	.textaligncenter {
 		text-align: center;
 	}
-
+	.item-tip{
+		line-height: 58rpx;
+	}
 	.case-title {
 		margin-bottom: 10rpx;
 		position: relative;

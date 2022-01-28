@@ -126,7 +126,7 @@ export default {
 			let resLawyer = await this.$api('index.lawyerDetail', formDataLawyer);
 			this.infoLawyer = resLawyer.data;
 
-			if (this.pro_name == '问一下' && this.info.order.investor_id) {
+			if (this.info.order.investor_id) {
 				let formDataInbo = {
 					id: this.info.order.investor_id,
 					token: uni.getStorageSync('token')
